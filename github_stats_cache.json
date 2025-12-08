@@ -1,0 +1,59 @@
+{
+  "oraios/Serena": {
+    "data": {
+      "owner": "oraios",
+      "repo": "Serena",
+      "stars": 16883,
+      "forks": 1161,
+      "language": "Python",
+      "description": "A powerful coding agent toolkit providing semantic retrieval and editing capabilities (MCP server & other integrations)",
+      "topics": [
+        "agent",
+        "ai",
+        "ai-coding",
+        "claude"
+      ],
+      "url": "https://github.com/oraios/Serena",
+      "timestamp": "2025-12-07T20:51:16.164081"
+    },
+    "timestamp": "2025-12-07T20:51:16.164088"
+  },
+  "facebook/react": {
+    "data": {
+      "owner": "facebook",
+      "repo": "react",
+      "stars": 241368,
+      "forks": 50030,
+      "language": "JavaScript",
+      "description": "The library for web and native user interfaces.",
+      "topics": [
+        "declarative",
+        "frontend",
+        "javascript",
+        "library"
+      ],
+      "url": "https://github.com/facebook/react",
+      "timestamp": "2025-12-07T20:51:16.467673"
+    },
+    "timestamp": "2025-12-07T20:51:16.467681"
+  },
+  "kubernetes/kubernetes": {
+    "data": {
+      "owner": "kubernetes",
+      "repo": "kubernetes",
+      "stars": 119128,
+      "forks": 41862,
+      "language": "Go",
+      "description": "Production-Grade Container Scheduling and Management",
+      "topics": [
+        "cncf",
+        "containers",
+        "go",
+        "kubernetes"
+      ],
+      "url": "https://github.com/kubernetes/kubernetes",
+      "timestamp": "2025-12-07T20:51:16.731432"
+    },
+    "timestamp": "2025-12-07T20:51:16.731438"
+  }
+}

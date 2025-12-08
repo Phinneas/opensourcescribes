@@ -30,10 +30,10 @@ def load_project_data():
         return []
 
 async def create_project_visual(project_name, github_url, output_path):
-    """Create custom graphic instead of screenshot"""
-    from graphics_generator import create_project_graphic
+    """Create custom graphic using Code Stream branding"""
+    from codestream_graphics import create_project_graphic
     
-    print(f"🎨 Creating graphic for: {project_name}")
+    print(f"🎨 Creating Code Stream graphic for: {project_name}")
     try:
         # Run in thread pool to avoid blocking
         import asyncio
@@ -48,9 +48,6 @@ async def create_project_visual(project_name, github_url, output_path):
         return True
     except Exception as e:
         print(f"❌ Failed to create graphic: {e}")
-        # Create simple fallback
-        from graphics_generator import create_fallback_graphic
-        create_fallback_graphic(project_name, output_path)
         return False
 
 def generate_audio_hume(text, output_path):

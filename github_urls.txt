@@ -1,0 +1,12 @@
+https://github.com/Fission-AI/OpenSpec
+https://github.com/pshenok/server-survival
+https://github.com/MemoriLabs/Memori
+https://github.com/jpt/trifold
+https://github.com/arpxspace/smartcommit
+https://github.com/mutativejs/travels
+https://github.com/unhappychoice/gitlogue
+https://github.com/apache/tsfile
+https://github.com/requestly/requestly
+https://github.com/n1crack/vuefinder
+https://github.com/flowglad/flowglad
+https://github.com/aws/aws-lambda-roadmap

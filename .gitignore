@@ -1,0 +1,9 @@
+*.mp4
+*.mp3
+*.png
+__pycache__/
+*.pyc
+.DS_Store
+final_github_roundup*.mp4
+assets/*.png
+assets/*.mp3

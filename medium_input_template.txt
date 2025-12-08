@@ -1,0 +1,12 @@
+---
+seraui/seraui
+SeraUI is a sleek UI component library built for React and Next.js. It leverages Tailwind CSS to deliver fast and responsive design out of the box.
+---
+langchain-ai/langchain
+LangChain is a framework for developing applications powered by language models. It enables applications that are context-aware and can reason.
+---
+owner/repo-name
+Your project description goes here.
+You can write multiple lines.
+Just keep it between the --- separators.
+---

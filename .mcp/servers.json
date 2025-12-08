@@ -1,0 +1,18 @@
+{
+  "serena": {
+    "command": "serena-mcp-server",
+   },
+  "asana": {
+    "command": "/Users/chesterbeard/.nvm/versions/node/v20.18.3/bin/mcp-server-asana",
+    "env": {
+      "ASANA_ACCESS_TOKEN": "${ASANA_ACCESS_TOKEN}"
+    }
+  },
+  "sequential-thinking": {
+    "command": "npx",
+    "args": ["-y", "mcp-server-sequential-thinking"]
+  },
+  "context7": {
+    "command": "context7"
+  }
+}

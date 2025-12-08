@@ -1,0 +1,24 @@
+{
+    "branding": {
+        "channel_name": "OpenSourceScribes",
+        "medium": "@opensourcescribes",
+        "reddit": "r/opensourcescribes",
+        "youtube": "@opensourcescribes"
+    },
+    "hume_ai": {
+        "api_key": "v37DwwGBRQ53jbWaQUJlahIAePuLexAwaJOtCtS4AAAODoyp",
+        "secret_key": "6cSWWIo5uWI2gbdZTr1Dwu8d8Cbu5PQfHpQbyk4tvA5roOTW6HhLPQYnLwmIv2Mh",
+        "voice_id": "default",
+        "use_hume": true
+    },
+    "video_settings": {
+        "intro_duration": 3,
+        "outro_duration": 5,
+        "text_overlay_duration": "full",
+        "font": "Arial",
+        "font_size": 60,
+        "text_color": "white",
+        "background_color": "rgba(0,0,0,0.7)",
+        "text_position": "bottom"
+    }
+}

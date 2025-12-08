@@ -1,0 +1,68 @@
+[
+  {
+    "id": "p1",
+    "name": "OpenSpec",
+    "github_url": "https://github.com/Fission-AI/OpenSpec",
+    "script_text": "OpenSpec is a TypeScript-based project that spec-driven development for ai coding assistants.. OpenSpec aligns humans and AI coding assistants with spec-driven development so you agree on what to build before any code is written. No API keys required. AI coding assistants are powerful but unpredictable when requirements live in chat history. OpenSpec adds a lightweight specification workflow  This project focuses on spec, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 823 times, indicating active development and community contributions. The project has gained significant traction in the developer community with over 11,386 stars on GitHub. This level of engagement demonstrates its value and reliability for real-world use cases. Developers can integrate OpenSpec into their workflows to solve complex technical challenges more efficiently. OpenSpec is worth exploring for your next project."
+  },
+  {
+    "id": "p2",
+    "name": "server-survival",
+    "github_url": "https://github.com/pshenok/server-survival",
+    "script_text": "server-survival is a JavaScript-based project that tower defense game that teaches cloud architecture. build infrastructure, survive traffic, learn scaling.. Server Survival is an interactive 3D simulation game where you play as a Cloud Architect. Your mission is to build and scale a resilient cloud infrastructure to handle increasing traffic loads while fighting off DDoS attacks and managing your budget. Survive as long as possible! Manage your Budget ( This project focuses on aws, cloud, devops, education, game, providing developers with specialized tools and capabilities in these areas. Built with JavaScript, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 91 times, indicating active development and community contributions. The project has gained significant traction in the developer community with over 1,716 stars on GitHub. This level of engagement demonstrates its value and reliability for real-world use cases. Developers can integrate server-survival into their workflows to solve complex technical challenges more efficiently. Check out server-survival if you're working in this space."
+  },
+  {
+    "id": "p3",
+    "name": "Memori",
+    "github_url": "https://github.com/MemoriLabs/Memori",
+    "script_text": "Memori is a Python-based project that open-source memory engine for llms, ai agents & multi-agent systems. Install Memori: pip install memori Significant performance improvements using Advanced Augmentation. Threaded, zero latency replacement for the v2 extraction agent. LLM agnostic with support for all of the major foundational models. Datastore agnostic with support for all major databases and documen This project focuses on agent, ai, aiagent, awesome, chatgpt, providing developers with specialized tools and capabilities in these areas. Built with Python, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 666 times, indicating active development and community contributions. The project has gained significant traction in the developer community with over 9,356 stars on GitHub. This level of engagement demonstrates its value and reliability for real-world use cases. Developers can integrate Memori into their workflows to solve complex technical challenges more efficiently. Memori is worth exploring for your next project."
+  },
+  {
+    "id": "p5",
+    "name": "smartcommit",
+    "github_url": "https://github.com/arpxspace/smartcommit",
+    "script_text": "smartcommit is a Go-based project that enforce the habit of self-documenting code through better commit messages.. smartcommit is an intelligent, AI-powered CLI tool that helps you write semantic, Conventional Commits messages effortlessly. It analyzes your staged changes, asks clarifying questions to understand the \"why\" behind your code, and generates a structured commit message for you. Future you will thank  This project focuses on commit, git, providing developers with specialized tools and capabilities in these areas. Built with Go, it leverages the language's strengths to deliver robust performance. With 221 stars on GitHub, the project has built a solid user base and continues to grow. Developers can integrate smartcommit into their workflows to solve complex technical challenges more efficiently. Check out smartcommit if you're working in this space."
+  },
+  {
+    "id": "p6",
+    "name": "travels",
+    "github_url": "https://github.com/mutativejs/travels",
+    "script_text": "travels is a TypeScript-based project that a fast, framework-agnostic undo/redo core powered by mutative json patch. A fast, framework-agnostic undo/redo library that stores only changes, not full snapshots. Travels gives your users the power to undo and redo their actions\u2014essential for text editors, drawing apps, form builders, and any interactive application. Unlike traditional undo systems that copy entire stat This project focuses on redo, time-tracking, undo, undo-redo, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver robust performance. With 258 stars on GitHub, the project has built a solid user base and continues to grow. Developers can integrate travels into their workflows to solve complex technical challenges more efficiently. Check out travels if you're working in this space."
+  },
+  {
+    "id": "p7",
+    "name": "gitlogue",
+    "github_url": "https://github.com/unhappychoice/gitlogue",
+    "script_text": "gitlogue is a Rust-based project that a cinematic git commit replay tool for the terminal, turning your git history into a living, animated story.. A cinematic Git commit replay tool for the terminal, turning your Git history into a living, animated story. Watch commits unfold with realistic typing animations, syntax highlighting, and file tree transitions, transforming code changes into a visual experience. curl -fsSL https://raw.githubusercon This project focuses on cli, cli-tool, code-animation, commit-history, developer-tools, providing developers with specialized tools and capabilities in these areas. Built with Rust, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 72 times, indicating active development and community contributions. The project has gained significant traction in the developer community with over 3,394 stars on GitHub. This level of engagement demonstrates its value and reliability for real-world use cases. Developers can integrate gitlogue into their workflows to solve complex technical challenges more efficiently. Check out gitlogue if you're working in this space."
+  },
+  {
+    "id": "p8",
+    "name": "tsfile",
+    "github_url": "https://github.com/apache/tsfile",
+    "script_text": "tsfile is a Java-based project that apache tsfile. Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements.  See the NOTICE file distributed with this work for additional information regarding copyright ownership.  The ASF licenses this file to you under the Apache License, Version 2.0 (the \"License\"); you m This project focuses on big-data, cpp, file, iot, java, providing developers with specialized tools and capabilities in these areas. Built with Java, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 86 times, indicating active development and community contributions. With 170 stars on GitHub, the project has built a solid user base and continues to grow. Developers can integrate tsfile into their workflows to solve complex technical challenges more efficiently. Check out tsfile if you're working in this space."
+  },
+  {
+    "id": "p9",
+    "name": "requestly",
+    "github_url": "https://github.com/requestly/requestly",
+    "script_text": "requestly is a TypeScript-based project that free and open-source api client & interceptor.. \ud83d\ude80 What is Requestly? HTTP Rules (Intercept & Modify HTTPs Requests) Mock Server (Create API Mocks in seconds) Sessions for faster debugging \ud83d\udcd5 Documentation \ud83d\udc69\u200d\ud83d\udcbb Development \ud83d\ude4f Contributing \ud83c\udfaf Our Mission Requestly is an Open-Source platform for front-end developers with essential tooling & integrations This project focuses on api, api-client, api-mock, api-rest, api-testing, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 514 times, indicating active development and community contributions. The project has gained significant traction in the developer community with over 5,614 stars on GitHub. This level of engagement demonstrates its value and reliability for real-world use cases. Developers can integrate requestly into their workflows to build robust APIs and backend services. requestly is worth exploring for your next project."
+  },
+  {
+    "id": "p10",
+    "name": "vuefinder",
+    "github_url": "https://github.com/n1crack/vuefinder",
+    "script_text": "vuefinder is a Vue-based project that a sleek, developer-friendly file manager for vue \u2014 organize, preview, and manage files with ease.. A modern, customizable file manager component built for Vue. Organize, preview, and manage your files through a beautiful, reactive interface \u2014 just like a native file explorer. Easily integrate it into your app, connect to any storage (local, S3, etc.), and craft your own cloud experience with full This project focuses on component, explorer, file-manager, media-library, tailwindcss, providing developers with specialized tools and capabilities in these areas. Built with Vue, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 94 times, indicating active development and community contributions. With 515 stars on GitHub, the project has built a solid user base and continues to grow. Developers can integrate vuefinder into their workflows to solve complex technical challenges more efficiently. Check out vuefinder if you're working in this space."
+  },
+  {
+    "id": "p11",
+    "name": "flowglad",
+    "github_url": "https://github.com/flowglad/flowglad",
+    "script_text": "flowglad is a TypeScript-based project that open source, zero webhooks payment provider. The easiest way to make internet money. Infinite pricing models, one source of truth, zero webhooks. Default Stateless Say goodbye to webhooks, \"subscriptions\" db tables, customer_id columns, PRICE_ID env variables, or manually mapping your plans to prices to features and back. Single Source of Trut This project focuses on billing, nextjs, payments, react, triggerdev, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver robust performance. The codebase has been forked over 55 times, indicating active development and community contributions. The project has gained significant traction in the developer community with over 1,404 stars on GitHub. This level of engagement demonstrates its value and reliability for real-world use cases. Developers can integrate flowglad into their workflows to solve complex technical challenges more efficiently. Check out flowglad if you're working in this space."
+  },
+  {
+    "id": "p12",
+    "name": "aws-lambda-roadmap",
+    "github_url": "https://github.com/aws/aws-lambda-roadmap",
+    "script_text": "aws-lambda-roadmap is an open-source tool available on GitHub. This is the public roadmap for AWS Lambda. Knowing about our upcoming products and priorities helps our customers plan. This repository contains information about what we are working on and allows all AWS customers to give direct feedback. Other AWS Public Roadmaps Q: Why did you build this? A: We k With 167 stars on GitHub, the project has built a solid user base and continues to grow. Developers can integrate aws-lambda-roadmap into their workflows to solve complex technical challenges more efficiently. Check out aws-lambda-roadmap if you're working in this space."
+  }
+]

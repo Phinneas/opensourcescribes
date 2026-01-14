@@ -56,7 +56,7 @@ def fetch_github_data(github_url: str) -> Optional[Dict]:
                 'homepage': data.get('homepage', ''),
                 'created_at': data.get('created_at', ''),
                 'updated_at': data.get('updated_at', ''),
-                'license': data.get('license', {}).get('name', 'No license'),
+                'license': (data.get('license') or {}).get('name', 'No license'),
                 'github_url': github_url
             }
         elif response.status_code == 404:
@@ -67,7 +67,49 @@ def fetch_github_data(github_url: str) -> Optional[Dict]:
     except Exception as e:
         print(f"❌ Failed to fetch GitHub data: {e}")
     
+    except Exception as e:
+        print(f"❌ Failed to fetch GitHub data: {e}")
+    
     return None
+
+def fetch_generic_data(url: str) -> Optional[Dict]:
+    """Fetch metadata from a generic website"""
+    print(f"🌍 Fetching generic web data for {url}...")
+    try:
+        response = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
+        if response.status_code != 200:
+            return None
+            
+        content = response.text
+        
+        # Simple regex extraction since bs4 might not be everywhere (though we checked)
+        # Using regex for speed and dependency-free baseline
+        title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
+        title = title_match.group(1).strip() if title_match else url.split('//')[-1].split('/')[0]
+        
+        desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE)
+        description = desc_match.group(1).strip() if desc_match else ""
+        
+        # Clean up title
+        name = title.split(' - ')[0].split(' | ')[0].strip()
+        
+        return {
+            'owner': 'web',
+            'repo': name.replace(' ', '_').lower(),
+            'name': name,
+            'full_name': name,
+            'description': description,
+            'stars': 0,
+            'forks': 0,
+            'language': 'Web',
+            'topics': ['website'],
+            'homepage': url,
+            'created_at': '',
+            'github_url': url
+        }
+    except Exception as e:
+        print(f"❌ Failed to fetch generic data: {e}")
+        return None
 
 
 def fetch_readme(owner: str, repo: str) -> Optional[str]:
@@ -223,17 +265,16 @@ def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     if language and language != 'Unknown':
         tech_details.append(f"Built with {language}, it leverages the language's strengths to deliver robust performance")
     
-    if forks > 50:
-        tech_details.append(f"The codebase has been forked over {forks:,} times, indicating active development and community contributions")
+    # Forks removed per user request (displayed on screen)
+    # if forks > 50:
+    #     tech_details.append(f"The codebase has been forked over {forks:,} times, indicating active development and community contributions")
     
     if tech_details:
         script_parts.append('. '.join(tech_details) + '.')
     
-    # 5. Community and adoption
-    if stars > 1000:
-        script_parts.append(f"The project has gained significant traction in the developer community with over {stars:,} stars on GitHub. This level of engagement demonstrates its value and reliability for real-world use cases.")
-    elif stars > 100:
-        script_parts.append(f"With {stars:,} stars on GitHub, the project has built a solid user base and continues to grow.")
+    # 5. Community and adoption - REMOVED per user request
+    # Stars and forks are displayed on screen, so no need to narrate them.
+    pass
     
     # 6. Use cases and applications
     use_case = f"Developers can integrate {name} into their workflows to"
@@ -260,7 +301,20 @@ def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     
     script = ' '.join(script_parts)
     
-    # No padding needed - we want concise scripts
+    # Clean up script: remove emojis and non-standard characters causing TTS artifacts
+    # Keep alphanumeric, punctuation, and spaces. Remove others.
+    # But we want to keep some accents maybe? For English TTS, staying ASCII compatible is safest for now,
+    # or just filtering known emoji ranges. simpler: remove anything that isn't basic punctuation or allowed chars.
+    
+    import re
+    # Remove emojis and symbols often found in GitHub descriptions
+    # Keep: a-z, A-Z, 0-9, ., ,, !, ?, ', ", -, (, ), space
+    # We'll replace others with space
+    script = re.sub(r'[^a-zA-Z0-9\.,!\?\'"\-\(\) \n]', ' ', script)
+    
+    # Fix multiple spaces
+    script = re.sub(r'\s+', ' ', script).strip()
+    
     return script
 
 
@@ -287,29 +341,32 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         client = anthropic.Anthropic(api_key=api_key)
         
         # Prepare context
-        readme_excerpt = readme_data.get('full_text', '')[:2000]
-        topics_str = ', '.join(repo_data['topics'][:5]) if repo_data['topics'] else 'None'
+        readme_content = readme_data.get('full_text', '')
+        if not readme_content:
+            print("⚠️  No README content available, using description only")
+            readme_content = repo_data.get('description', '')
         
-        prompt = f"""Create a 1-minute narration script (150-170 words) for a YouTube video about this GitHub project.
-
-Repository: {repo_data['full_name']}
-Description: {repo_data['description']}
-Stars: {repo_data['stars']:,} | Language: {repo_data['language']}
-Topics: {topics_str}
-
-README Content:
-{readme_excerpt}
-
-Requirements:
-- 150-170 words MAXIMUM (1 minute when spoken)
-- Extremely concise, information-dense
-- Focus on: what it is, what it does, why it matters
-- Skip verbose explanations
-- Technical but accessible
-- Do NOT include intro/outro phrases
-- Write as if you're giving a quick elevator pitch to a developer
-
-Generate only the script text, no meta-commentary."""
+        # Trim README to prevent token overflow (approx 8000 chars)
+        readme_content = readme_content[:8000]
+        
+        prompt = f"""
+    Write a short, engaging video script (approx {TARGET_WORDS} words) for a YouTube video about this project:
+    
+    Project Name: {repo_data['name']}
+    Description: {repo_data['description']}
+    
+    Source Content:
+    {readme_content}
+    
+    Requirements:
+    1. Start immediately with what the project DOES. No "Hey guys" or intro.
+    2. Explain the key features and why it's useful.
+    3. Use a conversational, enthusiastic tone.
+    4. End with a short sentence on who should use it.
+    5. DO NOT mention specific star counts or fork counts.
+    6. DO NOT use emojis or special characters that break TTS.
+    7. KEEP IT UNDER {MAX_WORDS} WORDS.
+    """
 
         print("🤖 Generating script with Claude...")
         
@@ -353,11 +410,24 @@ def generate_script(github_url: str) -> Optional[Dict]:
     """
     # Fetch GitHub data
     repo_data = fetch_github_data(github_url)
+    
+    # Fallback to generic if GitHub fetch failed
     if not repo_data:
+        print(f"⚠️  GitHub data fetch failed for {github_url}, trying generic fetch...")
+        repo_data = fetch_generic_data(github_url)
+        
+    if not repo_data:
+        print(f"❌ Failed to fetch any data for {github_url}")
         return None
     
     # Fetch README
-    readme_text = fetch_readme(repo_data['owner'], repo_data['repo'])
+    # For generic data, owner/repo might not be available or meaningful for README fetch
+    readme_text = None
+    if 'owner' in repo_data and 'repo' in repo_data:
+        readme_text = fetch_readme(repo_data['owner'], repo_data['repo'])
+    else:
+        print("ℹ️  Skipping README fetch as owner/repo not available from generic data.")
+
     readme_data = parse_readme_sections(readme_text) if readme_text else {}
     
     # Try AI generation first
@@ -413,13 +483,23 @@ def generate_from_url_list(filepath: str) -> list:
         
         result = generate_script(url)
         if result:
+             # Generate unique ID from URL (e.g., owner_repo)
+            safe_id = re.sub(r'[^a-zA-Z0-9]', '_', result['name']).lower()
+            # If repo name is generic, prepend owner? But name usually unique enough for local list.
+            # Better: use full_name if available in result (it is not currently returned in root dict)
+            # Let's extract from URL: github.com/owner/repo
+            match = re.search(r'github\.com/([^/]+)/([^/]+)', result['github_url'])
+            if match:
+                owner, repo = match.groups()
+                safe_id = f"{owner}_{repo}".lower().replace('-', '_')
+            
             projects.append({
-                'id': f'p{i}',
+                'id': safe_id,
                 'name': result['name'],
                 'github_url': result['github_url'],
                 'script_text': result['script_text']
             })
-            print(f"✅ Added {result['name']}")
+            print(f"✅ Added {result['name']} (ID: {safe_id})")
         else:
             print(f"❌ Failed to process {url}")
     
@@ -429,8 +509,16 @@ def generate_from_url_list(filepath: str) -> list:
 if __name__ == "__main__":
     import sys
     
-    # Test mode
-    if '--test' in sys.argv:
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='Generate video scripts from GitHub URLs')
+    parser.add_argument('--input', '-i', default='github_urls.txt', help='Input file with GitHub URLs')
+    parser.add_argument('--output', '-o', default='posts_data.json', help='Output JSON file')
+    parser.add_argument('--test', action='store_true', help='Run simple test')
+    
+    args = parser.parse_args()
+    
+    if args.test:
         print("🧪 Testing with sample URL...\n")
         test_url = "https://github.com/oraios/Serena"
         result = generate_script(test_url)
@@ -442,6 +530,12 @@ if __name__ == "__main__":
             print(f"\n{'='*60}")
             print(f"Word count: {result['metadata']['word_count']}")
     else:
-        print("Usage:")
-        print("  python3 auto_script_generator.py --test")
-        print("  Or import and use generate_script(url) or generate_from_url_list(file)")
+        # Process input file
+        projects = generate_from_url_list(args.input)
+        
+        if projects:
+            with open(args.output, 'w') as f:
+                json.dump(projects, f, indent=4)
+            print(f"\n✅ Successfully saved {len(projects)} projects to {args.output}")
+        else:
+            print("\n❌ No projects generated")

@@ -100,6 +100,56 @@ def create_outro_card(config, output_path="assets/outro_card.png"):
     print(f"✅ Created outro card: {output_path}")
     return output_path
 
+def create_subscribe_card(config, output_path="assets/subscribe_card.png"):
+    """Create a dedicated Subscribe call-to-action card"""
+    # Create 1920x1080 image
+    img = Image.new('RGB', (1920, 1080), color='#1a1a2e')
+    draw = ImageDraw.Draw(img)
+    
+    # Try to use a nice font
+    try:
+        title_font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 110)
+        subtitle_font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 60)
+    except:
+        title_font = ImageFont.load_default()
+        subtitle_font = ImageFont.load_default()
+    
+    # Draw simple, bold message
+    message = "Enjoying these tools?"
+    bbox = draw.textbbox((0, 0), message, font=subtitle_font)
+    text_width = bbox[2] - bbox[0]
+    x = (1920 - text_width) // 2
+    y = 350
+    draw.text((x, y), message, font=subtitle_font, fill='#cccccc')
+    
+    cta = "SUBSCRIBE"
+    bbox = draw.textbbox((0, 0), cta, font=title_font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    x = (1920 - text_width) // 2
+    y = 500
+    
+    # Draw simple button background
+    padding = 40
+    button_coords = [x - padding, y - padding, x + text_width + padding, y + text_height + padding]
+    draw.rectangle(button_coords, fill='#e63946', outline=None)
+    
+    draw.text((x, y), cta, font=title_font, fill='#ffffff')
+    
+    # Subtext
+    sub = "for more Open Source discoveries"
+    bbox = draw.textbbox((0, 0), sub, font=subtitle_font)
+    text_width = bbox[2] - bbox[0]
+    x = (1920 - text_width) // 2
+    y = 700
+    draw.text((x, y), sub, font=subtitle_font, fill='#cccccc')
+    
+    # Save
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    img.save(output_path)
+    print(f"✅ Created subscribe card: {output_path}")
+    return output_path
+
 if __name__ == "__main__":
     # Test the card generation
     import json

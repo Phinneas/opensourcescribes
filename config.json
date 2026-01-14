@@ -8,7 +8,7 @@
     "hume_ai": {
         "api_key": "v37DwwGBRQ53jbWaQUJlahIAePuLexAwaJOtCtS4AAAODoyp",
         "secret_key": "6cSWWIo5uWI2gbdZTr1Dwu8d8Cbu5PQfHpQbyk4tvA5roOTW6HhLPQYnLwmIv2Mh",
-        "voice_id": "default",
+        "voice_id": "d35ae770-3c1c-4afd-9e1c-6e7e9ab84251",
         "use_hume": true
     },
     "video_settings": {

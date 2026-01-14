@@ -11,6 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 from datetime import datetime, timedelta
 import re
+import random
 
 # Code Stream Brand Colors
 COLORS = {
@@ -144,72 +145,165 @@ class CodeStreamGraphics:
         return str(num)
     
     def create_base_image(self):
-        """Create base image with Code Stream aesthetic"""
+        """Create base image with Code Stream aesthetic - now with varied gradients"""
         # Start with Deep Blue background
         img = Image.new('RGB', (self.width, self.height), color=COLORS['deep_blue'])
         
-        # Add subtle vertical gradient (Deep Blue → slightly lighter)
+        # Randomize gradient intensity and direction
+        gradient_intensity = random.uniform(0.2, 0.5)  # Was fixed at 0.3
+        reverse_gradient = random.choice([True, False])
+        
         draw = ImageDraw.Draw(img)
+        
         for y in range(self.height):
-            ratio = y / self.height
-            r = int(COLORS['deep_blue'][0] + (COLORS['dark_purple'][0] - COLORS['deep_blue'][0]) * ratio * 0.3)
-            g = int(COLORS['deep_blue'][1] + (COLORS['dark_purple'][1] - COLORS['deep_blue'][1]) * ratio * 0.3)
-            b = int(COLORS['deep_blue'][2] + (COLORS['dark_purple'][2] - COLORS['deep_blue'][2]) * ratio * 0.3)
+            if reverse_gradient:
+                # Reverse: purple to blue
+                ratio = 1 - (y / self.height)
+            else:
+                # Normal: blue to purple
+                ratio = y / self.height
+            
+            r = int(COLORS['deep_blue'][0] + (COLORS['dark_purple'][0] - COLORS['deep_blue'][0]) * ratio * gradient_intensity)
+            g = int(COLORS['deep_blue'][1] + (COLORS['dark_purple'][1] - COLORS['deep_blue'][1]) * ratio * gradient_intensity)
+            b = int(COLORS['deep_blue'][2] + (COLORS['dark_purple'][2] - COLORS['deep_blue'][2]) * ratio * gradient_intensity)
             draw.line([(0, y), (self.width, y)], fill=(r, g, b))
         
         return img
     
     def add_grid_pattern(self, img):
-        """Add Code Stream grid pattern with Electric Teal"""
+        """Add Code Stream grid pattern with randomized spacing and optional skip"""
         overlay = Image.new('RGBA', (self.width, self.height), (0, 0, 0, 0))
         draw = ImageDraw.Draw(overlay)
         
-        grid_spacing = 80
-        grid_color = (*COLORS['electric_teal'], 40)  # 15% opacity
+        # Randomize grid spacing
+        grid_spacing = random.choice([60, 80, 100, 120])
+        
+        # Randomize accent color (sometimes teal, sometimes green, sometimes purple mix)
+        color_choice = random.choice(['teal', 'green', 'purple'])
+        if color_choice == 'teal':
+            grid_color = (*COLORS['electric_teal'], random.randint(25, 50))
+        elif color_choice == 'green':
+            grid_color = (*COLORS['electric_green'], random.randint(25, 50))
+        else:  # purple - mix of blue and teal
+            grid_color = (int((COLORS['deep_blue'][0] + COLORS['electric_teal'][0])/2),
+                         int((COLORS['deep_blue'][1] + COLORS['electric_teal'][1])/2),
+                         int((COLORS['deep_blue'][2] + COLORS['electric_teal'][2])/2),
+                         random.randint(25, 50))
+        
+        # Randomly decide to skip grid pattern entirely for cleaner look (30% chance)
+        if random.random() < 0.3:
+            return Image.alpha_composite(img.convert('RGBA'), overlay).convert('RGB')
         
         # Horizontal grid lines
         for y in range(0, self.height, grid_spacing):
-            draw.line([(0, y), (self.width, y)], fill=grid_color, width=1)
+            # Randomly skip some lines for variety (20% chance per line)
+            if random.random() > 0.2:
+                draw.line([(0, y), (self.width, y)], fill=grid_color, width=1)
         
         # Vertical grid lines
         for x in range(0, self.width, grid_spacing):
-            draw.line([(x, 0), (x, self.height)], fill=grid_color, width=1)
+            # Randomly skip some lines for variety (20% chance per line)
+            if random.random() > 0.2:
+                draw.line([(x, 0), (x, self.height)], fill=grid_color, width=1)
+        
+        # Add circuit nodes at some grid intersections
+        node_size = random.randint(3, 6)
+        for y in range(0, self.height, grid_spacing * 2):
+            for x in range(0, self.width, grid_spacing * 2):
+                # 40% chance to add a node at each intersection
+                if random.random() < 0.4:
+                    draw.ellipse([(x - node_size, y - node_size), (x + node_size, y + node_size)], 
+                                fill=grid_color)
         
         return Image.alpha_composite(img.convert('RGBA'), overlay).convert('RGB')
     
     def add_data_flow_lines(self, img):
-        """Add diagonal data flow lines suggesting motion"""
+        """Add diagonal data flow lines with randomized spacing and optional skip"""
         overlay = Image.new('RGBA', (self.width, self.height), (0, 0, 0, 0))
         draw = ImageDraw.Draw(overlay)
         
-        # Diagonal lines flowing top-left to bottom-right
-        flow_color = (*COLORS['electric_teal'], 50)  # 20% opacity
+        # Randomize flow line spacing
+        flow_spacing = random.choice([150, 200, 250])
         
-        for i in range(-self.height, self.width, 200):
-            draw.line(
-                [(i, 0), (i + self.height, self.height)],
-                fill=flow_color,
-                width=2
-            )
+        # Randomize flow line color
+        color_choice = random.choice(['teal', 'green'])
+        if color_choice == 'teal':
+            flow_color = (*COLORS['electric_teal'], random.randint(30, 60))
+        else:
+            flow_color = (*COLORS['electric_green'], random.randint(30, 60))
+        
+        # Randomly decide to skip flow lines entirely (40% chance)
+        if random.random() < 0.4:
+            return Image.alpha_composite(img.convert('RGBA'), overlay).convert('RGB')
+        
+        # Diagonal lines flowing top-left to bottom-right
+        for i in range(-self.height, self.width, flow_spacing):
+            # Randomly skip some lines (25% chance)
+            if random.random() > 0.25:
+                draw.line(
+                    [(i, 0), (i + self.height, self.height)],
+                    fill=flow_color,
+                    width=random.randint(1, 3)
+                )
         
         return Image.alpha_composite(img.convert('RGBA'), overlay).convert('RGB')
     
     def add_glow_accents(self, img):
-        """Add horizontal glow lines at top and bottom"""
+        """Add horizontal glow lines at top and bottom with randomized colors"""
         overlay = Image.new('RGBA', (self.width, self.height), (0, 0, 0, 0))
         draw = ImageDraw.Draw(overlay)
         
-        # Top glow accent (y: ~100)
-        for i in range(6):
-            opacity = int(80 - i * 12)
-            glow_color = (*COLORS['electric_teal'], opacity)
-            draw.line([(0, 100 + i), (self.width, 100 + i)], fill=glow_color, width=2)
+        # Randomize glow color (teal or green)
+        glow_choice = random.choice(['teal', 'green'])
+        if glow_choice == 'teal':
+            glow_base_color = COLORS['electric_teal']
+        else:
+            glow_base_color = COLORS['electric_green']
         
-        # Bottom glow accent (y: ~950)
+        # Randomly decide glow position
+        top_glow_y = random.randint(80, 120)
+        bottom_glow_y = random.randint(920, 980)
+        
+        # Top glow accent
         for i in range(6):
             opacity = int(80 - i * 12)
-            glow_color = (*COLORS['electric_teal'], opacity)
-            draw.line([(0, 950 + i), (self.width, 950 + i)], fill=glow_color, width=2)
+            glow_color = (*glow_base_color, opacity)
+            draw.line([(0, top_glow_y + i), (self.width, top_glow_y + i)], fill=glow_color, width=2)
+        
+        # Bottom glow accent
+        for i in range(6):
+            opacity = int(80 - i * 12)
+            glow_color = (*glow_base_color, opacity)
+            draw.line([(0, bottom_glow_y + i), (self.width, bottom_glow_y + i)], fill=glow_color, width=2)
+        
+        # Add random decorative glow orbs (1-3 orbs)
+        num_orbs = random.randint(1, 3)
+        for _ in range(num_orbs):
+            orb_x = random.randint(200, self.width - 200)
+            orb_y = random.randint(200, self.height - 200)
+            orb_size = random.randint(100, 200)
+            
+            # Random orb color
+            orb_color_choice = random.choice(['teal', 'green', 'purple'])
+            if orb_color_choice == 'teal':
+                orb_color = COLORS['electric_teal']
+            elif orb_color_choice == 'green':
+                orb_color = COLORS['electric_green']
+            else:  # purple mix
+                orb_color = (int((COLORS['deep_blue'][0] + COLORS['electric_teal'][0])/2),
+                           int((COLORS['deep_blue'][1] + COLORS['electric_teal'][1])/2),
+                           int((COLORS['deep_blue'][2] + COLORS['electric_teal'][2])/2))
+            
+            # Draw orb with multiple glow layers
+            for i in range(10):
+                opacity = int(40 - i * 4)
+                current_orb_size = orb_size - (i * (orb_size // 10))
+                glow_color = (*orb_color, opacity)
+                draw.ellipse(
+                    [(orb_x - current_orb_size//2, orb_y - current_orb_size//2), 
+                     (orb_x + current_orb_size//2, orb_y + current_orb_size//2)],
+                    fill=glow_color
+                )
         
         return Image.alpha_composite(img.convert('RGBA'), overlay).convert('RGB')
     

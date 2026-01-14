@@ -1,0 +1,68 @@
+[
+    {
+        "id": "p1",
+        "name": "OpenSpec",
+        "github_url": "https://github.com/Fission-AI/OpenSpec",
+        "script_text": "OpenSpec brings spec-driven development to AI coding assistants. Built with TypeScript, it ensures humans and AI agree on requirements before writing code. With over 11,000 stars and 823 forks, it's a proven solution for predictable AI-assisted development."
+    },
+    {
+        "id": "p2",
+        "name": "server-survival",
+        "github_url": "https://github.com/pshenok/server-survival",
+        "script_text": "Server Survival is an interactive 3D game that teaches cloud architecture. Play as a Cloud Architect, build infrastructure, survive traffic spikes, and fight DDoS attacks. With 1,700 stars, it's a fun way to learn AWS and DevOps concepts."
+    },
+    {
+        "id": "p3",
+        "name": "Memori",
+        "github_url": "https://github.com/MemoriLabs/Memori",
+        "script_text": "Memori is an open-source memory engine for LLMs and AI agents. With 9,300 stars, it offers zero-latency performance, supports all major LLMs, and works with any database. Install with pip install memori and supercharge your AI systems."
+    },
+    {
+        "id": "p5",
+        "name": "smartcommit",
+        "github_url": "https://github.com/arpxspace/smartcommit",
+        "script_text": "Smartcommit is an AI-powered CLI tool that writes semantic commit messages for you. Built in Go, it analyzes your changes, asks clarifying questions, and generates Conventional Commits. With 221 stars, it helps enforce self-documenting code habits."
+    },
+    {
+        "id": "p6",
+        "name": "travels",
+        "github_url": "https://github.com/mutativejs/travels",
+        "script_text": "Travels is a fast undo-redo library that stores only changes, not full snapshots. Perfect for text editors, drawing apps, and form builders. Built with TypeScript and 258 stars, it's framework-agnostic and memory-efficient."
+    },
+    {
+        "id": "p7",
+        "name": "gitlogue",
+        "github_url": "https://github.com/unhappychoice/gitlogue",
+        "script_text": "Gitlogue turns your Git history into a cinematic experience. Watch commits unfold with realistic typing animations and syntax highlighting. Built in Rust with 3,400 stars, it transforms code changes into visual storytelling."
+    },
+    {
+        "id": "p8",
+        "name": "tsfile",
+        "github_url": "https://github.com/apache/tsfile",
+        "script_text": "Apache TSFile is a columnar storage format for time-series data. Built in Java for IoT and big data applications, it offers efficient compression and fast queries. With 170 stars, it's a solid choice for time-series workloads."
+    },
+    {
+        "id": "p9",
+        "name": "requestly",
+        "github_url": "https://github.com/requestly/requestly",
+        "script_text": "Requestly is a free, open-source API client and interceptor. Modify HTTP requests, create API mocks in seconds, and debug faster with sessions. With 5,600 stars, it's an essential tool for frontend developers."
+    },
+    {
+        "id": "p10",
+        "name": "vuefinder",
+        "github_url": "https://github.com/n1crack/vuefinder",
+        "script_text": "VueFinder is a sleek file manager component for Vue. Organize, preview, and manage files with a beautiful interface. Connect to any storage like S3 or local. With 515 stars, it's perfect for building cloud file explorers."
+    },
+    {
+        "id": "p11",
+        "name": "flowglad",
+        "github_url": "https://github.com/flowglad/flowglad",
+        "script_text": "Flowglad is a zero-webhook payment provider. No more subscription tables, webhooks, or price ID variables. Built with TypeScript and Next.js, it has 1,400 stars and makes internet payments incredibly simple."
+    },
+    {
+        "id": "p12",
+        "name": "aws-lambda-roadmap",
+        "github_url": "https://github.com/aws/aws-lambda-roadmap",
+        "script_text": "The AWS Lambda Roadmap is the public roadmap for AWS Lambda. See what's coming next and give direct feedback to the AWS team. With 167 stars, it's essential for serverless developers planning their infrastructure."
+    }
+]

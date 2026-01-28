@@ -150,5 +150,304 @@
       "timestamp": "2026-01-09T20:42:49.116791"
     },
     "timestamp": "2026-01-09T20:42:49.116803"
+  },
+  "codebuffai/codebuff": {
+    "data": {
+      "owner": "codebuffai",
+      "repo": "codebuff",
+      "stars": 2700,
+      "forks": 344,
+      "language": "TypeScript",
+      "description": "Generate code from the terminal!",
+      "topics": [],
+      "url": "https://github.com/codebuffai/codebuff",
+      "timestamp": "2026-01-14T14:01:19.174525"
+    },
+    "timestamp": "2026-01-14T14:01:19.174536"
+  },
+  "aws/aws-lambda-roadmap": {
+    "data": {
+      "owner": "aws",
+      "repo": "aws-lambda-roadmap",
+      "stars": 181,
+      "forks": 4,
+      "language": null,
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/aws/aws-lambda-roadmap",
+      "timestamp": "2026-01-23T10:53:15.545651"
+    },
+    "timestamp": "2026-01-23T10:53:15.545661"
+  },
+  "arpxspace/smartcommit": {
+    "data": {
+      "owner": "arpxspace",
+      "repo": "smartcommit",
+      "stars": 237,
+      "forks": 6,
+      "language": "Go",
+      "description": "Enforce the habit of self-documenting code through better commit messages.",
+      "topics": [
+        "commit",
+        "git"
+      ],
+      "url": "https://github.com/arpxspace/smartcommit",
+      "timestamp": "2026-01-23T12:22:04.359086"
+    },
+    "timestamp": "2026-01-23T12:22:04.359096"
+  },
+  "Fission-AI/OpenSpec": {
+    "data": {
+      "owner": "Fission-AI",
+      "repo": "OpenSpec",
+      "stars": 19284,
+      "forks": 1292,
+      "language": "TypeScript",
+      "description": "Spec-driven development (SDD) for AI coding assistants.",
+      "topics": [
+        "ai",
+        "context-engineering",
+        "engineering",
+        "planning"
+      ],
+      "url": "https://github.com/Fission-AI/OpenSpec",
+      "timestamp": "2026-01-23T12:24:57.878325"
+    },
+    "timestamp": "2026-01-23T12:24:57.878338"
+  },
+  "Nagi-ovo/gemini-voyager": {
+    "data": {
+      "owner": "Nagi-ovo",
+      "repo": "gemini-voyager",
+      "stars": 3469,
+      "forks": 109,
+      "language": "TypeScript",
+      "description": "An all-in-one enhancement suite for Google Gemini - timeline navigation, folder management, prompt library, and chat export in one powerful extension.",
+      "topics": [
+        "ai-studio",
+        "bun",
+        "chat-management",
+        "chrome-extension"
+      ],
+      "url": "https://github.com/Nagi-ovo/gemini-voyager",
+      "timestamp": "2026-01-26T14:29:29.735995"
+    },
+    "timestamp": "2026-01-26T14:29:29.735999"
+  },
+  "clawdbot/clawdbot": {
+    "data": {
+      "owner": "clawdbot",
+      "repo": "clawdbot",
+      "stars": 44442,
+      "forks": 5189,
+      "language": "TypeScript",
+      "description": "Your own personal AI assistant. Any OS. Any Platform. The lobster way. \ud83e\udd9e ",
+      "topics": [
+        "ai",
+        "assistant",
+        "clawd",
+        "crustacean"
+      ],
+      "url": "https://github.com/clawdbot/clawdbot",
+      "timestamp": "2026-01-26T14:45:53.515438"
+    },
+    "timestamp": "2026-01-26T14:45:53.515441"
+  },
+  "remotion-dev/skills": {
+    "data": {
+      "owner": "remotion-dev",
+      "repo": "skills",
+      "stars": 935,
+      "forks": 102,
+      "language": "TypeScript",
+      "description": "Agent Skills",
+      "topics": [],
+      "url": "https://github.com/remotion-dev/skills",
+      "timestamp": "2026-01-26T15:13:27.590931"
+    },
+    "timestamp": "2026-01-26T15:13:27.590943"
+  },
+  "iOfficeAI/AionUi": {
+    "data": {
+      "owner": "iOfficeAI",
+      "repo": "AionUi",
+      "stars": 11583,
+      "forks": 877,
+      "language": "TypeScript",
+      "description": "Free, local, open-source 24/7 Cowork and Clawdbot for Gemini CLI, Claude Code, Codex, OpenCode, Qwen Code, Goose CLI, Auggie, and more | \ud83c\udf1f Star if you like it!",
+      "topics": [
+        "acp",
+        "ai",
+        "ai-agent",
+        "assistant"
+      ],
+      "url": "https://github.com/iOfficeAI/AionUi",
+      "timestamp": "2026-01-28T12:31:02.668630"
+    },
+    "timestamp": "2026-01-28T12:31:02.668643"
+  },
+  "thedotmack/claude-mem": {
+    "data": {
+      "owner": "thedotmack",
+      "repo": "claude-mem",
+      "stars": 15304,
+      "forks": 1065,
+      "language": "TypeScript",
+      "description": "A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into future sessions.",
+      "topics": [
+        "ai",
+        "ai-agents",
+        "ai-memory",
+        "anthropic"
+      ],
+      "url": "https://github.com/thedotmack/claude-mem",
+      "timestamp": "2026-01-28T13:40:37.116230"
+    },
+    "timestamp": "2026-01-28T13:40:37.116241"
+  },
+  "steveyegge/beads": {
+    "data": {
+      "owner": "steveyegge",
+      "repo": "beads",
+      "stars": 13391,
+      "forks": 804,
+      "language": "Go",
+      "description": "Beads - A memory upgrade for your coding agent",
+      "topics": [
+        "agents",
+        "claude-code",
+        "coding"
+      ],
+      "url": "https://github.com/steveyegge/beads",
+      "timestamp": "2026-01-28T13:41:13.681089"
+    },
+    "timestamp": "2026-01-28T13:41:13.681102"
+  },
+  "kubernetes-sigs/headlamp": {
+    "data": {
+      "owner": "kubernetes-sigs",
+      "repo": "headlamp",
+      "stars": 5519,
+      "forks": 552,
+      "language": "TypeScript",
+      "description": "A Kubernetes web UI that is fully-featured, user-friendly and extensible",
+      "topics": [
+        "cloud-native",
+        "dashboard",
+        "debugging",
+        "devops"
+      ],
+      "url": "https://github.com/kubernetes-sigs/headlamp",
+      "timestamp": "2026-01-28T13:42:04.391708"
+    },
+    "timestamp": "2026-01-28T13:42:04.391728"
+  },
+  "DayuanJiang/next-ai-draw-io": {
+    "data": {
+      "owner": "DayuanJiang",
+      "repo": "next-ai-draw-io",
+      "stars": 20092,
+      "forks": 2099,
+      "language": "TypeScript",
+      "description": "A next.js web application that integrates AI capabilities with draw.io diagrams. This app allows you to create, modify, and enhance diagrams through natural language commands and AI-assisted visualization.",
+      "topics": [
+        "ai",
+        "diagrams",
+        "productivity"
+      ],
+      "url": "https://github.com/DayuanJiang/next-ai-draw-io",
+      "timestamp": "2026-01-28T13:42:49.741211"
+    },
+    "timestamp": "2026-01-28T13:42:49.741240"
+  },
+  "C4illin/ConvertX": {
+    "data": {
+      "owner": "C4illin",
+      "repo": "ConvertX",
+      "stars": 15551,
+      "forks": 852,
+      "language": "TypeScript",
+      "description": "\ud83d\udcbe Self-hosted online file converter. Supports 1000+ formats \u2699\ufe0f",
+      "topics": [
+        "bun",
+        "conversion",
+        "convert",
+        "converter"
+      ],
+      "url": "https://github.com/C4illin/ConvertX",
+      "timestamp": "2026-01-28T13:43:38.254311"
+    },
+    "timestamp": "2026-01-28T13:43:38.254322"
+  },
+  "njbrake/agent-of-empires": {
+    "data": {
+      "owner": "njbrake",
+      "repo": "agent-of-empires",
+      "stars": 508,
+      "forks": 20,
+      "language": "Rust",
+      "description": "Claude Code, OpenCode, Mistral Vibe, Codex CLI, Gemini CLI Coding Agent Terminal Session manager via tmux and git Worktrees",
+      "topics": [
+        "ai-coding",
+        "claude",
+        "claude-code",
+        "cli"
+      ],
+      "url": "https://github.com/njbrake/agent-of-empires",
+      "timestamp": "2026-01-28T13:44:16.972495"
+    },
+    "timestamp": "2026-01-28T13:44:16.972511"
+  },
+  "Tencent/WeKnora": {
+    "data": {
+      "owner": "Tencent",
+      "repo": "WeKnora",
+      "stars": 12584,
+      "forks": 1417,
+      "language": "Go",
+      "description": "LLM-powered framework for deep document understanding, semantic retrieval, and context-aware answers using RAG paradigm.",
+      "topics": [
+        "agent",
+        "agentic",
+        "ai",
+        "chatbot"
+      ],
+      "url": "https://github.com/Tencent/WeKnora",
+      "timestamp": "2026-01-28T13:45:18.065926"
+    },
+    "timestamp": "2026-01-28T13:45:18.065937"
+  },
+  "sinelaw/fresh": {
+    "data": {
+      "owner": "sinelaw",
+      "repo": "fresh",
+      "stars": 5465,
+      "forks": 192,
+      "language": "Rust",
+      "description": "Text editor for your terminal: easy, powerful and fast",
+      "topics": [],
+      "url": "https://github.com/sinelaw/fresh",
+      "timestamp": "2026-01-28T13:45:59.189941"
+    },
+    "timestamp": "2026-01-28T13:45:59.189957"
+  },
+  "swark-io/swark": {
+    "data": {
+      "owner": "swark-io",
+      "repo": "swark",
+      "stars": 1580,
+      "forks": 98,
+      "language": "TypeScript",
+      "description": "Create architecture diagrams from code automatically using large language models (LLMs).",
+      "topics": [
+        "architecture",
+        "developer-tools",
+        "language-model",
+        "llm"
+      ],
+      "url": "https://github.com/swark-io/swark",
+      "timestamp": "2026-01-28T13:46:46.961224"
+    },
+    "timestamp": "2026-01-28T13:46:46.961236"
   }
 }

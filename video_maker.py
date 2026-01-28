@@ -14,8 +14,8 @@ with open('config.json', 'r') as f:
 OUTPUT_FOLDER = "assets"
 DATA_FILE = "posts_data.json"
 # Generate filename with current date: github_roundup_dec10.mp4
-# current_date = datetime.now().strftime("%b%d").lower()
-FINAL_VIDEO_NAME = "github_roundup_jan10.mp4"
+current_date = datetime.now().strftime("%b%d").lower()
+FINAL_VIDEO_NAME = f"github_roundup_{current_date}.mp4"
 
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 

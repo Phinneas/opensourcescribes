@@ -1,0 +1,8 @@
+[
+    {
+        "id": "remotion_dev_skills",
+        "name": "skills",
+        "github_url": "https://github.com/remotion-dev/skills",
+        "script_text": "skills is a TypeScript-based project that agent skills. This is an internal package and has no documentation. Built with TypeScript, it leverages the language's strengths to deliver robust performance. Developers can integrate skills into their workflows to solve complex technical challenges more efficiently. Check out skills if you're working in this space."
+    }
+]

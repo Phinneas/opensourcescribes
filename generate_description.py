@@ -2,6 +2,7 @@ import json
 import os
 import subprocess
 import datetime
+import re
 
 def get_duration(filepath):
     """Get duration of a video file in seconds using ffprobe"""
@@ -30,14 +31,19 @@ def generate_description():
     """Generate YouTube description from posts_data.json and video assets"""
     
     # Load project data
-    if not os.path.exists('posts_data.json'):
-        print("❌ posts_data.json not found")
+    data_file = 'posts_data_longform.json'
+    if not os.path.exists(data_file):
+        print(f"ℹ️  {data_file} not found, falling back to posts_data.json")
+        data_file = 'posts_data.json'
+        
+    if not os.path.exists(data_file):
+        print(f"❌ {data_file} not found")
         return
 
-    with open('posts_data.json', 'r') as f:
+    with open(data_file, 'r') as f:
         projects = json.load(f)
         
-    print(f"found {len(projects)} projects")
+    print(f"found {len(projects)} projects from {data_file}")
 
     # Start constructing description
     output = []
@@ -49,6 +55,7 @@ def generate_description():
     output.append("In this episode of Open Source Scribes, we uncover incredible open source tools that will supercharge your development workflow. From new frameworks to essential dev tools, here are the hidden gems of GitHub you should know about.")
     output.append("")
     output.append(f"🔥 **Subscribe for more open source discoveries:** https://youtube.com/@opensourcescribes?sub_confirmation=1")
+    output.append(f"📝 **Read more on Medium:** https://medium.com/sourcescribes")
     output.append("")
     output.append("---")
     output.append("")
@@ -78,11 +85,8 @@ def generate_description():
         output.append("")
         
         # Get audio duration for this project
-        # ID is usually in posts_data, or we construct it?
-        # simple_parser saves 'id' in posts_data.json
-        project_id = project.get('id', '')
+        project_id = project.get('id')
         if not project_id:
-             # Fallback logic from video_maker if ID missing (shouldn't happen with current parser)
              safe_id = re.sub(r'[^a-zA-Z0-9]', '_', project['name']).lower()
              project_id = safe_id
              
@@ -92,7 +96,7 @@ def generate_description():
         # Add duration to current time
         current_time += seg_dur
         
-        # Check for mid-roll subscribe
+        # Check for mid-roll subscribe logic (aligned with video_suite.py)
         if i == midpoint - 1:
             sub_path = "assets/subscribe_audio.mp3"
             sub_dur = get_duration(sub_path)
@@ -115,10 +119,18 @@ def generate_description():
     # Write to file
     final_content = "\n".join(output)
     
-    with open('YOUTUBE_DESCRIPTION.md', 'w') as f:
+    # Use organized delivery structure (MM-DD format)
+    current_date_mmdd = datetime.datetime.now().strftime("%m-%d")
+    delivery_folder = os.path.join("deliveries", current_date_mmdd)
+    output_path = os.path.join(delivery_folder, 'YOUTUBE_DESCRIPTION.md')
+    
+    # Ensure folder exists
+    os.makedirs(delivery_folder, exist_ok=True)
+    
+    with open(output_path, 'w') as f:
         f.write(final_content)
         
-    print("\n✅ Generated YOUTUBE_DESCRIPTION.md")
+    print(f"\n✅ Generated {output_path}")
     print("-" * 40)
     print(final_content)
     print("-" * 40)

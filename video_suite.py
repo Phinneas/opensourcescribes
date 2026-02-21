@@ -1,6 +1,7 @@
 """
 Integrated Video Suite
 Creates a full GitHub roundup video AND custom YouTube Shorts based on user selection.
+Enhanced with MiniMax integration for dynamic content and scrolling animations.
 """
 
 import os
@@ -11,10 +12,20 @@ import random
 from datetime import datetime
 from pathlib import Path
 from gtts import gTTS
+from typing import Optional, Dict
 
 # Load configuration
 with open('config.json', 'r') as f:
     CONFIG = json.load(f)
+
+# Import enhanced modules
+try:
+    from minimax_integration import get_minimax_generator
+    from github_page_capture import GitHubPageCapture
+    MINIMAX_AVAILABLE = True
+except ImportError:
+    MINIMAX_AVAILABLE = False
+    print("⚠️  MiniMax modules not available - using static graphics only")
 
 # Directories
 OUTPUT_FOLDER = "assets"
@@ -47,6 +58,9 @@ class VideoSuite:
         self.projects = []
         self.shorts_selection = []
         self.deep_dive_selection = []
+        self.use_minimax = CONFIG.get('video_settings', {}).get('use_minimax', True)
+        self.minimax_generator = get_minimax_generator() if MINIMAX_AVAILABLE else None
+        self.github_capture = GitHubPageCapture() if MINIMAX_AVAILABLE else None
         
     def load_projects(self):
         """Load projects from posts_data.json"""
@@ -127,13 +141,14 @@ class VideoSuite:
                 print("❌ Invalid input. Skipping Deep Dives.")
                 
     async def prepare_assets(self):
-        """Generate graphics and audio for projects"""
+        """Generate graphics and audio for projects with MiniMax enhancement"""
         from branding import create_intro_card, create_outro_card
         
         tasks = []
         
-        # 1. Prepare Main Video Assets (Horizontal)
+        # 1. Prepare Main Video Assets (with MiniMax if available)
         print(f"\n🎨 Generating Main Video Assets (Horizontal)...")
+        
         for project in self.projects:
             # Paths
             img_path = Path(OUTPUT_FOLDER) / f"{project['id']}_screen.png"
@@ -145,6 +160,15 @@ class VideoSuite:
             # Generate Audio (if not exists)
             self.generate_audio(project['script_text'], str(audio_path))
             
+            # Try MiniMax enhancement first
+            if self.use_minimax and self.minimax_generator and self.minimax_generator.enabled:
+                minimax_video = await self.generate_minimax_enhancement(project)
+                if minimax_video:
+                    project['enhanced_video'] = minimax_video
+                    print(f"   ✅ MiniMax enhanced video generated")
+                    continue
+            
+            # Fallback to static graphic
             # specific logic to not regenerate if exists? 
             # Handled inside create_project_graphic mostly, but let's be safe
             tasks.append(self.create_project_graphic(
@@ -340,16 +364,97 @@ class VideoSuite:
         # Save
         img.save(output_path)
 
+    async def generate_minimax_enhancement(self, project) -> Optional[str]:
+        """Generate MiniMax-enhanced video content for a project"""
+        if not self.use_minimax or not self.minimax_generator or not self.minimax_generator.enabled:
+            return None
+        
+        print(f"\n🎬 Generating MiniMax-enhanced video for {project['name']}...")
+        
+        try:
+            # Generate UI demonstration based on project
+            project_name = project['name']
+            description = project.get('script_text', '')
+            
+            # Create prompt for UI demo
+            ui_prompt = f"""A professional, smooth demonstration of {project_name}, which {description.lower()}, 
+            showing modern interface elements, animations, and interactive features. High quality rendering with 
+            cinematic camera movements revealing the application's capabilities."""
+            
+            # Generate video
+            video_path = Path(OUTPUT_FOLDER) / f"{project['id']}_minimax_enhanced.mp4"
+            
+            result = self.minimax_generator.generate_ui_demonstration(
+                ui_prompt,
+                str(video_path)
+            )
+            
+            return result
+            
+        except Exception as e:
+            print(f"⚠️  MiniMax enhancement failed: {e}")
+            return None
+
+    async def generate_captures_and_code_animations(self, project):
+        """Generate GitHub page captures and code animations for a project"""
+        if not self.github_capture:
+            return None
+        
+        print(f"\n🎬 Generating GitHub captures and code animations for {project['name']}...")
+        
+        try:
+            # Capture GitHub page scrolling
+            github_url = project['github_url']
+            captures = self.github_capture.capture_all_key_sections(github_url)
+            
+            project['github_captures'] = captures
+            print(f"   ✅ Captured {len(captures)} GitHub sections")
+            
+            # Generate code animation
+            if self.minimax_generator and self.minimax_generator.enabled:
+                # Find sample code from description
+                description = project.get('script_text', '')
+                # Extract potential code snippet or use placeholder
+                code_snippet = f"# {project['name']} implementation\nimport os\nfrom typing import List\n\ndef process_data(data: List[str]) -> List[str]:\n    # Process and transform data\n    return [d.upper() for d in data]"
+                
+                code_animation_path = Path(OUTPUT_FOLDER) / f"{project['id']}_code_animation.mp4"
+                
+                language = project.get('metadata', {}).get('language', 'python')
+                result = self.minimax_generator.generate_code_animation(
+                    code_snippet,
+                    language,
+                    str(code_animation_path)
+                )
+                
+                if result:
+                    project['code_animation'] = result
+                    print(f"   ✅ Generated code animation")
+            
+            return captures
+            
+        except Exception as e:
+            print(f"⚠️  Failed to generate captures/animations: {e}")
+            return None
+
     def create_segment(self, project, index, is_short=False):
         """Create video segment"""
         if is_short:
-            image_path = project['short_img_path']
+            image_path = project.get('short_img_path', project.get('img_path'))
             # Re-use audio from main video
             audio_path = project['audio_path']
             output_path = Path(SHORTS_FOLDER) / f"short_{project['id']}.mp4"
             print(f"🎬 Rendering Short: {project['name']}")
         else:
-            image_path = project['img_path']
+            # Check for enhanced video first
+            if 'enhanced_video' in project:
+                # Copy MiniMax-enhanced video as segment
+                enhanced_src = project['enhanced_video']
+                output_path = Path(OUTPUT_FOLDER) / f"segment_{index:03d}.mp4"
+                subprocess.run(['cp', enhanced_src, output_path], check=True)
+                print(f"🎬 Using enhanced video: {project['name']}")
+                return str(output_path)
+            
+            image_path = project.get('img_path')
             audio_path = project['audio_path']
             output_path = Path(OUTPUT_FOLDER) / f"segment_{index:03d}.mp4"
             print(f"🎬 Rendering Segment: {project['name']}")
@@ -419,7 +524,7 @@ class VideoSuite:
             
         print(f"✅ Created {len(self.shorts_selection)} Shorts in {SHORTS_FOLDER}/")
 
-    def generate_deep_dives(self):
+    async def generate_deep_dives(self):
         """Generate deep dive videos for selected projects"""
         if not self.deep_dive_selection:
             return
@@ -432,7 +537,7 @@ class VideoSuite:
             project_id = project['id']
             output_path = os.path.join(DEEP_DIVES_FOLDER, f"{project_id}_deep_dive.mp4")
             print(f"   Creating deep dive: {project['name']}")
-            create_single_project_video(project_id, output_path)
+            await create_single_project_video(project_id, output_path)
             
         print(f"✅ Created {len(self.deep_dive_selection)} Deep Dives in {DEEP_DIVES_FOLDER}/")
 
@@ -516,7 +621,7 @@ class VideoSuite:
         self.assemble_shorts()
         
         # 6. Generate Deep Dives
-        self.generate_deep_dives()
+        await self.generate_deep_dives()
         
         print("\n" + "="*60)
         print("✅ WORKFLOW COMPLETE")

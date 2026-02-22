@@ -143,42 +143,101 @@ class VideoSuiteAutomated:
         await asyncio.gather(*tasks)
 
     async def generate_minimax_enhancement(self, project) -> Optional[str]:
-        """Generate MiniMax-enhanced video content for a project"""
+        """Generate multiple MiniMax-enhanced clips for a project to fill the narration time without repetition"""
         if not self.use_minimax or not self.minimax_generator or not self.minimax_generator.enabled:
             return None
         
-        print(f"🎬 MiniMax enhancement: {project['name']}")
+        print(f"🎬 MiniMax enhancement (Multi-Segment Animation): {project['name']}")
         
         try:
-            # Generate UI demonstration based on project
-            project_name = project['name']
-            description = project.get('script_text', '')
+            final_video_path = Path(OUTPUT_FOLDER) / f"{project['id']}_minimax_enhanced.mp4"
             
-            # Create prompt for UI demo
-            ui_prompt = f"""[Static shot] A professional, smooth demonstration of {project_name}, which {description.lower()[:200]}, 
-            showing modern interface elements, animations, and interactive features. High quality rendering with 
-            cinematic camera movements revealing the application's capabilities."""
+            # 1. Take multiple screenshots of different page sections
+            project_url = project.get('github_url')
+            project_id = project['id']
             
-            # Generate video
-            video_path = Path(OUTPUT_FOLDER) / f"{project['id']}_minimax_enhanced.mp4"
+            print(f"   📸 Capturing multi-point walkthrough for: {project_url}")
+            if self.github_capture:
+                loop = asyncio.get_event_loop()
+                screenshot_paths = await loop.run_in_executor(
+                    None, 
+                    self.github_capture.take_multi_screenshots, 
+                    project_url, 
+                    project_id
+                )
+            else:
+                screenshot_paths = []
+
+            if not screenshot_paths:
+                print("   ⚠️  Screenshot capture failed, falling back to basic demo")
+                return self.minimax_generator.generate_ui_demonstration(
+                    f"A professional demonstration of {project['name']}.", 
+                    str(final_video_path)
+                )
+
+            # 2. Generate MiniMax videos for each screenshot with varying prompts
+            clip_paths = []
+            motions = [
+                "Smooth cinematic camera scroll down revealing features.",
+                "Slow pan across the interface showing technical details.",
+                "Tilt up shot revealing the bottom sections of the page."
+            ]
             
-            # Only generate if it doesn't exist
-            if os.path.exists(str(video_path)):
-                return str(video_path)
+            for i, (path, motion) in enumerate(zip(screenshot_paths, motions)):
+                segment_path = Path(OUTPUT_FOLDER) / f"{project_id}_enh_seg_{i}.mp4"
+                prompt = f"{motion} Modern high-quality rendering of {project['name']} interface."
                 
-            result = self.minimax_generator.generate_ui_demonstration(
-                ui_prompt,
-                str(video_path)
-            )
+                print(f"   🪄  Animating segment {i+1}/3...")
+                res = self.minimax_generator.generate_image_to_video(path, prompt, str(segment_path))
+                if res:
+                    clip_paths.append(res)
+
+            # 3. Concatenate clips if we have multiple
+            if len(clip_paths) > 1:
+                print(f"   🔗 Sequencing {len(clip_paths)} clips for {project['name']}...")
+                concat_list = Path(OUTPUT_FOLDER) / f"{project_id}_concat_list.txt"
+                with open(concat_list, 'w') as f:
+                    for clip in clip_paths:
+                        f.write(f"file '{clip}'\n")
+                
+                cmd = [
+                    'ffmpeg', '-y',
+                    '-f', 'concat', '-safe', '0',
+                    '-i', str(concat_list),
+                    '-c', 'copy',
+                    str(final_video_path)
+                ]
+                subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+                return str(final_video_path)
+            elif clip_paths:
+                return clip_paths[0]
             
-            return result
+            return None
             
         except Exception as e:
-            print(f"⚠️  MiniMax enhancement failed: {e}")
+            print(f"⚠️  MiniMax multi-enhancement failed: {e}")
+            import traceback
+            traceback.print_exc()
             return None
         
     def generate_audio(self, text, output_path):
         """Generate audio using Hume.ai or gTTS"""
+        
+        # Phonetic corrections for common technical terms/acronyms
+        pronunciation_map = {
+            "webmcp": "Web M C P",
+            "sqlite": "sequel lite",
+            "github": "git hub",
+            "substack": "sub stack",
+            "osmnx": "O S M N X"
+        }
+        
+        processed_text = text
+        for term, phonetic in pronunciation_map.items():
+            # Case insensitive replacement while preserving original punctuation context
+            import re
+            processed_text = re.sub(rf'\b{term}\b', phonetic, processed_text, flags=re.IGNORECASE)
+        
         if os.path.exists(output_path):
             return
 
@@ -192,7 +251,7 @@ class VideoSuiteAutomated:
                 client = HumeClient(api_key=CONFIG['hume_ai']['api_key'])
                 
                 audio_generator = client.tts.synthesize_file(
-                    utterances=[PostedUtterance(text=text)]
+                    utterances=[PostedUtterance(text=processed_text)]
                 )
                 
                 audio_chunks = []
@@ -210,8 +269,8 @@ class VideoSuiteAutomated:
                 print(f"⚠️  Hume.ai failed: {e}")
         
         # Fallback to gTTS
-        print(f"🎙️ gTTS: {text[:30]}...")
-        tts = gTTS(text=text, lang='en')
+        print(f"🎙️ gTTS: {processed_text[:30]}...")
+        tts = gTTS(text=processed_text, lang='en')
         tts.save(output_path)
         self.trim_audio_silence(output_path)
         return True
@@ -342,12 +401,27 @@ class VideoSuiteAutomated:
         else:
             # Check for enhanced video first
             if 'enhanced_video' in project:
-                # Copy MiniMax-enhanced video as segment
                 enhanced_src = project['enhanced_video']
+                audio_path = project['audio_path']
                 output_path = Path(OUTPUT_FOLDER) / f"segment_{index:03d}.mp4"
-                import shutil
-                shutil.copy2(enhanced_src, output_path)
-                print(f"🎬 Using enhanced video: {project['name']}")
+                
+                print(f"🎬 Merging audio with enhanced video: {project['name']}")
+                
+                # Combine video and audio, looping the video if narration is longer
+                cmd = [
+                    'ffmpeg', '-y',
+                    '-stream_loop', '-1',  # Loop input video
+                    '-i', enhanced_src,
+                    '-i', audio_path,
+                    '-c:v', 'libx264', '-preset', 'ultrafast',
+                    '-c:a', 'aac', '-b:a', '192k',
+                    '-pix_fmt', 'yuv420p',
+                    '-map', '0:v:0',      # Use video from first input
+                    '-map', '1:a:0',      # Use audio from second input
+                    '-shortest',          # Match duration to audio
+                    str(output_path)
+                ]
+                subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
                 return str(output_path)
                 
             image_path = project['img_path']

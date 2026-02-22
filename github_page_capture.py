@@ -39,27 +39,78 @@ class GitHubPageCapture:
             return False
     
     def capture_github_overview(self, github_url: str, output_path: str = None) -> Optional[str]:
-        """
-        Capture scrolling animation of GitHub repository overview
-        
-        Args:
-            github_url: GitHub repository URL
-            output_path: Where to save the video
-            
-        Returns:
-            Path to captured video or None if failed
-        """
+        """Capture scrolling animation of GitHub repository overview"""
         if not output_path:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             project_id = self._get_project_id_from_url(github_url)
             output_path = str(self.output_dir / f"{project_id}_overview_scroll.mp4")
         
-        print(f"🎬 Capturing GitHub overview scroll for: {github_url}")
+        print(f"🎬 Capturing page scroll for: {github_url}")
         
         if self.browser_available:
             return self._capture_with_selenium(github_url, output_path, capture_type='overview')
         else:
             return self._capture_with_webkit2png(github_url, output_path, capture_type='overview')
+
+    def take_screenshot(self, url: str, output_path: str, scroll_to: int = 0) -> bool:
+        """Take a single high-quality screenshot of a URL at a specific scroll position"""
+        try:
+            from selenium import webdriver
+            from selenium.webdriver.chrome.options import Options
+            
+            options = Options()
+            options.add_argument('--headless=new')
+            options.add_argument('--window-size=1920,1080')
+            
+            driver = webdriver.Chrome(options=options)
+            driver.get(url)
+            import time
+            time.sleep(3)
+            
+            if scroll_to > 0:
+                driver.execute_script(f"window.scrollTo(0, {scroll_to});")
+                time.sleep(1)
+                
+            driver.save_screenshot(output_path)
+            driver.quit()
+            return True
+        except Exception as e:
+            print(f"❌ Screenshot failed: {e}")
+            return False
+
+    def take_multi_screenshots(self, url: str, project_id: str) -> List[str]:
+        """Capture multiple points of interest on a page"""
+        try:
+            from selenium import webdriver
+            from selenium.webdriver.chrome.options import Options
+            
+            options = Options()
+            options.add_argument('--headless=new')
+            options.add_argument('--window-size=1920,1080')
+            
+            driver = webdriver.Chrome(options=options)
+            driver.get(url)
+            import time
+            time.sleep(3)
+            
+            # Get total height
+            total_height = driver.execute_script("return document.body.scrollHeight")
+            
+            # Define points (0%, 30%, 60%)
+            points = [0, int(total_height * 0.3), int(total_height * 0.6)]
+            screenshot_paths = []
+            
+            for i, pos in enumerate(points):
+                driver.execute_script(f"window.scrollTo(0, {pos});")
+                time.sleep(1)
+                path = str(self.output_dir / f"{project_id}_pos_{i}.png")
+                driver.save_screenshot(path)
+                screenshot_paths.append(path)
+                
+            driver.quit()
+            return screenshot_paths
+        except Exception as e:
+            print(f"❌ Multi-screenshot failed: {e}")
+            return []
     
     def capture_features_section(self, github_url: str, output_path: str = None) -> Optional[str]:
         """Capture scrolling animation of features section"""
@@ -180,13 +231,20 @@ class GitHubPageCapture:
         
         return results
     
-    def _get_project_id_from_url(self, github_url: str) -> str:
-        """Extract project ID from GitHub URL"""
-        match = re.search(r'github\.com/([^/]+)/([^/]+)', github_url)
-        if match:
-            owner, repo = match.groups()
-            return f"{owner}_{repo}".replace('-', '_')
-        return "unknown_project"
+    def _get_project_id_from_url(self, url: str) -> str:
+        """Extract project ID from any URL"""
+        if 'github.com' in url:
+            match = re.search(r'github\.com/([^/]+)/([^/]+)', url)
+            if match:
+                owner, repo = match.groups()
+                return f"{owner}_{repo}".replace('-', '_').replace('.', '_')
+        
+        # Generic URL handling
+        clean_url = url.replace('https://', '').replace('http://', '').strip('/')
+        parts = clean_url.split('/')
+        if len(parts) > 1:
+            return parts[-1].replace('-', '_').replace('.', '_')
+        return parts[0].replace('.', '_')
     
     def _capture_with_selenium(
         self, 

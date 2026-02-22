@@ -121,16 +121,7 @@ class MiniMaxVideoGenerator:
         duration: int = None
     ) -> Optional[str]:
         """
-        Generate video from image + prompt
-        
-        Args:
-            image_path: Path to input image
-            prompt: Text description of desired motion/animation
-            output_path: Where to save the video
-            duration: Video duration in seconds (must be 6 or 10)
-            
-        Returns:
-            Path to generated video or None if failed
+        Generate video by animating a starting image (i2v)
         """
         if not self.enabled:
             return None
@@ -138,22 +129,18 @@ class MiniMaxVideoGenerator:
         # Ensure duration is valid
         if duration is None:
             duration = self.default_duration
-        if duration not in self.supported_durations:
-            candidates = [d for d in self.supported_durations if d >= duration]
-            duration = min(candidates) if candidates else self.default_duration
-            print(f"⚠️  Duration adjusted to {duration}s")
             
-        print(f"🎬 Generating video from image: {image_path}")
-        print(f"   Prompt: {prompt[:50]}...")
-        print(f"   Duration: {duration}s, Resolution: 1080P")
+        print(f"🎬 Generating video from physical image: {image_path}")
         
         try:
-            # Upload image first (for image-to-video, though this API doesn't support i2v directly)
-            # For now, we'll just use text-to-video with the prompt
-            print("⚠️  Image-to-video not fully implemented, using text-to-video with enhanced prompt")
-            enhanced_prompt = f"[Static shot] {prompt}"
+            # 1. Convert image to Base64
+            import base64
+            with open(image_path, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
             
-            # Create video generation task
+            first_frame_data_url = f"data:image/png;base64,{encoded_string}"
+
+            # 2. Create the i2v task
             response = requests.post(
                 f"{self.base_url}/video_generation",
                 headers={
@@ -162,39 +149,33 @@ class MiniMaxVideoGenerator:
                 },
                 json={
                     "model": self.model,
-                    "prompt": enhanced_prompt,
+                    "prompt": prompt,
+                    "first_frame_image": first_frame_data_url,
                     "duration": duration,
                     "resolution": "1080P"
                 }
             )
             
             if response.status_code != 200:
-                print(f"❌ MiniMax API error: {response.text}")
+                print(f"❌ MiniMax i2v error: {response.text}")
                 return None
             
             task_data = response.json()
             task_id = task_data.get('task_id')
             
             if not task_id:
-                print("❌ No task ID returned from MiniMax")
                 return None
             
             print(f"   Task ID: {task_id}")
-            
-            # Poll for completion
             video_url = self._poll_task_completion(task_id)
             
             if video_url:
-                # Download video
                 self._download_video(video_url, output_path)
-                print(f"   ✅ Video saved to {output_path}")
                 return output_path
-            else:
-                print("❌ Video generation failed or timed out")
-                return None
+            return None
                 
         except Exception as e:
-            print(f"❌ Error generating image-to-video: {e}")
+            print(f"❌ Error in image-to-video: {e}")
             return None
     
     def generate_code_animation(self, code_snippet: str, language: str = "python", output_path: str = None) -> Optional[str]:
@@ -243,28 +224,6 @@ class MiniMaxVideoGenerator:
         
         return self.generate_text_to_video(prompt, output_path, duration=6)
     
-    def _upload_image(self, image_path: str) -> Optional[str]:
-        """Upload image to MiniMax and return URL"""
-        try:
-            with open(image_path, 'rb') as f:
-                response = requests.post(
-                    f"{self.base_url}/files/upload",
-                    headers={
-                        "Authorization": f"Bearer {self.api_key}"
-                    },
-                    files={'file': f}
-                )
-                
-            if response.status_code == 200:
-                data = response.json()
-                return data.get('url')
-            else:
-                print(f"❌ Image upload failed: {response.text}")
-                return None
-                
-        except Exception as e:
-            print(f"❌ Error uploading image: {e}")
-            return None
     
     def _poll_task_completion(self, task_id: str, max_wait: int = 300) -> Optional[str]:
         """Poll task status until complete"""

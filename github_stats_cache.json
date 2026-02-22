@@ -136,8 +136,8 @@
     "data": {
       "owner": "mountain-loop",
       "repo": "yaak",
-      "stars": 17365,
-      "forks": 671,
+      "stars": 17633,
+      "forks": 694,
       "language": "TypeScript",
       "description": "The most intuitive desktop API client. Organize and execute REST, GraphQL, WebSockets, Server Sent Events, and gRPC \ud83e\uddac",
       "topics": [
@@ -147,9 +147,9 @@
         "http"
       ],
       "url": "https://github.com/mountain-loop/yaak",
-      "timestamp": "2026-01-09T20:42:49.116791"
+      "timestamp": "2026-02-02T16:00:28.817566"
     },
-    "timestamp": "2026-01-09T20:42:49.116803"
+    "timestamp": "2026-02-02T16:00:28.817574"
   },
   "codebuffai/codebuff": {
     "data": {
@@ -309,8 +309,8 @@
     "data": {
       "owner": "steveyegge",
       "repo": "beads",
-      "stars": 13391,
-      "forks": 804,
+      "stars": 14430,
+      "forks": 858,
       "language": "Go",
       "description": "Beads - A memory upgrade for your coding agent",
       "topics": [
@@ -319,9 +319,9 @@
         "coding"
       ],
       "url": "https://github.com/steveyegge/beads",
-      "timestamp": "2026-01-28T13:41:13.681089"
+      "timestamp": "2026-02-02T20:07:12.780191"
     },
-    "timestamp": "2026-01-28T13:41:13.681102"
+    "timestamp": "2026-02-02T20:07:12.780198"
   },
   "kubernetes-sigs/headlamp": {
     "data": {
@@ -383,8 +383,8 @@
     "data": {
       "owner": "njbrake",
       "repo": "agent-of-empires",
-      "stars": 508,
-      "forks": 20,
+      "stars": 640,
+      "forks": 31,
       "language": "Rust",
       "description": "Claude Code, OpenCode, Mistral Vibe, Codex CLI, Gemini CLI Coding Agent Terminal Session manager via tmux and git Worktrees",
       "topics": [
@@ -394,9 +394,9 @@
         "cli"
       ],
       "url": "https://github.com/njbrake/agent-of-empires",
-      "timestamp": "2026-01-28T13:44:16.972495"
+      "timestamp": "2026-02-13T15:06:59.941860"
     },
-    "timestamp": "2026-01-28T13:44:16.972511"
+    "timestamp": "2026-02-13T15:06:59.941880"
   },
   "Tencent/WeKnora": {
     "data": {
@@ -435,8 +435,8 @@
     "data": {
       "owner": "swark-io",
       "repo": "swark",
-      "stars": 1580,
-      "forks": 98,
+      "stars": 1609,
+      "forks": 100,
       "language": "TypeScript",
       "description": "Create architecture diagrams from code automatically using large language models (LLMs).",
       "topics": [
@@ -446,8 +446,277 @@
         "llm"
       ],
       "url": "https://github.com/swark-io/swark",
-      "timestamp": "2026-01-28T13:46:46.961224"
+      "timestamp": "2026-02-13T15:07:08.655468"
     },
-    "timestamp": "2026-01-28T13:46:46.961236"
+    "timestamp": "2026-02-13T15:07:08.655487"
+  },
+  "fcavallarin/wirebrowser": {
+    "data": {
+      "owner": "fcavallarin",
+      "repo": "wirebrowser",
+      "stars": 464,
+      "forks": 13,
+      "language": "JavaScript",
+      "description": "Wirebrowser is an advanced debugging and inspection tool built on the Chrome DevTools Protocol, unifying network interception, API replay, automation, and deep runtime/memory analysis in a single workflow.",
+      "topics": [],
+      "url": "https://github.com/fcavallarin/wirebrowser",
+      "timestamp": "2026-02-02T15:44:12.588607"
+    },
+    "timestamp": "2026-02-02T15:44:12.588621"
+  },
+  "psviderski/uncloud": {
+    "data": {
+      "owner": "psviderski",
+      "repo": "uncloud",
+      "stars": 4594,
+      "forks": 120,
+      "language": "Go",
+      "description": "A lightweight tool for deploying and managing containerised applications across a network of Docker hosts. Bridging the gap between Docker and Kubernetes \u2728",
+      "topics": [
+        "containers",
+        "deployment",
+        "devops",
+        "docker"
+      ],
+      "url": "https://github.com/psviderski/uncloud",
+      "timestamp": "2026-02-02T20:08:43.653875"
+    },
+    "timestamp": "2026-02-02T20:08:43.653887"
+  },
+  "distil-labs/distil-text2sql": {
+    "data": {
+      "owner": "distil-labs",
+      "repo": "distil-text2sql",
+      "stars": 184,
+      "forks": 10,
+      "language": "Python",
+      "description": "Query your data in plain English with a fine-tuned Text2SQL model",
+      "topics": [],
+      "url": "https://github.com/distil-labs/distil-text2sql",
+      "timestamp": "2026-02-05T18:49:36.139406"
+    },
+    "timestamp": "2026-02-05T18:49:36.139419"
+  },
+  "DrSkyle/CloudSlash": {
+    "data": {
+      "owner": "DrSkyle",
+      "repo": "CloudSlash",
+      "stars": 131,
+      "forks": 8,
+      "language": "Go",
+      "description": "Local-first AWS forensic engine. Finds waste via dependency graph analysis and enables safe remediation with Terraform state restoration.",
+      "topics": [
+        "aws",
+        "cli",
+        "cost-optimization",
+        "finops"
+      ],
+      "url": "https://github.com/DrSkyle/CloudSlash",
+      "timestamp": "2026-02-05T18:55:14.842298"
+    },
+    "timestamp": "2026-02-05T18:55:14.842306"
+  },
+  "steveyegge/gastown": {
+    "data": {
+      "owner": "steveyegge",
+      "repo": "gastown",
+      "stars": 8412,
+      "forks": 651,
+      "language": "Go",
+      "description": "Gas Town - multi-agent workspace manager",
+      "topics": [],
+      "url": "https://github.com/steveyegge/gastown",
+      "timestamp": "2026-02-05T18:55:54.850032"
+    },
+    "timestamp": "2026-02-05T18:55:54.850057"
+  },
+  "plausible/community-edition": {
+    "data": {
+      "owner": "plausible",
+      "repo": "community-edition",
+      "stars": 2259,
+      "forks": 378,
+      "language": null,
+      "description": "Example Docker Compose setup for hosting Plausible Community Edition",
+      "topics": [],
+      "url": "https://github.com/plausible/community-edition",
+      "timestamp": "2026-02-12T18:09:43.668855"
+    },
+    "timestamp": "2026-02-12T18:09:43.668863"
+  },
+  "kagent-dev/kagent": {
+    "data": {
+      "owner": "kagent-dev",
+      "repo": "kagent",
+      "stars": 2187,
+      "forks": 401,
+      "language": "Go",
+      "description": "Cloud Native Agentic AI | Discord: https://bit.ly/kagentdiscord",
+      "topics": [
+        "agents",
+        "ai",
+        "cncf",
+        "devops"
+      ],
+      "url": "https://github.com/kagent-dev/kagent",
+      "timestamp": "2026-02-12T18:11:22.771964"
+    },
+    "timestamp": "2026-02-12T18:11:22.771978"
+  },
+  "databricks/dicer": {
+    "data": {
+      "owner": "databricks",
+      "repo": "dicer",
+      "stars": 237,
+      "forks": 20,
+      "language": "Scala",
+      "description": "Dicer auto-sharder: Infrastructure for building sharded services",
+      "topics": [],
+      "url": "https://github.com/databricks/dicer",
+      "timestamp": "2026-02-13T14:00:06.332987"
+    },
+    "timestamp": "2026-02-13T14:00:06.332999"
+  },
+  "puckeditor/puck": {
+    "data": {
+      "owner": "puckeditor",
+      "repo": "puck",
+      "stars": 12130,
+      "forks": 838,
+      "language": "TypeScript",
+      "description": "Create your own AI page builder",
+      "topics": [
+        "ai",
+        "builder",
+        "drag-and-drop",
+        "draganddrop"
+      ],
+      "url": "https://github.com/puckeditor/puck",
+      "timestamp": "2026-02-13T14:03:01.168252"
+    },
+    "timestamp": "2026-02-13T14:03:01.168267"
+  },
+  "facebookincubator/memlab": {
+    "data": {
+      "owner": "facebookincubator",
+      "repo": "memlab",
+      "stars": 4901,
+      "forks": 135,
+      "language": "JavaScript",
+      "description": "A framework for finding JavaScript memory leaks and analyzing heap snapshots",
+      "topics": [
+        "detector",
+        "e2e",
+        "facebook",
+        "heap"
+      ],
+      "url": "https://github.com/facebookincubator/memlab",
+      "timestamp": "2026-02-13T14:03:11.587603"
+    },
+    "timestamp": "2026-02-13T14:03:11.587618"
+  },
+  "OlaProeis/Ferrite": {
+    "data": {
+      "owner": "OlaProeis",
+      "repo": "Ferrite",
+      "stars": 1008,
+      "forks": 35,
+      "language": "Rust",
+      "description": "A fast, lightweight text editor for Markdown, JSON, YAML, and TOML files. Built with Rust and egui for a native, responsive experience.",
+      "topics": [
+        "cross-platform",
+        "editor",
+        "egui",
+        "json"
+      ],
+      "url": "https://github.com/OlaProeis/Ferrite",
+      "timestamp": "2026-02-13T14:03:20.761048"
+    },
+    "timestamp": "2026-02-13T14:03:20.761059"
+  },
+  "bolt-foundry/gambit": {
+    "data": {
+      "owner": "bolt-foundry",
+      "repo": "gambit",
+      "stars": 195,
+      "forks": 12,
+      "language": "TypeScript",
+      "description": "Agent harness framework for building, running, and verifying LLM workflows",
+      "topics": [],
+      "url": "https://github.com/bolt-foundry/gambit",
+      "timestamp": "2026-02-13T15:00:49.767518"
+    },
+    "timestamp": "2026-02-13T15:00:49.767535"
+  },
+  "marcoaapfortes/Mantic.sh": {
+    "data": {
+      "owner": "marcoaapfortes",
+      "repo": "Mantic.sh",
+      "stars": 539,
+      "forks": 24,
+      "language": "TypeScript",
+      "description": "A structural code search engine for Al agents.",
+      "topics": [
+        "ai-agent",
+        "claude",
+        "code-search",
+        "context-retrieval"
+      ],
+      "url": "https://github.com/marcoaapfortes/Mantic.sh",
+      "timestamp": "2026-02-20T20:53:37.869279"
+    },
+    "timestamp": "2026-02-20T20:53:37.869289"
+  },
+  "agrinman/tunnelto": {
+    "data": {
+      "owner": "agrinman",
+      "repo": "tunnelto",
+      "stars": 5831,
+      "forks": 441,
+      "language": "Rust",
+      "description": "Expose your local web server to the internet with a public URL.",
+      "topics": [
+        "async-io",
+        "expose",
+        "localhost",
+        "rust"
+      ],
+      "url": "https://github.com/agrinman/tunnelto",
+      "timestamp": "2026-02-20T20:56:32.955824"
+    },
+    "timestamp": "2026-02-20T20:56:32.955839"
+  },
+  "asg017/sqlite-dist": {
+    "data": {
+      "owner": "asg017",
+      "repo": "sqlite-dist",
+      "stars": 17,
+      "forks": 7,
+      "language": "Rust",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/asg017/sqlite-dist",
+      "timestamp": "2026-02-20T20:56:41.922491"
+    },
+    "timestamp": "2026-02-20T20:56:41.922509"
+  },
+  "gboeing/osmnx": {
+    "data": {
+      "owner": "gboeing",
+      "repo": "osmnx",
+      "stars": 5575,
+      "forks": 860,
+      "language": "Python",
+      "description": "Download, model, analyze, and visualize street networks and other geospatial features from OpenStreetMap.",
+      "topics": [
+        "geography",
+        "geospatial",
+        "gis",
+        "mapping"
+      ],
+      "url": "https://github.com/gboeing/osmnx",
+      "timestamp": "2026-02-20T20:56:48.287652"
+    },
+    "timestamp": "2026-02-20T20:56:48.287669"
   }
 }

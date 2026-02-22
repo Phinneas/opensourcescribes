@@ -263,7 +263,7 @@ def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     # 4. Technical details
     tech_details = []
     if language and language != 'Unknown':
-        tech_details.append(f"Built with {language}, it leverages the language's strengths to deliver robust performance")
+        tech_details.append(f"Built with {language}, it leverages the language's strengths to deliver reliable performance")
     
     # Forks removed per user request (displayed on screen)
     # if forks > 50:
@@ -280,7 +280,7 @@ def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     use_case = f"Developers can integrate {name} into their workflows to"
     description_lower = description.lower() if description else ''
     if 'api' in name.lower() or 'api' in description_lower:
-        use_case += " build robust APIs and backend services."
+        use_case += " build high-performance APIs and backend services."
     elif 'ui' in name.lower() or 'component' in description_lower:
         use_case += " create polished user interfaces and interactive components."
     elif 'data' in description_lower or 'database' in description_lower:
@@ -335,7 +335,15 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         # Check for API key
         api_key = os.getenv('ANTHROPIC_API_KEY')
         if not api_key:
-            print("⚠️  ANTHROPIC_API_KEY not set, using template fallback")
+            try:
+                with open('config.json', 'r') as f:
+                    config = json.load(f)
+                api_key = config.get('anthropic', {}).get('api_key')
+            except:
+                pass
+                
+        if not api_key:
+            print("⚠️  ANTHROPIC_API_KEY not set and not in config.json, using template fallback")
             return None
         
         client = anthropic.Anthropic(api_key=api_key)
@@ -350,7 +358,7 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         readme_content = readme_content[:8000]
         
         prompt = f"""
-    Write a short, engaging video script (approx {TARGET_WORDS} words) for a YouTube video about this project:
+    Write a short, engineering-focused video script (approx {TARGET_WORDS} words) for a YouTube video about this project:
     
     Project Name: {repo_data['name']}
     Description: {repo_data['description']}
@@ -360,18 +368,19 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
     
     Requirements:
     1. Start immediately with what the project DOES. No "Hey guys" or intro.
-    2. Explain the key features and why it's useful.
-    3. Use a conversational, enthusiastic tone.
-    4. End with a short sentence on who should use it.
-    5. DO NOT mention specific star counts or fork counts.
-    6. DO NOT use emojis or special characters that break TTS.
-    7. KEEP IT UNDER {MAX_WORDS} WORDS.
+    2. Explain the technical utility and unique implementation.
+    3. Use a direct, informative tone. Avoid marketing hype.
+    4. End with a short sentence on the primary use case.
+    5. DO NOT use these words: Robust, Gems, Supercharge, Game changer, Dive in, Revolutionary, Unlock, Pique.
+    6. DO NOT mention specific star counts or fork counts.
+    7. DO NOT use emojis or special characters that break TTS.
+    8. KEEP IT UNDER {MAX_WORDS} WORDS.
     """
 
         print("🤖 Generating script with Claude...")
         
         message = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-3-5-sonnet-20240620",
             max_tokens=1024,
             messages=[
                 {"role": "user", "content": prompt}
@@ -466,8 +475,19 @@ def generate_from_url_list(filepath: str) -> list:
     print(f"📖 Reading URLs from: {filepath}")
     
     try:
+        urls = []
         with open(filepath, 'r') as f:
-            urls = [line.strip() for line in f if line.strip() and line.strip().startswith('http')]
+            for line in f:
+                url = line.strip()
+                if not url:
+                    continue
+                # Prepend https:// if missing
+                if not url.startswith('http'):
+                    if 'github.com' in url or '.' in url:
+                        url = 'https://' + url
+                    else:
+                        continue
+                urls.append(url)
     except FileNotFoundError:
         print(f"❌ File not found: {filepath}")
         return []
@@ -501,7 +521,24 @@ def generate_from_url_list(filepath: str) -> list:
             })
             print(f"✅ Added {result['name']} (ID: {safe_id})")
         else:
-            print(f"❌ Failed to process {url}")
+            print(f"⚠️  Failed to process {url}. Adding fallback entry.")
+            # Fallback entry to ensure it's not skipped in blogs/social
+            match = re.search(r'github\.com/([^/]+)/([^/]+)', url)
+            if match:
+                owner, repo = match.groups()
+                name = repo
+                safe_id = f"{owner}_{repo}".lower().replace('-', '_')
+            else:
+                name = url.split('/')[-1] or "Unknown Project"
+                safe_id = f"unknown_{i}"
+                
+            projects.append({
+                'id': safe_id,
+                'name': name,
+                'github_url': url,
+                'script_text': f"{name} is an interesting open source project found on GitHub. Check out the link to learn more about its features and implementation."
+            })
+            print(f"✅ Added fallback for {name} (ID: {safe_id})")
     
     return projects
 

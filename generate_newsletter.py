@@ -1,5 +1,5 @@
 """
-Generate Medium blog post from project data using Claude API
+Generate Substack/Newsletter post from project data using Claude API
 Processes projects individually to ensure none are skipped.
 """
 
@@ -15,23 +15,24 @@ CLICHE_FILTER = """
 Do NOT use: Robust, Gems, Hidden Gems, Supercharge, Dive in, Game changer, Revolutionary, Look no further, Unlock the potential, Elevate your workflow, Buckle up, Pique your interest, Treasure trove, Innovative, Cutting-edge, State of the art, Seamlessly integrate, Tired of X? Meet Y.
 
 ## ✍️ WRITING STYLE
-- Concrete over Abstract: No marketing fluff. Describe exactly what the code does.
-- Simple Tone: Write like a senior engineer explaining a tool to a teammate.
-- SHORT sentences (max 15 words). No run-ons.
+- ROI Focus: Explain how much time or effort this tool saves.
+- Direct Technical Analysis: Avoid marketing hype.
+- SHORT sentences (max 15 words). 
 """
 
-INTRO_PROMPT = """You are a technical writer for OpenSourceScribes. 
-Write a direct, engineering-focused INTRODUCTION for a Medium post titled: "{n_projects} Open-Source Projects for Your Dev Stack".
+EDITORIAL_PROMPT = """You are the lead editor for the OpenSourceScribes Newsletter. 
+Write a technical editorial for "The Scribe's Digest: {n_projects} Open Source Discoveries".
 
 {cliche_filter}
 
-## PROJECTS COVERED (STRICTLY FOLLOW THESE):
+## PROJECTS IN THIS EDITION (STRICTLY USE THESE):
 {project_summaries}
 
-Write ONLY the introduction (100-150 words). NO headers or special formatting symbols. Do not use '#' or '*'."""
+Write ONLY the editorial (150-200 words). NO headers or special formatting symbols. Do not use '#' or '*'.
+"""
 
-PROJECT_SECTION_PROMPT = """You are a technical writer for OpenSourceScribes.
-Write a technical section for a specific GitHub project.
+PROJECT_SECTION_PROMPT = """You are the lead editor for OpenSourceScribes.
+Write a technical curation section for this project.
 
 {cliche_filter}
 
@@ -42,22 +43,26 @@ Description: {description}
 
 ## FORMATTING RULES
 1. Title: Project: {name}
-2. Technical Description: 4-5 SHORT sentences explaining the utility.
-3. Technical Details: Exactly 3 plain text feature descriptions.
-4. Link: View on GitHub: {url}
-5. NO hashtags, headers, or asterisks (no #, **, or *). Use plain text only.
+2. The TL;DR: (One-sentence technical summary)
+3. Technical Utility: (2-3 sentences of analysis)
+4. Stack: (Primary Language/Tech)
+5. Link: View on GitHub: {url}
+6. NO hashtags, headers, or asterisks (no #, **, or *). Use plain text only.
 
-Write ONLY this section."""
+Write ONLY this section.
+"""
 
-OUTRO_PROMPT = """You are a technical writer for OpenSourceScribes. 
-Write the CONCLUSION and TECHNICAL TRENDS section.
+OUTRO_PROMPT = """You are the lead editor for OpenSourceScribes. 
+Write the technical closing sections.
 
 {cliche_filter}
 
-## PROJECTS COVERED
-{project_names}
+## TASK
+1. Implementation Pick: Highlight ONE tool from this list as the most practical for production: {project_names}.
+2. Closing: 1-2 sentences of practical advice.
+3. NO hashtags, headers, or asterisks formatting. Do not use '#' or '*'.
 
-Write ONLY this ending part (brief, technical, no hype). Do not use '#' or '*' symbols."""
+Write ONLY this ending part."""
 
 # --- FUNCTIONS ---
 
@@ -71,25 +76,20 @@ def get_client():
             api_key = config.get('anthropic', {}).get('api_key')
         except:
             pass
-    
     if not api_key:
         print("❌ Anthropic API key not found")
         return None
-    
     return anthropic.Anthropic(api_key=api_key)
 
 def load_projects():
     """Load project data from JSON"""
-    data_file = 'posts_data_longform.json'
+    data_file = 'posts_data.json'
     if not os.path.exists(data_file):
-        data_file = 'posts_data.json'
-        
+        data_file = 'posts_data_longform.json'
     if not os.path.exists(data_file):
         return None
-
     with open(data_file, 'r') as f:
-        projects = json.load(f)
-    return projects
+        return json.load(f)
 
 def call_claude(client, prompt, model="claude-3-haiku-20240307"):
     """Helper to call Claude API"""
@@ -104,8 +104,8 @@ def call_claude(client, prompt, model="claude-3-haiku-20240307"):
         print(f"⚠️ API Error: {e}")
         return ""
 
-def generate_full_post(projects):
-    """Generate post by assembling sections"""
+def generate_full_newsletter(projects):
+    """Generate newsletter by assembling sections"""
     client = get_client()
     if not client: return None
     
@@ -114,20 +114,22 @@ def generate_full_post(projects):
     
     full_content = []
     
-    # 1. Introduction
-    print(f"🖋️  Generating Introduction for {n_projects} projects...")
-    intro = call_claude(client, INTRO_PROMPT.format(
+    # Title
+    full_content.append(f"# The Scribe's Digest: {n_projects} Open Source Discoveries to Supercharge Your Week\n")
+    
+    # 1. Editorial
+    print(f"🖋️  Generating Newsletter Editorial...")
+    editorial = call_claude(client, EDITORIAL_PROMPT.format(
         n_projects=n_projects, 
         project_summaries=project_summaries, 
         cliche_filter=CLICHE_FILTER
     ))
-    full_content.append(f"# {n_projects} Open-Source Projects for Your Dev Stack\n")
-    full_content.append(intro)
+    full_content.append(editorial)
     full_content.append("\n---\n")
     
-    # 2. Project Sections (The Core Improvement)
+    # 2. Project Sections
     for i, project in enumerate(projects):
-        print(f"📦 [{i+1}/{n_projects}] Generating section for: {project['name']}...")
+        print(f"📦 [{i+1}/{n_projects}] Generating newsletter section for: {project['name']}...")
         section = call_claude(client, PROJECT_SECTION_PROMPT.format(
             name=project['name'],
             url=project['github_url'],
@@ -137,8 +139,8 @@ def generate_full_post(projects):
         full_content.append(section)
         full_content.append("\n---\n")
         
-    # 3. Conclusion
-    print("🏁 Generating Patterns & Conclusion...")
+    # 3. Outro
+    print("🏁 Generating Newsletter Outro...")
     outro = call_claude(client, OUTRO_PROMPT.format(project_names=project_summaries, cliche_filter=CLICHE_FILTER))
     full_content.append(outro)
     
@@ -149,12 +151,12 @@ def generate_full_post(projects):
     return clean_text
 
 def save_post(content):
-    """Save Medium post to delivery folder"""
+    """Save Newsletter to delivery folder"""
     current_date = os.environ.get("DELIVERY_DATE", datetime.datetime.now().strftime("%m-%d"))
     delivery_folder = os.path.join("deliveries", current_date)
     os.makedirs(delivery_folder, exist_ok=True)
     
-    output_path = os.path.join(delivery_folder, 'MEDIUM_POST.md')
+    output_path = os.path.join(delivery_folder, 'SUBSTACK_NEWSLETTER.txt')
     with open(output_path, 'w') as f:
         f.write(content)
     
@@ -167,15 +169,11 @@ def main():
         print("❌ No projects found to process")
         return
     
-    print(f"🚀 Starting Medium post generation for {len(projects)} projects...")
-    content = generate_full_post(projects)
+    print(f"🚀 Starting Newsletter generation for {len(projects)} projects...")
+    content = generate_full_newsletter(projects)
     
     if content:
         save_post(content)
-        # Show a snippet
-        print("\n" + "="*30 + " PREVIEW " + "="*30)
-        print(content[:500] + "...")
-        print("="*69)
 
 if __name__ == "__main__":
     main()

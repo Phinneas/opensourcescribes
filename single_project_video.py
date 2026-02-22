@@ -19,7 +19,7 @@ OUTPUT_FOLDER = "assets"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 # Organized delivery structure
-current_date_mmdd = datetime.now().strftime("%m-%d")
+current_date_mmdd = os.environ.get("DELIVERY_DATE", datetime.now().strftime("%m-%d"))
 DELIVERIES_ROOT = "deliveries"
 DEEP_DIVES_FOLDER = os.path.join(DELIVERIES_ROOT, current_date_mmdd, "deep_dives")
 os.makedirs(DEEP_DIVES_FOLDER, exist_ok=True)
@@ -139,8 +139,8 @@ def create_static_segment(image_path, duration, output_name, audio_path=None):
     subprocess.run(cmd, check=True, capture_output=True)
     return output_name
 
-def create_segment(project):
-    """Create video segment for a project"""
+async def create_segment(project):
+    """Create video segment for a project (async)"""
     project_id = project.get('id', 'project')
     project_name = project.get('name', 'Unknown')
     github_url = project.get('github_url', '')
@@ -160,7 +160,7 @@ def create_segment(project):
     
     # Generate graphic
     graphic_path = os.path.join(OUTPUT_FOLDER, f"{project_id}_graphic.png")
-    asyncio.run(create_project_visual(project_name, github_url, graphic_path))
+    await create_project_visual(project_name, github_url, graphic_path)
     
     # Create segment
     duration = get_audio_duration(audio_path)
@@ -176,8 +176,8 @@ def create_segment(project):
     subprocess.run(cmd, check=True, capture_output=True)
     return segment_name
 
-def create_single_project_video(project_id, output_filename=None):
-    """Create a focused video for a single project"""
+async def create_single_project_video(project_id, output_filename=None):
+    """Create a focused video for a single project (async)"""
     
     # Load project
     project = load_project_by_id(project_id)
@@ -217,7 +217,7 @@ def create_single_project_video(project_id, output_filename=None):
         segment_files.append(create_static_segment(intro_path, 0, "seg_intro_single.mp4", audio_path=intro_audio_path))
     
     # 2. Main project segment
-    segment_files.append(create_segment(project))
+    segment_files.append(await create_segment(project))
     
     # 3. Outro
     if os.path.exists(outro_path):
@@ -260,7 +260,7 @@ if __name__ == "__main__":
     project_id = "arpxspace_smartcommit"
     output_filename = "smartcommit_focused.mp4"
     
-    success = create_single_project_video(project_id, output_filename)
+    success = asyncio.run(create_single_project_video(project_id, output_filename))
     
     if success:
         print(f"\n🎉 Your SmartCommit video is ready!")

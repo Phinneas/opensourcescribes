@@ -1,5 +1,5 @@
 """
-Generate Medium blog post from project data using Claude API
+Generate Reddit post from project data using Claude API
 Processes projects individually to ensure none are skipped.
 """
 
@@ -15,23 +15,24 @@ CLICHE_FILTER = """
 Do NOT use: Robust, Gems, Hidden Gems, Supercharge, Dive in, Game changer, Revolutionary, Look no further, Unlock the potential, Elevate your workflow, Buckle up, Pique your interest, Treasure trove, Innovative, Cutting-edge, State of the art, Seamlessly integrate, Tired of X? Meet Y.
 
 ## ✍️ WRITING STYLE
-- Concrete over Abstract: No marketing fluff. Describe exactly what the code does.
-- Simple Tone: Write like a senior engineer explaining a tool to a teammate.
-- SHORT sentences (max 15 words). No run-ons.
+- Engineering Focus: No marketing "hype". Focus on utility and technical implementation.
+- Direct & Concise: Bullet points should be technical.
+- SHORT sentences (max 15 words). 
 """
 
-INTRO_PROMPT = """You are a technical writer for OpenSourceScribes. 
-Write a direct, engineering-focused INTRODUCTION for a Medium post titled: "{n_projects} Open-Source Projects for Your Dev Stack".
+INTRO_PROMPT = """You are a community manager for OpenSourceScribes. 
+Write a direct, helpful INTRODUCTION for a Reddit post titled "{n_projects} Trending Open-Source Projects ({month_year})".
 
 {cliche_filter}
 
-## PROJECTS COVERED (STRICTLY FOLLOW THESE):
+## PROJECTS IN THIS LIST (STRICTLY USE THESE):
 {project_summaries}
 
-Write ONLY the introduction (100-150 words). NO headers or special formatting symbols. Do not use '#' or '*'."""
+Write ONLY the introduction (50-100 words). NO headers or special formatting symbols. Do not use '#' or '*'.
+"""
 
-PROJECT_SECTION_PROMPT = """You are a technical writer for OpenSourceScribes.
-Write a technical section for a specific GitHub project.
+PROJECT_SECTION_PROMPT = """You are a community manager for OpenSourceScribes.
+Write a concise technical showcase for this project.
 
 {cliche_filter}
 
@@ -41,23 +42,30 @@ GitHub: {url}
 Description: {description}
 
 ## FORMATTING RULES
-1. Title: Project: {name}
-2. Technical Description: 4-5 SHORT sentences explaining the utility.
-3. Technical Details: Exactly 3 plain text feature descriptions.
-4. Link: View on GitHub: {url}
+1. Format: {name} - [Technical Purpose]
+2. Content: 2 SHORT sentences on utility and implementation.
+3. Repo: {url}
+4. NO labels like "Description:" or "Repo:".
 5. NO hashtags, headers, or asterisks (no #, **, or *). Use plain text only.
 
-Write ONLY this section."""
+Write ONLY this snippet.
+"""
 
-OUTRO_PROMPT = """You are a technical writer for OpenSourceScribes. 
-Write the CONCLUSION and TECHNICAL TRENDS section.
+OUTRO_PROMPT = """You are a community manager for OpenSourceScribes. 
+Write a short, direct outro.
 
 {cliche_filter}
 
-## PROJECTS COVERED
-{project_names}
+## PROJECTS COVERED:
+{project_summaries}
 
-Write ONLY this ending part (brief, technical, no hype). Do not use '#' or '*' symbols."""
+## TASK
+1. Ask for technical feedback or similar tools.
+2. Mention the YouTube channel "OpenSourceScribes" for walkthroughs.
+3. NO hashtags, headers, or asterisks formatting. Do not use '#' or '*'.
+
+Write ONLY the outro.
+"""
 
 # --- FUNCTIONS ---
 
@@ -80,9 +88,10 @@ def get_client():
 
 def load_projects():
     """Load project data from JSON"""
-    data_file = 'posts_data_longform.json'
+    # Prefer posts_data.json as the direct output of the URL parser
+    data_file = 'posts_data.json'
     if not os.path.exists(data_file):
-        data_file = 'posts_data.json'
+        data_file = 'posts_data_longform.json'
         
     if not os.path.exists(data_file):
         return None
@@ -96,7 +105,7 @@ def call_claude(client, prompt, model="claude-3-haiku-20240307"):
     try:
         message = client.messages.create(
             model=model,
-            max_tokens=2048,
+            max_tokens=1024,
             messages=[{"role": "user", "content": prompt}]
         )
         return message.content[0].text
@@ -109,25 +118,29 @@ def generate_full_post(projects):
     client = get_client()
     if not client: return None
     
-    project_summaries = "\n".join([f"- {p['name']}: {p.get('script_text', '')[:100]}..." for p in projects])
+    project_summaries = "\n".join([f"- {p['name']}: {p.get('script_text', '')[:80]}..." for p in projects])
     n_projects = len(projects)
+    month_year = datetime.datetime.now().strftime("%B %Y")
     
     full_content = []
     
+    # Header Title
+    full_content.append(f"# {n_projects} Trending Open-Source Projects ({month_year})\n")
+    
     # 1. Introduction
-    print(f"🖋️  Generating Introduction for {n_projects} projects...")
+    print(f"🖋️  Generating Reddit Intro...")
     intro = call_claude(client, INTRO_PROMPT.format(
         n_projects=n_projects, 
+        month_year=month_year, 
         project_summaries=project_summaries, 
         cliche_filter=CLICHE_FILTER
     ))
-    full_content.append(f"# {n_projects} Open-Source Projects for Your Dev Stack\n")
     full_content.append(intro)
-    full_content.append("\n---\n")
+    full_content.append("\n")
     
-    # 2. Project Sections (The Core Improvement)
+    # 2. Project Sections
     for i, project in enumerate(projects):
-        print(f"📦 [{i+1}/{n_projects}] Generating section for: {project['name']}...")
+        print(f"📦 [{i+1}/{n_projects}] Generating Reddit snippet for: {project['name']}...")
         section = call_claude(client, PROJECT_SECTION_PROMPT.format(
             name=project['name'],
             url=project['github_url'],
@@ -135,11 +148,11 @@ def generate_full_post(projects):
             cliche_filter=CLICHE_FILTER
         ))
         full_content.append(section)
-        full_content.append("\n---\n")
+        full_content.append("\n")
         
     # 3. Conclusion
-    print("🏁 Generating Patterns & Conclusion...")
-    outro = call_claude(client, OUTRO_PROMPT.format(project_names=project_summaries, cliche_filter=CLICHE_FILTER))
+    print("🏁 Generating Reddit Outro...")
+    outro = call_claude(client, OUTRO_PROMPT.format(project_summaries=project_summaries, cliche_filter=CLICHE_FILTER))
     full_content.append(outro)
     
     # 4. Final Cleanup: Remove any lingering hashtags or asterisks
@@ -149,12 +162,12 @@ def generate_full_post(projects):
     return clean_text
 
 def save_post(content):
-    """Save Medium post to delivery folder"""
+    """Save Reddit post to delivery folder"""
     current_date = os.environ.get("DELIVERY_DATE", datetime.datetime.now().strftime("%m-%d"))
     delivery_folder = os.path.join("deliveries", current_date)
     os.makedirs(delivery_folder, exist_ok=True)
     
-    output_path = os.path.join(delivery_folder, 'MEDIUM_POST.md')
+    output_path = os.path.join(delivery_folder, 'REDDIT_POST.md')
     with open(output_path, 'w') as f:
         f.write(content)
     
@@ -167,15 +180,11 @@ def main():
         print("❌ No projects found to process")
         return
     
-    print(f"🚀 Starting Medium post generation for {len(projects)} projects...")
+    print(f"🚀 Starting Reddit post generation for {len(projects)} projects...")
     content = generate_full_post(projects)
     
     if content:
         save_post(content)
-        # Show a snippet
-        print("\n" + "="*30 + " PREVIEW " + "="*30)
-        print(content[:500] + "...")
-        print("="*69)
 
 if __name__ == "__main__":
     main()

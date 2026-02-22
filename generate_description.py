@@ -30,11 +30,11 @@ def format_timestamp(seconds):
 def generate_description():
     """Generate YouTube description from posts_data.json and video assets"""
     
-    # Load project data
-    data_file = 'posts_data_longform.json'
+    # Load project data - use current generated data by default
+    data_file = 'posts_data.json'
     if not os.path.exists(data_file):
-        print(f"ℹ️  {data_file} not found, falling back to posts_data.json")
-        data_file = 'posts_data.json'
+        print(f"ℹ️  {data_file} not found, falling back to posts_data_longform.json")
+        data_file = 'posts_data_longform.json'
         
     if not os.path.exists(data_file):
         print(f"❌ {data_file} not found")
@@ -52,10 +52,10 @@ def generate_description():
     today = datetime.date.today().strftime("%b %Y")
     output.append(f"# {len(projects)} Trending Open Source Projects ({today})")
     output.append("")
-    output.append("In this episode of Open Source Scribes, we uncover incredible open source tools that will supercharge your development workflow. From new frameworks to essential dev tools, here are the hidden gems of GitHub you should know about.")
+    output.append("In this episode of Open Source Scribes, we explore a collection of open source tools designed to improve development efficiency. From infrastructure automation to new frameworks, here are the latest repositories from GitHub covered in today's roundup.")
     output.append("")
-    output.append(f"🔥 **Subscribe for more open source discoveries:** https://youtube.com/@opensourcescribes?sub_confirmation=1")
-    output.append(f"📝 **Read more on Medium:** https://medium.com/sourcescribes")
+    output.append(f"Subscribe for technical walkthroughs of new open source repositories: https://youtube.com/@opensourcescribes?sub_confirmation=1")
+    output.append(f"Read the full technical breakdown on Medium: https://medium.com/sourcescribes")
     output.append("")
     output.append("---")
     output.append("")
@@ -120,7 +120,7 @@ def generate_description():
     final_content = "\n".join(output)
     
     # Use organized delivery structure (MM-DD format)
-    current_date_mmdd = datetime.datetime.now().strftime("%m-%d")
+    current_date_mmdd = os.environ.get("DELIVERY_DATE", datetime.datetime.now().strftime("%m-%d"))
     delivery_folder = os.path.join("deliveries", current_date_mmdd)
     output_path = os.path.join(delivery_folder, 'YOUTUBE_DESCRIPTION.md')
     

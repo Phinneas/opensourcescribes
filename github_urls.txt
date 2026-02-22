@@ -1,14 +1,1 @@
-https://github.com/thedotmack/claude-mem
-https://github.com/steveyegge/beads
-https://github.com/kubernetes-sigs/headlamp
-https://github.com/DayuanJiang/next-ai-draw-io
-https://github.com/C4illin/ConvertX
-https://github.com/njbrake/agent-of-empires
-https://github.com/Tencent/WeKnora
-https://github.com/sinelaw/fresh
-https://github.com/swark-io/swark
-https://github.com/databricks/dicer
-https://github.com/puckeditor/puck
-https://github.com/bolt-foundry/gambit
-https://github.com/iOfficeAI/AionUi
-https://facebook.github.io/memlab
+https://webmachinelearning.github.io/webmcp/

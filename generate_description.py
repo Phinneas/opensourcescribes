@@ -96,8 +96,8 @@ def generate_description():
         # Add duration to current time
         current_time += seg_dur
         
-        # Check for mid-roll subscribe logic (aligned with video_suite.py)
-        if i == midpoint - 1:
+        # Check for mid-roll subscribe logic (aligned with video_automated.py - after project 2 index 1)
+        if i == 1:
             sub_path = "assets/subscribe_audio.mp3"
             sub_dur = get_duration(sub_path)
             if sub_dur > 0:

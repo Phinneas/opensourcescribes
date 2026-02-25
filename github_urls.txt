@@ -1,1 +1,12 @@
-https://webmachinelearning.github.io/webmcp/
+https://github.com/mitchellh/vouch
+https://github.com/pydantic/monty
+https://github.com/villagesql/villagesql-server
+https://github.com/TonyStef/Grov
+https://github.com/christopherkarani/Wax
+https://github.com/Cranot/roam-code
+https://github.com/n-e/pg-typesafe
+https://github.com/taleshape-com/shaper
+https://github.com/seflless/slowmo
+https://github.com/millionco/react-doctor
+https://github.com/brendanhogan/hermitclaw
+https://github.com/LadybugDB/ladybug

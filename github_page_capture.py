@@ -77,8 +77,8 @@ class GitHubPageCapture:
             print(f"❌ Screenshot failed: {e}")
             return False
 
-    def take_multi_screenshots(self, url: str, project_id: str) -> List[str]:
-        """Capture multiple points of interest on a page"""
+    def take_multi_screenshots(self, url: str, project_id: str, num_screenshots: int = 3) -> List[str]:
+        """Capture multiple points of interest on a page distributed by height"""
         try:
             from selenium import webdriver
             from selenium.webdriver.chrome.options import Options
@@ -95,8 +95,16 @@ class GitHubPageCapture:
             # Get total height
             total_height = driver.execute_script("return document.body.scrollHeight")
             
-            # Define points (0%, 30%, 60%)
-            points = [0, int(total_height * 0.3), int(total_height * 0.6)]
+            # Distribute points across the page (0% to 80% to avoid potential footer/empty space issues)
+            points = []
+            if num_screenshots == 1:
+                points = [0]
+            else:
+                for i in range(num_screenshots):
+                    # Progress from 0 to 0.8 weight
+                    pos = int(total_height * (0.8 * i / (num_screenshots - 1)))
+                    points.append(pos)
+            
             screenshot_paths = []
             
             for i, pos in enumerate(points):

@@ -9,6 +9,7 @@ import asyncio
 import json
 import subprocess
 import random
+import math
 from datetime import datetime
 from pathlib import Path
 from gtts import gTTS
@@ -22,6 +23,13 @@ try:
 except ImportError:
     MINIMAX_AVAILABLE = False
     print("⚠️  MiniMax modules not available - using static graphics only")
+
+# Import content generators
+from generate_description import generate_description
+from generate_medium_post import main as generate_medium_post
+from generate_reddit_post import main as generate_reddit_post
+from generate_newsletter import main as generate_newsletter
+from reformat_newsletter import main as reformat_newsletter
 
 # Load configuration
 with open('config.json', 'r') as f:
@@ -48,6 +56,25 @@ os.makedirs(DEEP_DIVES_FOLDER, exist_ok=True)
 Path(SHORTS_FOLDER).mkdir(exist_ok=True)
 
 MAX_DEEP_DIVES = 3  # Limit deep dives per roundup (Set to 0 to disable)
+
+# Cinematic Motion Library for MiniMax
+MOTION_LIBRARY = [
+    "Smooth cinematic camera scroll down revealing features.",
+    "Slow pan across the interface showing technical details.",
+    "Tilt up shot revealing the bottom sections of the page.",
+    "Cinematic zoom-in on the main repository header.",
+    "Dolly sweep from left to right across the code files.",
+    "Perspective tilt showing the page in a 3D workspace.",
+    "Slow rotation around the center of the UI.",
+    "Fast tracking shot down the sidebar and into the content.",
+    "Glide over the interface with a soft bokeh background effect.",
+    "Rack focus from the foreground text to the background code.",
+    "Dynamic crane shot descending from the top of the repository.",
+    "Slow push-in on a specific set of features.",
+    "Arresting side-scrolling shot showing the project evolution.",
+    "Floating camera effect mimicking a handheld walkthrough.",
+    "Sharp cinematic pull-back revealing the full page layout."
+]
 
 
 class VideoSuiteAutomated:
@@ -143,62 +170,80 @@ class VideoSuiteAutomated:
         await asyncio.gather(*tasks)
 
     async def generate_minimax_enhancement(self, project) -> Optional[str]:
-        """Generate multiple MiniMax-enhanced clips for a project to fill the narration time without repetition"""
+        """Generate multiple unique MiniMax clips to fill the narration time exactly"""
         if not self.use_minimax or not self.minimax_generator or not self.minimax_generator.enabled:
             return None
         
-        print(f"🎬 MiniMax enhancement (Multi-Segment Animation): {project['name']}")
+        print(f"🎬 Premium Cinematic Enhancement: {project['name']}")
         
         try:
             final_video_path = Path(OUTPUT_FOLDER) / f"{project['id']}_minimax_enhanced.mp4"
+            audio_path = project.get('audio_path')
             
-            # 1. Take multiple screenshots of different page sections
+            # 1. Calculate clips needed based on audio duration (Each MiniMax clip is 6s)
+            duration = self._get_audio_duration(audio_path)
+            num_clips_needed = math.ceil(duration / 6)
+            # Ensure at least 1 clip and cap it at a reasonable number to save credits if needed, 
+            # though here we prioritize quality as requested.
+            num_clips_needed = max(1, num_clips_needed)
+            
+            print(f"   ⏱️  Audio duration: {duration:.2f}s. Generating {num_clips_needed} unique clips.")
+            
+            # 2. Take screenshots for each required segment
             project_url = project.get('github_url')
             project_id = project['id']
             
-            print(f"   📸 Capturing multi-point walkthrough for: {project_url}")
             if self.github_capture:
                 loop = asyncio.get_event_loop()
                 screenshot_paths = await loop.run_in_executor(
                     None, 
                     self.github_capture.take_multi_screenshots, 
                     project_url, 
-                    project_id
+                    project_id,
+                    num_clips_needed
                 )
             else:
                 screenshot_paths = []
 
             if not screenshot_paths:
-                print("   ⚠️  Screenshot capture failed, falling back to basic demo")
+                print("   ⚠️  Capture failed, using fallback UI demo")
                 return self.minimax_generator.generate_ui_demonstration(
                     f"A professional demonstration of {project['name']}.", 
                     str(final_video_path)
                 )
 
-            # 2. Generate MiniMax videos for each screenshot with varying prompts
-            clip_paths = []
-            motions = [
-                "Smooth cinematic camera scroll down revealing features.",
-                "Slow pan across the interface showing technical details.",
-                "Tilt up shot revealing the bottom sections of the page."
-            ]
+            # 3. Generate unique motions for each clip
+            # Choose unique motions from library, reusing if num_clips > library size
+            motions = random.sample(MOTION_LIBRARY, min(num_clips_needed, len(MOTION_LIBRARY)))
+            if num_clips_needed > len(motions):
+                extra_needed = num_clips_needed - len(motions)
+                motions.extend(random.choices(MOTION_LIBRARY, k=extra_needed))
             
+            clip_paths = []
             for i, (path, motion) in enumerate(zip(screenshot_paths, motions)):
                 segment_path = Path(OUTPUT_FOLDER) / f"{project_id}_enh_seg_{i}.mp4"
-                prompt = f"{motion} Modern high-quality rendering of {project['name']} interface."
                 
-                print(f"   🪄  Animating segment {i+1}/3...")
+                # REUSE existing segments if they exist to save credits
+                if segment_path.exists() and segment_path.stat().st_size > 1000:
+                    print(f"   ♻️  Reusing existing segment {i+1}: {segment_path.name}")
+                    clip_paths.append(str(segment_path))
+                    continue
+                
+                prompt = f"{motion} Modern professional studio lighting. Clean interface for {project['name']}."
+                
+                print(f"   🪄  Animating segment {i+1}/{num_clips_needed}: {motion[:40]}...")
                 res = self.minimax_generator.generate_image_to_video(path, prompt, str(segment_path))
                 if res:
                     clip_paths.append(res)
 
-            # 3. Concatenate clips if we have multiple
+            # 4. Sequence clips
             if len(clip_paths) > 1:
-                print(f"   🔗 Sequencing {len(clip_paths)} clips for {project['name']}...")
+                print(f"   🔗 Stitching {len(clip_paths)} unique cinematic angles...")
                 concat_list = Path(OUTPUT_FOLDER) / f"{project_id}_concat_list.txt"
                 with open(concat_list, 'w') as f:
                     for clip in clip_paths:
-                        f.write(f"file '{clip}'\n")
+                        # Use only the filename since the list is in the same directory
+                        f.write(f"file '{os.path.basename(clip)}'\n")
                 
                 cmd = [
                     'ffmpeg', '-y',
@@ -215,10 +260,24 @@ class VideoSuiteAutomated:
             return None
             
         except Exception as e:
-            print(f"⚠️  MiniMax multi-enhancement failed: {e}")
+            print(f"⚠️  MiniMax cinematic enhancement failed: {e}")
             import traceback
             traceback.print_exc()
             return None
+
+    def _get_audio_duration(self, audio_path: str) -> float:
+        """Helper to get audio duration using ffprobe"""
+        if not os.path.exists(audio_path):
+            return 6.0  # Default to one MiniMax clip duration
+        try:
+            cmd = [
+                'ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+                '-of', 'default=noprint_wrappers=1:nokey=1', audio_path
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            return float(result.stdout.strip())
+        except:
+            return 6.0
         
     def generate_audio(self, text, output_path):
         """Generate audio using Hume.ai or gTTS"""
@@ -466,6 +525,18 @@ class VideoSuiteAutomated:
         for i, project in enumerate(self.projects):
             segment_files.append(self.create_segment(project, i, is_short=False))
             
+            # Mid-roll subscribe (Moved to after project 2 - index 1)
+            if i == 1:
+                sub_card = Path(OUTPUT_FOLDER) / "subscribe_card.png"
+                sub_audio = Path(OUTPUT_FOLDER) / "subscribe_audio.mp3"
+                if not sub_card.exists():
+                    from branding import create_subscribe_card
+                    create_subscribe_card(CONFIG, str(sub_card))
+                
+                if sub_card.exists() and sub_audio.exists():
+                    print("🎬 Adding mid-roll subscribe prompt...")
+                    segment_files.append(self.create_static_segment(str(sub_card), 0, "seg_subscribe.mp4", audio_path=str(sub_audio)))
+            
         if os.path.exists(outro_path):
             segment_files.append(self.create_static_segment(outro_path, 5, "seg_outro.mp4"))
             
@@ -569,15 +640,31 @@ class VideoSuiteAutomated:
             
         self.auto_select()
         
+        await self.prepare_assets()
+        
+        # Save project data AFTER assets are prepared to include enhanced_video paths
         with open(DATA_OUTPUT_FILE, 'w') as f:
             json.dump(self.projects, f, indent=4)
-        print(f"\n💾 Saved longform data to {DATA_OUTPUT_FILE}")
-            
-        await self.prepare_assets()
+        print(f"\n💾 Saved longform data with asset paths to {DATA_OUTPUT_FILE}")
         
         self.assemble_longform_video()
         self.assemble_shorts()
         await self.generate_deep_dives()
+        
+        print("\n📝 Generating content suite (Description, Blog, Social)...")
+        try:
+            generate_description()
+            generate_medium_post()
+            generate_reddit_post()
+            generate_newsletter()
+            print("✨ Reformatting newsletter for Substack premium layout...")
+            try:
+                reformat_newsletter()
+            except Exception as re_e:
+                print(f"⚠️ Reformatting failed: {re_e}")
+            print("✅ Content suite generated successfully")
+        except Exception as e:
+            print(f"⚠️ Failed to generate content suite: {e}")
         
         print("\n" + "="*60)
         print("✅ WORKFLOW COMPLETE")

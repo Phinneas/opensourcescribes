@@ -144,9 +144,9 @@ def generate_full_newsletter(projects):
     outro = call_claude(client, OUTRO_PROMPT.format(project_names=project_summaries, cliche_filter=CLICHE_FILTER))
     full_content.append(outro)
     
-    # 4. Final Cleanup: Remove any lingering hashtags or asterisks
+    # 4. Final Cleanup: Ensure clean line endings
     raw_text = "\n".join(full_content)
-    clean_text = raw_text.replace('#', '').replace('*', '')
+    clean_text = raw_text.strip()
     
     return clean_text
 
@@ -156,7 +156,7 @@ def save_post(content):
     delivery_folder = os.path.join("deliveries", current_date)
     os.makedirs(delivery_folder, exist_ok=True)
     
-    output_path = os.path.join(delivery_folder, 'SUBSTACK_NEWSLETTER.txt')
+    output_path = os.path.join(delivery_folder, 'SUBSTACK_NEWSLETTER.md')
     with open(output_path, 'w') as f:
         f.write(content)
     

@@ -380,7 +380,7 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         print("🤖 Generating script with Claude...")
         
         message = client.messages.create(
-            model="claude-3-5-sonnet-20240620",
+            model="claude-3-haiku-20240307",
             max_tokens=1024,
             messages=[
                 {"role": "user", "content": prompt}
@@ -500,6 +500,11 @@ def generate_from_url_list(filepath: str) -> list:
         print(f"\n{'='*60}")
         print(f"Processing {i}/{len(urls)}: {url}")
         print('='*60)
+        
+        # ERROR CHECK: Ensure it's a GitHub URL to prevent scraping personal blogs
+        if 'github.com' not in url:
+            print(f"⚠️  ERROR CHECK: Skipping non-GitHub URL to prevent scraping errors: {url}")
+            continue
         
         result = generate_script(url)
         if result:

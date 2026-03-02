@@ -28,8 +28,11 @@ Write a technical editorial for "The Scribe's Digest: {n_projects} Open Source D
 ## PROJECTS IN THIS EDITION (STRICTLY USE THESE):
 {project_summaries}
 
-Write ONLY the editorial (150-200 words). NO headers or special formatting symbols. Do not use '#' or '*'.
-"""
+## PROMOTIONAL LINKS TO INCLUDE
+{promo_links}
+
+Write ONLY the editorial (150-200 words) and then append the PROMOTIONAL LINKS EXACTLY as provided. NO headers or special formatting symbols in the editorial text. Do not use '#' or '*'."""
+
 
 PROJECT_SECTION_PROMPT = """You are the lead editor for OpenSourceScribes.
 Write a technical curation section for this project.
@@ -117,12 +120,23 @@ def generate_full_newsletter(projects):
     # Title
     full_content.append(f"# The Scribe's Digest: {n_projects} Open Source Discoveries to Supercharge Your Week\n")
     
+    PROMO_LINKS = (
+        "Featured Newsletters & Resources\n"
+        "- FinOps Weekly: https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3\n"
+        "- The Multiverse School: https://themultiverseschool.substack.com?r=ykyfl\n"
+        "- Earth Conscious Life: https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr\n"
+        "- My MCP Shelf Directory: https://www.mymcpshelf.com/\n"
+        "- Pikapods with AWS Hosting Tutorial: https://www.salishseaconsulting.com/blog/pikapods/\n"
+        "- Firecrawl MCP Server: https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/\n"
+    )
+
     # 1. Editorial
     print(f"🖋️  Generating Newsletter Editorial...")
     editorial = call_claude(client, EDITORIAL_PROMPT.format(
         n_projects=n_projects, 
         project_summaries=project_summaries, 
-        cliche_filter=CLICHE_FILTER
+        cliche_filter=CLICHE_FILTER,
+        promo_links=PROMO_LINKS
     ))
     full_content.append(editorial)
     full_content.append("\n---\n")

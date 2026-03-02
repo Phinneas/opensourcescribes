@@ -28,8 +28,11 @@ Write a direct, helpful INTRODUCTION for a Reddit post titled "{n_projects} Tren
 ## PROJECTS IN THIS LIST (STRICTLY USE THESE):
 {project_summaries}
 
-Write ONLY the introduction (50-100 words). NO headers or special formatting symbols. Do not use '#' or '*'.
-"""
+## PROMOTIONAL LINKS TO INCLUDE
+{promo_links}
+
+Write ONLY the introduction (50-100 words) and then append the PROMOTIONAL LINKS EXACTLY as provided. NO headers or special formatting symbols in the introduction text. Do not use '#' or '*'."""
+
 
 PROJECT_SECTION_PROMPT = """You are a community manager for OpenSourceScribes.
 Write a concise technical showcase for this project.
@@ -127,13 +130,24 @@ def generate_full_post(projects):
     # Header Title
     full_content.append(f"# {n_projects} Trending Open-Source Projects ({month_year})\n")
     
+    PROMO_LINKS = (
+        "Featured Newsletters & Resources\n"
+        "- FinOps Weekly: https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3\n"
+        "- The Multiverse School: https://themultiverseschool.substack.com?r=ykyfl\n"
+        "- Earth Conscious Life: https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr\n"
+        "- My MCP Shelf Directory: https://www.mymcpshelf.com/\n"
+        "- Pikapods with AWS Hosting Tutorial: https://www.salishseaconsulting.com/blog/pikapods/\n"
+        "- Firecrawl MCP Server: https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/\n"
+    )
+
     # 1. Introduction
     print(f"🖋️  Generating Reddit Intro...")
     intro = call_claude(client, INTRO_PROMPT.format(
         n_projects=n_projects, 
         month_year=month_year, 
         project_summaries=project_summaries, 
-        cliche_filter=CLICHE_FILTER
+        cliche_filter=CLICHE_FILTER,
+        promo_links=PROMO_LINKS
     ))
     full_content.append(intro)
     full_content.append("\n")

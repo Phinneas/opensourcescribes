@@ -28,7 +28,10 @@ Write a direct, engineering-focused INTRODUCTION for a Medium post titled: "{n_p
 ## PROJECTS COVERED (STRICTLY FOLLOW THESE):
 {project_summaries}
 
-Write ONLY the introduction (100-150 words). NO headers or special formatting symbols. Do not use '#' or '*'."""
+## PROMOTIONAL LINKS TO INCLUDE
+{promo_links}
+
+Write ONLY the introduction (100-150 words) and then append the PROMOTIONAL LINKS EXACTLY as provided. Do not use '#' or '*' in your intro text."""
 
 PROJECT_SECTION_PROMPT = """You are a technical writer for OpenSourceScribes.
 Write a technical section for a specific GitHub project.
@@ -114,12 +117,24 @@ def generate_full_post(projects):
     
     full_content = []
     
+    PROMO_LINKS = (
+        "Featured Newsletters & Resources\n"
+        "- Subscribe to my Medium: https://chesterbeard.medium.com/subscribe\n"
+        "- FinOps Weekly: https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3\n"
+        "- The Multiverse School: https://themultiverseschool.substack.com?r=ykyfl\n"
+        "- Earth Conscious Life: https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr\n"
+        "- My MCP Shelf Directory: https://www.mymcpshelf.com/\n"
+        "- Pikapods with AWS Hosting Tutorial: https://www.salishseaconsulting.com/blog/pikapods/\n"
+        "- Firecrawl MCP Server: https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/\n"
+    )
+
     # 1. Introduction
     print(f"🖋️  Generating Introduction for {n_projects} projects...")
     intro = call_claude(client, INTRO_PROMPT.format(
         n_projects=n_projects, 
         project_summaries=project_summaries, 
-        cliche_filter=CLICHE_FILTER
+        cliche_filter=CLICHE_FILTER,
+        promo_links=PROMO_LINKS
     ))
     full_content.append(f"# {n_projects} Open-Source Projects for Your Dev Stack\n")
     full_content.append(intro)

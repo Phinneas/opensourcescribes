@@ -193,6 +193,36 @@ def concatenate_task(segment_files: List[str], output_path: str) -> str:
     concat_list.unlink(missing_ok=True)
     return output_path
 
+@task(name="render-remotion-video", log_prints=True)
+def render_remotion_video_task(composition_id: str, props: dict, output_name: str) -> str:
+    """Invokes the local Remotion project to render a video."""
+    logger = get_run_logger()
+    remotion_dir = str(Path(__file__).parent / "remotion_video")
+    output_path = str(Path(OUTPUT_FOLDER) / output_name)
+    
+    logger.info(f"🎥 Rendering Remotion composition '{composition_id}' to: {output_path}")
+    
+    # Save props to a temporary JSON file to pass to Remotion
+    props_fp = str(Path(remotion_dir) / f"props_{composition_id}.json")
+    with open(props_fp, "w") as f:
+        json.dump(props, f)
+        
+    try:
+        # We run the Remotion CLI via npx inside the remotion_video directory
+        cmd = [
+            "npx", "remotion", "render", composition_id, output_path,
+            "--props", f"props_{composition_id}.json"
+        ]
+        subprocess.run(cmd, cwd=remotion_dir, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        logger.info(f"✅ Remotion render complete: {output_path}")
+        return output_path
+    except subprocess.CalledProcessError as e:
+        logger.error(f"❌ Remotion render failed: {e.stderr.decode('utf-8')}")
+        raise
+    finally:
+        # Clean up the temporary props file
+        Path(props_fp).unlink(missing_ok=True)
+
 # ── New Content & Derivative Tasks ──────────────────────────────────────────
 
 @task(name="generate-content-suite", log_prints=True)
@@ -307,13 +337,35 @@ def production_pipeline():
     sub_seg = render_static_segment_task(sub_img, 0, "seg_subscribe.mp4", audio_path=sub_audio)
 
     segment_files = [intro_seg]
+    props = {"clips": []}
+    
+    # helper for precise lengths
+    def add_clip(src, dur, ctype, name="", url=""):
+        props["clips"].append({
+            "src": f"file://{os.path.abspath(src)}",
+            "durationInSeconds": dur,
+            "type": ctype,
+            "name": name,
+            "url": url
+        })
+
+    add_clip(intro_seg, _get_audio_duration(intro_audio), "intro")
+
     mid = len(projects) // 2
     for i, p in enumerate(projects):
-        segment_files.append(render_segment_task(p, i))
-        if i == mid - 1: segment_files.append(sub_seg)
+        seg = render_segment_task(p, i)
+        segment_files.append(seg)
+        add_clip(seg, _get_audio_duration(p["audio_path"]), "project", p.get("name", ""), p.get("github_url", ""))
+        
+        if i == mid - 1:
+            segment_files.append(sub_seg)
+            add_clip(sub_seg, _get_audio_duration(sub_audio), "subscribe")
+            
     segment_files.append(outro_seg)
+    add_clip(outro_seg, 5.0, "outro")
 
-    longform_video = concatenate_task(segment_files, LONGFORM_VIDEO)
+    # longform_video = concatenate_task(segment_files, LONGFORM_VIDEO)
+    longform_video = render_remotion_video_task("Main", props, "longform_github_roundup.mp4")
 
     # 5. Phase 4: Derivative Content (Parallel)
     logger.info("⚡ PHASE 4: CONTENT SUITE & DERIVATIVES")

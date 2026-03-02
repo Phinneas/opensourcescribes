@@ -38,7 +38,7 @@ STRICT RULES:
 - Do NOT write out the full URL as text — the link emoji 🔗 + platform word is sufficient (e.g. [🔗 GitHub](URL))
 - Replace all "Technical Utility:" labels with "Why it matters:"
 - Replace all "View on GitHub:" with 🔗 GitHub
-- Do NOT use: Robust, Supercharge, Game changer, Revolutionary, Dive in, Unlock, Gems
+- Do NOT use: Robust, Supercharge, Game changer, Revolutionary, Dive in, Unlock, Gems, Workflow
 - Output must be plain text suitable for pasting directly into Substack
 """
 

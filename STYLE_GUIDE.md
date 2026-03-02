@@ -22,6 +22,7 @@ Do NOT use these words or phrases under any circumstances:
 - "Ultimate guide"
 - "Must-have"
 - "Take a closer look"
+- "Workflow" (Avoid this noun entirely)
 
 ## ✍️ WRITING RULES
 1. **Concrete over Abstract**: Instead of saying a tool "supercharges your workflow," say "it automates your Docker deployments" or "it reduces build times by 30%."

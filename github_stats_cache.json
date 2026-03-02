@@ -718,5 +718,173 @@
       "timestamp": "2026-02-20T20:56:48.287652"
     },
     "timestamp": "2026-02-20T20:56:48.287669"
+  },
+  "coala-info/coala": {
+    "data": {
+      "owner": "coala-info",
+      "repo": "coala",
+      "stars": 4,
+      "forks": 0,
+      "language": "Python",
+      "description": "Command-line LLM-agent Adapter",
+      "topics": [],
+      "url": "https://github.com/coala-info/coala",
+      "timestamp": "2026-02-23T02:19:19.490076"
+    },
+    "timestamp": "2026-02-23T02:19:19.490082"
+  },
+  "taleshape-com/shaper": {
+    "data": {
+      "owner": "taleshape-com",
+      "repo": "shaper",
+      "stars": 870,
+      "forks": 22,
+      "language": "Go",
+      "description": "Visualize and share your data. All in SQL. Powered by DuckDB.",
+      "topics": [
+        "analytics",
+        "dashboards",
+        "data",
+        "duckdb"
+      ],
+      "url": "https://github.com/taleshape-com/shaper",
+      "timestamp": "2026-02-23T02:21:21.715886"
+    },
+    "timestamp": "2026-02-23T02:21:21.715955"
+  },
+  "millionco/react-doctor": {
+    "data": {
+      "owner": "millionco",
+      "repo": "react-doctor",
+      "stars": 4410,
+      "forks": 135,
+      "language": "TypeScript",
+      "description": "Let coding agents diagnose and fix your React code",
+      "topics": [
+        "agents",
+        "code-review",
+        "doctor",
+        "react"
+      ],
+      "url": "https://github.com/millionco/react-doctor",
+      "timestamp": "2026-02-23T08:20:19.854090"
+    },
+    "timestamp": "2026-02-23T08:20:19.854102"
+  },
+  "LadybugDB/ladybug": {
+    "data": {
+      "owner": "LadybugDB",
+      "repo": "ladybug",
+      "stars": 491,
+      "forks": 36,
+      "language": "C++",
+      "description": "LadybugDB a graph database",
+      "topics": [
+        "database",
+        "graph"
+      ],
+      "url": "https://github.com/LadybugDB/ladybug",
+      "timestamp": "2026-02-24T12:32:21.728322"
+    },
+    "timestamp": "2026-02-24T12:32:21.728330"
+  },
+  "TonyStef/Grov": {
+    "data": {
+      "owner": "TonyStef",
+      "repo": "Grov",
+      "stars": 167,
+      "forks": 12,
+      "language": "TypeScript",
+      "description": "Grov automatically captures the context from your private AI sessions and syncs it to a shared team memory. It auto injects relevant memories across developers and future sessions to save tokens and time spent on tasks.",
+      "topics": [
+        "ai",
+        "ai-coding-tools",
+        "ai-infrastructure",
+        "ai-memory"
+      ],
+      "url": "https://github.com/TonyStef/Grov",
+      "timestamp": "2026-02-24T12:36:30.977850"
+    },
+    "timestamp": "2026-02-24T12:36:30.977866"
+  },
+  "brendanhogan/hermitclaw": {
+    "data": {
+      "owner": "brendanhogan",
+      "repo": "hermitclaw",
+      "stars": 280,
+      "forks": 43,
+      "language": "Python",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/brendanhogan/hermitclaw",
+      "timestamp": "2026-02-24T12:36:44.280098"
+    },
+    "timestamp": "2026-02-24T12:36:44.280124"
+  },
+  "blackboardsh/electrobun": {
+    "data": {
+      "owner": "blackboardsh",
+      "repo": "electrobun",
+      "stars": 7310,
+      "forks": 156,
+      "language": "C++",
+      "description": "Build ultra fast, tiny, and cross-platform desktop apps with Typescript.",
+      "topics": [],
+      "url": "https://github.com/blackboardsh/electrobun",
+      "timestamp": "2026-02-27T15:51:51.318226"
+    },
+    "timestamp": "2026-02-27T15:51:51.318234"
+  },
+  "alibaba/zvec": {
+    "data": {
+      "owner": "alibaba",
+      "repo": "zvec",
+      "stars": 8190,
+      "forks": 458,
+      "language": "C++",
+      "description": "A lightweight, lightning-fast, in-process vector database",
+      "topics": [
+        "ann-search",
+        "embedded-database",
+        "rag",
+        "vector-search"
+      ],
+      "url": "https://github.com/alibaba/zvec",
+      "timestamp": "2026-02-27T17:03:43.511894"
+    },
+    "timestamp": "2026-02-27T17:03:43.511910"
+  },
+  "seflless/slowmo": {
+    "data": {
+      "owner": "seflless",
+      "repo": "slowmo",
+      "stars": 129,
+      "forks": 1,
+      "language": "TypeScript",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/seflless/slowmo",
+      "timestamp": "2026-02-27T17:07:05.915725"
+    },
+    "timestamp": "2026-02-27T17:07:05.915738"
+  },
+  "ruvnet/ruvector": {
+    "data": {
+      "owner": "ruvnet",
+      "repo": "ruvector",
+      "stars": 1917,
+      "forks": 197,
+      "language": "Rust",
+      "description": "RuVector is a High Performance, Real-Time, Self-Learning, Vector Graph Neural Network, and Database built in Rust.",
+      "topics": [
+        "ai",
+        "ai-ocr",
+        "attention-mechanism",
+        "gnn"
+      ],
+      "url": "https://github.com/ruvnet/ruvector",
+      "timestamp": "2026-02-27T17:07:18.384679"
+    },
+    "timestamp": "2026-02-27T17:07:18.384697"
   }
 }

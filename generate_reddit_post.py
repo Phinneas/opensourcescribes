@@ -12,7 +12,7 @@ import anthropic
 
 CLICHE_FILTER = """
 ## 🚫 BANNED PHRASES (CRITICAL)
-Do NOT use: Robust, Gems, Hidden Gems, Supercharge, Dive in, Game changer, Revolutionary, Look no further, Unlock the potential, Elevate your workflow, Buckle up, Pique your interest, Treasure trove, Innovative, Cutting-edge, State of the art, Seamlessly integrate, Tired of X? Meet Y.
+Do NOT use: Robust, Gems, Hidden Gems, Supercharge, Dive in, Game changer, Revolutionary, Look no further, Unlock the potential, Elevate your workflow, Buckle up, Pique your interest, Treasure trove, Innovative, Cutting-edge, State of the art, Seamlessly integrate, Tired of X? Meet Y, Workflow.
 
 ## ✍️ WRITING STYLE
 - Engineering Focus: No marketing "hype". Focus on utility and technical implementation.

@@ -33,4 +33,4 @@
 
 ## Example Filled Script
 
-"Discover 11 incredible open source tools that will supercharge your development workflow this January. Welcome back to **Open Source Scribes**, your guide to the best of GitHub. Today we're diggin into a new browser for power users, a voxel engine for CSS, and a lightning-fast database client. Let's dive in."
+"Discover 11 incredible open source tools that will improve your development process this January. Welcome back to **Open Source Scribes**, your guide to the best of GitHub. Today we're diggin into a new browser for power users, a voxel engine for CSS, and a lightning-fast database client. Let's dive in."

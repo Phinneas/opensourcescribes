@@ -5,6 +5,6 @@ __pycache__/
 *.pyc
 .DS_Store
 final_github_roundup*.mp4
-assets/*.png
-assets/*.mp3
+assets/
+deliveries/
 config.json

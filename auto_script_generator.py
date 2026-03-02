@@ -371,7 +371,7 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
     2. Explain the technical utility and unique implementation.
     3. Use a direct, informative tone. Avoid marketing hype.
     4. End with a short sentence on the primary use case.
-    5. DO NOT use these words: Robust, Gems, Supercharge, Game changer, Dive in, Revolutionary, Unlock, Pique.
+    5. DO NOT use these words: Robust, Gems, Supercharge, Game changer, Dive in, Revolutionary, Unlock, Pique, Workflow.
     6. DO NOT mention specific star counts or fork counts.
     7. DO NOT use emojis or special characters that break TTS.
     8. KEEP IT UNDER {MAX_WORDS} WORDS.

@@ -1,0 +1,10 @@
+# Prefect Configuration
+# Disable ephemeral server and use dedicated server mode
+
+[prefect]
+api_url = "http://127.0.0.1:4200/api"
+server_api_host = "0.0.0.0"
+server_api_port = 4200
+
+[logging]
+level = "INFO"

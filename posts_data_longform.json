@@ -1,119 +1,110 @@
 [
     {
-        "id": "millionco_react_doctor",
-        "name": "react-doctor",
-        "github_url": "https://github.com/millionco/react-doctor",
-        "script_text": "React Doctor is a powerful tool that helps diagnose and fix issues in your React code. It uses advanced static analysis to identify common problems, such as invalid props, unused state variables, and inefficient rendering.\n\nThe unique implementation of React Doctor allows it to work seamlessly within your development workflow. It integrates with your existing toolchain, providing real-time feedback and suggestions for improvement. The tool's modular design makes it easy to extend, enabling you to tailor it to your specific needs.\n\nReact Doctor is particularly useful for teams working on large, complex React applications. By catching issues early in the development process, it helps improve code quality and reduces the time and effort required for debugging and maintenance. If you're looking to streamline your React development, React Doctor is a valuable addition to your toolkit.",
-        "img_path": "assets/millionco_react_doctor_screen.png",
-        "audio_path": "assets/millionco_react_doctor_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/millionco_react_doctor_short.png"
+        "id": "agent_field_swe_af",
+        "name": "SWE-AF",
+        "github_url": "https://github.com/Agent-Field/SWE-AF",
+        "script_text": "SWE-AF is a Python-based project that autonomous software engineering fleet of ai agents for production-grade prs on agentfield plan, code, test, and ship.. Pronounced \"swee-AF\" (one word) One API call full engineering team shipped code. One API call spins up a full autonomous engineering team product managers, architects, coders, reviewers, testers that scopes, builds, adapts, and ships complex software end to end. SWE-AF is a first step tow This project focuses on agent-factory, agentfield, agentic-ai, ai-agents, ai-factory, providing developers with specialized tools and capabilities in these areas. Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate SWE-AF into their workflows to improve their testing strategies and code quality. Check out SWE-AF if you're working in this space.",
+        "img_path": "assets/agent_field_swe_af_screen.png",
+        "audio_path": "assets/agent_field_swe_af_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/agent_field_swe_af_short.png"
     },
     {
-        "id": "seflless_slowmo",
-        "name": "slowmo",
-        "github_url": "https://github.com/seflless/slowmo",
-        "script_text": "Introducing slowmo: a powerful library that lets you slow down, pause, or speed up any web content. Whether you're debugging animations, studying cool demos, or adjusting the difficulty of your games, slowmo has you covered.\n\nWith just a single line of code, you can control the playback speed of CSS animations, transitions, videos, audio, and even libraries like GSAP and Three.js. The comprehensive API gives you full control, allowing you to pause, play, and reset the virtual timeline.\n\nTired of missing crucial details in your web animations? Slowmo's 10x slower mode is perfect for in-depth analysis. And with the upcoming Chrome extension, you can manipulate animations on any website without writing a single line of code.\n\nUnleash your creativity and gain a deeper understanding of web animations with slowmo.",
-        "img_path": "assets/seflless_slowmo_screen.png",
-        "audio_path": "assets/seflless_slowmo_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/seflless_slowmo_short.png"
+        "id": "expo_skills",
+        "name": "skills",
+        "github_url": "https://github.com/expo/skills",
+        "script_text": "skills is a JavaScript-based project that a collection of ai agent skills for working with expo projects and expo application services. Official AI agent skills from the Expo team for building, deploying, and debugging robust Expo apps. Add the marketplace plugin marketplace add expo skills Install a plugin plugin install expo-app-design plugin install upgrading-expo plugin install expo-deployment Install from GitHub 1. Open C Built with JavaScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate skills into their workflows to solve complex technical challenges more efficiently. Check out skills if you're working in this space.",
+        "img_path": "assets/expo_skills_screen.png",
+        "audio_path": "assets/expo_skills_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/expo_skills_short.png"
     },
     {
-        "id": "blackboardsh_electrobun",
-        "name": "electrobun",
-        "github_url": "https://github.com/blackboardsh/electrobun",
-        "script_text": "Electrobun is a comprehensive solution for building ultra-fast, tiny, and cross-platform desktop applications using Typescript. Powered by Bun's JavaScript runtime and leveraging Zig for native bindings, Electrobun simplifies the development and deployment process.\n\nIts key features include seamless integration between the main process and webview, fast and typed RPC communication, and compact application bundles. Electrobun provides a tightly-integrated workflow, allowing developers to start coding in just 5 minutes and distribute their applications in 10.\n\nWhether you're building a text-to-speech app or a hybrid web browser and code editor, Electrobun offers a robust and efficient platform to bring your desktop application ideas to life.",
-        "img_path": "assets/blackboardsh_electrobun_screen.png",
-        "audio_path": "assets/blackboardsh_electrobun_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/blackboardsh_electrobun_short.png"
+        "id": "zion_off_giggles",
+        "name": "giggles",
+        "github_url": "https://github.com/zion-off/giggles",
+        "script_text": "giggles is a TypeScript-based project that batteries-included react framework for building rich terminal apps. giggles is a batteries-included react framework for building terminal apps. built on ink, it handles focus, input routing, screen navigation, and theming out of the box so you can skip the plumbing and build. each component owns its keys a text input inside a list inside a panel all work independe This project focuses on cli, ink, tui, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate giggles into their workflows to solve complex technical challenges more efficiently. Check out giggles if you're working in this space.",
+        "img_path": "assets/zion_off_giggles_screen.png",
+        "audio_path": "assets/zion_off_giggles_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/zion_off_giggles_short.png"
     },
     {
-        "id": "bneb_lattice",
-        "name": "lattice",
-        "github_url": "https://github.com/bneb/lattice",
-        "script_text": "Salt is an ahead-of-time compiled systems language that combines the performance of C with formal verification through an embedded Z3 theorem prover. The compiler integrates Z3 as a first-class backend, allowing developers to write `requires` and `ensures` contracts that are statically verified before code generation.\n\nMemory is managed through arenas with compile-time escape analysis, providing the performance of manual allocation with the safety of managed memory. The multi-dialect MLIR pipeline optimizes code through polyhedral loop tiling, register-pressure-aware scheduling, and custom arena lowering, achieving performance on par with or exceeding optimized C.\n\nSalt is designed for performance-critical systems programming, from low-level kernel modules to high-performance data processing pipelines.",
-        "img_path": "assets/bneb_lattice_screen.png",
-        "audio_path": "assets/bneb_lattice_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/bneb_lattice_short.png"
+        "id": "zion_off_clairo",
+        "name": "clairo",
+        "github_url": "https://github.com/zion-off/clairo",
+        "script_text": "clairo is a TypeScript-based project that tui for jira and github. an opinionated dashboard tui for github PRs, jira tickets, and daily logs. github dashboard configure and switch between remotes view open PRs with status, reviews, and checks see full PR details with description, labels, and assignees create new PRs from the terminal browse all PRs across the repo Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate clairo into their workflows to solve complex technical challenges more efficiently. Check out clairo if you're working in this space.",
+        "img_path": "assets/zion_off_clairo_screen.png",
+        "audio_path": "assets/zion_off_clairo_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/zion_off_clairo_short.png"
     },
     {
-        "id": "obra_superpowers",
-        "name": "superpowers",
-        "github_url": "https://github.com/obra/superpowers",
-        "script_text": "Here is a 161-word engineering-focused video script for a YouTube video about the \"superpowers\" project:\n\nSuperpowers is a software development workflow built on a framework of composable \"skills.\" It helps your coding agents work more effectively, from initial requirements gathering to autonomous task completion.\n\nThe key innovation is Superpowers' approach to task planning and execution. Rather than just jumping into coding, the agent first clarifies the actual goals and specs with you. It then creates a clear, step-by-step implementation plan - one that's simple enough for a junior engineer to follow. \n\nFrom there, the agent coordinates a \"subagent-driven-development\" process, where specialized agents handle individual tasks. They work autonomously, following the plan, and the main agent reviews and validates their progress. This allows for highly efficient, TDD-driven development without constant human oversight.\n\nSuperpowers is designed to integrate seamlessly with your existing workflow, automatically triggering its skills when needed. The result is a powerful yet frictionless way to leverage agentic intelligence for software projects of all kinds.",
-        "img_path": "assets/obra_superpowers_screen.png",
-        "audio_path": "assets/obra_superpowers_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/obra_superpowers_short.png"
+        "id": "vadimdemedes_ink",
+        "name": "ink",
+        "github_url": "https://github.com/vadimdemedes/ink",
+        "script_text": "ink is a TypeScript-based project that React for interactive command-line apps. React for CLIs. Build and test your CLI output using components. Ink provides the same component-based UI building experience that React offers in the browser, but for command-line apps. If you are already familiar with React, you already know Ink. Since Ink is a React renderer, all features of Re This project focuses on cli, command-line, flexbox, interactive, javascript, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate ink into their workflows to solve complex technical challenges more efficiently. ink is worth exploring for your next project.",
+        "img_path": "assets/vadimdemedes_ink_screen.png",
+        "audio_path": "assets/vadimdemedes_ink_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/vadimdemedes_ink_short.png"
     },
     {
-        "id": "alibaba_zvec",
-        "name": "zvec",
-        "github_url": "https://github.com/alibaba/zvec",
-        "script_text": "Zvec is a lightweight, lightning-fast, in-process vector database designed to embed directly into applications. Built on Alibaba's battle-tested vector search engine, Proxima, Zvec delivers production-grade, low-latency, scalable similarity search with minimal setup.\n\nZvec supports both dense and sparse vector embeddings, with native support for multi-vector queries in a single call. Its hybrid search capabilities combine semantic similarity with structured filters, providing precise results. As an in-process library, Zvec runs wherever your code runs - notebooks, servers, CLI tools, or even edge devices.\n\nWith its blazing-fast performance, simple integration, and flexibility, Zvec is an ideal choice for developers looking to incorporate advanced vector search and similarity matching into their applications.",
-        "img_path": "assets/alibaba_zvec_screen.png",
-        "audio_path": "assets/alibaba_zvec_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/alibaba_zvec_short.png"
+        "id": "facebook_yoga",
+        "name": "yoga",
+        "github_url": "https://github.com/facebook/yoga",
+        "script_text": "yoga is a C -based project that yoga is an embeddable layout engine targeting web standards.. Yoga is an embeddable and performant flexbox layout engine with bindings for multiple languages. Yoga's main implementation targets C 20 with accompanying build logic in CMake. A wrapper is provided to build the main library and run unit tests. Many of Yoga's tests are automatically generated, usi Built with C , it leverages the language's strengths to deliver reliable performance. Developers can integrate yoga into their workflows to solve complex technical challenges more efficiently. yoga is worth exploring for your next project.",
+        "img_path": "assets/facebook_yoga_screen.png",
+        "audio_path": "assets/facebook_yoga_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/facebook_yoga_short.png"
     },
     {
-        "id": "cloudflare_agents",
-        "name": "agents",
-        "github_url": "https://github.com/cloudflare/agents",
-        "script_text": "Build and deploy AI Agents on Cloudflare with the `agents` package. Agents are persistent, stateful execution environments powered by Cloudflare's Durable Objects. Each agent has its own state, storage, and lifecycle, with built-in support for real-time communication, scheduling, AI model calls, MCP, workflows, and more. \n\nAgents hibernate when idle and wake on demand, allowing you to run millions of them at low cost. Create an agent with the `npm create cloudflare@latest -- --template cloudflare/agents-starter` command or add it to an existing project with `npm install agents`.\n\nExplore the [documentation](https://developers.cloudflare.com/agents/) to get started, learn the API, and discover use cases like per-user, per-session, or per-game room applications that require low-latency, stateful, and scalable infrastructure.",
-        "img_path": "assets/cloudflare_agents_screen.png",
-        "audio_path": "assets/cloudflare_agents_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/cloudflare_agents_short.png"
+        "id": "hoppscotch_hoppscotch",
+        "name": "hoppscotch",
+        "github_url": "https://github.com/hoppscotch/hoppscotch",
+        "script_text": "hoppscotch is a TypeScript-based project that open-source api development ecosystem https hoppscotch.io offline, on-prem cloud web, desktop cli open-source alternative to postman, insomnia. src \"https avatars.githubusercontent.com u 56705483\" alt \"Hoppscotch\" height \"64\" Open Source API Development Ecosystem Built with by contributors Lightweight Crafted with minimalistic UI design. Fast Send requests and get responses in real time. HTTP Methods Request methods define This project focuses on api, api-client, api-rest, api-testing, developer-tools, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate hoppscotch into their workflows to build high-performance APIs and backend services. hoppscotch is worth exploring for your next project.",
+        "img_path": "assets/hoppscotch_hoppscotch_screen.png",
+        "audio_path": "assets/hoppscotch_hoppscotch_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/hoppscotch_hoppscotch_short.png"
     },
     {
-        "id": "stan_smith_fossflow",
-        "name": "FossFLOW",
-        "github_url": "https://github.com/stan-smith/FossFLOW",
-        "script_text": "FossFLOW is an open-source Progressive Web App (PWA) that empowers users to create stunning isometric infrastructure diagrams. Built with React and the Isoflow library, it provides a browser-based diagramming solution with offline support.\n\nThe unique implementation of FossFLOW leverages the Isoflow library, which simplifies the creation of isometric graphics. This allows users to quickly assemble professional-looking diagrams without the need for specialized design skills or software.\n\nThe application's intuitive interface and drag-and-drop functionality make it easy for engineers, IT professionals, and project managers to visualize complex infrastructure and communicate their ideas effectively. FossFLOW's offline capabilities ensure uninterrupted diagramming even in areas with limited internet access.\n\nWhether you're documenting your cloud architecture, mapping out a network topology, or visualizing a data center layout, FossFLOW provides a powerful and user-friendly tool to bring your infrastructure diagrams to life.",
-        "img_path": "assets/stan_smith_fossflow_screen.png",
-        "audio_path": "assets/stan_smith_fossflow_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/stan_smith_fossflow_short.png"
+        "id": "alibaba_opensandbox",
+        "name": "OpenSandbox",
+        "github_url": "https://github.com/alibaba/OpenSandbox",
+        "script_text": "OpenSandbox is a Python-based project that opensandbox is a general-purpose sandbox platform for ai applications, offering multi-language sdks, unified sandbox apis, and docker kubernetes runtimes for scenarios like coding agents, gui agents, agent evaluation, ai code execution, and rl training.. OpenSandbox is a general-purpose sandbox platform for AI applications, offering multi-language SDKs, unified sandbox APIs, and Docker Kubernetes runtimes for scenarios like Coding Agents, GUI Agents, Agent Evaluation, AI Code Execution, and RL Training. Multi-language SDKs Provides sandbox SDKs in This project focuses on ai, ai-agent, ai-infra, kubernetes, sandbox, providing developers with specialized tools and capabilities in these areas. Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate OpenSandbox into their workflows to build high-performance APIs and backend services. OpenSandbox is worth exploring for your next project.",
+        "img_path": "assets/alibaba_opensandbox_screen.png",
+        "audio_path": "assets/alibaba_opensandbox_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/alibaba_opensandbox_short.png"
     },
     {
-        "id": "abhigyanpatwari_gitnexus",
-        "name": "GitNexus",
-        "github_url": "https://github.com/abhigyanpatwari/GitNexus",
-        "script_text": "GitNexus: The Zero-Server Code Intelligence Engine\n\nGitNexus is a client-side knowledge graph creator that runs entirely in your browser. Drop in a GitHub repo or ZIP file, and get an interactive knowledge graph with a built-in Graph RAG Agent. GitNexus indexes any codebase into a knowledge graph, tracking dependencies, call chains, clusters, and execution flows, then exposes smart tools so AI agents never miss code.\n\nThe web UI provides a quick way to visually explore any repository. But the real power lies in the CLI and MCP, which let you connect AI agents like Cursor and Claude Code directly to your codebase. This gives them full architectural clarity, allowing even smaller models to compete with the best. GitNexus is the perfect tool for code exploration and empowering your AI development workflow.",
-        "img_path": "assets/abhigyanpatwari_gitnexus_screen.png",
-        "audio_path": "assets/abhigyanpatwari_gitnexus_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/abhigyanpatwari_gitnexus_short.png"
+        "id": "react_native_vibe_code_react_native_vibe_code_sdk",
+        "name": "react-native-vibe-code-sdk",
+        "github_url": "https://github.com/react-native-vibe-code/react-native-vibe-code-sdk",
+        "script_text": "react-native-vibe-code-sdk is a TypeScript-based project that the react native vibe code sdk lets you build text to mobile web apps in seconds. a full suite of packages to run your your own vibe coding features or platform. try cloud version at https reactnativevibecode.com. The first open-source IDE that creates mobile apps with AI. Build React Native and Expo applications through natural language. Frontend Next.js 14, shadcn ui, TailwindCSS Mobile React Native, Expo AI Anthropic Claude (via Claude Code) Sandboxing E2b and Daytona SDK for secure code execution Data Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate react-native-vibe-code-sdk into their workflows to solve complex technical challenges more efficiently. Check out react-native-vibe-code-sdk if you're working in this space.",
+        "img_path": "assets/react_native_vibe_code_react_native_vibe_code_sdk_screen.png",
+        "audio_path": "assets/react_native_vibe_code_react_native_vibe_code_sdk_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/react_native_vibe_code_react_native_vibe_code_sdk_short.png"
     },
     {
-        "id": "pgdogdev_pgdog",
-        "name": "pgdog",
-        "github_url": "https://github.com/pgdogdev/pgdog",
-        "script_text": "PgDog is a powerful PostgreSQL connection pooler, load balancer, and database sharding solution. Written in Rust, PgDog delivers high-performance, secure, and scalable database connectivity for your applications.\n\nWith PgDog, you can manage thousands of concurrent connections on commodity hardware. It supports connection pooling, load balancing queries, and sharding entire databases - allowing you to scale your PostgreSQL infrastructure seamlessly.\n\nPgDog's modular design and extensive configuration options make it a versatile tool for both small and large-scale deployments. Whether you're running on Kubernetes, AWS, or a local Docker environment, PgDog provides a straightforward way to optimize your PostgreSQL setup.\n\nSimplify your database management and boost the performance of your PostgreSQL-powered applications with PgDog, the Swiss Army knife for PostgreSQL scaling.",
-        "img_path": "assets/pgdogdev_pgdog_screen.png",
-        "audio_path": "assets/pgdogdev_pgdog_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/pgdogdev_pgdog_short.png"
+        "id": "codebuffai_codebuff",
+        "name": "codebuff",
+        "github_url": "https://github.com/CodebuffAI/codebuff",
+        "script_text": "codebuff is a TypeScript-based project that generate code from the terminal!. Codebuff is an open-source AI coding assistant that edits your codebase through natural language instructions. Instead of using one model for everything, it coordinates specialized agents that work together to understand your project and make precise changes. Codebuff beats Claude Code at 61 vs 53 Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate codebuff into their workflows to solve complex technical challenges more efficiently. Check out codebuff if you're working in this space.",
+        "img_path": "assets/codebuffai_codebuff_screen.png",
+        "audio_path": "assets/codebuffai_codebuff_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/codebuffai_codebuff_short.png"
     },
     {
-        "id": "vectifyai_pageindex",
-        "name": "PageIndex",
-        "github_url": "https://github.com/VectifyAI/PageIndex",
-        "script_text": "PageIndex provides a new approach to document retrieval that overcomes the limitations of traditional vector-based RAG. Unlike vector-based systems, PageIndex uses a reasoning-based index that allows for human-like retrieval without relying on a vector database or document chunking.\n\nThe key innovation behind PageIndex is an agentic, in-context tree index that enables large language models to perform reasoning-based retrieval directly over the full text of long documents. This eliminates the need for costly vector storage and computationally intensive chunking, resulting in more accurate and contextual responses.\n\nPageIndex's unique architecture enables professional users to interact with long-form documents, such as research papers and legal contracts, in a natural and intuitive way. By providing a vectorless, reasoning-based approach to retrieval, PageIndex aims to revolutionize how users access and extract insights from complex document collections.",
-        "img_path": "assets/vectifyai_pageindex_screen.png",
-        "audio_path": "assets/vectifyai_pageindex_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/vectifyai_pageindex_short.png"
+        "id": "googleworkspace_cli",
+        "name": "cli",
+        "github_url": "https://github.com/googleworkspace/cli",
+        "script_text": "cli is a Rust-based project that google workspace cli one command-line tool for drive, gmail, calendar, sheets, docs, chat, admin, and more. dynamically built from google discovery service. includes ai agent skills.. Drive, Gmail, Calendar, and every Workspace API. Zero boilerplate. Structured JSON output. 40 agent skills included. !IMPORTANT Temporarily disabling non-collaborator pull requests. See this discussion, https github.com googleworkspace cli discussions 249. This is not an officially suppor This project focuses on agent-skills, ai-agent, automation, cli, discovery-api, providing developers with specialized tools and capabilities in these areas. Built with Rust, it leverages the language's strengths to deliver reliable performance. Developers can integrate cli into their workflows to solve complex technical challenges more efficiently. cli is worth exploring for your next project.",
+        "img_path": "assets/googleworkspace_cli_screen.png",
+        "audio_path": "assets/googleworkspace_cli_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/googleworkspace_cli_short.png"
     },
     {
-        "id": "ruvnet_ruvector",
-        "name": "ruvector",
-        "github_url": "https://github.com/ruvnet/ruvector",
-        "script_text": "RuVector is a high-performance, real-time, self-learning vector graph neural network and database built in Rust. Unlike traditional vector databases that store and search data the same way every time, RuVector watches how you use it and automatically improves search results, tunes itself to your workload, and runs AI models directly on your hardware.\n\nWith 46 advanced attention mechanisms, including novel techniques like mincut-gated attention that can cut compute by 50%, RuVector delivers state-of-the-art vector similarity search. Its graph query engine allows you to explore relationships in your data, and transfer learning capabilities bootstrap new tasks from past experience.\n\nRuVector is a unique, open-source project that brings self-learning and agentic behavior to the world of databases, empowering developers to build intelligent, self-optimizing applications.",
-        "img_path": "assets/ruvnet_ruvector_screen.png",
-        "audio_path": "assets/ruvnet_ruvector_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/ruvnet_ruvector_short.png"
-    },
-    {
-        "id": "generalaction_emdash",
-        "name": "emdash",
-        "github_url": "https://github.com/generalaction/emdash",
-        "script_text": "Emdash is an open-source Agentic Development Environment that allows you to run multiple coding agents in parallel, either locally or over SSH on a remote machine. It supports over 20 CLI agents, including Claude Code, Qwen Code, Amp, and Codex.\n\nWith Emdash, you can directly pass Linear, GitHub, or Jira tickets to an agent, review diffs, test changes, create pull requests, see CI/CD checks, and merge. The platform is provider-agnostic, giving you the flexibility to work with your preferred tools and services.\n\nEmdash also enables you to develop on remote servers via SSH, with support for SSH agent and key authentication, and secure credential storage in your OS keychain. This allows you to run agents on remote projects using the same parallel workflow as local development.\n\nEmdash is designed to streamline your coding workflow and boost your productivity, making it an ideal tool for developers and engineering teams.",
-        "img_path": "assets/generalaction_emdash_screen.png",
-        "audio_path": "assets/generalaction_emdash_audio.mp3",
-        "short_img_path": "deliveries/02-27/shorts/generalaction_emdash_short.png"
+        "id": "rivet_dev_rivet",
+        "name": "rivet",
+        "github_url": "https://github.com/rivet-dev/rivet",
+        "script_text": "rivet is a Rust-based project that rivet actors are a serverless primitive for stateful workloads. each actor has built-in state, storage, workflows, scheduling, and websockets everything needed to build the next generation of software.. Rivet Actors are a serverless primitive for stateful workloads. Each actor has built-in state, storage, workflows, scheduling, and WebSockets everything needed to build the next generation of software. typescript import actor from \"rivetkit\" export const chatRoom actor( In-memory sta This project focuses on actor, actors, cloudflare, cloudflare-durable-objects, durable-objects, providing developers with specialized tools and capabilities in these areas. Built with Rust, it leverages the language's strengths to deliver reliable performance. Developers can integrate rivet into their workflows to solve complex technical challenges more efficiently. rivet is worth exploring for your next project.",
+        "img_path": "assets/rivet_dev_rivet_screen.png",
+        "audio_path": "assets/rivet_dev_rivet_audio.mp3",
+        "short_img_path": "deliveries/03-06/shorts/rivet_dev_rivet_short.png"
     }
 ]

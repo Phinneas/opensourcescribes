@@ -1,0 +1,74 @@
+Prefect Setup Guide for OpenSourceScribes
+============================================
+
+PROJECT IS NOW CONFIGURED FOR DEDICATED PREFECT SERVER
+
+Quick Start Options:
+
+OPTION 1: Automated Setup (Recommended)
+--------------------------------------
+./run_with_prefect.sh [orchestration|pipeline]
+
+- Automatically starts Prefect server
+- Runs the selected workflow
+- Cleans up server when done
+
+OPTION 2: Manual Two-Terminal Setup
+-----------------------------------
+Terminal 1:
+  ./START_PREFECT_SERVER.sh
+
+Terminal 2:
+  export PREFECT_API_URL="http://127.0.0.1:4200/api"
+  python3 orchestration.py
+  # or
+  python3 pipeline.py
+
+OPTION 3: Alternative (No Prefect)
+----------------------------------
+If Prefect continues to have issues, use:
+
+  source venv/bin/activate
+  python3 video_automated.py
+
+This provides the same functionality without Prefect dependency.
+
+WHAT CHANGES WERE MADE:
+-----------------------
+
+1. orchestration.py - Updated to use dedicated server
+2. pipeline.py - Updated to use dedicated server  
+3. run_with_prefect.sh - Created automated runner
+4. START_PREFECT_SERVER.sh - Created dedicated server starter
+5. prefect.toml - Created server configuration
+
+WHY DEDICATED SERVER?
+--------------------
+
+The ephemeral (temporary) Prefect server was timing out
+on complex flows with many tasks. A dedicated server is
+more stable and reliable for production workflows.
+
+TROUBLESHOOTING:
+---------------
+
+Issue: "Prefect server failed to start"
+Check: /tmp/prefect_server.log
+Fix: Make sure port 4200 is not in use
+
+Issue: "Timed out while attempting to connect"
+Fix: Use ./run_with_prefect.sh script which handles
+     proper server startup and connection
+
+Issue: Port already in use
+Fix: kill existing Prefect processes
+     pkill -f "prefect server"
+
+VERIFICATION:
+-------------
+Test that Prefect is working:
+
+  source venv/bin/activate
+  python3 -c "from prefect import flow, task; @flow; @task; print('Prefect OK')"
+
+Mistral is already working correctly.

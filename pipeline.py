@@ -6,6 +6,9 @@ persistent job state, and a live UI at localhost:4200.
 Run once:        python pipeline.py
 Run with UI:     prefect server start  (in a separate terminal)
                  python pipeline.py
+                 
+Or use the provided script:
+  ./run_with_prefect.sh
 """
 
 import asyncio
@@ -17,6 +20,9 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+# Configure for dedicated Prefect server
+os.environ.setdefault('PREFECT_API_URL', 'http://127.0.0.1:4200/api')
 
 from prefect import flow, task, get_run_logger
 from prefect.concurrency.sync import concurrency

@@ -886,5 +886,404 @@
       "timestamp": "2026-02-27T17:07:18.384679"
     },
     "timestamp": "2026-02-27T17:07:18.384697"
+  },
+  "rebase-energy/timedb": {
+    "data": {
+      "owner": "rebase-energy",
+      "repo": "timedb",
+      "stars": 71,
+      "forks": 8,
+      "language": "Python",
+      "description": "An open-source, opinionated time-series database built on PostgreSQL & TimescaleDB.",
+      "topics": [],
+      "url": "https://github.com/rebase-energy/timedb",
+      "timestamp": "2026-03-02T20:26:20.085252"
+    },
+    "timestamp": "2026-03-02T20:26:20.085276"
+  },
+  "buva7687/sql-crack": {
+    "data": {
+      "owner": "buva7687",
+      "repo": "sql-crack",
+      "stars": 94,
+      "forks": 2,
+      "language": "TypeScript",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/buva7687/sql-crack",
+      "timestamp": "2026-03-02T20:26:20.374428"
+    },
+    "timestamp": "2026-03-02T20:26:20.374437"
+  },
+  "oxc-project/oxc": {
+    "data": {
+      "owner": "oxc-project",
+      "repo": "oxc",
+      "stars": 19604,
+      "forks": 862,
+      "language": "Rust",
+      "description": "\u2693 A collection of high-performance JavaScript tools.",
+      "topics": [
+        "compiler",
+        "javascript",
+        "linter",
+        "minifier"
+      ],
+      "url": "https://github.com/oxc-project/oxc",
+      "timestamp": "2026-03-02T20:26:20.605234"
+    },
+    "timestamp": "2026-03-02T20:26:20.605242"
+  },
+  "moonshine-ai/moonshine": {
+    "data": {
+      "owner": "moonshine-ai",
+      "repo": "moonshine",
+      "stars": 6747,
+      "forks": 316,
+      "language": "C",
+      "description": "Fast and accurate automatic speech recognition (ASR) for edge devices",
+      "topics": [],
+      "url": "https://github.com/moonshine-ai/moonshine",
+      "timestamp": "2026-03-02T20:26:20.814026"
+    },
+    "timestamp": "2026-03-02T20:26:20.814040"
+  },
+  "D4Vinci/Scrapling": {
+    "data": {
+      "owner": "D4Vinci",
+      "repo": "Scrapling",
+      "stars": 20199,
+      "forks": 1385,
+      "language": "Python",
+      "description": "\ud83d\udd77\ufe0f An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!",
+      "topics": [
+        "ai",
+        "ai-scraping",
+        "automation",
+        "crawler"
+      ],
+      "url": "https://github.com/D4Vinci/Scrapling",
+      "timestamp": "2026-03-02T20:26:21.022129"
+    },
+    "timestamp": "2026-03-02T20:26:21.022140"
+  },
+  "terramate-io/terramate": {
+    "data": {
+      "owner": "terramate-io",
+      "repo": "terramate",
+      "stars": 3541,
+      "forks": 115,
+      "language": "Go",
+      "description": "Open-source Infrastructure as Code (IaC) orchestration platform: GitOps workflows, orchestration, code generation, observability, drift detection, asset management, policies, Slack notifications, and more. Integrates with Terraform, OpenTofu, Terragrunt, Kubernetes, GitHub Actions, GitLab CI/CD, BitBucket Pipelines, and any other CI/CD platform.",
+      "topics": [],
+      "url": "https://github.com/terramate-io/terramate",
+      "timestamp": "2026-03-02T20:26:21.256452"
+    },
+    "timestamp": "2026-03-02T20:26:21.256465"
+  },
+  "flamestro/deff": {
+    "data": {
+      "owner": "flamestro",
+      "repo": "deff",
+      "stars": 363,
+      "forks": 9,
+      "language": "Rust",
+      "description": "interactive, side-by-side file review for git diffs with per-file navigation, vertical and horizontal scrolling, syntax highlighting, and added/deleted line tinting",
+      "topics": [],
+      "url": "https://github.com/flamestro/deff",
+      "timestamp": "2026-03-02T20:26:21.501570"
+    },
+    "timestamp": "2026-03-02T20:26:21.501588"
+  },
+  "ghostty-org/ghostty": {
+    "data": {
+      "owner": "ghostty-org",
+      "repo": "ghostty",
+      "stars": 45241,
+      "forks": 1783,
+      "language": "Zig",
+      "description": "\ud83d\udc7b Ghostty is a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.",
+      "topics": [],
+      "url": "https://github.com/ghostty-org/ghostty",
+      "timestamp": "2026-03-02T20:26:21.721829"
+    },
+    "timestamp": "2026-03-02T20:26:21.721836"
+  },
+  "superset-sh/superset": {
+    "data": {
+      "owner": "superset-sh",
+      "repo": "superset",
+      "stars": 3611,
+      "forks": 245,
+      "language": "TypeScript",
+      "description": "IDE for the AI Agents Era - Run an army of Claude Code, Codex, etc. on your machine",
+      "topics": [
+        "agentic-ai",
+        "ai-agents",
+        "claude-code",
+        "cli"
+      ],
+      "url": "https://github.com/superset-sh/superset",
+      "timestamp": "2026-03-02T20:26:21.930106"
+    },
+    "timestamp": "2026-03-02T20:26:21.930112"
+  },
+  "hardwood-hq/hardwood": {
+    "data": {
+      "owner": "hardwood-hq",
+      "repo": "hardwood",
+      "stars": 194,
+      "forks": 12,
+      "language": "Java",
+      "description": "A minimal dependency implementation of Apache Parquet",
+      "topics": [],
+      "url": "https://github.com/hardwood-hq/hardwood",
+      "timestamp": "2026-03-02T20:26:22.170066"
+    },
+    "timestamp": "2026-03-02T20:26:22.170081"
+  },
+  "rivet-dev/rivet": {
+    "data": {
+      "owner": "rivet-dev",
+      "repo": "rivet",
+      "stars": 5171,
+      "forks": 158,
+      "language": "Rust",
+      "description": "Rivet Actors are a serverless primitive for stateful workloads. Each actor has built-in state, storage, workflows, scheduling, and WebSockets \u2014 everything needed to build the next generation of software.",
+      "topics": [
+        "actor",
+        "actors",
+        "cloudflare",
+        "cloudflare-durable-objects"
+      ],
+      "url": "https://github.com/rivet-dev/rivet",
+      "timestamp": "2026-03-06T10:46:30.639429"
+    },
+    "timestamp": "2026-03-06T10:46:30.639444"
+  },
+  "microsoft/markitdown": {
+    "data": {
+      "owner": "microsoft",
+      "repo": "markitdown",
+      "stars": 89722,
+      "forks": 5257,
+      "language": "Python",
+      "description": "Python tool for converting files and office documents to Markdown.",
+      "topics": [
+        "autogen",
+        "autogen-extension",
+        "langchain",
+        "markdown"
+      ],
+      "url": "https://github.com/microsoft/markitdown",
+      "timestamp": "2026-03-02T20:26:22.614920"
+    },
+    "timestamp": "2026-03-02T20:26:22.614932"
+  },
+  "NevaMind-AI/memU": {
+    "data": {
+      "owner": "NevaMind-AI",
+      "repo": "memU",
+      "stars": 12377,
+      "forks": 897,
+      "language": "Python",
+      "description": "Memory for 24/7 proactive agents like openclaw (moltbot, clawdbot).",
+      "topics": [
+        "agent-memory",
+        "agentic-workflow",
+        "claude",
+        "claude-skills"
+      ],
+      "url": "https://github.com/NevaMind-AI/memU",
+      "timestamp": "2026-03-02T20:26:22.865924"
+    },
+    "timestamp": "2026-03-02T20:26:22.865933"
+  },
+  "j178/prek": {
+    "data": {
+      "owner": "j178",
+      "repo": "prek",
+      "stars": 6651,
+      "forks": 178,
+      "language": "Rust",
+      "description": "\u26a1 Better `pre-commit`, re-engineered in Rust",
+      "topics": [
+        "git",
+        "git-hooks",
+        "pre-commit"
+      ],
+      "url": "https://github.com/j178/prek",
+      "timestamp": "2026-03-02T20:26:23.080662"
+    },
+    "timestamp": "2026-03-02T20:26:23.080671"
+  },
+  "Agent-Field/SWE-AF": {
+    "data": {
+      "owner": "Agent-Field",
+      "repo": "SWE-AF",
+      "stars": 320,
+      "forks": 48,
+      "language": "Python",
+      "description": "Autonomous software engineering fleet of AI agents for production-grade PRs on AgentField: plan, code, test, and ship.",
+      "topics": [
+        "agent-factory",
+        "agentfield",
+        "agentic-ai",
+        "ai-agents"
+      ],
+      "url": "https://github.com/Agent-Field/SWE-AF",
+      "timestamp": "2026-03-06T10:20:59.459421"
+    },
+    "timestamp": "2026-03-06T10:20:59.459437"
+  },
+  "expo/skills": {
+    "data": {
+      "owner": "expo",
+      "repo": "skills",
+      "stars": 1355,
+      "forks": 59,
+      "language": "JavaScript",
+      "description": "A collection of AI agent skills for working with Expo projects and Expo Application Services",
+      "topics": [],
+      "url": "https://github.com/expo/skills",
+      "timestamp": "2026-03-06T10:20:59.962124"
+    },
+    "timestamp": "2026-03-06T10:20:59.962134"
+  },
+  "zion-off/giggles": {
+    "data": {
+      "owner": "zion-off",
+      "repo": "giggles",
+      "stars": 177,
+      "forks": 3,
+      "language": "TypeScript",
+      "description": "batteries-included react framework for building rich terminal apps",
+      "topics": [
+        "cli",
+        "ink",
+        "tui"
+      ],
+      "url": "https://github.com/zion-off/giggles",
+      "timestamp": "2026-03-06T10:21:00.447341"
+    },
+    "timestamp": "2026-03-06T10:21:00.447348"
+  },
+  "zion-off/clairo": {
+    "data": {
+      "owner": "zion-off",
+      "repo": "clairo",
+      "stars": 1,
+      "forks": 0,
+      "language": "TypeScript",
+      "description": "tui for jira and github",
+      "topics": [],
+      "url": "https://github.com/zion-off/clairo",
+      "timestamp": "2026-03-06T10:21:00.848399"
+    },
+    "timestamp": "2026-03-06T10:21:00.848739"
+  },
+  "vadimdemedes/ink": {
+    "data": {
+      "owner": "vadimdemedes",
+      "repo": "ink",
+      "stars": 35398,
+      "forks": 857,
+      "language": "TypeScript",
+      "description": "\ud83c\udf08 React for interactive command-line apps",
+      "topics": [
+        "cli",
+        "command-line",
+        "flexbox",
+        "interactive"
+      ],
+      "url": "https://github.com/vadimdemedes/ink",
+      "timestamp": "2026-03-06T10:21:01.258920"
+    },
+    "timestamp": "2026-03-06T10:21:01.259065"
+  },
+  "facebook/yoga": {
+    "data": {
+      "owner": "facebook",
+      "repo": "yoga",
+      "stars": 18740,
+      "forks": 1518,
+      "language": "C++",
+      "description": "Yoga is an embeddable layout engine targeting web standards.",
+      "topics": [],
+      "url": "https://github.com/facebook/yoga",
+      "timestamp": "2026-03-06T10:21:01.540631"
+    },
+    "timestamp": "2026-03-06T10:21:01.540643"
+  },
+  "hoppscotch/hoppscotch": {
+    "data": {
+      "owner": "hoppscotch",
+      "repo": "hoppscotch",
+      "stars": 78185,
+      "forks": 5619,
+      "language": "TypeScript",
+      "description": "Open-Source API Development Ecosystem \u2022 https://hoppscotch.io \u2022 Offline, On-Prem & Cloud \u2022 Web, Desktop & CLI \u2022 Open-Source Alternative to Postman, Insomnia",
+      "topics": [
+        "api",
+        "api-client",
+        "api-rest",
+        "api-testing"
+      ],
+      "url": "https://github.com/hoppscotch/hoppscotch",
+      "timestamp": "2026-03-06T10:21:02.017126"
+    },
+    "timestamp": "2026-03-06T10:21:02.017153"
+  },
+  "alibaba/OpenSandbox": {
+    "data": {
+      "owner": "alibaba",
+      "repo": "OpenSandbox",
+      "stars": 6524,
+      "forks": 470,
+      "language": "Python",
+      "description": "OpenSandbox is a general-purpose sandbox platform for AI applications, offering multi-language SDKs, unified sandbox APIs, and Docker/Kubernetes runtimes for scenarios like Coding Agents, GUI Agents, Agent Evaluation, AI Code Execution, and RL Training.",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-infra",
+        "kubernetes"
+      ],
+      "url": "https://github.com/alibaba/OpenSandbox",
+      "timestamp": "2026-03-06T10:21:02.345585"
+    },
+    "timestamp": "2026-03-06T10:21:02.345595"
+  },
+  "react-native-vibe-code/react-native-vibe-code-sdk": {
+    "data": {
+      "owner": "react-native-vibe-code",
+      "repo": "react-native-vibe-code-sdk",
+      "stars": 130,
+      "forks": 21,
+      "language": "TypeScript",
+      "description": "The React Native Vibe Code SDK lets you build text to mobile & web apps in seconds. A full suite of packages to run your your own vibe coding features or platform. Try cloud version at https://reactnativevibecode.com",
+      "topics": [],
+      "url": "https://github.com/react-native-vibe-code/react-native-vibe-code-sdk",
+      "timestamp": "2026-03-06T10:21:02.670270"
+    },
+    "timestamp": "2026-03-06T10:21:02.670345"
+  },
+  "googleworkspace/cli": {
+    "data": {
+      "owner": "googleworkspace",
+      "repo": "cli",
+      "stars": 13789,
+      "forks": 468,
+      "language": "Rust",
+      "description": "Google Workspace CLI \u2014 one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service. Includes AI agent skills.",
+      "topics": [
+        "agent-skills",
+        "ai-agent",
+        "automation",
+        "cli"
+      ],
+      "url": "https://github.com/googleworkspace/cli",
+      "timestamp": "2026-03-06T10:21:03.018575"
+    },
+    "timestamp": "2026-03-06T10:21:03.018583"
   }
 }

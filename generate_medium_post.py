@@ -119,13 +119,13 @@ def generate_full_post(projects):
     
     PROMO_LINKS = (
         "Featured Newsletters & Resources\n"
-        "- Subscribe to my Medium: https://chesterbeard.medium.com/subscribe\n"
-        "- FinOps Weekly: https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3\n"
-        "- The Multiverse School: https://themultiverseschool.substack.com?r=ykyfl\n"
-        "- Earth Conscious Life: https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr\n"
-        "- My MCP Shelf Directory: https://www.mymcpshelf.com/\n"
-        "- Pikapods with AWS Hosting Tutorial: https://www.salishseaconsulting.com/blog/pikapods/\n"
-        "- Firecrawl MCP Server: https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/\n"
+        "- [Subscribe to my Medium](https://chesterbeard.medium.com/subscribe)\n"
+        "- [FinOps Weekly](https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3)\n"
+        "- [The Multiverse School](https://themultiverseschool.substack.com?r=ykyfl)\n"
+        "- [Earth Conscious Life](https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr)\n"
+        "- [My MCP Shelf Directory](https://www.mymcpshelf.com/)\n"
+        "- [Pikapods with AWS Hosting Tutorial](https://www.salishseaconsulting.com/blog/pikapods/)\n"
+        "- [Firecrawl MCP Server](https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/)\n"
     )
 
     # 1. Introduction
@@ -136,7 +136,7 @@ def generate_full_post(projects):
         cliche_filter=CLICHE_FILTER,
         promo_links=PROMO_LINKS
     ))
-    full_content.append(f"# {n_projects} Open-Source Projects for Your Dev Stack\n")
+    full_content.append(f"{n_projects} Open-Source Projects for Your Dev Stack\n")
     full_content.append(intro)
     full_content.append("\n---\n")
     

@@ -1,0 +1,12 @@
+https://github.com/Agent-Field/SWE-AF
+https://github.com/expo/skills
+https://github.com/zion-off/giggles
+https://github.com/zion-off/clairo
+https://github.com/vadimdemedes/ink
+https://github.com/facebook/yoga
+https://github.com/hoppscotch/hoppscotch
+https://github.com/alibaba/OpenSandbox
+https://github.com/react-native-vibe-code/react-native-vibe-code-sdk
+https://github.com/CodebuffAI/codebuff
+https://github.com/googleworkspace/cli
+https://github.com/rivet-dev/rivet

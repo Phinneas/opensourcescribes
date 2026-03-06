@@ -7,7 +7,15 @@ A complete Prefect workflow that manages:
 4. Content Suite (Medium, Reddit, Substack, YouTube Description)
 
 Usage:
+  # Start dedicated server first:
+  prefect server start
+  
+  # Then run orchestration:
+  export PREFECT_API_URL="http://127.0.0.1:4200/api"
   python orchestration.py
+  
+  # Or use the provided script:
+  ./run_with_prefect.sh
 """
 
 import asyncio
@@ -19,6 +27,9 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, List
+
+# Configure for dedicated Prefect server
+os.environ.setdefault('PREFECT_API_URL', 'http://127.0.0.1:4200/api')
 
 from prefect import flow, task, get_run_logger
 from prefect.concurrency.sync import concurrency
@@ -194,11 +205,11 @@ def concatenate_task(segment_files: List[str], output_path: str) -> str:
     return output_path
 
 @task(name="render-remotion-video", log_prints=True)
-def render_remotion_video_task(composition_id: str, props: dict, output_name: str) -> str:
+def render_remotion_video_task(composition_id: str, props: dict, output_path: str) -> str:
     """Invokes the local Remotion project to render a video."""
     logger = get_run_logger()
     remotion_dir = str(Path(__file__).parent / "remotion_video")
-    output_path = str(Path(OUTPUT_FOLDER) / output_name)
+    output_path = str(Path(output_path).resolve())
     
     logger.info(f"🎥 Rendering Remotion composition '{composition_id}' to: {output_path}")
     
@@ -213,15 +224,14 @@ def render_remotion_video_task(composition_id: str, props: dict, output_name: st
             "npx", "remotion", "render", composition_id, output_path,
             "--props", f"props_{composition_id}.json"
         ]
-        subprocess.run(cmd, cwd=remotion_dir, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        subprocess.run(cmd, cwd=remotion_dir, check=True)
         logger.info(f"✅ Remotion render complete: {output_path}")
         return output_path
     except subprocess.CalledProcessError as e:
-        logger.error(f"❌ Remotion render failed: {e.stderr.decode('utf-8')}")
+        logger.error(f"❌ Remotion render failed")
         raise
     finally:
-        # Clean up the temporary props file
-        Path(props_fp).unlink(missing_ok=True)
+        pass # dont delete so we can debug
 
 # ── New Content & Derivative Tasks ──────────────────────────────────────────
 
@@ -342,7 +352,7 @@ def production_pipeline():
     # helper for precise lengths
     def add_clip(src, dur, ctype, name="", url=""):
         props["clips"].append({
-            "src": f"file://{os.path.abspath(src)}",
+            "src": f"assets/{os.path.basename(src)}",
             "durationInSeconds": dur,
             "type": ctype,
             "name": name,
@@ -365,7 +375,7 @@ def production_pipeline():
     add_clip(outro_seg, 5.0, "outro")
 
     # longform_video = concatenate_task(segment_files, LONGFORM_VIDEO)
-    longform_video = render_remotion_video_task("Main", props, "longform_github_roundup.mp4")
+    longform_video = render_remotion_video_task("Main", props, LONGFORM_VIDEO)
 
     # 5. Phase 4: Derivative Content (Parallel)
     logger.info("⚡ PHASE 4: CONTENT SUITE & DERIVATIVES")

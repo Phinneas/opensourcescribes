@@ -50,7 +50,7 @@ def generate_description():
     
     # --- HEADER ---
     today = datetime.date.today().strftime("%b %Y")
-    output.append(f"# {len(projects)} Trending Open Source Projects ({today})")
+    output.append(f"{len(projects)} Trending Open Source Projects ({today})")
     output.append("")
     output.append("In this episode of Open Source Scribes, we explore a collection of open source tools designed to improve development efficiency. From infrastructure automation to new frameworks, here are the latest repositories from GitHub covered in today's roundup.")
     output.append("")
@@ -59,7 +59,7 @@ def generate_description():
     output.append("")
     output.append("---")
     output.append("")
-    output.append("## ⏱️ **Timestamps & Links**")
+    output.append("## ⏱️  Timestamps & Links ")
     output.append("")
 
     # --- TIMESTAMPS ---
@@ -80,7 +80,7 @@ def generate_description():
     
     for i, project in enumerate(projects):
         # Calculate start time for this project
-        output.append(f"{format_timestamp(current_time)} - **{project['name']}**")
+        output.append(f"{format_timestamp(current_time)} - {project['name']}")
         output.append(f"🔗 {project['github_url']}")
         output.append("")
         
@@ -109,12 +109,12 @@ def generate_description():
     # --- FOOTER ---
     output.append("---")
     output.append("")
-    output.append("## 🏷️ **Tags**")
+    output.append("## 🏷️  Tags ")
     output.append("#opensource #github #programming #webdevelopment #coding #tech #softwareengineering #python #javascript #devtools")
     output.append("")
     output.append("---")
     output.append("")
-    output.append("**Disclaimer:** This video is for educational purposes. All project information corresponds to the state of the repositories at the time of recording.")
+    output.append(" Disclaimer:  This video is for educational purposes. All project information corresponds to the state of the repositories at the time of recording.")
 
     # Write to file
     final_content = "\n".join(output)

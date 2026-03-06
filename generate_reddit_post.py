@@ -132,13 +132,13 @@ def generate_full_post(projects):
     full_content.append(f"# {n_projects} Trending Open-Source Projects ({month_year})\n")
     
     PROMO_LINKS = (
-        "Featured Newsletters & Resources\n"
-        "- FinOps Weekly: https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3\n"
-        "- The Multiverse School: https://themultiverseschool.substack.com?r=ykyfl\n"
-        "- Earth Conscious Life: https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr\n"
-        "- My MCP Shelf Directory: https://www.mymcpshelf.com/\n"
-        "- Pikapods with AWS Hosting Tutorial: https://www.salishseaconsulting.com/blog/pikapods/\n"
-        "- Firecrawl MCP Server: https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/\n"
+        "**Featured Newsletters & Resources**\n\n"
+        "* [FinOps Weekly](https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3)\n"
+        "* [The Multiverse School](https://themultiverseschool.substack.com?r=ykyfl)\n"
+        "* [Earth Conscious Life](https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr)\n"
+        "* [My MCP Shelf Directory](https://www.mymcpshelf.com/)\n"
+        "* [Pikapods with AWS Hosting Tutorial](https://www.salishseaconsulting.com/blog/pikapods/)\n"
+        "* [Firecrawl MCP Server](https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/)\n"
     )
 
     # 1. Introduction

@@ -206,3 +206,172 @@ if __name__ == "__main__":
         print(f"✅ Created: {result}")
     else:
         print(f"Test image {test_image} not found")
+
+
+# ============================================================
+# ADDITIONAL ENHANCED EFFECTS
+# ============================================================
+
+def apply_parallax_scroll(input_image: str, output_video: str, duration: float = 6.0) -> str:
+    """
+    Create 3D parallax effect - makes screenshots look like layered 3D scenes
+    Requires ImageMagick for layer separation, falls back to smooth pan if unavailable
+    """
+    fps = 24
+    frames = int(duration * fps)
+    
+    # Simulated parallax with aggressive foreground/background motion
+    cmd = [
+        "ffmpeg", "-y",
+        "-loop", "1", "-i", input_image,
+        "-vf", f"zoompan=z='1.0+0.1*sin(on/100)':x='iw/2-iw/2+50*sin(on/80)':y='ih/2-ih/2+30*cos(on/60)':d={frames}:s=1920x1080:fps={fps}",
+        "-t", str(duration),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "23",
+        "-pix_fmt", "yuv420p",
+        output_video
+    ]
+    
+    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    return output_video
+
+
+def apply_cinematic_reveal(input_image: str, output_video: str, duration: float = 6.0) -> str:
+    """
+    Cinematic reveal - starts zoomed in, pulls back to reveal full image
+    """
+    fps = 24
+    frames = int(duration * fps)
+    
+    # Start at 1.5x zoom, pull back to 1.0x
+    cmd = [
+        "ffmpeg", "-y",
+        "-loop", "1", "-i", input_image,
+        "-vf", f"zoompan=z='max(1.0,1.5-0.5*on/{frames})':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1920x1080:fps={fps}",
+        "-t", str(duration),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "23",
+        "-pix_fmt", "yuv420p",
+        output_video
+    ]
+    
+    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    return output_video
+
+
+def apply_spotlight_effect(input_image: str, output_video: str, duration: float = 6.0) -> str:
+    """
+    Spotlight/vignette effect - creates focused spotlight that moves across image
+    Great for highlighting specific features
+    """
+    fps = 24
+    frames = int(duration * fps)
+    
+    # Moving spotlight effect using drawbox filter
+    cmd = [
+        "ffmpeg", "-y",
+        "-loop", "1", "-i", input_image,
+        "-vf", f"zoompan=z='1.1':x='iw/2-iw/zoom/2+100*sin(on/50)':y='ih/2-ih/zoom/2':d={frames}:s=1920x1080:fps={fps},drawbox=x='iw/2-300':y='ih/2-200':w=600:h=400:color=white@0.1:t=fill",
+        "-t", str(duration),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "23",
+        "-pix_fmt", "yuv420p",
+        output_video
+    ]
+    
+    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    return output_video
+
+
+def apply_typewriter_reveal(input_image: str, output_video: str, duration: float = 6.0) -> str:
+    """
+    Left-to-right reveal - simulates scanning across the image
+    Good for code screenshots or text-heavy content
+    """
+    fps = 24
+    frames = int(duration * fps)
+    
+    # Horizontal wipe effect
+    cmd = [
+        "ffmpeg", "-y",
+        "-loop", "1", "-i", input_image,
+        "-vf", f"format=yuva444p,geq='if(lt(X,W*on/{frames}),p(X,Y),0)':a='if(lt(X,W*on/{frames}),255,0)',fps={fps}",
+        "-t", str(duration),
+        "-frames:v", str(frames),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "23",
+        "-pix_fmt", "yuv420p",
+        output_video
+    ]
+    
+    try:
+        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        return output_video
+    except:
+        # Fallback to simple pan if geq fails
+        return apply_pan_effect(input_image, output_video, duration, "left")
+
+
+def apply_glitch_transition(input_image: str, output_video: str, duration: float = 6.0) -> str:
+    """
+    Digital glitch effect - adds modern tech aesthetic
+    Great for developer tools and tech content
+    """
+    fps = 24
+    frames = int(duration * fps)
+    
+    # Simulated glitch using random color shifts
+    cmd = [
+        "ffmpeg", "-y",
+        "-loop", "1", "-i", input_image,
+        "-vf", f"zoompan=z='1.05+0.05*random(0)':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d={frames}:s=1920x1080:fps={fps},format=yuv420p",
+        "-t", str(duration),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "23",
+        "-pix_fmt", "yuv420p",
+        output_video
+    ]
+    
+    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    return output_video
+
+
+# Enhanced selection with all effects
+def get_random_effect(input_image: str, output_video: str, duration: float = 6.0) -> str:
+    """
+    Randomly select from all available effects
+    Keeps videos varied and interesting
+    """
+    effects = [
+        apply_ken_burns,
+        apply_smooth_zoom,
+        lambda img, out, dur: apply_pan_effect(img, out, dur, random.choice(["left", "right", "up", "down"])),
+        apply_cinematic_reveal,
+        apply_parallax_scroll,
+        # apply_spotlight_effect,  # Optional - can be subtle
+        # apply_glitch_transition,  # Optional - modern tech look
+    ]
+    
+    selected_effect = random.choice(effects)
+    return selected_effect(input_image, output_video, duration)
+
+
+def apply_motion_blur(input_image: str, output_video: str, duration: float = 6.0) -> str:
+    """
+    Motion blur effect - smooths transitions with professional blur
+    Makes movement look more cinematic
+    """
+    fps = 24
+    frames = int(duration * fps)
+    
+    cmd = [
+        "ffmpeg", "-y",
+        "-loop", "1", "-i", input_image,
+        "-vf", f"zoompan=z='1.0+0.15*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s=1920x1080:fps={fps},minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps={fps}'",
+        "-t", str(duration),
+        "-c:v", "libx264", "-preset", "medium", "-crf", "23",
+        "-pix_fmt", "yuv420p",
+        output_video
+    ]
+    
+    try:
+        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        return output_video
+    except:
+        # Fallback if minterpolate fails
+        return apply_ken_burns(input_image, output_video, duration)

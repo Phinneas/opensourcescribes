@@ -1,0 +1,139 @@
+import json
+import os
+import subprocess
+import datetime
+import re
+
+def get_duration(filepath):
+    """Get duration of a video file in seconds using ffprobe"""
+    if not os.path.exists(filepath):
+        return 0
+    
+    cmd = [
+        'ffprobe', 
+        '-v', 'error', 
+        '-show_entries', 'format=duration', 
+        '-of', 'default=noprint_wrappers=1:nokey=1', 
+        filepath
+    ]
+    try:
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        return float(result.stdout.strip())
+    except (ValueError, subprocess.SubprocessError):
+        return 0
+
+def format_timestamp(seconds):
+    """Convert seconds to MM:SS format"""
+    m, s = divmod(int(seconds), 60)
+    return f"{m}:{s:02d}"
+
+def generate_description():
+    """Generate YouTube description from posts_data.json and video assets"""
+    
+    # Load project data - use current generated data by default
+    data_file = 'posts_data.json'
+    if not os.path.exists(data_file):
+        print(f"ℹ️  {data_file} not found, falling back to posts_data_longform.json")
+        data_file = 'posts_data_longform.json'
+        
+    if not os.path.exists(data_file):
+        print(f"❌ {data_file} not found")
+        return
+
+    with open(data_file, 'r') as f:
+        projects = json.load(f)
+        
+    print(f"found {len(projects)} projects from {data_file}")
+
+    # Start constructing description
+    output = []
+    
+    # --- HEADER ---
+    today = datetime.date.today().strftime("%b %Y")
+    output.append(f"{len(projects)} Trending Open Source Projects ({today})")
+    output.append("")
+    output.append("In this episode of Open Source Scribes, we explore a collection of open source tools designed to improve development efficiency. From infrastructure automation to new frameworks, here are the latest repositories from GitHub covered in today's roundup.")
+    output.append("")
+    output.append(f"Subscribe for technical walkthroughs of new open source repositories: https://youtube.com/@opensourcescribes?sub_confirmation=1")
+    output.append(f"Read the full technical breakdown on Medium: https://medium.com/sourcescribes")
+    output.append("")
+    output.append("---")
+    output.append("")
+    output.append("## ⏱️  Timestamps & Links ")
+    output.append("")
+
+    # --- TIMESTAMPS ---
+    current_time = 0.0
+    
+    # 1. Intro
+    # Use intro_audio.mp3 duration if it exists, otherwise default to config (usually 3s) or estimate
+    intro_audio_path = "assets/intro_audio.mp3"
+    intro_dur = get_duration(intro_audio_path)
+    if intro_dur == 0:
+        intro_dur = 3.0 # Fallback estimate
+        
+    output.append(f"{format_timestamp(current_time)} - Intro")
+    current_time += intro_dur
+    
+    # 2. Projects
+    midpoint = len(projects) // 2
+    
+    for i, project in enumerate(projects):
+        # Calculate start time for this project
+        output.append(f"{format_timestamp(current_time)} - {project['name']}")
+        output.append(f"🔗 {project['github_url']}")
+        output.append("")
+        
+        # Get audio duration for this project
+        project_id = project.get('id')
+        if not project_id:
+             safe_id = re.sub(r'[^a-zA-Z0-9]', '_', project['name']).lower()
+             project_id = safe_id
+             
+        audio_path = f"assets/{project_id}_audio.mp3"
+        seg_dur = get_duration(audio_path)
+        
+        # Add duration to current time
+        current_time += seg_dur
+        
+        # Check for mid-roll subscribe logic (aligned with video_automated.py - after project 2 index 1)
+        if i == 1:
+            sub_path = "assets/subscribe_audio.mp3"
+            sub_dur = get_duration(sub_path)
+            if sub_dur > 0:
+                current_time += sub_dur
+
+        # Add light spacing
+        # output.append("")
+        
+    # --- FOOTER ---
+    output.append("---")
+    output.append("")
+    output.append("## 🏷️  Tags ")
+    output.append("#opensource #github #programming #webdevelopment #coding #tech #softwareengineering #python #javascript #devtools")
+    output.append("")
+    output.append("---")
+    output.append("")
+    output.append(" Disclaimer:  This video is for educational purposes. All project information corresponds to the state of the repositories at the time of recording.")
+
+    # Write to file
+    final_content = "\n".join(output)
+    
+    # Use organized delivery structure (MM-DD format)
+    current_date_mmdd = os.environ.get("DELIVERY_DATE", datetime.datetime.now().strftime("%m-%d"))
+    delivery_folder = os.path.join("deliveries", current_date_mmdd)
+    output_path = os.path.join(delivery_folder, 'YOUTUBE_DESCRIPTION.md')
+    
+    # Ensure folder exists
+    os.makedirs(delivery_folder, exist_ok=True)
+    
+    with open(output_path, 'w') as f:
+        f.write(final_content)
+        
+    print(f"\n✅ Generated {output_path}")
+    print("-" * 40)
+    print(final_content)
+    print("-" * 40)
+
+if __name__ == "__main__":
+    generate_description()

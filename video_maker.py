@@ -245,7 +245,103 @@ def create_static_segment(image_path, duration, output_name, audio_path=None):
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     return output_path
 
-def assemble_video_fast(project_data, episode_title=None):
+def create_segment_with_overlay(project, index, use_remotion_overlays=True):
+    """Create a video segment with Remotion overlay composited"""
+    from ffmpeg_enhancements import get_random_effect
+    import subprocess
+    
+    # Reconstruct paths if not in JSON
+    if 'img_path' not in project:
+         image_path = os.path.join(OUTPUT_FOLDER, f"{project['id']}_screen.png")
+         audio_path = os.path.join(OUTPUT_FOLDER, f"{project['id']}_audio.mp3")
+    else:
+         image_path = project['img_path']
+         audio_path = project['audio_path']
+
+    # Get audio duration
+    result = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", audio_path],
+        capture_output=True, text=True, check=True
+    )
+    duration = float(result.stdout.strip())
+    
+    # Create Ken Burns video
+    ken_burns_video = f"temp_ken_burns_{project['id']}.mp4"
+    get_random_effect(image_path, ken_burns_video, duration)
+    
+    output_segment = os.path.join(OUTPUT_FOLDER, f"segment_{index:03d}.mp4")
+    
+    if not use_remotion_overlays:
+        # Fallback to standard segment
+        cmd = [
+            'ffmpeg', '-y',
+            '-i', ken_burns_video,
+            '-i', audio_path,
+            '-c:v', 'libx264', '-preset', 'medium', '-c:a', 'aac',
+            '-shortest',
+            output_segment
+        ]
+        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        os.remove(ken_burns_video)
+        return output_segment
+
+    # Get or generate overlay
+    overlay_path = f"assets/overlay_{project['id']}.mp4"
+    if not os.path.exists(overlay_path):
+        print(f"  Generating overlay for {project['name']}...")
+        from remotion_overlay_generator import OverlayGenerator
+        generator = OverlayGenerator()
+        generator.batch_generate_overlays([project])
+    
+    # Compose overlay with Ken Burns video
+    cmd = [
+        'ffmpeg', '-y',
+        '-i', ken_burns_video,
+        '-i', overlay_path,
+        '-filter_complex', 
+        f'[1:v]format=rgba,colorchannelmixer=aa=0.95[ov];[0:v][ov]overlay=enable="between(t,1,{duration-1})"[v]',
+        '-map', '[v]', 
+        '-map', f'{ken_burns_video}:a',
+        '-c:v', 'libx264', '-preset', 'medium', '-c:a', 'aac',
+        '-shortest',
+        output_segment
+    ]
+    
+    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    
+    # Cleanup temp file
+    os.remove(ken_burns_video)
+    
+    return output_segment
+
+def select_transition(project_index, total_projects, segment_duration):
+    """Select appropriate transition based on context"""
+    import random
+    transitions_dir = "assets/transitions"
+    
+    # Determine transition type based on position
+    if project_index % 3 == 0:
+        transition_type = 'loader'
+    elif segment_duration < 5:
+        transition_type = 'wipe'
+    elif segment_duration > 10:
+        transition_type = 'dissolve'
+    else:
+        transition_type = random.choice(['wipe', 'zoom'])
+    
+    # Get available transitions
+    if os.path.exists(transitions_dir):
+        matching_files = [
+            f for f in os.listdir(transitions_dir)
+            if f.startswith(transition_type) and f.endswith('.mp4')
+        ]
+        if matching_files:
+            return os.path.join(transitions_dir, random.choice(matching_files))
+    
+    return None
+
+def assemble_video_fast(project_data, episode_title=None, use_overlays=True, use_transitions=True):
     """Assemble final video using fast FFmpeg concatenation"""
     if not project_data:
         print("❌ No project data to assemble.")
@@ -277,7 +373,7 @@ def assemble_video_fast(project_data, episode_title=None):
         # Ensure 'id' is present
         if 'id' not in project:
             project['id'] = f'p{i+1}'
-        segment_files.append(create_segment(project, i))
+        segment_files.append(create_segment_with_overlay(project, i, use_overlays))
         
         # INSERT SUBSCRIBE SEGMENT
         if i == midpoint - 1:
@@ -285,7 +381,25 @@ def assemble_video_fast(project_data, episode_title=None):
              if os.path.exists(sub_card_path) and os.path.exists(sub_audio_path):
                  sub_seg = create_static_segment(sub_card_path, 0, "seg_subscribe.mp4", audio_path=sub_audio_path)
                  segment_files.append(sub_seg)
-        
+                 
+
+        # ADD TRANSITION between segments
+        if use_transitions and i < len(project_data) - 1:
+            # Get segment duration
+            result = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                 "-of", "default=noprint_wrappers=1:nokey=1", project['audio_path']],
+                capture_output=True, text=True, check=True, silent=True
+            )
+            segment_duration = float(result.stdout.strip()) if result.stdout else 0
+            
+            # Skip transition after subscribe segment
+            if i != midpoint - 1:
+                transition = select_transition(i, len(project_data), segment_duration)
+                if transition and os.path.exists(transition):
+                    print(f"  Adding transition: {os.path.basename(transition)}")
+                    segment_files.append(transition)
+    
     # 3. Outro
     if os.path.exists(outro_path):
         segment_files.append(create_static_segment(outro_path, CONFIG['video_settings']['outro_duration'], "seg_outro.mp4"))
@@ -332,5 +446,5 @@ if __name__ == "__main__":
         # Note: prepare_assets populates img_path/audio_path in project_data dicts
         asyncio.run(prepare_assets(project_data))
         
-        # Assemble video
-        assemble_video_fast(project_data, episode_title)
+        # Assemble video with Remotion enhancements
+        assemble_video_fast(project_data, episode_title, use_overlays=True, use_transitions=True)

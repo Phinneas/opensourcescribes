@@ -24,6 +24,17 @@ except ImportError:
     MINIMAX_AVAILABLE = False
     print("⚠️  MiniMax modules not available - using static graphics only")
 
+# Import hybrid video modules
+try:
+    from minimax_intro_generator import generate_intro_with_audio
+    from ffmpeg_enhancements import create_animated_segment, get_random_effect
+    from remotion_overlay_generator import OverlayGenerator
+    from remotion_transition_generator import TransitionGenerator
+    HYBRID_AVAILABLE = True
+except ImportError as e:
+    HYBRID_AVAILABLE = False
+    print(f"⚠️  Hybrid modules not available: {e}")
+
 # Import content generators
 from generate_description import generate_description
 from generate_medium_post import main as generate_medium_post
@@ -139,14 +150,6 @@ class VideoSuiteAutomated:
             
             # Generate Audio
             self.generate_audio(project['script_text'], str(audio_path))
-            
-            # Try MiniMax enhancement first
-            if self.use_minimax and self.minimax_generator and self.minimax_generator.enabled:
-                minimax_video = await self.generate_minimax_enhancement(project)
-                if minimax_video:
-                    project['enhanced_video'] = minimax_video
-                    print(f"   ✅ MiniMax enhanced video generated")
-                    continue
             
             tasks.append(self.create_project_graphic(
                 project['name'],
@@ -488,6 +491,10 @@ class VideoSuiteAutomated:
             output_path = Path(OUTPUT_FOLDER) / f"segment_{index:03d}.mp4"
             print(f"🎬 Rendering Segment: {project['name']}")
         
+        # Use Ken Burns animated effect if hybrid modules available
+        if HYBRID_AVAILABLE:
+            return create_animated_segment(image_path, audio_path, str(output_path))
+
         cmd = [
             'ffmpeg', '-y',
             '-loop', '1', '-framerate', '24',
@@ -500,27 +507,44 @@ class VideoSuiteAutomated:
             '-shortest',
             str(output_path)
         ]
-        
+
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
         return str(output_path)
     
     def assemble_longform_video(self):
         """Assemble full longform video"""
-        from branding import create_intro_card, create_outro_card
+        from branding import create_outro_card
 
         print(f"\n🎬 Assembling Longform Video...")
-        
-        intro_path = create_intro_card(CONFIG, "GitHub Projects Roundup")
+
         outro_path = create_outro_card(CONFIG)
-        
         segment_files = []
-        
-        if os.path.exists(intro_path):
-            intro_audio = Path(OUTPUT_FOLDER) / "intro_audio.mp3"
-            if intro_audio.exists():
-                segment_files.append(self.create_static_segment(intro_path, 0, "seg_intro.mp4", audio_path=str(intro_audio)))
-            else:
-                segment_files.append(self.create_static_segment(intro_path, 3, "seg_intro.mp4"))
+
+        # Generate intro audio if it doesn't exist
+        intro_audio = Path(OUTPUT_FOLDER) / "intro_audio.mp3"
+        if not intro_audio.exists():
+            intro_script = "Welcome to OpenSourceScribes! Your weekly roundup of the most exciting open source projects on GitHub."
+            self.generate_audio(intro_script, str(intro_audio))
+
+        if HYBRID_AVAILABLE:
+            # Use MiniMax for cinematic intro (falls back to static card on failure)
+            intro_seg = generate_intro_with_audio(
+                intro_video_path=str(Path(OUTPUT_FOLDER) / "intro_minimax.mp4"),
+                intro_audio_path=str(intro_audio),
+                output_path=str(Path(OUTPUT_FOLDER) / "seg_intro.mp4"),
+                episode_title="GitHub Projects Roundup",
+                fallback_to_static=True
+            )
+            if intro_seg and os.path.exists(intro_seg):
+                segment_files.append(intro_seg)
+        else:
+            from branding import create_intro_card
+            intro_path = create_intro_card(CONFIG, "GitHub Projects Roundup")
+            if os.path.exists(intro_path):
+                if intro_audio.exists():
+                    segment_files.append(self.create_static_segment(intro_path, 0, "seg_intro.mp4", audio_path=str(intro_audio)))
+                else:
+                    segment_files.append(self.create_static_segment(intro_path, 3, "seg_intro.mp4"))
         
         for i, project in enumerate(self.projects):
             segment_files.append(self.create_segment(project, i, is_short=False))
@@ -605,13 +629,29 @@ class VideoSuiteAutomated:
         return str(output_path)
 
     def concatenate_segments(self, segment_files, output_name):
-        """Concatenate video segments"""
+        """Concatenate video segments with Remotion transitions between them"""
         concat_list = Path("concat_list.txt")
-        
+
+        # Insert Remotion transition clips between segments when available
+        all_files = list(segment_files)
+        if HYBRID_AVAILABLE and len(segment_files) > 1:
+            transition_gen = TransitionGenerator()
+            all_files = []
+            for i, seg in enumerate(segment_files):
+                all_files.append(seg)
+                if i < len(segment_files) - 1:
+                    transition = transition_gen.select_transition(i, len(segment_files), 8.0)
+                    if transition:
+                        transition_path = os.path.join(transition_gen.transitions_dir, transition)
+                        if os.path.exists(transition_path):
+                            all_files.append(transition_path)
+            if len(all_files) > len(segment_files):
+                print(f"🎬 Inserted {len(all_files) - len(segment_files)} Remotion transitions")
+
         with open(concat_list, 'w') as f:
-            for seg in segment_files:
+            for seg in all_files:
                 f.write(f"file '{seg}'\n")
-        
+
         print(f"🔗 Concatenating to {output_name}...")
         cmd = [
             'ffmpeg', '-y',
@@ -622,10 +662,10 @@ class VideoSuiteAutomated:
             '-c:a', 'aac', '-b:a', '192k',
             output_name
         ]
-        
+
         subprocess.run(cmd, check=True)
         print(f"✅ Created: {output_name}")
-        
+
         if concat_list.exists():
             concat_list.unlink()
 

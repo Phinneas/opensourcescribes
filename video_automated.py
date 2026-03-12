@@ -614,9 +614,15 @@ class VideoSuiteAutomated:
         ]
         
         if audio_path:
-            cmd.extend(['-i', audio_path, '-shortest'])
+            # Normalize audio to mono 48kHz to match segment format
+            cmd.extend([
+                '-i', audio_path,
+                '-af', 'aformat=channel_layouts=mono:sample_rates=48000',
+                '-shortest'
+            ])
         else:
-            cmd.extend(['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100', '-t', str(duration)])
+            # Use mono 48kHz silent audio to match segment format
+            cmd.extend(['-f', 'lavfi', '-i', 'anullsrc=channel_layout=mono:sample_rate=48000', '-t', str(duration)])
             
         cmd.extend([
             '-c:v', 'libx264', '-preset', 'ultrafast', '-tune', 'stillimage',
@@ -648,18 +654,16 @@ class VideoSuiteAutomated:
             if len(all_files) > len(segment_files):
                 print(f"🎬 Inserted {len(all_files) - len(segment_files)} Remotion transitions")
 
-        with open(concat_list, 'w') as f:
+        with open(concat_list, 'w') as outfile:
             for seg in all_files:
-                f.write(f"file '{seg}'\n")
+                outfile.write(f"file '{seg}'\n")
 
         print(f"🔗 Concatenating to {output_name}...")
         cmd = [
             'ffmpeg', '-y',
-            '-f', 'concat',
-            '-safe', '0',
+            '-f', 'concat', '-safe', '0',
             '-i', str(concat_list),
-            '-c:v', 'libx264', '-preset', 'ultrafast',
-            '-c:a', 'aac', '-b:a', '192k',
+            '-c', 'copy',
             output_name
         ]
 

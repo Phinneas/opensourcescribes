@@ -26,6 +26,49 @@ class TransitionGenerator:
         # Ensure output directory exists
         os.makedirs(self.transitions_dir, exist_ok=True)
     
+    def _normalize_audio(self, video_path: str) -> bool:
+        """Normalize audio to mono 48kHz to match segment audio format.
+        This prevents FFmpeg concat from extending video duration."""
+        tmp_path = video_path.replace('.mp4', '_normalized.mp4')
+        cmd = [
+            'ffmpeg', '-y', '-i', video_path,
+            '-c:v', 'copy',  # Keep video as-is
+            '-af', 'aformat=channel_layouts=mono:sample_rates=48000',  # Mono 48kHz
+            '-c:a', 'aac',
+            tmp_path
+        ]
+        try:
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+            os.replace(tmp_path, video_path)
+            return True
+        except Exception as e:
+            print(f"  Warning: Audio normalization failed: {e}")
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+            return False
+    
+    def _normalize_timestamps(self, video_path: str) -> bool:
+        """Re-encode to fix DTS (Decoding Time Stamp) discontinuity.
+        Remotion outputs can have timestamps that cause FFmpeg concat to extend video."""
+        tmp_path = video_path.replace('.mp4', '_ts_fixed.mp4')
+        cmd = [
+            'ffmpeg', '-y', '-i', video_path,
+            '-c:v', 'libx264', '-preset', 'ultrafast',
+            '-c:a', 'aac',
+            '-fflags', '+bitexact',
+            '-map_metadata', '-1',  # Remove metadata for clean timestamps
+            tmp_path
+        ]
+        try:
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+            os.replace(tmp_path, video_path)
+            return True
+        except Exception as e:
+            print(f"  Warning: Timestamp normalization failed: {e}")
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+            return False
+    
     def get_remotion_cli_command(self, props: Dict, output_path: str) -> str:
         """Generate Remotion CLI command for transition rendering"""
         props_json = json.dumps(props)
@@ -67,6 +110,11 @@ class TransitionGenerator:
             # Check if output file exists
             actual_output = output_path.replace('../', '')
             success = os.path.exists(actual_output)
+            
+            # Normalize audio to mono 48kHz to match segment audio format
+            if success:
+                self._normalize_audio(actual_output)
+                self._normalize_timestamps(actual_output)
             
             print(f"  Transition generated: {output_filename} ({elapsed:.1f}s)" if success else f"  Failed: {output_filename}")
             return success

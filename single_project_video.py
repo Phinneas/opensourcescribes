@@ -127,7 +127,7 @@ def create_static_segment(image_path, duration, output_name, audio_path=None):
             'ffmpeg', '-y', '-loop', '1', '-i', image_path,
             '-i', audio_path, '-c:v', 'libx264', '-preset', 'ultrafast',
             '-tune', 'stillimage', '-c:a', 'aac', '-b:a', '192k',
-            '-pix_fmt', 'yuv420p', '-shortest', output_name
+            '-pix_fmt', 'yuv420p', '-t', str(duration), output_name
         ]
     else:
         cmd = [
@@ -170,7 +170,7 @@ async def create_segment(project):
         'ffmpeg', '-y', '-loop', '1', '-i', graphic_path,
         '-i', audio_path, '-c:v', 'libx264', '-preset', 'ultrafast',
         '-tune', 'stillimage', '-c:a', 'aac', '-b:a', '192k',
-        '-pix_fmt', 'yuv420p', '-shortest', segment_name
+        '-pix_fmt', 'yuv420p', '-t', str(duration), segment_name
     ]
     
     subprocess.run(cmd, check=True, capture_output=True)

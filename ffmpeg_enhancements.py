@@ -11,8 +11,8 @@ from pathlib import Path
 
 # Ken Burns motion presets (smooth pan/zoom effects)
 KEN_BURNS_PRESETS = [
-    {"zoom": "1.0:1.2", "x": "iw/2-iw/2*(in/200)": "x", "y": "ih/2-ih/2*(in/200)"},  # Slow zoom in center
-    {"zoom": "1.2:1.0", "x": "iw/2-iw/2*(1-in/200)": "x", "y": "ih/2-ih/2*(1-in/200)"},  # Slow zoom out center
+    {"zoom": "1.0:1.2", "x": "iw/2-iw/2*(in/200)", "y": "ih/2-ih/2*(in/200)"},  # Slow zoom in center
+    {"zoom": "1.2:1.0", "x": "iw/2-iw/2*(1-in/200)", "y": "ih/2-ih/2*(1-in/200)"},  # Slow zoom out center
     {"zoom": "1.0:1.15", "x": "0", "y": "ih-(ih*in/200)"},  # Pan down with zoom
     {"zoom": "1.0:1.15", "x": "0", "y": "0+(ih*in/200)"},  # Pan up with zoom
     {"zoom": "1.0:1.1", "x": "iw-(iw*in/200)", "y": "ih/2"},  # Pan left with zoom
@@ -163,7 +163,7 @@ def create_animated_segment(image_path: str, audio_path: str, output_path: str) 
         "-c:v", "libx264", "-preset", "medium", "-crf", "23",
         "-c:a", "aac", "-b:a", "192k",
         "-pix_fmt", "yuv420p",
-        "-shortest",
+        "-t", str(duration),
         output_path
     ]
     

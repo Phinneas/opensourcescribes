@@ -1285,5 +1285,146 @@
       "timestamp": "2026-03-06T10:21:03.018575"
     },
     "timestamp": "2026-03-06T10:21:03.018583"
+  },
+  "python-poetry/poetry": {
+    "data": {
+      "owner": "python-poetry",
+      "repo": "poetry",
+      "stars": 34360,
+      "forks": 2409,
+      "language": "Python",
+      "description": "Python packaging and dependency management made easy",
+      "topics": [
+        "dependency-manager",
+        "package-manager",
+        "packaging",
+        "poetry"
+      ],
+      "url": "https://github.com/python-poetry/poetry",
+      "timestamp": "2026-03-09T15:10:18.414682"
+    },
+    "timestamp": "2026-03-09T15:10:18.414690"
+  },
+  "jakejs/jake": {
+    "data": {
+      "owner": "jakejs",
+      "repo": "jake",
+      "stars": 1977,
+      "forks": 188,
+      "language": "JavaScript",
+      "description": "JavaScript build tool, similar to Make or Rake. Built to work with Node.js.",
+      "topics": [],
+      "url": "https://github.com/jakejs/jake",
+      "timestamp": "2026-03-09T15:20:37.541040"
+    },
+    "timestamp": "2026-03-09T15:20:37.541059"
+  },
+  "Doriandarko/claude-engineer": {
+    "data": {
+      "owner": "Doriandarko",
+      "repo": "claude-engineer",
+      "stars": 11165,
+      "forks": 1153,
+      "language": "Python",
+      "description": "Claude Engineer is an interactive command-line interface (CLI) that leverages the power of Anthropic's Claude-3.5-Sonnet model to assist with software development tasks.This framework enables Claude to generate and manage its own tools, continuously expanding its capabilities through conversation. Available both as a CLI and a modern web interface",
+      "topics": [],
+      "url": "https://github.com/Doriandarko/claude-engineer",
+      "timestamp": "2026-03-09T15:20:58.517179"
+    },
+    "timestamp": "2026-03-09T15:20:58.517197"
+  },
+  "disler/pocket-pick": {
+    "data": {
+      "owner": "disler",
+      "repo": "pocket-pick",
+      "stars": 200,
+      "forks": 46,
+      "language": "Python",
+      "description": "What if the exact code snippet or idea you were looking for was one prompt away?",
+      "topics": [],
+      "url": "https://github.com/disler/pocket-pick",
+      "timestamp": "2026-03-09T15:21:18.874004"
+    },
+    "timestamp": "2026-03-09T15:21:18.874022"
+  },
+  "infranodus/mcp-server-infranodus": {
+    "data": {
+      "owner": "infranodus",
+      "repo": "mcp-server-infranodus",
+      "stars": 70,
+      "forks": 13,
+      "language": "TypeScript",
+      "description": "The official InfraNodus MCP server",
+      "topics": [],
+      "url": "https://github.com/infranodus/mcp-server-infranodus",
+      "timestamp": "2026-03-11T15:59:16.066808"
+    },
+    "timestamp": "2026-03-11T15:59:16.066821"
+  },
+  "sapientinc/HRM": {
+    "data": {
+      "owner": "sapientinc",
+      "repo": "HRM",
+      "stars": 12352,
+      "forks": 1801,
+      "language": "Python",
+      "description": "Hierarchical Reasoning Model Official Release",
+      "topics": [
+        "brain-inspired-ai",
+        "deep-learning",
+        "large-language-models",
+        "reasoning"
+      ],
+      "url": "https://github.com/sapientinc/HRM",
+      "timestamp": "2026-03-11T16:53:32.577762"
+    },
+    "timestamp": "2026-03-11T16:53:32.577785"
+  },
+  "stackblitz-labs/bolt.diy": {
+    "data": {
+      "owner": "stackblitz-labs",
+      "repo": "bolt.diy",
+      "stars": 19132,
+      "forks": 10385,
+      "language": "TypeScript",
+      "description": "Prompt, run, edit, and deploy full-stack web applications using any LLM you want!",
+      "topics": [],
+      "url": "https://github.com/stackblitz-labs/bolt.diy",
+      "timestamp": "2026-03-11T16:54:19.347638"
+    },
+    "timestamp": "2026-03-11T16:54:19.347673"
+  },
+  "openclaw/openclaw": {
+    "data": {
+      "owner": "openclaw",
+      "repo": "openclaw",
+      "stars": 303759,
+      "forks": 57395,
+      "language": "TypeScript",
+      "description": "Your own personal AI assistant. Any OS. Any Platform. The lobster way. \ud83e\udd9e ",
+      "topics": [
+        "ai",
+        "assistant",
+        "crustacean",
+        "molty"
+      ],
+      "url": "https://github.com/openclaw/openclaw",
+      "timestamp": "2026-03-11T16:54:48.625526"
+    },
+    "timestamp": "2026-03-11T16:54:48.625541"
+  },
+  "SamsungSAILMontreal/TinyRecursiveModels": {
+    "data": {
+      "owner": "SamsungSAILMontreal",
+      "repo": "TinyRecursiveModels",
+      "stars": 6389,
+      "forks": 998,
+      "language": "Python",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/SamsungSAILMontreal/TinyRecursiveModels",
+      "timestamp": "2026-03-11T18:57:57.284428"
+    },
+    "timestamp": "2026-03-11T18:57:57.284448"
   }
 }

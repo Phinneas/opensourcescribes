@@ -173,15 +173,18 @@ def _get_audio_duration(path: str) -> float:
 @task(name="render-segment")
 def render_segment_task(project: dict, index: int) -> str:
     output_path = str(Path(OUTPUT_FOLDER) / f"segment_{index:03d}.mp4")
+    
+    audio_dur = _get_audio_duration(project["audio_path"])
+    
     if "enhanced_video" in project:
         subprocess.run(["ffmpeg", "-y", "-stream_loop", "-1", "-i", project["enhanced_video"], "-i", project["audio_path"], 
                         "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac", "-b:a", "192k", "-pix_fmt", "yuv420p", 
-                        "-map", "0:v:0", "-map", "1:a:0", "-shortest", output_path], 
+                        "-map", "0:v:0", "-map", "1:a:0", "-t", str(audio_dur), output_path], 
                        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     else:
         subprocess.run(["ffmpeg", "-y", "-loop", "1", "-framerate", "24", "-i", project["img_path"], "-i", project["audio_path"], 
                         "-r", "24", "-c:v", "libx264", "-preset", "ultrafast", "-tune", "stillimage", "-c:a", "aac", 
-                        "-b:a", "192k", "-pix_fmt", "yuv420p", "-shortest", output_path], 
+                        "-b:a", "192k", "-pix_fmt", "yuv420p", "-t", str(audio_dur), output_path], 
                        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     return output_path
 

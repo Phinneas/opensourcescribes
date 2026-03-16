@@ -1,110 +1,209 @@
 [
     {
-        "id": "agent_field_swe_af",
-        "name": "SWE-AF",
-        "github_url": "https://github.com/Agent-Field/SWE-AF",
-        "script_text": "SWE-AF is a Python-based project that autonomous software engineering fleet of ai agents for production-grade prs on agentfield plan, code, test, and ship.. Pronounced \"swee-AF\" (one word) One API call full engineering team shipped code. One API call spins up a full autonomous engineering team product managers, architects, coders, reviewers, testers that scopes, builds, adapts, and ships complex software end to end. SWE-AF is a first step tow This project focuses on agent-factory, agentfield, agentic-ai, ai-agents, ai-factory, providing developers with specialized tools and capabilities in these areas. Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate SWE-AF into their workflows to improve their testing strategies and code quality. Check out SWE-AF if you're working in this space.",
-        "img_path": "assets/agent_field_swe_af_screen.png",
-        "audio_path": "assets/agent_field_swe_af_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/agent_field_swe_af_short.png"
+        "id": "openclaw_openclaw",
+        "name": "openclaw",
+        "github_url": "https://github.com/openclaw/openclaw",
+        "script_text": "OpenClaw is your personal AI assistant that runs on any operating system and platform. It integrates with the messaging channels you already use, like WhatsApp, Discord, and Slack, allowing you to interact with it seamlessly.\n\nThe unique aspect of OpenClaw is its decentralized architecture. Instead of relying on a centralized service, OpenClaw runs locally on your own devices, ensuring your data remains private and secure. This also enables fast, always-on functionality without relying on external servers.\n\nOpenClaw can listen, speak, and even render a live Canvas that you can control. It's a versatile tool that puts the power of an AI assistant in your hands, on your terms. If you're looking for a personal, single-user assistant that feels local, fast, and always-on, OpenClaw is the solution for you.",
+        "img_path": "assets/openclaw_openclaw_screen.png",
+        "audio_path": "assets/openclaw_openclaw_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/openclaw_openclaw_short.png"
     },
     {
-        "id": "expo_skills",
-        "name": "skills",
-        "github_url": "https://github.com/expo/skills",
-        "script_text": "skills is a JavaScript-based project that a collection of ai agent skills for working with expo projects and expo application services. Official AI agent skills from the Expo team for building, deploying, and debugging robust Expo apps. Add the marketplace plugin marketplace add expo skills Install a plugin plugin install expo-app-design plugin install upgrading-expo plugin install expo-deployment Install from GitHub 1. Open C Built with JavaScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate skills into their workflows to solve complex technical challenges more efficiently. Check out skills if you're working in this space.",
-        "img_path": "assets/expo_skills_screen.png",
-        "audio_path": "assets/expo_skills_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/expo_skills_short.png"
+        "id": "openbrowserai_openbrowser",
+        "name": "openbrowser",
+        "github_url": "https://github.com/OpenBrowserAI/openbrowser",
+        "script_text": "OpenBrowser is an open-source, AI-native browser built on Chromium - a privacy-first alternative to popular AI assistants. Instead of sending your data away, OpenBrowser brings powerful AI directly into your browser, so you stay in control.\n\nThe key features include native AI agents that run locally, a privacy-first approach where your data never leaves your computer, and full transparency through open-source development. Built on the trusted Chromium foundation, OpenBrowser offers compatibility and performance.\n\nJoin our community on Discord and X (Twitter) to help shape the future of AI-powered browsing. We welcome contributions - please check our guidelines to get started. OpenBrowser is open source under the MIT license, providing a truly unique and user-centric browsing experience.",
+        "img_path": "assets/openbrowserai_openbrowser_screen.png",
+        "audio_path": "assets/openbrowserai_openbrowser_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/openbrowserai_openbrowser_short.png"
     },
     {
-        "id": "zion_off_giggles",
-        "name": "giggles",
-        "github_url": "https://github.com/zion-off/giggles",
-        "script_text": "giggles is a TypeScript-based project that batteries-included react framework for building rich terminal apps. giggles is a batteries-included react framework for building terminal apps. built on ink, it handles focus, input routing, screen navigation, and theming out of the box so you can skip the plumbing and build. each component owns its keys a text input inside a list inside a panel all work independe This project focuses on cli, ink, tui, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate giggles into their workflows to solve complex technical challenges more efficiently. Check out giggles if you're working in this space.",
-        "img_path": "assets/zion_off_giggles_screen.png",
-        "audio_path": "assets/zion_off_giggles_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/zion_off_giggles_short.png"
+        "id": "browser_use_browser_use",
+        "name": "browser-use",
+        "github_url": "https://github.com/browser-use/browser-use",
+        "script_text": "Introducing Browser-Use: a powerful open-source toolkit that makes websites accessible for AI agents. With Browser-Use, you can automate online tasks with ease, interacting with web pages as a virtual user.\n\nOur innovative approach leverages the Playwright library to programmatically control web browsers, allowing AI models to navigate, interact, and extract data from websites. This seamless integration enables a wide range of applications, from web scraping and data extraction to automated form filling and task completion.\n\nWhether you're a developer, researcher, or automation enthusiast, Browser-Use empowers you to create intelligent, self-sufficient agents that can operate on the web. Unlock new possibilities in web automation and make your AI-powered applications more versatile than ever before.",
+        "img_path": "assets/browser_use_browser_use_screen.png",
+        "audio_path": "assets/browser_use_browser_use_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/browser_use_browser_use_short.png"
     },
     {
-        "id": "zion_off_clairo",
-        "name": "clairo",
-        "github_url": "https://github.com/zion-off/clairo",
-        "script_text": "clairo is a TypeScript-based project that tui for jira and github. an opinionated dashboard tui for github PRs, jira tickets, and daily logs. github dashboard configure and switch between remotes view open PRs with status, reviews, and checks see full PR details with description, labels, and assignees create new PRs from the terminal browse all PRs across the repo Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate clairo into their workflows to solve complex technical challenges more efficiently. Check out clairo if you're working in this space.",
-        "img_path": "assets/zion_off_clairo_screen.png",
-        "audio_path": "assets/zion_off_clairo_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/zion_off_clairo_short.png"
+        "id": "miromindai_mirothinker",
+        "name": "MiroThinker",
+        "github_url": "https://github.com/MiroMindAI/MiroThinker",
+        "script_text": "MiroThinker is a deep research agent optimized for complex research and prediction tasks. Our latest models, MiroThinker-1.7 and MiroThinker-H1, achieve state-of-the-art performance on the challenging BrowseComp benchmark, scoring 74.0 and 88.2 respectively.\n\nMiroThinker utilizes advanced language models and reinforcement learning techniques to quickly parse, comprehend, and extract insights from vast amounts of research data. Its unique architecture allows it to seamlessly integrate with existing workflows, enabling researchers and analysts to supercharge their productivity.\n\nTrained on a diverse corpus of academic papers, patents, and industry reports, MiroThinker excels at tasks such as literature review, hypothesis generation, and forecasting. Whether you're conducting groundbreaking research or making mission-critical business decisions, MiroThinker is the AI assistant you need to unlock your full potential.",
+        "img_path": "assets/miromindai_mirothinker_screen.png",
+        "audio_path": "assets/miromindai_mirothinker_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/miromindai_mirothinker_short.png"
     },
     {
-        "id": "vadimdemedes_ink",
-        "name": "ink",
-        "github_url": "https://github.com/vadimdemedes/ink",
-        "script_text": "ink is a TypeScript-based project that React for interactive command-line apps. React for CLIs. Build and test your CLI output using components. Ink provides the same component-based UI building experience that React offers in the browser, but for command-line apps. If you are already familiar with React, you already know Ink. Since Ink is a React renderer, all features of Re This project focuses on cli, command-line, flexbox, interactive, javascript, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate ink into their workflows to solve complex technical challenges more efficiently. ink is worth exploring for your next project.",
-        "img_path": "assets/vadimdemedes_ink_screen.png",
-        "audio_path": "assets/vadimdemedes_ink_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/vadimdemedes_ink_short.png"
+        "id": "datalab_to_chandra",
+        "name": "chandra",
+        "github_url": "https://github.com/datalab-to/chandra",
+        "script_text": "Introducing Chandra, a state-of-the-art OCR model that handles complex documents with ease. Unlike traditional OCR, Chandra can accurately extract text, tables, math, and handwriting from messy forms, invoices, and research papers.\n\nChandra's unique layout-aware approach preserves the original structure, outputting results in structured formats like Markdown, HTML, and JSON. It supports over 40 languages and can run locally via Hugging Face Transformers or be deployed as a high-throughput vLLM server.\n\nWhether you're working with doctor's notes, financial filings, or technical documents, Chandra's advanced capabilities make it the go-to solution for document intelligence tasks.",
+        "img_path": "assets/datalab_to_chandra_screen.png",
+        "audio_path": "assets/datalab_to_chandra_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/datalab_to_chandra_short.png"
     },
     {
-        "id": "facebook_yoga",
-        "name": "yoga",
-        "github_url": "https://github.com/facebook/yoga",
-        "script_text": "yoga is a C -based project that yoga is an embeddable layout engine targeting web standards.. Yoga is an embeddable and performant flexbox layout engine with bindings for multiple languages. Yoga's main implementation targets C 20 with accompanying build logic in CMake. A wrapper is provided to build the main library and run unit tests. Many of Yoga's tests are automatically generated, usi Built with C , it leverages the language's strengths to deliver reliable performance. Developers can integrate yoga into their workflows to solve complex technical challenges more efficiently. yoga is worth exploring for your next project.",
-        "img_path": "assets/facebook_yoga_screen.png",
-        "audio_path": "assets/facebook_yoga_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/facebook_yoga_short.png"
+        "id": "facebook_pyrefly",
+        "name": "pyrefly",
+        "github_url": "https://github.com/facebook/pyrefly",
+        "script_text": "Pyrefly is a fast type checker and language server for Python, providing lightning-fast type checking and powerful IDE features. It infers types in most locations, apart from function parameters, and understands your program's control flow to refine static types. Pyrefly aims for large-scale incrementality at the module level, with optimized checking and parallelism, making it a highly efficient tool for your Python development workflow.\n\nKey features include type inference, flow types, and incremental checking. Pyrefly is available as a command-line tool and IDE extensions for popular editors like VSCode, Neovim, and Zed. Try it out in the browser sandbox or install it using pip to supercharge your Python development.",
+        "img_path": "assets/facebook_pyrefly_screen.png",
+        "audio_path": "assets/facebook_pyrefly_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/facebook_pyrefly_short.png"
     },
     {
-        "id": "hoppscotch_hoppscotch",
-        "name": "hoppscotch",
-        "github_url": "https://github.com/hoppscotch/hoppscotch",
-        "script_text": "hoppscotch is a TypeScript-based project that open-source api development ecosystem https hoppscotch.io offline, on-prem cloud web, desktop cli open-source alternative to postman, insomnia. src \"https avatars.githubusercontent.com u 56705483\" alt \"Hoppscotch\" height \"64\" Open Source API Development Ecosystem Built with by contributors Lightweight Crafted with minimalistic UI design. Fast Send requests and get responses in real time. HTTP Methods Request methods define This project focuses on api, api-client, api-rest, api-testing, developer-tools, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate hoppscotch into their workflows to build high-performance APIs and backend services. hoppscotch is worth exploring for your next project.",
-        "img_path": "assets/hoppscotch_hoppscotch_screen.png",
-        "audio_path": "assets/hoppscotch_hoppscotch_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/hoppscotch_hoppscotch_short.png"
+        "id": "kubeagi_arcadia",
+        "name": "arcadia",
+        "github_url": "https://github.com/kubeagi/arcadia",
+        "script_text": "Arcadia is an all-in-one enterprise-grade LLMOps platform that provides a unified interface for developers and operators. It offers an orchestration engine for Retrieval Augmented Generation and LLM finetuning, allowing you to build, debug, and deploy AI agents on the ops-console. Arcadia's infrastructure, built with KubeBB, ensures multi-tenant isolation, OIDC, RBAC, and auditing, enabling different companies and departments to collaborate through a secure and scalable platform. With support for popular LLMs, embedding models, and reranking models, Arcadia accelerates inference using techniques like quantization and distributed processing. Developers can fine-tune models using the LLaMa-Factory integration. Arcadia's modular design, based on the Kubernetes operator pattern, ensures better performance and maintainability. Whether you're an AI engineer, data scientist, or DevOps professional, Arcadia simplifies the process of developing and deploying large language models within your organization.",
+        "img_path": "assets/kubeagi_arcadia_screen.png",
+        "audio_path": "assets/kubeagi_arcadia_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/kubeagi_arcadia_short.png"
     },
     {
-        "id": "alibaba_opensandbox",
-        "name": "OpenSandbox",
-        "github_url": "https://github.com/alibaba/OpenSandbox",
-        "script_text": "OpenSandbox is a Python-based project that opensandbox is a general-purpose sandbox platform for ai applications, offering multi-language sdks, unified sandbox apis, and docker kubernetes runtimes for scenarios like coding agents, gui agents, agent evaluation, ai code execution, and rl training.. OpenSandbox is a general-purpose sandbox platform for AI applications, offering multi-language SDKs, unified sandbox APIs, and Docker Kubernetes runtimes for scenarios like Coding Agents, GUI Agents, Agent Evaluation, AI Code Execution, and RL Training. Multi-language SDKs Provides sandbox SDKs in This project focuses on ai, ai-agent, ai-infra, kubernetes, sandbox, providing developers with specialized tools and capabilities in these areas. Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate OpenSandbox into their workflows to build high-performance APIs and backend services. OpenSandbox is worth exploring for your next project.",
-        "img_path": "assets/alibaba_opensandbox_screen.png",
-        "audio_path": "assets/alibaba_opensandbox_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/alibaba_opensandbox_short.png"
+        "id": "ruvnet_arcadia",
+        "name": "ARCADIA",
+        "github_url": "https://github.com/ruvnet/ARCADIA",
+        "script_text": "ARCADIA is an AI-powered game engine that revolutionizes dynamic, personalized experiences in evolving worlds. Built with Rust's performance and safety guarantees, ARCADIA combines cutting-edge AI systems with battle-tested game development tools.\n\nAt the core of ARCADIA are its advanced AI capabilities. Leveraging multi-level cognitive processing, ARCADIA's NPCs exhibit genuine emotional intelligence and strategic planning. Autopoietic processing enables self-organizing, self-healing game mechanics that maintain dynamic equilibrium. Evolutionary algorithms drive adaptive AI behavior, with population-based strategy evolution and fitness-driven learning.\n\nARCADIA's technical innovations provide the infrastructure to make your game world truly come alive. Whether you're building the next open-world RPG or pushing the boundaries of procedurally generated content, ARCADIA's AI-driven systems empower you to create immersive, ever-evolving experiences.",
+        "img_path": "assets/ruvnet_arcadia_screen.png",
+        "audio_path": "assets/ruvnet_arcadia_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/ruvnet_arcadia_short.png"
     },
     {
-        "id": "react_native_vibe_code_react_native_vibe_code_sdk",
-        "name": "react-native-vibe-code-sdk",
-        "github_url": "https://github.com/react-native-vibe-code/react-native-vibe-code-sdk",
-        "script_text": "react-native-vibe-code-sdk is a TypeScript-based project that the react native vibe code sdk lets you build text to mobile web apps in seconds. a full suite of packages to run your your own vibe coding features or platform. try cloud version at https reactnativevibecode.com. The first open-source IDE that creates mobile apps with AI. Build React Native and Expo applications through natural language. Frontend Next.js 14, shadcn ui, TailwindCSS Mobile React Native, Expo AI Anthropic Claude (via Claude Code) Sandboxing E2b and Daytona SDK for secure code execution Data Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate react-native-vibe-code-sdk into their workflows to solve complex technical challenges more efficiently. Check out react-native-vibe-code-sdk if you're working in this space.",
-        "img_path": "assets/react_native_vibe_code_react_native_vibe_code_sdk_screen.png",
-        "audio_path": "assets/react_native_vibe_code_react_native_vibe_code_sdk_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/react_native_vibe_code_react_native_vibe_code_sdk_short.png"
+        "id": "samsungsailmontreal_tinyrecursivemodels",
+        "name": "TinyRecursiveModels",
+        "github_url": "https://github.com/SamsungSAILMontreal/TinyRecursiveModels",
+        "script_text": "Tiny Recursive Models (TRM) is a novel approach that achieves impressive scores on the challenging ARC-AGI benchmarks using a tiny 7M parameter neural network. The key innovation is a recursive reasoning process that allows the model to progressively improve its answers, addressing any errors from previous iterations, in an extremely parameter-efficient manner.\n\nUnlike traditional methods that rely on large language models, TRM demonstrates that \"less is more\" - a small model trained from scratch can outperform massive foundational models on hard reasoning tasks. By recursively updating its internal representations and answer, TRM minimizes overfitting and delivers strong performance without breaking the bank.\n\nThis work simplifies the recursive reasoning concept, removing the need for complex biological analogies or mathematical theorems, making it a compelling and accessible technique for researchers and engineers looking to develop efficient AI systems for challenging reasoning problems.",
+        "img_path": "assets/samsungsailmontreal_tinyrecursivemodels_screen.png",
+        "audio_path": "assets/samsungsailmontreal_tinyrecursivemodels_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/samsungsailmontreal_tinyrecursivemodels_short.png"
     },
     {
-        "id": "codebuffai_codebuff",
-        "name": "codebuff",
-        "github_url": "https://github.com/CodebuffAI/codebuff",
-        "script_text": "codebuff is a TypeScript-based project that generate code from the terminal!. Codebuff is an open-source AI coding assistant that edits your codebase through natural language instructions. Instead of using one model for everything, it coordinates specialized agents that work together to understand your project and make precise changes. Codebuff beats Claude Code at 61 vs 53 Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate codebuff into their workflows to solve complex technical challenges more efficiently. Check out codebuff if you're working in this space.",
-        "img_path": "assets/codebuffai_codebuff_screen.png",
-        "audio_path": "assets/codebuffai_codebuff_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/codebuffai_codebuff_short.png"
+        "id": "fission_ai_openspec",
+        "name": "OpenSpec",
+        "github_url": "https://github.com/Fission-AI/OpenSpec",
+        "script_text": "Here is a 160-word engineering-focused video script for a YouTube video about the OpenSpec project:\n\nOpenSpec is a specification-driven framework for AI coding assistants. It enables a new workflow for AI-powered software development, where codified specifications drive the implementation process.\n\nThe core idea is simple yet powerful - create structured specifications for your features, then use OpenSpec to manage the entire lifecycle, from proposal to deployment. This artifact-guided approach provides clear visibility into the what, why, and how of each change, leading to more transparent and accountable engineering.\n\nUnder the hood, OpenSpec uses a Git-based file structure to store all specifications and related artifacts. This allows teams to leverage existing version control tools and workflows, ensuring a seamless integration into their existing development processes.\n\nWhether you're working on a personal project or an enterprise-scale application, OpenSpec can help you build better software, faster, by aligning your team around a unified, specification-driven development process.",
+        "img_path": "assets/fission_ai_openspec_screen.png",
+        "audio_path": "assets/fission_ai_openspec_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/fission_ai_openspec_short.png"
     },
     {
-        "id": "googleworkspace_cli",
-        "name": "cli",
-        "github_url": "https://github.com/googleworkspace/cli",
-        "script_text": "cli is a Rust-based project that google workspace cli one command-line tool for drive, gmail, calendar, sheets, docs, chat, admin, and more. dynamically built from google discovery service. includes ai agent skills.. Drive, Gmail, Calendar, and every Workspace API. Zero boilerplate. Structured JSON output. 40 agent skills included. !IMPORTANT Temporarily disabling non-collaborator pull requests. See this discussion, https github.com googleworkspace cli discussions 249. This is not an officially suppor This project focuses on agent-skills, ai-agent, automation, cli, discovery-api, providing developers with specialized tools and capabilities in these areas. Built with Rust, it leverages the language's strengths to deliver reliable performance. Developers can integrate cli into their workflows to solve complex technical challenges more efficiently. cli is worth exploring for your next project.",
-        "img_path": "assets/googleworkspace_cli_screen.png",
-        "audio_path": "assets/googleworkspace_cli_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/googleworkspace_cli_short.png"
+        "id": "showlab_code2video",
+        "name": "Code2Video",
+        "github_url": "https://github.com/showlab/Code2Video",
+        "script_text": "Here is a 160-word engineering-focused video script for the Code2Video project:\n\nCode2Video: Video Generation via Code\n\nCode2Video is a novel approach to educational video generation that leverages code as the primary input. By transforming code into engaging animations and visualizations, this system creates high-quality videos to explain complex technical concepts.\n\nThe key innovation lies in our code-centric paradigm. Unlike traditional video production, which requires manual editing and animation, Code2Video automatically generates videos from concise code snippets. This unlocks a scalable and efficient way to create educational content, enabling instructors and students to focus on the core subject matter rather than the production process.\n\nOur experiments demonstrate the effectiveness of Code2Video across diverse topics, including the Hanoi problem, large language models, and Fourier series. The generated videos seamlessly blend code, animations, and narration, providing a compelling learning experience.\n\nCode2Video aims to revolutionize technical education by empowering creators to easily generate high-quality, code-driven videos for their students and online audiences.",
+        "img_path": "assets/showlab_code2video_screen.png",
+        "audio_path": "assets/showlab_code2video_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/showlab_code2video_short.png"
     },
     {
-        "id": "rivet_dev_rivet",
-        "name": "rivet",
-        "github_url": "https://github.com/rivet-dev/rivet",
-        "script_text": "rivet is a Rust-based project that rivet actors are a serverless primitive for stateful workloads. each actor has built-in state, storage, workflows, scheduling, and websockets everything needed to build the next generation of software.. Rivet Actors are a serverless primitive for stateful workloads. Each actor has built-in state, storage, workflows, scheduling, and WebSockets everything needed to build the next generation of software. typescript import actor from \"rivetkit\" export const chatRoom actor( In-memory sta This project focuses on actor, actors, cloudflare, cloudflare-durable-objects, durable-objects, providing developers with specialized tools and capabilities in these areas. Built with Rust, it leverages the language's strengths to deliver reliable performance. Developers can integrate rivet into their workflows to solve complex technical challenges more efficiently. rivet is worth exploring for your next project.",
-        "img_path": "assets/rivet_dev_rivet_screen.png",
-        "audio_path": "assets/rivet_dev_rivet_audio.mp3",
-        "short_img_path": "deliveries/03-06/shorts/rivet_dev_rivet_short.png"
+        "id": "astral_sh_uv",
+        "name": "uv",
+        "github_url": "https://github.com/astral-sh/uv",
+        "script_text": "uv is an extremely fast Python package and project manager, written in Rust. It delivers a 10-100x performance boost compared to traditional tools like pip, providing a comprehensive solution for managing Python dependencies, virtual environments, and project workflows.\n\nPowered by Rust, uv offers lightning-fast installation and dependency resolution, along with advanced features like a universal lockfile, script execution, Python version management, and a pip-compatible interface. It aims to replace a suite of traditional Python tools, streamlining your development process and reducing the overhead of managing your Python projects.\n\nWith its disk-space efficient global cache and support for Cargo-style workspaces, uv is designed for scalable, enterprise-grade Python development. Whether you're a solo developer or part of a large team, uv simplifies the management of your Python ecosystem, empowering you to focus on writing code.",
+        "img_path": "assets/astral_sh_uv_screen.png",
+        "audio_path": "assets/astral_sh_uv_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/astral_sh_uv_short.png"
+    },
+    {
+        "id": "sapientinc_hrm",
+        "name": "HRM",
+        "github_url": "https://github.com/sapientinc/HRM",
+        "script_text": "The Hierarchical Reasoning Model (HRM) is a novel recurrent architecture that brings significant advancements to complex reasoning tasks in AI. Unlike current large language models relying on brittle Chain-of-Thought techniques, HRM employs a hierarchical structure inspired by the human brain's multi-timescale processing. \n\nHRM's two interdependent recurrent modules - a high-level abstract planner and a low-level detailed computation handler - enable efficient sequential reasoning in a single forward pass, without explicit supervision of the intermediate steps. With only 27 million parameters, HRM achieves exceptional performance on challenging tasks like complex Sudoku puzzles and optimal path finding, outperforming much larger models.\n\nFurthermore, HRM's outstanding results on the Abstraction and Reasoning Corpus benchmark underscore its potential as a transformative advancement toward general-purpose reasoning systems. This efficient and effective reasoning model can be a crucial step forward in developing versatile AI agents capable of tackling complex real-world problems.",
+        "img_path": "assets/sapientinc_hrm_screen.png",
+        "audio_path": "assets/sapientinc_hrm_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/sapientinc_hrm_short.png"
+    },
+    {
+        "id": "stackblitz_labs_bolt.diy",
+        "name": "bolt.diy",
+        "github_url": "https://github.com/stackblitz-labs/bolt.diy",
+        "script_text": "Bolt.diy is an open-source project that empowers developers to create full-stack web applications using any large language model (LLM) they prefer. This innovative approach allows you to choose the AI provider that best suits your needs, whether it's OpenAI, Anthropic, or one of the many other supported options. With bolt.diy, you can prompt, run, edit, and deploy your web apps directly in the browser, streamlining the development process. The project is easily extensible, enabling you to integrate new LLM providers as they become available. Whether you're a seasoned developer or just starting out, bolt.diy provides a versatile and customizable platform for building web applications powered by the latest advancements in AI technology.",
+        "img_path": "assets/stackblitz_labs_bolt.diy_screen.png",
+        "audio_path": "assets/stackblitz_labs_bolt.diy_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/stackblitz_labs_bolt.diy_short.png"
+    },
+    {
+        "id": "guillaumegay13_fieldflow",
+        "name": "fieldflow",
+        "github_url": "https://github.com/guillaumegay13/fieldflow",
+        "script_text": "FieldFlow turns OpenAPI-described REST endpoints into selectively filtered tools. It generates Pydantic models and FastAPI routes that forward requests to the upstream API and return only the fields the caller asks for. An optional MCP layer exposes the same functionality to Model Context Protocol clients such as Claude Desktop.\n\nFieldFlow discovers endpoints and schemas from OpenAPI 3.0 files, dynamically building request/response models and proxying requests while automatically formatting paths and parameters. It works with any OpenAPI-compliant spec, including nested schemas and references.\n\nThe primary use case is empowering developers to quickly expose customizable API access to their teams and customers, reducing data transfer and improving response times.",
+        "img_path": "assets/guillaumegay13_fieldflow_screen.png",
+        "audio_path": "assets/guillaumegay13_fieldflow_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/guillaumegay13_fieldflow_short.png"
+    },
+    {
+        "id": "infranodus_mcp_server_infranodus",
+        "name": "mcp-server-infranodus",
+        "github_url": "https://github.com/infranodus/mcp-server-infranodus",
+        "script_text": "The InfraNodus MCP Server integrates advanced network analysis into your language models and AI assistants. It transforms unstructured text into structured insights using graph theory, enabling you to detect content gaps, identify key topics and concepts, and generate knowledge graphs. \n\nThe server offers a suite of tools that can be seamlessly integrated into your existing workflows. You can connect your InfraNodus knowledge graphs, analyze text for topical clusters, and generate research questions to augment your language model responses. This allows you to go beyond surface-level insights and uncover the nuanced relationships within your data.\n\nWhether you're building content-generating AI assistants or powering your LLM workflows, the InfraNodus MCP Server can provide the deep, contextual understanding you need to deliver more informed and relevant outputs.",
+        "img_path": "assets/infranodus_mcp_server_infranodus_screen.png",
+        "audio_path": "assets/infranodus_mcp_server_infranodus_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/infranodus_mcp_server_infranodus_short.png"
+    },
+    {
+        "id": "paralect_ship",
+        "name": "ship",
+        "github_url": "https://github.com/paralect/ship",
+        "script_text": "The [Ship](https://ship.paralect.com) is a full-stack, plugin-based boilerplate for building scalable products. It's built on top of cutting-edge technologies like Next.js, React Query, and Koa.js, and provides a production-ready foundation for your application.\n\nShip's modular architecture allows you to customize and extend the codebase to fit your specific needs. It includes features like authentication, database management, file storage, and real-time communication, all pre-configured and ready to use.\n\nThe project is the result of years of experience by the [Paralect](https://www.paralect.com) team, who have carefully curated and documented these best practices. Ship's goal is to help developers ship products faster, by providing a reliable and flexible starting point.",
+        "img_path": "assets/paralect_ship_screen.png",
+        "audio_path": "assets/paralect_ship_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/paralect_ship_short.png"
+    },
+    {
+        "id": "samanhappy_mcphub",
+        "name": "mcphub",
+        "github_url": "https://github.com/samanhappy/mcphub",
+        "script_text": "MCPHub is a unified hub for centrally managing and dynamically orchestrating multiple MCP (Model Context Protocol) servers and APIs. It organizes these resources into separate HTTP/SSE endpoints, providing flexible routing strategies to access all servers, individual servers, or logical server groups.\n\nThe key features include centralized management, smart routing with vector semantic search, hot-swappable configuration, and support for OAuth 2.0 and social login. MCPHub can be deployed instantly with Docker and is designed for both development and production environments.\n\nThe primary use case of MCPHub is to simplify the management and scaling of complex MCP-based AI infrastructure, enabling developers to focus on building innovative applications on top of these powerful model APIs.",
+        "img_path": "assets/samanhappy_mcphub_screen.png",
+        "audio_path": "assets/samanhappy_mcphub_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/samanhappy_mcphub_short.png"
+    },
+    {
+        "id": "ruvnet_ruflo",
+        "name": "ruflo",
+        "github_url": "https://github.com/ruvnet/ruflo",
+        "script_text": "Ruflo is the leading agent orchestration platform for Claude. Deploy intelligent multi-agent swarms, coordinate autonomous workflows, and build conversational AI systems. Ruflo features enterprise-grade architecture, distributed swarm intelligence, and native Claude Code / Codex integration. The platform's self-learning capabilities, fault-tolerant consensus, and security focus enable teams to harness the power of coordinated AI agents for complex software engineering tasks. Ruflo transforms Claude Code into a versatile multi-agent development environment.",
+        "img_path": "assets/ruvnet_ruflo_screen.png",
+        "audio_path": "assets/ruvnet_ruflo_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/ruvnet_ruflo_short.png"
+    },
+    {
+        "id": "marcuspat_turbo_flow",
+        "name": "turbo-flow",
+        "github_url": "https://github.com/marcuspat/turbo-flow",
+        "script_text": "Introducing Turbo Flow v4.0 - an advanced agentic development environment empowering DevOps, data science, and AI engineering teams. Featuring a unified Ruflo v3.5 core, Turbo Flow seamlessly integrates 600+ AI subagents, Claude Flow, and the SPARC methodology. Leverage cutting-edge capabilities like Beads for cross-session project memory, Git Worktrees for agent isolation, and GitNexus for codebase knowledge graphing. Deploy intelligent multi-agent swarms and coordinate autonomous workflows across Devpods, Rackspace Spot Instances, GitHub Codespaces, and Google Cloud Shell. With a laser-focused plugin ecosystem and a powerful interface, Turbo Flow is your ultimate tool for accelerating agentic development and deployment. Unlock the next frontier of intelligent automation and intelligent infrastructure.",
+        "img_path": "assets/marcuspat_turbo_flow_screen.png",
+        "audio_path": "assets/marcuspat_turbo_flow_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/marcuspat_turbo_flow_short.png"
+    },
+    {
+        "id": "andrewyng_context_hub",
+        "name": "context-hub",
+        "github_url": "https://github.com/andrewyng/context-hub",
+        "script_text": "Context Hub is a tool that helps coding agents stay informed. It provides curated, versioned documentation for APIs and other technical content, allowing agents to access the information they need without forgetting what they've learned. The key feature is the ability to annotate and provide feedback on the docs, which helps improve them over time. This creates a self-improving loop where agents get smarter with every task. All the content is open and maintained as Markdown, so you can inspect exactly what your agent is reading and even contribute back. Context Hub is designed to be a reliable, transparent resource for coding agents to use, making their work more efficient and effective.",
+        "img_path": "assets/andrewyng_context_hub_screen.png",
+        "audio_path": "assets/andrewyng_context_hub_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/andrewyng_context_hub_short.png"
+    },
+    {
+        "id": "livekit_examples_agent_starter_react",
+        "name": "agent-starter-react",
+        "github_url": "https://github.com/livekit-examples/agent-starter-react",
+        "script_text": "This project, \"agent-starter-react,\" provides a comprehensive frontend app for LiveKit Agents, a voice AI platform. Built with Next.js, it offers real-time voice interaction, camera video streaming, screen sharing, and virtual avatar integration. The app utilizes the Agents UI components and the LiveKit JavaScript SDK, simplifying the development process. \n\nKey features include customizable audio visualizers, light/dark theme switching, and configurable branding and UI elements. The project structure separates business logic, Agents UI components, and primitive UI components, allowing for easy extensibility and modification.\n\nThis template serves as a solid starting point for developers looking to build voice-enabled applications on top of the LiveKit platform. Whether you're creating a virtual assistant, a collaborative workspace, or a voice-driven application, this starter kit provides a robust foundation to accelerate your development journey.",
+        "img_path": "assets/livekit_examples_agent_starter_react_screen.png",
+        "audio_path": "assets/livekit_examples_agent_starter_react_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/livekit_examples_agent_starter_react_short.png"
+    },
+    {
+        "id": "junetic_usercall_mcp",
+        "name": "usercall-mcp",
+        "github_url": "https://github.com/junetic/usercall-mcp",
+        "script_text": "Usercall MCP is an AI-powered server that lets agents run real user interviews and retrieve valuable insights. By integrating with popular MCP clients like Claude Desktop and Cursor, agents can quickly gather qualitative feedback directly from users.\n\nThe server handles the entire interview process, from creating study sessions to collecting responses and analyzing the results. Agents simply provide the interview details, and Usercall MCP returns structured insights with key themes and verbatim quotes.\n\nThis solution enables AI agents to supplement their product development with genuine user perspectives, going beyond synthetic data or assumptions. With Usercall MCP, agents can make more informed decisions and build better products that truly meet user needs.",
+        "img_path": "assets/junetic_usercall_mcp_screen.png",
+        "audio_path": "assets/junetic_usercall_mcp_audio.mp3",
+        "short_img_path": "deliveries/03-11/shorts/junetic_usercall_mcp_short.png"
     }
 ]

@@ -102,22 +102,22 @@ CODE_STREAM_THEMES = {
 
 INTRO_PROMPTS_ENHANCED = [
     # Terminal/Code themes
-    "[Cinematic reveal] OpenSourceScribes logo emerges from flowing green terminal code stream, dark background, professional 4K quality, smooth animation, 6 seconds",
+    "[Cinematic reveal] flowing green terminal code stream, dark background, professional 4K quality, smooth animation, 6 seconds",
     
     # Circuit/Tech themes  
-    "[Macro shot] Circuit board pulses with energy as 'OpenSourceScribes' text glows into existence, green electric trails, tech aesthetic, cinematic depth, 6 seconds",
+    "[Macro shot] Circuit board pulses with energy, green electric trails, tech aesthetic, cinematic depth, 6 seconds",
     
     # GitHub/Community themes
-    "[3D visualization] GitHub contribution graph expands forming 'OpenSourceScribes' text, stars and connections glowing, space background, epic reveal, 6 seconds",
+    "[3D visualization] GitHub contribution graph expands, stars and connections glowing, space background, epic reveal, 6 seconds",
     
     # Code Rain themes
-    "[Slow motion] Code characters rain down forming channel name, matrix-style effect, green and cyan colors, dark void background, 6 seconds",
+    "[Slow motion] Code characters rain down, matrix-style effect, green and cyan colors, dark void background, 6 seconds",
     
     # Particle effects
-    "[Abstract visualization] Data particles swirl and coalesce into OpenSourceScribes branding, flowing motion, digital cosmos environment, cinematic 4K, 6 seconds",
+    "[Abstract visualization] Data particles swirl and coalesce flowing motion, digital cosmos environment, cinematic 4K, 6 seconds",
     
     # Developer workspace
-    "[Cinematic shot] Modern developer workspace with monitors, 'OpenSourceScribes' fades in with professional motion graphics overlay, warm lighting, 6 seconds"
+    "[Cinematic shot] Modern developer workspace with monitors, warm lighting, 6 seconds"
 ]
 
 
@@ -146,10 +146,7 @@ def get_code_stream_intro_prompt(episode_title: str = None, theme: str = None) -
     base_prompt = random.choice(theme_data["prompts"])
     
     # Add channel branding
-    branded_prompt = f"{base_prompt}, OpenSourceScribes channel branding text with smooth fade-in animation"
-    
-    if episode_title:
-        branded_prompt += f", episode title '{episode_title}' appears below channel name"
+    branded_prompt = f"{base_prompt}"
     
     # Add quality and duration specs
     final_prompt = f"{branded_prompt}, 4K quality, professional color grading, cinematic depth of field, 6 seconds duration"
@@ -199,8 +196,6 @@ def generate_minimax_intro(
     if use_predefined_prompts:
         # Use curated, tested prompts
         prompt = random.choice(INTRO_PROMPTS_ENHANCED)
-        if episode_title:
-            prompt = prompt.replace("OpenSourceScribes", f"OpenSourceScribes - {episode_title}")
     else:
         # Use dynamic generation
         prompt_data = get_code_stream_intro_prompt(episode_title, theme)
@@ -258,17 +253,35 @@ def generate_intro_with_audio(
     )
     
     if minimax_video and os.path.exists(intro_audio_path):
-        # Combine MiniMax video with audio
-        print("🎵 Combining MiniMax intro with audio...")
+        # Combine MiniMax video with audio and overlay text
+        print("🎵 Combining MiniMax intro with audio and text overlay...")
         
+        episode_text = episode_title if episode_title else "GitHub Projects Roundup"
+        
+        # Ensure text is properly escaped for FFmpeg drawtext
+        channel_name = "OpenSourceScribes"
+        
+        # Get audio duration
+        audio_dur = "6.0"
+        try:
+            dur_res = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "format=duration", 
+                 "-of", "default=noprint_wrappers=1:nokey=1", intro_audio_path],
+                capture_output=True, text=True, check=True
+            )
+            audio_dur = str(float(dur_res.stdout.strip()))
+        except Exception:
+            pass
+
         cmd = [
             "ffmpeg", "-y",
             "-i", minimax_video,
             "-i", intro_audio_path,
+            "-vf", f"drawtext=text='{channel_name}':fontcolor=white:fontsize=72:x=(w-text_w)/2:y=(h-text_h)/2-50:shadowcolor=black:shadowx=2:shadowy=2:alpha='if(lt(t,1),0,if(lt(t,2),(t-1)/1,1))', drawtext=text='{episode_text}':fontcolor=#16c79a:fontsize=48:x=(w-text_w)/2:y=(h-text_h)/2+50:shadowcolor=black:shadowx=2:shadowy=2:alpha='if(lt(t,1.5),0,if(lt(t,2.5),(t-1.5)/1,1))'",
             "-c:v", "libx264", "-preset", "medium", "-crf", "23",
             "-c:a", "aac", "-b:a", "192k",
             "-pix_fmt", "yuv420p",
-            "-shortest",
+            "-t", audio_dur,
             output_path
         ]
         
@@ -287,6 +300,18 @@ def generate_intro_with_audio(
         
         intro_img = create_intro_card(config, episode_title or "GitHub Projects Roundup")
         
+        # Get audio duration
+        audio_dur = "6.0"
+        try:
+            dur_res = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "format=duration", 
+                 "-of", "default=noprint_wrappers=1:nokey=1", intro_audio_path],
+                capture_output=True, text=True, check=True
+            )
+            audio_dur = str(float(dur_res.stdout.strip()))
+        except Exception:
+            pass
+
         # Create static segment
         cmd = [
             "ffmpeg", "-y",
@@ -295,7 +320,7 @@ def generate_intro_with_audio(
             "-c:v", "libx264", "-preset", "ultrafast", "-tune", "stillimage",
             "-c:a", "aac", "-b:a", "192k",
             "-pix_fmt", "yuv420p",
-            "-shortest",
+            "-t", audio_dur,
             output_path
         ]
         

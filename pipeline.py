@@ -251,6 +251,8 @@ def render_segment_task(project: dict, index: int) -> str:
     """Render a single project video segment."""
     logger = get_run_logger()
     output_path = str(Path(OUTPUT_FOLDER) / f"segment_{index:03d}.mp4")
+    
+    audio_dur = _get_audio_duration(project["audio_path"])
 
     # Enhanced (MiniMax) path
     if "enhanced_video" in project:
@@ -263,7 +265,7 @@ def render_segment_task(project: dict, index: int) -> str:
              "-c:a", "aac", "-b:a", "192k",
              "-pix_fmt", "yuv420p",
              "-map", "0:v:0", "-map", "1:a:0",
-             "-shortest", output_path],
+             "-t", str(audio_dur), output_path],
             check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
         )
         return output_path
@@ -278,7 +280,7 @@ def render_segment_task(project: dict, index: int) -> str:
          "-c:v", "libx264", "-preset", "ultrafast", "-tune", "stillimage",
          "-c:a", "aac", "-b:a", "192k",
          "-pix_fmt", "yuv420p",
-         "-shortest", output_path],
+         "-t", str(audio_dur), output_path],
         check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
     )
     return output_path

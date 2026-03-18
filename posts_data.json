@@ -1,140 +1,104 @@
 [
-    {
-        "id": "openclaw_openclaw",
-        "name": "openclaw",
-        "github_url": "https://github.com/openclaw/openclaw",
-        "script_text": "OpenClaw is your personal AI assistant that runs on any operating system and platform. It integrates with the messaging channels you already use, like WhatsApp, Discord, and Slack, allowing you to interact with it seamlessly.\n\nThe unique aspect of OpenClaw is its decentralized architecture. Instead of relying on a centralized service, OpenClaw runs locally on your own devices, ensuring your data remains private and secure. This also enables fast, always-on functionality without relying on external servers.\n\nOpenClaw can listen, speak, and even render a live Canvas that you can control. It's a versatile tool that puts the power of an AI assistant in your hands, on your terms. If you're looking for a personal, single-user assistant that feels local, fast, and always-on, OpenClaw is the solution for you."
-    },
-    {
-        "id": "openbrowserai_openbrowser",
-        "name": "openbrowser",
-        "github_url": "https://github.com/OpenBrowserAI/openbrowser",
-        "script_text": "OpenBrowser is an open-source, AI-native browser built on Chromium - a privacy-first alternative to popular AI assistants. Instead of sending your data away, OpenBrowser brings powerful AI directly into your browser, so you stay in control.\n\nThe key features include native AI agents that run locally, a privacy-first approach where your data never leaves your computer, and full transparency through open-source development. Built on the trusted Chromium foundation, OpenBrowser offers compatibility and performance.\n\nJoin our community on Discord and X (Twitter) to help shape the future of AI-powered browsing. We welcome contributions - please check our guidelines to get started. OpenBrowser is open source under the MIT license, providing a truly unique and user-centric browsing experience."
-    },
-    {
-        "id": "browser_use_browser_use",
-        "name": "browser-use",
-        "github_url": "https://github.com/browser-use/browser-use",
-        "script_text": "Introducing Browser-Use: a powerful open-source toolkit that makes websites accessible for AI agents. With Browser-Use, you can automate online tasks with ease, interacting with web pages as a virtual user.\n\nOur innovative approach leverages the Playwright library to programmatically control web browsers, allowing AI models to navigate, interact, and extract data from websites. This seamless integration enables a wide range of applications, from web scraping and data extraction to automated form filling and task completion.\n\nWhether you're a developer, researcher, or automation enthusiast, Browser-Use empowers you to create intelligent, self-sufficient agents that can operate on the web. Unlock new possibilities in web automation and make your AI-powered applications more versatile than ever before."
-    },
-    {
-        "id": "miromindai_mirothinker",
-        "name": "MiroThinker",
-        "github_url": "https://github.com/MiroMindAI/MiroThinker",
-        "script_text": "MiroThinker is a deep research agent optimized for complex research and prediction tasks. Our latest models, MiroThinker-1.7 and MiroThinker-H1, achieve state-of-the-art performance on the challenging BrowseComp benchmark, scoring 74.0 and 88.2 respectively.\n\nMiroThinker utilizes advanced language models and reinforcement learning techniques to quickly parse, comprehend, and extract insights from vast amounts of research data. Its unique architecture allows it to seamlessly integrate with existing workflows, enabling researchers and analysts to supercharge their productivity.\n\nTrained on a diverse corpus of academic papers, patents, and industry reports, MiroThinker excels at tasks such as literature review, hypothesis generation, and forecasting. Whether you're conducting groundbreaking research or making mission-critical business decisions, MiroThinker is the AI assistant you need to unlock your full potential."
-    },
-    {
-        "id": "datalab_to_chandra",
-        "name": "chandra",
-        "github_url": "https://github.com/datalab-to/chandra",
-        "script_text": "Introducing Chandra, a state-of-the-art OCR model that handles complex documents with ease. Unlike traditional OCR, Chandra can accurately extract text, tables, math, and handwriting from messy forms, invoices, and research papers.\n\nChandra's unique layout-aware approach preserves the original structure, outputting results in structured formats like Markdown, HTML, and JSON. It supports over 40 languages and can run locally via Hugging Face Transformers or be deployed as a high-throughput vLLM server.\n\nWhether you're working with doctor's notes, financial filings, or technical documents, Chandra's advanced capabilities make it the go-to solution for document intelligence tasks."
-    },
-    {
-        "id": "facebook_pyrefly",
-        "name": "pyrefly",
-        "github_url": "https://github.com/facebook/pyrefly",
-        "script_text": "Pyrefly is a fast type checker and language server for Python, providing lightning-fast type checking and powerful IDE features. It infers types in most locations, apart from function parameters, and understands your program's control flow to refine static types. Pyrefly aims for large-scale incrementality at the module level, with optimized checking and parallelism, making it a highly efficient tool for your Python development workflow.\n\nKey features include type inference, flow types, and incremental checking. Pyrefly is available as a command-line tool and IDE extensions for popular editors like VSCode, Neovim, and Zed. Try it out in the browser sandbox or install it using pip to supercharge your Python development."
-    },
-    {
-        "id": "kubeagi_arcadia",
-        "name": "arcadia",
-        "github_url": "https://github.com/kubeagi/arcadia",
-        "script_text": "Arcadia is an all-in-one enterprise-grade LLMOps platform that provides a unified interface for developers and operators. It offers an orchestration engine for Retrieval Augmented Generation and LLM finetuning, allowing you to build, debug, and deploy AI agents on the ops-console. Arcadia's infrastructure, built with KubeBB, ensures multi-tenant isolation, OIDC, RBAC, and auditing, enabling different companies and departments to collaborate through a secure and scalable platform. With support for popular LLMs, embedding models, and reranking models, Arcadia accelerates inference using techniques like quantization and distributed processing. Developers can fine-tune models using the LLaMa-Factory integration. Arcadia's modular design, based on the Kubernetes operator pattern, ensures better performance and maintainability. Whether you're an AI engineer, data scientist, or DevOps professional, Arcadia simplifies the process of developing and deploying large language models within your organization."
-    },
-    {
-        "id": "ruvnet_arcadia",
-        "name": "ARCADIA",
-        "github_url": "https://github.com/ruvnet/ARCADIA",
-        "script_text": "ARCADIA is an AI-powered game engine that revolutionizes dynamic, personalized experiences in evolving worlds. Built with Rust's performance and safety guarantees, ARCADIA combines cutting-edge AI systems with battle-tested game development tools.\n\nAt the core of ARCADIA are its advanced AI capabilities. Leveraging multi-level cognitive processing, ARCADIA's NPCs exhibit genuine emotional intelligence and strategic planning. Autopoietic processing enables self-organizing, self-healing game mechanics that maintain dynamic equilibrium. Evolutionary algorithms drive adaptive AI behavior, with population-based strategy evolution and fitness-driven learning.\n\nARCADIA's technical innovations provide the infrastructure to make your game world truly come alive. Whether you're building the next open-world RPG or pushing the boundaries of procedurally generated content, ARCADIA's AI-driven systems empower you to create immersive, ever-evolving experiences."
-    },
-    {
-        "id": "samsungsailmontreal_tinyrecursivemodels",
-        "name": "TinyRecursiveModels",
-        "github_url": "https://github.com/SamsungSAILMontreal/TinyRecursiveModels",
-        "script_text": "Tiny Recursive Models (TRM) is a novel approach that achieves impressive scores on the challenging ARC-AGI benchmarks using a tiny 7M parameter neural network. The key innovation is a recursive reasoning process that allows the model to progressively improve its answers, addressing any errors from previous iterations, in an extremely parameter-efficient manner.\n\nUnlike traditional methods that rely on large language models, TRM demonstrates that \"less is more\" - a small model trained from scratch can outperform massive foundational models on hard reasoning tasks. By recursively updating its internal representations and answer, TRM minimizes overfitting and delivers strong performance without breaking the bank.\n\nThis work simplifies the recursive reasoning concept, removing the need for complex biological analogies or mathematical theorems, making it a compelling and accessible technique for researchers and engineers looking to develop efficient AI systems for challenging reasoning problems."
-    },
-    {
-        "id": "fission_ai_openspec",
-        "name": "OpenSpec",
-        "github_url": "https://github.com/Fission-AI/OpenSpec",
-        "script_text": "Here is a 160-word engineering-focused video script for a YouTube video about the OpenSpec project:\n\nOpenSpec is a specification-driven framework for AI coding assistants. It enables a new workflow for AI-powered software development, where codified specifications drive the implementation process.\n\nThe core idea is simple yet powerful - create structured specifications for your features, then use OpenSpec to manage the entire lifecycle, from proposal to deployment. This artifact-guided approach provides clear visibility into the what, why, and how of each change, leading to more transparent and accountable engineering.\n\nUnder the hood, OpenSpec uses a Git-based file structure to store all specifications and related artifacts. This allows teams to leverage existing version control tools and workflows, ensuring a seamless integration into their existing development processes.\n\nWhether you're working on a personal project or an enterprise-scale application, OpenSpec can help you build better software, faster, by aligning your team around a unified, specification-driven development process."
-    },
-    {
-        "id": "showlab_code2video",
-        "name": "Code2Video",
-        "github_url": "https://github.com/showlab/Code2Video",
-        "script_text": "Here is a 160-word engineering-focused video script for the Code2Video project:\n\nCode2Video: Video Generation via Code\n\nCode2Video is a novel approach to educational video generation that leverages code as the primary input. By transforming code into engaging animations and visualizations, this system creates high-quality videos to explain complex technical concepts.\n\nThe key innovation lies in our code-centric paradigm. Unlike traditional video production, which requires manual editing and animation, Code2Video automatically generates videos from concise code snippets. This unlocks a scalable and efficient way to create educational content, enabling instructors and students to focus on the core subject matter rather than the production process.\n\nOur experiments demonstrate the effectiveness of Code2Video across diverse topics, including the Hanoi problem, large language models, and Fourier series. The generated videos seamlessly blend code, animations, and narration, providing a compelling learning experience.\n\nCode2Video aims to revolutionize technical education by empowering creators to easily generate high-quality, code-driven videos for their students and online audiences."
-    },
-    {
-        "id": "astral_sh_uv",
-        "name": "uv",
-        "github_url": "https://github.com/astral-sh/uv",
-        "script_text": "uv is an extremely fast Python package and project manager, written in Rust. It delivers a 10-100x performance boost compared to traditional tools like pip, providing a comprehensive solution for managing Python dependencies, virtual environments, and project workflows.\n\nPowered by Rust, uv offers lightning-fast installation and dependency resolution, along with advanced features like a universal lockfile, script execution, Python version management, and a pip-compatible interface. It aims to replace a suite of traditional Python tools, streamlining your development process and reducing the overhead of managing your Python projects.\n\nWith its disk-space efficient global cache and support for Cargo-style workspaces, uv is designed for scalable, enterprise-grade Python development. Whether you're a solo developer or part of a large team, uv simplifies the management of your Python ecosystem, empowering you to focus on writing code."
-    },
-    {
-        "id": "sapientinc_hrm",
-        "name": "HRM",
-        "github_url": "https://github.com/sapientinc/HRM",
-        "script_text": "The Hierarchical Reasoning Model (HRM) is a novel recurrent architecture that brings significant advancements to complex reasoning tasks in AI. Unlike current large language models relying on brittle Chain-of-Thought techniques, HRM employs a hierarchical structure inspired by the human brain's multi-timescale processing. \n\nHRM's two interdependent recurrent modules - a high-level abstract planner and a low-level detailed computation handler - enable efficient sequential reasoning in a single forward pass, without explicit supervision of the intermediate steps. With only 27 million parameters, HRM achieves exceptional performance on challenging tasks like complex Sudoku puzzles and optimal path finding, outperforming much larger models.\n\nFurthermore, HRM's outstanding results on the Abstraction and Reasoning Corpus benchmark underscore its potential as a transformative advancement toward general-purpose reasoning systems. This efficient and effective reasoning model can be a crucial step forward in developing versatile AI agents capable of tackling complex real-world problems."
-    },
-    {
-        "id": "stackblitz_labs_bolt.diy",
-        "name": "bolt.diy",
-        "github_url": "https://github.com/stackblitz-labs/bolt.diy",
-        "script_text": "Bolt.diy is an open-source project that empowers developers to create full-stack web applications using any large language model (LLM) they prefer. This innovative approach allows you to choose the AI provider that best suits your needs, whether it's OpenAI, Anthropic, or one of the many other supported options. With bolt.diy, you can prompt, run, edit, and deploy your web apps directly in the browser, streamlining the development process. The project is easily extensible, enabling you to integrate new LLM providers as they become available. Whether you're a seasoned developer or just starting out, bolt.diy provides a versatile and customizable platform for building web applications powered by the latest advancements in AI technology."
-    },
-    {
-        "id": "guillaumegay13_fieldflow",
-        "name": "fieldflow",
-        "github_url": "https://github.com/guillaumegay13/fieldflow",
-        "script_text": "FieldFlow turns OpenAPI-described REST endpoints into selectively filtered tools. It generates Pydantic models and FastAPI routes that forward requests to the upstream API and return only the fields the caller asks for. An optional MCP layer exposes the same functionality to Model Context Protocol clients such as Claude Desktop.\n\nFieldFlow discovers endpoints and schemas from OpenAPI 3.0 files, dynamically building request/response models and proxying requests while automatically formatting paths and parameters. It works with any OpenAPI-compliant spec, including nested schemas and references.\n\nThe primary use case is empowering developers to quickly expose customizable API access to their teams and customers, reducing data transfer and improving response times."
-    },
-    {
-        "id": "infranodus_mcp_server_infranodus",
-        "name": "mcp-server-infranodus",
-        "github_url": "https://github.com/infranodus/mcp-server-infranodus",
-        "script_text": "The InfraNodus MCP Server integrates advanced network analysis into your language models and AI assistants. It transforms unstructured text into structured insights using graph theory, enabling you to detect content gaps, identify key topics and concepts, and generate knowledge graphs. \n\nThe server offers a suite of tools that can be seamlessly integrated into your existing workflows. You can connect your InfraNodus knowledge graphs, analyze text for topical clusters, and generate research questions to augment your language model responses. This allows you to go beyond surface-level insights and uncover the nuanced relationships within your data.\n\nWhether you're building content-generating AI assistants or powering your LLM workflows, the InfraNodus MCP Server can provide the deep, contextual understanding you need to deliver more informed and relevant outputs."
-    },
-    {
-        "id": "paralect_ship",
-        "name": "ship",
-        "github_url": "https://github.com/paralect/ship",
-        "script_text": "The [Ship](https://ship.paralect.com) is a full-stack, plugin-based boilerplate for building scalable products. It's built on top of cutting-edge technologies like Next.js, React Query, and Koa.js, and provides a production-ready foundation for your application.\n\nShip's modular architecture allows you to customize and extend the codebase to fit your specific needs. It includes features like authentication, database management, file storage, and real-time communication, all pre-configured and ready to use.\n\nThe project is the result of years of experience by the [Paralect](https://www.paralect.com) team, who have carefully curated and documented these best practices. Ship's goal is to help developers ship products faster, by providing a reliable and flexible starting point."
-    },
-    {
-        "id": "samanhappy_mcphub",
-        "name": "mcphub",
-        "github_url": "https://github.com/samanhappy/mcphub",
-        "script_text": "MCPHub is a unified hub for centrally managing and dynamically orchestrating multiple MCP (Model Context Protocol) servers and APIs. It organizes these resources into separate HTTP/SSE endpoints, providing flexible routing strategies to access all servers, individual servers, or logical server groups.\n\nThe key features include centralized management, smart routing with vector semantic search, hot-swappable configuration, and support for OAuth 2.0 and social login. MCPHub can be deployed instantly with Docker and is designed for both development and production environments.\n\nThe primary use case of MCPHub is to simplify the management and scaling of complex MCP-based AI infrastructure, enabling developers to focus on building innovative applications on top of these powerful model APIs."
-    },
-    {
-        "id": "ruvnet_ruflo",
-        "name": "ruflo",
-        "github_url": "https://github.com/ruvnet/ruflo",
-        "script_text": "Ruflo is the leading agent orchestration platform for Claude. Deploy intelligent multi-agent swarms, coordinate autonomous workflows, and build conversational AI systems. Ruflo features enterprise-grade architecture, distributed swarm intelligence, and native Claude Code / Codex integration. The platform's self-learning capabilities, fault-tolerant consensus, and security focus enable teams to harness the power of coordinated AI agents for complex software engineering tasks. Ruflo transforms Claude Code into a versatile multi-agent development environment."
-    },
-    {
-        "id": "marcuspat_turbo_flow",
-        "name": "turbo-flow",
-        "github_url": "https://github.com/marcuspat/turbo-flow",
-        "script_text": "Introducing Turbo Flow v4.0 - an advanced agentic development environment empowering DevOps, data science, and AI engineering teams. Featuring a unified Ruflo v3.5 core, Turbo Flow seamlessly integrates 600+ AI subagents, Claude Flow, and the SPARC methodology. Leverage cutting-edge capabilities like Beads for cross-session project memory, Git Worktrees for agent isolation, and GitNexus for codebase knowledge graphing. Deploy intelligent multi-agent swarms and coordinate autonomous workflows across Devpods, Rackspace Spot Instances, GitHub Codespaces, and Google Cloud Shell. With a laser-focused plugin ecosystem and a powerful interface, Turbo Flow is your ultimate tool for accelerating agentic development and deployment. Unlock the next frontier of intelligent automation and intelligent infrastructure."
-    },
-    {
-        "id": "andrewyng_context_hub",
-        "name": "context-hub",
-        "github_url": "https://github.com/andrewyng/context-hub",
-        "script_text": "Context Hub is a tool that helps coding agents stay informed. It provides curated, versioned documentation for APIs and other technical content, allowing agents to access the information they need without forgetting what they've learned. The key feature is the ability to annotate and provide feedback on the docs, which helps improve them over time. This creates a self-improving loop where agents get smarter with every task. All the content is open and maintained as Markdown, so you can inspect exactly what your agent is reading and even contribute back. Context Hub is designed to be a reliable, transparent resource for coding agents to use, making their work more efficient and effective."
-    },
-    {
-        "id": "livekit_examples_agent_starter_react",
-        "name": "agent-starter-react",
-        "github_url": "https://github.com/livekit-examples/agent-starter-react",
-        "script_text": "This project, \"agent-starter-react,\" provides a comprehensive frontend app for LiveKit Agents, a voice AI platform. Built with Next.js, it offers real-time voice interaction, camera video streaming, screen sharing, and virtual avatar integration. The app utilizes the Agents UI components and the LiveKit JavaScript SDK, simplifying the development process. \n\nKey features include customizable audio visualizers, light/dark theme switching, and configurable branding and UI elements. The project structure separates business logic, Agents UI components, and primitive UI components, allowing for easy extensibility and modification.\n\nThis template serves as a solid starting point for developers looking to build voice-enabled applications on top of the LiveKit platform. Whether you're creating a virtual assistant, a collaborative workspace, or a voice-driven application, this starter kit provides a robust foundation to accelerate your development journey."
-    },
-    {
-        "id": "junetic_usercall_mcp",
-        "name": "usercall-mcp",
-        "github_url": "https://github.com/junetic/usercall-mcp",
-        "script_text": "Usercall MCP is an AI-powered server that lets agents run real user interviews and retrieve valuable insights. By integrating with popular MCP clients like Claude Desktop and Cursor, agents can quickly gather qualitative feedback directly from users.\n\nThe server handles the entire interview process, from creating study sessions to collecting responses and analyzing the results. Agents simply provide the interview details, and Usercall MCP returns structured insights with key themes and verbatim quotes.\n\nThis solution enables AI agents to supplement their product development with genuine user perspectives, going beyond synthetic data or assumptions. With Usercall MCP, agents can make more informed decisions and build better products that truly meet user needs."
-    }
+  {
+    "id": "sidequestjs_sidequest",
+    "name": "sidequest",
+    "github_url": "https://github.com/sidequestjs/sidequest",
+    "script_text": "Sidequest is a modern, scalable background job processor for Node.js applications. Built with TypeScript, it provides reliable job processing with multiple database backends, a beautiful web dashboard, and comprehensive monitoring capabilities.\n\nSidequest leverages worker threads for non-blocking job processing, ensuring high performance. It supports a variety of database backends, including PostgreSQL, MySQL, and SQLite, allowing you to seamlessly integrate with your existing infrastructure.\n\nThe modular architecture of Sidequest allows for flexible deployment, with support for both ESM and CJS. It also includes a command-line interface for database migrations and management, simplifying the setup process.\n\nSidequest's comprehensive features, including queue management, job lifecycle management, and scheduled jobs, make it a powerful tool for building reliable and scalable Node.js applications with background processing needs."
+  },
+  {
+    "id": "marcuspat_turbo_flow",
+    "name": "turbo-flow",
+    "github_url": "https://github.com/marcuspat/turbo-flow",
+    "script_text": "Turbo Flow v4.0 delivers an advanced agentic development environment, powering autonomous workflows across cloud platforms. With 600+ AI subagents, Ruflo v3.5, and the SPARC methodology, you can deploy intelligent multi-agent swarms that coordinate complex tasks. Key features include Beads for cross-session memory, Git Worktrees for agent isolation, and the GitNexus codebase graph. Seamlessly integrate with Devpods, Rackspace Spot Instances, GitHub Codespaces, and Google Cloud Shell. Turbo Flow v4.0 empowers developers to build and orchestrate cutting-edge, AI-driven applications."
+  },
+  {
+    "id": "composiohq_awesome_claude_skills",
+    "name": "awesome-claude-skills",
+    "github_url": "https://github.com/ComposioHQ/awesome-claude-skills",
+    "script_text": "Awesome Claude Skills provides a curated collection of practical tools and resources to enhance your Claude AI workflows. The project connects Claude to over 500 apps, allowing it to perform real-world actions like sending emails, creating issues, and posting to Slack. This unique implementation, powered by the Composio platform, streamlines your Claude-driven workflows and boosts productivity across various domains.\n\nWhether you're a developer, data analyst, or content creator, Awesome Claude Skills offers a diverse range of skills to automate tasks, process documents, and integrate Claude with your favorite tools. Explore this comprehensive resource to unlock the full potential of Claude and elevate your Claude-powered projects."
+  },
+  {
+    "id": "sovereign_net_the_sovereign_network",
+    "name": "The-Sovereign-Network",
+    "github_url": "https://github.com/SOVEREIGN-NET/The-Sovereign-Network",
+    "script_text": "The Sovereign Network is a Rust-based implementation of the Zero Knowledge Hypertext Transfer Protocol (ZHTP), a decentralized protocol for secure and privacy-preserving data exchange. \n\nAt the core of the project is a seed-anchored identity architecture, where a single seed acts as the root of trust for all identity components. This approach enables deterministic identities, rotatable cryptographic keys, and forward-compatible proof versioning.\n\nThe monorepo contains a suite of modular libraries covering blockchain, consensus, cryptography, networking, and more. These libraries power the ZHTP orchestrator node, which facilitates the secure exchange of data between participants in the network.\n\nBy leveraging zero-knowledge proofs and a distributed architecture, the Sovereign Network aims to provide a decentralized, privacy-preserving alternative to traditional data sharing and collaboration platforms."
+  },
+  {
+    "id": "yedp123_comfyui_beginner_bible",
+    "name": "ComfyUI-Beginner-Bible",
+    "github_url": "https://github.com/yedp123/ComfyUI-Beginner-Bible",
+    "script_text": "Introducing the ComfyUI Beginner Bible - a drag-and-drop dictionary designed to simplify the learning curve for absolute beginners. This in-app extension translates 136 core nodes into plain, easy-to-understand explanations, allowing users to quickly grasp their functionality and wire them together effortlessly. \n\nFeaturing a searchable sidebar, hover previews, and native drag-and-drop support, the Beginner Bible empowers non-coders to navigate the complexities of ComfyUI. No more guessing what a \"KSampler\" does or how to connect a \"VAE Decode\" - this tool bridges the gap between technical jargon and practical application.\n\nWhether you're new to node-based AI workflows or simply seeking a more intuitive way to explore ComfyUI, the Beginner Bible is your go-to resource for jumpstarting your creative journey."
+  },
+  {
+    "id": "abhigyanpatwari_gitnexus",
+    "name": "GitNexus",
+    "github_url": "https://github.com/abhigyanpatwari/GitNexus",
+    "script_text": "Here's a 160-word engineering-focused video script for GitNexus:\n\nGitNexus is a client-side knowledge graph creator that runs entirely in your browser. Drop in a GitHub repo or ZIP file, and get an interactive knowledge graph with a built-in Graph RAG Agent.\n\nGitNexus indexes any codebase into a knowledge graph, tracking every dependency, call chain, cluster, and execution flow. It then exposes this architectural data through smart tools, so AI agents like Cursor and Claude Code never miss crucial code relationships.\n\nUnlike traditional code documentation tools, GitNexus doesn't just describe the code - it analyzes the full structure, giving your AI agents a deep, reliable understanding of the codebase. Even smaller language models can compete with larger ones by leveraging GitNexus's architectural clarity.\n\nUse the web UI for quick exploration and demos, or the CLI + MCP to seamlessly integrate GitNexus into your daily development workflow, empowering your AI assistants to work with full code intelligence."
+  },
+  {
+    "id": "google_langextract",
+    "name": "langextract",
+    "github_url": "https://github.com/google/langextract",
+    "script_text": "LangExtract is a Python library that extracts structured information from unstructured text using large language models (LLMs). It maps every extraction to its exact location in the source text, enabling precise source grounding and interactive visualization. LangExtract overcomes the \"needle-in-a-haystack\" challenge of large document extraction by using optimized strategies like text chunking and parallel processing. The library supports a wide range of LLMs, from cloud-based models to local open-source alternatives, and can be easily adapted to any domain using just a few examples. With LangExtract, you can reliably extract and organize key details from clinical notes, reports, and other long-form documents, ensuring the extracted data corresponds to the original source."
+  },
+  {
+    "id": "j_p_higgins_soundthread",
+    "name": "SoundThread",
+    "github_url": "https://github.com/j-p-higgins/SoundThread",
+    "script_text": "SoundThread is a cross-platform graphical user interface for the Composers Desktop Project (CDP), a suite of open-source sound manipulation tools. It offers a node-based patching system, allowing users to quickly build complex audio processing chains. SoundThread provides access to over 100 CDP time-domain and frequency-domain processes, enabling extensive sound design capabilities. \n\nThe key innovation of SoundThread is its user-friendly, modular approach to working with CDP. Users can visually connect various processes, automate parameter values, and mix outputs, all within a single, intuitive interface. This makes CDP more accessible, particularly for those new to experimental sound processing.\n\nSoundThread is designed to be a powerful tool for sound designers, musicians, and audio enthusiasts who seek a streamlined way to leverage the depth and flexibility of the CDP suite. Whether you're creating unique soundscapes, manipulating field recordings, or exploring the boundaries of audio synthesis, SoundThread provides a versatile platform to expand your creative possibilities."
+  },
+  {
+    "id": "msitarzewski_agency_agents",
+    "name": "agency-agents",
+    "github_url": "https://github.com/msitarzewski/agency-agents",
+    "script_text": "**The Agency: AI Specialists Ready to Transform Your Workflow**\n\nA complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables.\n\nBorn from a Reddit thread, The Agency is a growing collection of meticulously crafted AI agent personalities. Each agent is tailored for specific tasks, with unique communication styles and deliverable-focused workflows. Think of it as assembling your dream team, except they're AI specialists who never sleep, never complain, and always deliver.\n\nExplore the roster of engineering experts, community managers, and more. Use them to streamline your development process, boost content creation, and transform your workflow."
+  },
+  {
+    "id": "666ghj_mirofish",
+    "name": "MiroFish",
+    "github_url": "https://github.com/666ghj/MiroFish",
+    "script_text": "MiroFish is a novel AI prediction engine that harnesses the power of swarm intelligence. By extracting seed information from the real world, it automatically constructs high-fidelity parallel digital worlds. Within these spaces, thousands of intelligent agents with independent personalities, long-term memory, and behavioral logic freely interact and evolve.\n\nUsers can dynamically inject variables into this digital sandbox, allowing them to precisely simulate future outcomes. This enables decision-makers to experiment with policies and strategies in a risk-free environment, while individual users can explore creative scenarios or story narratives.\n\nMiroFish breaks free from the limitations of traditional prediction methods by capturing the emergent phenomena that arise from individual interactions. Whether you're a policymaker or a storyteller, MiroFish empowers you to see the future before it unfolds."
+  },
+  {
+    "id": "viudiratech_uinxed_kernel",
+    "name": "Uinxed-Kernel",
+    "github_url": "https://github.com/ViudiraTech/Uinxed-Kernel",
+    "script_text": "Uinxed-Kernel is a Unix-like operating system kernel developed from scratch, focusing on modern computer architecture and advanced system design concepts. It aims to build an efficient, stable, and scalable kernel while maintaining code clarity and maintainability.\n\nThe project supports the x86_64 architecture, with optimizations for modern 64-bit processors. It offers both UEFI and Legacy boot modes, ensuring compatibility with a wide range of hardware platforms. Uinxed-Kernel also includes features like KASLR for enhanced security, a robust memory management system, and advanced interrupt handling capabilities.\n\nDevelopers can take advantage of the project's multi-core support, ACPI integration, and high-speed terminal implementation to create reliable and performant operating systems. Uinxed-Kernel is an ideal choice for those seeking a well-designed, open-source kernel as the foundation for their custom operating systems."
+  },
+  {
+    "id": "promptfoo_promptfoo",
+    "name": "promptfoo",
+    "github_url": "https://github.com/promptfoo/promptfoo",
+    "script_text": "Promptfoo is a CLI and library for evaluating and red-teaming LLM applications. It allows you to test your prompts, agents, and AI models, comparing the performance of GPT, Claude, Gemini, Llama, and more.\n\nPromptfoo provides a simple declarative configuration system with command line and CI/CD integration. Stop the trial-and-error approach - Promptfoo helps you ship secure, reliable AI apps by identifying vulnerabilities through extensive testing and red teaming.\n\nThe tool supports automated evaluations, side-by-side model comparisons, and code scanning to review pull requests for LLM-related security and compliance issues. Promptfoo's comprehensive feature set empowers developers to build and maintain high-quality, trustworthy AI applications."
+  },
+  {
+    "id": "karpathy_nanochat",
+    "name": "nanochat",
+    "github_url": "https://github.com/karpathy/nanochat",
+    "script_text": "nanochat is the simplest experimental harness for training large language models. It is designed to run on a single GPU node, with minimal and hackable code that covers all major LLM stages, including tokenization, pretraining, finetuning, evaluation, inference, and a chat UI.\n\nFor example, you can train your own GPT-2 capability model, which cost around $43,000 to train in 2019, for only $48 on a single 8XH100 GPU node. nanochat is configured to train an entire series of compute-optimal models by setting a single complexity dial, the number of transformer layers.\n\nThe primary focus of nanochat is on optimizing the pretraining stage, which takes the most compute. The project maintains a leaderboard for a \"GPT-2 speedrun\", measuring the wall-clock time required to train a nanochat model to GPT-2 grade capability.\n\nIf you have questions about the repo, you can use the provided resources or join the community on Discord."
+  },
+  {
+    "id": "pbakaus_impeccable",
+    "name": "impeccable",
+    "github_url": "https://github.com/pbakaus/impeccable",
+    "script_text": "Impeccable is a design language that empowers your AI to create better-looking user interfaces. It provides a comprehensive frontend design skill, 17 steering commands, and curated anti-patterns to guide the AI away from common design mistakes.\n\nThe skill covers essential design topics like typography, color, layout, and interaction. The commands allow you to audit, critique, normalize, and polish your designs, all the way to adding purposeful motion and strategic color.\n\nImpeccable fights the bias of generic design templates by explicitly telling the AI what to do and what not to do. This helps your AI harness produce cohesive, accessible, and delightful user experiences.\n\nWhether you're generating concepts or refining production-ready designs, Impeccable gives your AI the vocabulary it needs to design with impeccable style."
+  },
+  {
+    "id": "p_e_w_heretic",
+    "name": "heretic",
+    "github_url": "https://github.com/p-e-w/heretic",
+    "script_text": "Heretic is a tool that automatically removes censorship from transformer-based language models. It combines an advanced implementation of directional ablation, also known as \"abliteration,\" with a parameter optimizer powered by Optuna.\n\nHeretic's approach enables it to work completely automatically, finding high-quality abliteration parameters by co-minimizing the number of refusals and the KL divergence from the original model. This results in a decensored model that retains as much of the original model's intelligence as possible, without requiring an understanding of transformer internals.\n\nHeretic can produce decensored models that rival the quality of abliterations created manually by human experts, outperforming them in terms of both refusal suppression and preservation of the original model's capabilities. With Heretic, anyone who knows how to run a command-line program can easily decensor language models."
+  },
+  {
+    "id": "volcengine_openviking",
+    "name": "OpenViking",
+    "github_url": "https://github.com/volcengine/OpenViking",
+    "script_text": "Here is a 160-word engineering-focused video script for the OpenViking project:\n\nOpenViking is an open-source context database designed specifically for AI Agents. It unifies the management of context - memories, resources, and skills - through a file system paradigm, enabling hierarchical context delivery and self-evolution.\n\nDevelopers building AI Agents often face challenges like fragmented context, surging context demand, poor retrieval effectiveness, unobservable context, and limited memory iteration. OpenViking solves these by abandoning the fragmented vector storage model and adopting a file system approach.\n\nWith OpenViking, developers can build an Agent's brain just like managing local files. The unified filesystem management paradigm solves context fragmentation, while tiered context loading reduces token consumption. OpenViking also provides a global view of the Agent's context, making it easier to debug and understand.\n\nBy offering a minimalist context interaction paradigm, OpenViking empowers developers to focus on building intelligent Agents without the hassle of context management."
+  },
+  {
+    "id": "kreuzberg_dev_kreuzberg",
+    "name": "kreuzberg",
+    "github_url": "https://github.com/kreuzberg-dev/kreuzberg",
+    "script_text": "Kreuzberg is a polyglot document intelligence framework with a Rust core. It can extract text, metadata, and structured information from PDFs, Office documents, images, and over 88 different file formats. \n\nThe project is available for a wide range of languages, including Rust, Python, Ruby, Java, Go, PHP, Elixir, C#, R, C, and TypeScript. You can use it through a command-line interface, REST API, or MCP server.\n\nKreuzberg's unique implementation leverages Rust's performance and safety guarantees to provide a robust and efficient document processing solution. It is designed to seamlessly integrate into your existing applications and workflows, enabling you to extract valuable insights from your document-heavy data.\n\nWhether you're working with large document repositories or need to process specialized file formats, Kreuzberg can help you automate and streamline your document intelligence tasks."
+  }
 ]

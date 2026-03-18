@@ -35,6 +35,13 @@ except ImportError as e:
     HYBRID_AVAILABLE = False
     print(f"⚠️  Hybrid modules not available: {e}")
 
+# Import Gemini image generator (optional — degrades gracefully)
+try:
+    from gemini_image_generator import GeminiImageGenerator
+    GEMINI_IMAGE_AVAILABLE = True
+except ImportError:
+    GEMINI_IMAGE_AVAILABLE = False
+
 # Import content generators
 from generate_description import generate_description
 from generate_medium_post import main as generate_medium_post
@@ -98,6 +105,8 @@ class VideoSuiteAutomated:
         self.use_minimax = CONFIG.get('video_settings', {}).get('use_minimax', True)
         self.minimax_generator = get_minimax_generator() if MINIMAX_AVAILABLE else None
         self.github_capture = GitHubPageCapture() if MINIMAX_AVAILABLE else None
+        self.gemini_image_gen = GeminiImageGenerator() if GEMINI_IMAGE_AVAILABLE else None
+        self.overlay_gen = OverlayGenerator() if HYBRID_AVAILABLE else None
         
     def load_projects(self):
         """Load projects from posts_data.json"""
@@ -486,14 +495,16 @@ class VideoSuiteAutomated:
                 subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
                 return str(output_path)
                 
-            image_path = project['img_path']
+            image_path = project.get('img_path', '')
             audio_path = project['audio_path']
             output_path = Path(OUTPUT_FOLDER) / f"segment_{index:03d}.mp4"
             print(f"🎬 Rendering Segment: {project['name']}")
-        
-        # Use Ken Burns animated effect if hybrid modules available
+
+        # Full pipeline: Gemini image → Ken Burns → Remotion overlay → composite
         if HYBRID_AVAILABLE:
-            return create_animated_segment(image_path, audio_path, str(output_path))
+            return self._create_segment_with_overlay(
+                project, image_path, audio_path, str(output_path)
+            )
 
         cmd = [
             'ffmpeg', '-y',
@@ -511,6 +522,142 @@ class VideoSuiteAutomated:
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
         return str(output_path)
     
+    def _create_segment_with_overlay(
+        self,
+        project: Dict,
+        fallback_image_path: str,
+        audio_path: str,
+        output_path: str,
+    ) -> str:
+        """
+        Full segment pipeline:
+          1. Generate abstract Gemini background image (falls back to screenshot/card)
+          2. Apply Ken Burns effect + audio  → background.mp4
+          3. Render Remotion combined overlay → overlay_{id}.webm  (VP8 alpha)
+          4. FFmpeg composite: overlay on top of background video
+          5. Return final segment path
+
+        If overlay generation fails, the background-only video is returned
+        (graceful degradation — no crash).
+        """
+        project_id = project.get('id', 'unknown')
+        bg_video_path = str(Path(OUTPUT_FOLDER) / f"bg_{project_id}.mp4")
+        overlay_path = str(Path(OUTPUT_FOLDER) / f"overlay_{project_id}.webm")
+
+        # --- Step 1: Background image ---
+        image_path = fallback_image_path
+        if self.gemini_image_gen and self.gemini_image_gen.available:
+            generated = self.gemini_image_gen.generate_project_image(
+                project, fallback_path=fallback_image_path
+            )
+            if generated and os.path.exists(generated):
+                image_path = generated
+
+        if not image_path or not os.path.exists(image_path):
+            print(f"  ⚠️  No background image for {project.get('name')} — skipping segment")
+            return output_path  # caller handles missing file
+
+        # --- Step 2: Ken Burns + audio → background video ---
+        bg_video = create_animated_segment(image_path, audio_path, bg_video_path)
+
+        # --- Step 3: Audio duration (needed for overlay timing) ---
+        try:
+            probe = subprocess.run(
+                [
+                    "ffprobe", "-v", "error",
+                    "-show_entries", "format=duration",
+                    "-of", "default=noprint_wrappers=1:nokey=1",
+                    audio_path,
+                ],
+                capture_output=True, text=True, check=True,
+            )
+            segment_duration = float(probe.stdout.strip())
+        except Exception:
+            segment_duration = 10.0  # safe fallback
+
+        # --- Step 4: Remotion combined overlay (webm with alpha) ---
+        overlay_generated = None
+        if self.overlay_gen:
+            overlay_generated = self.overlay_gen.generate_combined_overlay(
+                project, segment_duration
+            )
+
+        # --- Step 5: FFmpeg composite ---
+        if overlay_generated and os.path.exists(overlay_generated):
+            try:
+                composite_cmd = [
+                    "ffmpeg", "-y",
+                    "-i", bg_video,
+                    "-i", overlay_generated,
+                    "-filter_complex", "[0:v][1:v]overlay=0:0",
+                    "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                    "-c:a", "copy",
+                    "-pix_fmt", "yuv420p",
+                    output_path,
+                ]
+                subprocess.run(
+                    composite_cmd, check=True,
+                    stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+                )
+                print(f"  Composited overlay → {output_path}")
+            except subprocess.CalledProcessError as e:
+                print(f"  ⚠️  Composite failed, using background only: {e.stderr[-200:]}")
+                import shutil
+                shutil.copy(bg_video, output_path)
+            finally:
+                # Clean up intermediate files
+                for tmp in (bg_video_path, overlay_path):
+                    if os.path.exists(tmp) and tmp != output_path:
+                        try:
+                            os.remove(tmp)
+                        except OSError:
+                            pass
+        else:
+            # No overlay — just use background video as-is
+            import shutil
+            shutil.copy(bg_video, output_path)
+            if os.path.exists(bg_video_path) and bg_video_path != output_path:
+                try:
+                    os.remove(bg_video_path)
+                except OSError:
+                    pass
+
+        return output_path
+
+    def _generate_episode_intro(self):
+        """
+        Build a unique per-episode intro narration script and title
+        from the actual project list for this run.
+        Both change every episode so no two intros are identical.
+        """
+        names = [p['name'] for p in self.projects]
+        n = len(names)
+        date_str = datetime.now().strftime("%B %d")
+
+        # Episode title: date + first two project names
+        if n <= 2:
+            featured = " & ".join(names)
+        else:
+            featured = f"{names[0]}, {names[1]} & {n - 2} More"
+        episode_title = f"{date_str} — {featured}"
+
+        # Narration: name the first three projects explicitly
+        if n == 1:
+            name_list = names[0]
+        elif n <= 3:
+            name_list = ", ".join(names[:-1]) + f" and {names[-1]}"
+        else:
+            name_list = f"{names[0]}, {names[1]}, {names[2]}, and {n - 3} more"
+
+        script = (
+            f"Welcome to OpenSourceScribes. "
+            f"This week: {n} open source projects. "
+            f"Including {name_list}. "
+            f"Let's get into it."
+        )
+
+        return script, episode_title
+
     def assemble_longform_video(self):
         """Assemble full longform video"""
         from branding import create_outro_card
@@ -520,11 +667,11 @@ class VideoSuiteAutomated:
         outro_path = create_outro_card(CONFIG)
         segment_files = []
 
-        # Generate intro audio if it doesn't exist
+        # Always regenerate intro audio — script is unique per episode
         intro_audio = Path(OUTPUT_FOLDER) / "intro_audio.mp3"
-        if not intro_audio.exists():
-            intro_script = "Welcome to OpenSourceScribes! Your weekly roundup of the most exciting open source projects on GitHub."
-            self.generate_audio(intro_script, str(intro_audio))
+        intro_script, episode_title = self._generate_episode_intro()
+        print(f"   Episode title: {episode_title}")
+        self.generate_audio(intro_script, str(intro_audio))
 
         if HYBRID_AVAILABLE:
             # Use MiniMax for cinematic intro (falls back to static card on failure)
@@ -532,14 +679,14 @@ class VideoSuiteAutomated:
                 intro_video_path=str(Path(OUTPUT_FOLDER) / "intro_minimax.mp4"),
                 intro_audio_path=str(intro_audio),
                 output_path=str(Path(OUTPUT_FOLDER) / "seg_intro.mp4"),
-                episode_title="GitHub Projects Roundup",
+                episode_title=episode_title,
                 fallback_to_static=True
             )
             if intro_seg and os.path.exists(intro_seg):
                 segment_files.append(intro_seg)
         else:
             from branding import create_intro_card
-            intro_path = create_intro_card(CONFIG, "GitHub Projects Roundup")
+            intro_path = create_intro_card(CONFIG, episode_title)
             if os.path.exists(intro_path):
                 if intro_audio.exists():
                     segment_files.append(self.create_static_segment(intro_path, 0, "seg_intro.mp4", audio_path=str(intro_audio)))

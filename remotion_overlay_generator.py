@@ -4,9 +4,11 @@ Generates animated overlays using Remotion CLI to enhance video segments
 """
 
 import os
+import re
 import json
 import subprocess
 import argparse
+import requests
 from pathlib import Path
 from typing import Dict, List, Optional
 import time
@@ -86,6 +88,65 @@ class OverlayGenerator:
         success = self.generate_overlay("stats", props, output_path)
         return output_path.replace('../', '') if success else None
     
+    def generate_combined_overlay(self, project: Dict, duration: float) -> Optional[str]:
+        """
+        Generate the combined terminal-style overlay for a project segment.
+        Renders as webm with VP8 alpha channel so FFmpeg can composite it
+        transparently over the Ken Burns background video.
+
+        Args:
+            project: Project dict (needs at least id, name, github_url, script_text)
+            duration: Segment duration in seconds (must match audio length)
+
+        Returns:
+            Path to overlay_{id}.webm, or None on failure
+        """
+        project_id = project.get('id', 'unknown')
+        output_path = f"../assets/overlay_{project_id}.webm"
+        actual_output = output_path.replace('../', '')
+
+        # Fetch live GitHub stats
+        stats = _fetch_github_stats(project.get('github_url', ''))
+
+        # Extract 3 bullet points from the script narration text
+        bullets = _extract_bullets(project.get('script_text', ''))
+
+        props = {
+            "overlayType": "combined",
+            "name": project.get('name', ''),
+            "language": stats.get('language', project.get('language', '')),
+            "license": stats.get('license', project.get('license', '')),
+            "stars": stats.get('stars', project.get('stars', 0)),
+            "forks": stats.get('forks', project.get('forks', 0)),
+            "bullet1": bullets[0],
+            "bullet2": bullets[1],
+            "bullet3": bullets[2],
+            "duration": duration,
+        }
+
+        props_json = json.dumps(props)
+        # vp8 codec → webm with alpha channel transparency
+        cmd = (
+            f"cd {self.remotion_dir} && npx remotion render OverlayGenerator "
+            f"--props='{props_json}' "
+            f"--output={output_path} "
+            f"--codec=vp8"
+        )
+
+        try:
+            start_time = time.time()
+            result = subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
+            elapsed = time.time() - start_time
+            success = os.path.exists(actual_output)
+            if success:
+                print(f"  Combined overlay: {actual_output} ({elapsed:.1f}s)")
+            else:
+                print(f"  Combined overlay render failed (file not found): {actual_output}")
+            return actual_output if success else None
+        except subprocess.CalledProcessError as e:
+            print(f"  Combined overlay error: {e.stderr[-300:] if e.stderr else 'unknown'}")
+            return None
+
     def batch_generate_overlays(self, projects: List[Dict], overlay_type: str = 'project') -> Dict[str, str]:
         """Generate overlays for all projects"""
         print(f"\nGenerating {overlay_type} overlays for {len(projects)} projects...")
@@ -107,6 +168,78 @@ class OverlayGenerator:
             results[project_id] = result
         
         return results
+
+
+# ---------------------------------------------------------------------------
+# Module-level helpers
+# ---------------------------------------------------------------------------
+
+def _fetch_github_stats(github_url: str) -> Dict:
+    """
+    Fetch stars, forks, language, and license from the GitHub REST API.
+    No auth required for public repos (60 req/hour unauthenticated).
+    Returns empty dict on any failure so callers degrade gracefully.
+    """
+    if not github_url:
+        return {}
+    match = re.match(r'https?://github\.com/([^/]+)/([^/\s]+)', github_url.strip().rstrip('/'))
+    if not match:
+        return {}
+    owner, repo = match.group(1), match.group(2)
+    # Strip .git suffix if present
+    repo = repo.rstrip('.git') if repo.endswith('.git') else repo
+    try:
+        resp = requests.get(
+            f"https://api.github.com/repos/{owner}/{repo}",
+            timeout=6,
+            headers={"Accept": "application/vnd.github+json"},
+        )
+        if resp.status_code == 200:
+            data = resp.json()
+            license_info = data.get('license') or {}
+            return {
+                'stars': data.get('stargazers_count', 0),
+                'forks': data.get('forks_count', 0),
+                'language': data.get('language') or '',
+                'license': license_info.get('spdx_id') or '',
+            }
+    except Exception:
+        pass
+    return {}
+
+
+def _extract_bullets(script_text: str, n: int = 3, max_chars: int = 72) -> List[str]:
+    """
+    Extract n bullet points from the narration script text.
+    Splits on sentence boundaries, picks the first n substantive sentences,
+    and truncates each to max_chars with ellipsis.
+    """
+    if not script_text:
+        return ['', '', '']
+
+    # Strip markdown-ish formatting
+    cleaned = re.sub(r'\*\*|__|\*|_|#+', '', script_text)
+
+    # Split into sentences
+    sentences = re.split(r'(?<=[.!?])\s+', cleaned.strip())
+
+    bullets: List[str] = []
+    for s in sentences:
+        s = s.strip()
+        # Skip very short fragments and lines that are just headers/labels
+        if len(s) < 25 or s.endswith(':'):
+            continue
+        if len(s) > max_chars:
+            s = s[:max_chars - 3].rsplit(' ', 1)[0] + '...'
+        bullets.append(s)
+        if len(bullets) >= n:
+            break
+
+    # Pad to exactly n
+    while len(bullets) < n:
+        bullets.append('')
+
+    return bullets
 
 
 def main():

@@ -107,16 +107,31 @@ def call_claude(client, prompt, model="claude-3-haiku-20240307"):
         print(f"⚠️ API Error: {e}")
         return ""
 
+def _find_project_image(project: dict) -> str:
+    """
+    Return the best available image path for a project (relative to repo root).
+    Priority: Gemini abstract background → static card → empty string.
+    """
+    project_id = project.get('id', '')
+    gemini_path = os.path.join('assets', f"bg_{project_id}.png")
+    if os.path.exists(gemini_path):
+        return gemini_path
+    card_path = project.get('img_path', '')
+    if card_path and os.path.exists(card_path):
+        return card_path
+    return ''
+
+
 def generate_full_post(projects):
     """Generate post by assembling sections"""
     client = get_client()
     if not client: return None
-    
+
     project_summaries = "\n".join([f"- {p['name']}: {p.get('script_text', '')[:100]}..." for p in projects])
     n_projects = len(projects)
-    
+
     full_content = []
-    
+
     PROMO_LINKS = (
         "Featured Newsletters & Resources\n\n"
         "* [Subscribe to my Medium](https://chesterbeard.medium.com/subscribe)\n"
@@ -131,16 +146,24 @@ def generate_full_post(projects):
     # 1. Introduction
     print(f"🖋️  Generating Introduction for {n_projects} projects...")
     intro = call_claude(client, INTRO_PROMPT.format(
-        n_projects=n_projects, 
-        project_summaries=project_summaries, 
+        n_projects=n_projects,
+        project_summaries=project_summaries,
         cliche_filter=CLICHE_FILTER,
         promo_links=PROMO_LINKS
     ))
     full_content.append(f"{n_projects} Open-Source Projects for Your Dev Stack\n")
     full_content.append(intro)
     full_content.append("\n---\n")
-    
-    # 2. Project Sections (The Core Improvement)
+
+    # 2. Project Sections — insert up to 3 images spread evenly across the post
+    n = len(projects)
+    image_slots = set()
+    if n >= 1: image_slots.add(0)           # first project
+    if n >= 3: image_slots.add(n // 2)      # middle project
+    if n >= 2: image_slots.add(n - 1)       # last project
+    image_slots = sorted(image_slots)[:3]   # cap at 3, ascending order
+
+    images_used = 0
     for i, project in enumerate(projects):
         print(f"📦 [{i+1}/{n_projects}] Generating section for: {project['name']}...")
         section = call_claude(client, PROJECT_SECTION_PROMPT.format(
@@ -150,17 +173,28 @@ def generate_full_post(projects):
             cliche_filter=CLICHE_FILTER
         ))
         full_content.append(section)
+
+        # Insert image for designated slots — path relative to repo root
+        # Medium users: upload this file when you see the placeholder
+        if i in image_slots and images_used < 3:
+            img_path = _find_project_image(project)
+            if img_path:
+                # ../../ makes the path resolvable from deliveries/MM-DD/
+                full_content.append(f"\n![{project['name']}](../../{img_path})\n")
+                images_used += 1
+
         full_content.append("\n---\n")
-        
+
     # 3. Conclusion
     print("🏁 Generating Patterns & Conclusion...")
     outro = call_claude(client, OUTRO_PROMPT.format(project_names=project_summaries, cliche_filter=CLICHE_FILTER))
     full_content.append(outro)
-    
-    # 4. Final Cleanup: Remove any lingering hashtags or asterisks
+
+    # 4. Final Cleanup: Remove any lingering bare hashtags or asterisks
+    # Note: image markdown ![alt](path) is intentionally preserved
     raw_text = "\n".join(full_content)
     clean_text = raw_text.replace('#', '').replace('*', '')
-    
+
     return clean_text
 
 def save_post(content):

@@ -1426,5 +1426,114 @@
       "timestamp": "2026-03-11T18:57:57.284428"
     },
     "timestamp": "2026-03-11T18:57:57.284448"
+  },
+  "paralect/ship": {
+    "data": {
+      "owner": "paralect",
+      "repo": "ship",
+      "stars": 424,
+      "forks": 75,
+      "language": "TypeScript",
+      "description": "A full-stack plugin-based boilerplate to ship scalable products fast \ud83d\ude80",
+      "topics": [
+        "aws",
+        "boilerplate",
+        "digitalocean",
+        "docker"
+      ],
+      "url": "https://github.com/paralect/ship",
+      "timestamp": "2026-03-16T12:39:23.645553"
+    },
+    "timestamp": "2026-03-16T12:39:23.645563"
+  },
+  "ruvnet/ARCADIA": {
+    "data": {
+      "owner": "ruvnet",
+      "repo": "ARCADIA",
+      "stars": 44,
+      "forks": 11,
+      "language": "Rust",
+      "description": "AI-powered game engine for dynamic, personalized experiences in evolving worlds. Ethical, accessible, inclusive.",
+      "topics": [],
+      "url": "https://github.com/ruvnet/ARCADIA",
+      "timestamp": "2026-03-16T12:54:05.237439"
+    },
+    "timestamp": "2026-03-16T12:54:05.237460"
+  },
+  "OpenBrowserAI/openbrowser": {
+    "data": {
+      "owner": "OpenBrowserAI",
+      "repo": "openbrowser",
+      "stars": 41,
+      "forks": 8,
+      "language": "TypeScript",
+      "description": "OpenBrowser is an open-source, AI-native browser built on Chromium \u2014 a truly privacy-first alternative to ChatGPT Atlas, Perplexity Comet, and Dia.",
+      "topics": [
+        "agent",
+        "agentic-browser",
+        "agents",
+        "ai-agents"
+      ],
+      "url": "https://github.com/OpenBrowserAI/openbrowser",
+      "timestamp": "2026-03-16T12:54:14.978740"
+    },
+    "timestamp": "2026-03-16T12:54:14.978754"
+  },
+  "kreuzberg-dev/kreuzberg": {
+    "data": {
+      "owner": "kreuzberg-dev",
+      "repo": "kreuzberg",
+      "stars": 6724,
+      "forks": 321,
+      "language": "Rust",
+      "description": "A polyglot document intelligence framework with a Rust core. Extract text, metadata, and structured information from PDFs, Office documents, images, and 88+ formats. Available for Rust, Python, Ruby, Java, Go, PHP, Elixir, C#, R, C, TypeScript (Node/Bun/Wasm/Deno)- or use via CLI, REST API, or MCP server.",
+      "topics": [
+        "bun",
+        "csharp",
+        "document-intelligence",
+        "elixir"
+      ],
+      "url": "https://github.com/kreuzberg-dev/kreuzberg",
+      "timestamp": "2026-03-16T15:45:12.527421"
+    },
+    "timestamp": "2026-03-16T15:45:12.527427"
+  },
+  "volcengine/OpenViking": {
+    "data": {
+      "owner": "volcengine",
+      "repo": "OpenViking",
+      "stars": 14062,
+      "forks": 962,
+      "language": "Python",
+      "description": "OpenViking is an open-source context database designed specifically for AI Agents(such as openclaw). OpenViking unifies the management of context (memory, resources, and skills) that Agents need through a file system paradigm, enabling hierarchical context delivery and self-evolving.",
+      "topics": [
+        "agent",
+        "agentic-rag",
+        "ai-agents",
+        "clawbot"
+      ],
+      "url": "https://github.com/volcengine/OpenViking",
+      "timestamp": "2026-03-16T16:09:37.857501"
+    },
+    "timestamp": "2026-03-16T16:09:37.857528"
+  },
+  "promptfoo/promptfoo": {
+    "data": {
+      "owner": "promptfoo",
+      "repo": "promptfoo",
+      "stars": 16817,
+      "forks": 1458,
+      "language": "TypeScript",
+      "description": "Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, Llama, and more. Simple declarative configs with command line and CI/CD integration.",
+      "topics": [
+        "ci",
+        "ci-cd",
+        "cicd",
+        "evaluation"
+      ],
+      "url": "https://github.com/promptfoo/promptfoo",
+      "timestamp": "2026-03-16T16:10:29.067375"
+    },
+    "timestamp": "2026-03-16T16:10:29.067401"
   }
 }

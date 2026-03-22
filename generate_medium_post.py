@@ -11,56 +11,59 @@ import anthropic
 # --- PROMPT TEMPLATES ---
 
 CLICHE_FILTER = """
-## 🚫 BANNED PHRASES (CRITICAL)
-Do NOT use: Robust, Gems, Hidden Gems, Supercharge, Dive in, Game changer, Revolutionary, Look no further, Unlock the potential, Elevate your workflow, Buckle up, Pique your interest, Treasure trove, Innovative, Cutting-edge, State of the art, Seamlessly integrate, Tired of X? Meet Y, Workflow.
-
-## ✍️ WRITING STYLE
-- Concrete over Abstract: No marketing fluff. Describe exactly what the code does.
-- Simple Tone: Write like a senior engineer explaining a tool to a teammate.
-- SHORT sentences (max 15 words). No run-ons.
+Vary sentence length — some short, some longer and more specific. Banned words: robust, streamline, supercharge, game-changer, revolutionary, seamless, dive in, hidden gems, powerful, cutting-edge, leverage, utilize. Banned constructions: "Designed for...", "Whether you're a X, Y, or Z", "Key features include:", three-part lists where everything sounds equally important. Not everything needs to sound exciting. Match enthusiasm to actual interestingness.
 """
 
-INTRO_PROMPT = """You are a technical writer for OpenSourceScribes. 
-Write a direct, engineering-focused INTRODUCTION for a Medium post titled: "{n_projects} Open-Source Projects for Your Dev Stack".
-
-{cliche_filter}
-
-## PROJECTS COVERED (STRICTLY FOLLOW THESE):
-{project_summaries}
-
-## PROMOTIONAL LINKS TO INCLUDE
+INTRO_PROMPT = """Write an opening for a developer tools roundup on Medium called OpenSourceScribes.
+Skip any thesis statement about open source or developer productivity — get straight to what's interesting about this particular batch of tools.
+One specific observation is better than a general one.
+Include these promo links naturally in the text, not as a list:
 {promo_links}
 
-Write ONLY the introduction (100-150 words) and then append the PROMOTIONAL LINKS EXACTLY as provided. Do not use '#' or '*' in your intro text."""
-
-PROJECT_SECTION_PROMPT = """You are a technical writer for OpenSourceScribes.
-Write a technical section for a specific GitHub project.
+Projects in this batch:
+{project_summaries}
 
 {cliche_filter}
 
-## PROJECT DATA
+100 words maximum. Editorial tone — opinionated, direct, not promotional. Do not use '#' or '*' symbols."""
+
+PROJECT_SECTION_PROMPT = """Write a short description of this GitHub project for a developer tools roundup on Medium.
+
+Project details:
 Name: {name}
 GitHub: {url}
 Description: {description}
 
-## FORMATTING RULES
-1. Title: Project: {name}
-2. Technical Description: 4-5 SHORT sentences explaining the utility.
-3. Technical Details: Exactly 3 plain text feature descriptions.
-4. Link: View on GitHub: {url}
-5. NO hashtags, headers, or asterisks (no #, **, or *). Use plain text only.
-
-Write ONLY this section."""
-
-OUTRO_PROMPT = """You are a technical writer for OpenSourceScribes. 
-Write the CONCLUSION and TECHNICAL TRENDS section.
+Rules:
+- Length should reflect how interesting the tool actually is. A niche or early-stage tool gets 2-3 sentences. A genuinely useful one gets 4-5.
+- Say what problem it actually solves, not what category it belongs to
+- If it has a meaningful limitation or caveat, mention it
+- No headers, no feature lists, no asterisks
+- Don't start with the project name as the subject of the sentence
+- End with: View on GitHub: {url}
 
 {cliche_filter}
 
-## PROJECTS COVERED
+Tone: a knowledgeable colleague who has looked at a lot of tools and has a calibrated sense of what's actually worth attention. Do not use '#' or '*' symbols."""
+
+OUTRO_PROMPT = """Write a closing paragraph for this developer tools roundup.
+Don't summarize trends in open source software generally.
+Instead, make 1-2 specific observations about what stands out in this particular batch of tools — what problem they're collectively solving, or what surprised you, or what feels early but worth watching.
+3-4 sentences maximum. No hype. No universal statements about the future of software engineering.
+
+Projects covered:
 {project_names}
 
-Write ONLY this ending part (brief, technical, no hype). Do not use '#' or '*' symbols."""
+{cliche_filter}
+
+Do not use '#' or '*' symbols."""
+
+CONSISTENCY_PASS_PROMPT = """Below are sections of a developer tools roundup written separately.
+Lightly edit for consistent tone and varied rhythm without rewriting the substance.
+Flag any two sections that sound identical in structure and vary one of them.
+Do not add headers, asterisks, or markdown formatting. Return the full edited text only.
+
+{content}"""
 
 # --- FUNCTIONS ---
 
@@ -94,7 +97,7 @@ def load_projects():
         projects = json.load(f)
     return projects
 
-def call_claude(client, prompt, model="claude-3-haiku-20240307"):
+def call_claude(client, prompt, model="claude-sonnet-4-6"):
     """Helper to call Claude API"""
     try:
         message = client.messages.create(
@@ -190,9 +193,15 @@ def generate_full_post(projects):
     outro = call_claude(client, OUTRO_PROMPT.format(project_names=project_summaries, cliche_filter=CLICHE_FILTER))
     full_content.append(outro)
 
-    # 4. Final Cleanup: Remove any lingering bare hashtags or asterisks
-    # Note: image markdown ![alt](path) is intentionally preserved
+    # 4. Consistency pass — smooth register differences across sections
+    print("✏️  Running consistency pass...")
     raw_text = "\n".join(full_content)
+    smoothed = call_claude(client, CONSISTENCY_PASS_PROMPT.format(content=raw_text))
+    if smoothed:
+        raw_text = smoothed
+
+    # 5. Final Cleanup: Remove any lingering bare hashtags or asterisks
+    # Note: image markdown ![alt](path) is intentionally preserved
     clean_text = raw_text.replace('#', '').replace('*', '')
 
     return clean_text

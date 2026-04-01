@@ -1772,5 +1772,24 @@
       "timestamp": "2026-03-23T13:56:18.857706"
     },
     "timestamp": "2026-03-23T13:56:18.857723"
+  },
+  "backnotprop/plannotator": {
+    "data": {
+      "owner": "backnotprop",
+      "repo": "plannotator",
+      "stars": 3729,
+      "forks": 238,
+      "language": "TypeScript",
+      "description": "Annotate and review coding agent plans and code diffs visually, share with your team, send feedback to agents with one click.",
+      "topics": [
+        "claude-code",
+        "codex",
+        "obsidian",
+        "opencode"
+      ],
+      "url": "https://github.com/backnotprop/plannotator",
+      "timestamp": "2026-04-01T12:26:55.679052"
+    },
+    "timestamp": "2026-04-01T12:26:55.679059"
   }
 }

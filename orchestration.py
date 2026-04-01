@@ -130,10 +130,14 @@ def minimax_enhancement_task(project: dict) -> Optional[str]:
     final_path = str(Path(OUTPUT_FOLDER) / f"{project['id']}_minimax_enhanced.mp4")
     if os.path.exists(final_path): return final_path
 
-    from minimax_integration import get_minimax_generator
-    from github_page_capture import GitHubPageCapture
-    generator = get_minimax_generator()
-    if not generator or not generator.enabled: return None
+    try:
+        from minimax_integration import get_minimax_generator
+        from github_page_capture import GitHubPageCapture
+        generator = get_minimax_generator()
+        if not generator or not generator.enabled: return None
+    except ImportError:
+        logger.warning("MiniMax modules not available — skipping enhancement")
+        return None
 
     with concurrency("minimax", occupy=1):
         duration = _get_audio_duration(project["audio_path"])
@@ -241,7 +245,7 @@ def render_remotion_video_task(composition_id: str, props: dict, output_path: st
         cmd = [
             "npx", "remotion", "render", composition_id, output_path,
             "--props", f"props_{composition_id}.json",
-            "--public-dir", project_root,
+            "--public-dir", str(Path(project_root) / "assets"),
             "--log", "error",
         ]
         subprocess.run(cmd, cwd=remotion_dir, check=True)
@@ -372,7 +376,7 @@ def production_pipeline():
     # helper for precise lengths
     def add_clip(src, dur, ctype, name="", url=""):
         props["clips"].append({
-            "src": f"assets/{os.path.basename(src)}",
+            "src": f"{os.path.basename(src)}",
             "durationInSeconds": dur,
             "type": ctype,
             "name": name,

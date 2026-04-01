@@ -154,13 +154,24 @@ def minimax_enhancement_task(project: dict) -> Optional[str]:
             res = generator.generate_image_to_video(shot, prompt, seg_path)
             if res: clip_paths.append(res)
 
-        if len(clip_paths) > 1:
-            concat_list = Path(OUTPUT_FOLDER) / f"{project['id']}_concat.txt"
-            concat_list.write_text("\n".join(f"file '{p}'" for p in clip_paths))
-            subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat_list), "-c", "copy", final_path], 
-                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        if len(clip_paths) >= 1:
+            if len(clip_paths) == 1:
+                # Single clip — copy directly to final_path so cache guard works on retries
+                import shutil
+                shutil.copy2(clip_paths[0], final_path)
+            else:
+                # Multiple clips — concat with absolute paths to avoid ffmpeg resolution issues
+                concat_list = Path(OUTPUT_FOLDER) / f"{project['id']}_concat.txt"
+                abs_clip_paths = [str(Path(p).resolve()) for p in clip_paths]
+                concat_list.write_text("\n".join(f"file '{p}'" for p in abs_clip_paths))
+                result = subprocess.run(
+                    ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat_list), "-c", "copy", final_path],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT
+                )
+                if result.returncode != 0:
+                    logger.warning(f"⚠️  ffmpeg concat failed for {project['id']} — falling back to first clip")
+                    shutil.copy2(clip_paths[0], final_path)
             return final_path
-        elif clip_paths: return clip_paths[0]
     return None
 
 def _get_audio_duration(path: str) -> float:
@@ -222,10 +233,16 @@ def render_remotion_video_task(composition_id: str, props: dict, output_path: st
         json.dump(props, f)
         
     try:
-        # We run the Remotion CLI via npx inside the remotion_video directory
+        # Run Remotion CLI inside remotion_video/.
+        # --public-dir points to the project root so Remotion's HTTP server
+        # serves assets/ through http://localhost:PORT/assets/... 
+        # This avoids Chromium's file:// protocol security block on staticFile().
+        project_root = str(Path(__file__).parent)
         cmd = [
             "npx", "remotion", "render", composition_id, output_path,
-            "--props", f"props_{composition_id}.json"
+            "--props", f"props_{composition_id}.json",
+            "--public-dir", project_root,
+            "--log", "error",
         ]
         subprocess.run(cmd, cwd=remotion_dir, check=True)
         logger.info(f"✅ Remotion render complete: {output_path}")

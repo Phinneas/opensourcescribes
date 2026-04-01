@@ -1535,5 +1535,242 @@
       "timestamp": "2026-03-16T16:10:29.067375"
     },
     "timestamp": "2026-03-16T16:10:29.067401"
+  },
+  "athina-ai/goose-skills": {
+    "data": {
+      "owner": "athina-ai",
+      "repo": "goose-skills",
+      "stars": 290,
+      "forks": 47,
+      "language": "Python",
+      "description": "Library of GTM skills for Claude Code, Codex, Cursor",
+      "topics": [
+        "claude",
+        "claude-skills",
+        "claudecode",
+        "claudecode-skills"
+      ],
+      "url": "https://github.com/athina-ai/goose-skills",
+      "timestamp": "2026-03-23T13:13:10.153196"
+    },
+    "timestamp": "2026-03-23T13:13:10.153206"
+  },
+  "NousResearch/hermes-agent": {
+    "data": {
+      "owner": "NousResearch",
+      "repo": "hermes-agent",
+      "stars": 11364,
+      "forks": 1391,
+      "language": "Python",
+      "description": "The agent that grows with you",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-agents",
+        "anthropic"
+      ],
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "timestamp": "2026-03-23T13:13:10.560291"
+    },
+    "timestamp": "2026-03-23T13:13:10.560300"
+  },
+  "RunanywhereAI/RCLI": {
+    "data": {
+      "owner": "RunanywhereAI",
+      "repo": "RCLI",
+      "stars": 1290,
+      "forks": 67,
+      "language": "C++",
+      "description": "Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG",
+      "topics": [
+        "ai-assistant",
+        "apple-silicon",
+        "kitten-tts",
+        "kokoro-tts"
+      ],
+      "url": "https://github.com/RunanywhereAI/RCLI",
+      "timestamp": "2026-03-23T13:13:10.826883"
+    },
+    "timestamp": "2026-03-23T13:13:10.826893"
+  },
+  "alibaba/page-agent": {
+    "data": {
+      "owner": "alibaba",
+      "repo": "page-agent",
+      "stars": 13558,
+      "forks": 1030,
+      "language": "TypeScript",
+      "description": "JavaScript in-page GUI agent. Control web interfaces with natural language.",
+      "topics": [
+        "agent",
+        "ai",
+        "ai-agents",
+        "browser-automation"
+      ],
+      "url": "https://github.com/alibaba/page-agent",
+      "timestamp": "2026-03-23T13:13:11.114344"
+    },
+    "timestamp": "2026-03-23T13:13:11.114354"
+  },
+  "2xBuild/cutefolio": {
+    "data": {
+      "owner": "2xBuild",
+      "repo": "cutefolio",
+      "stars": 17,
+      "forks": 2,
+      "language": "TypeScript",
+      "description": "build portfolios and linkfolios that are actually cute.",
+      "topics": [],
+      "url": "https://github.com/2xBuild/cutefolio",
+      "timestamp": "2026-03-23T13:13:11.374878"
+    },
+    "timestamp": "2026-03-23T13:13:11.374885"
+  },
+  "thesysdev/openui": {
+    "data": {
+      "owner": "thesysdev",
+      "repo": "openui",
+      "stars": 2482,
+      "forks": 171,
+      "language": "TypeScript",
+      "description": "The Open Standard for Generative UI",
+      "topics": [
+        "agent",
+        "agents",
+        "ai",
+        "generative-ui"
+      ],
+      "url": "https://github.com/thesysdev/openui",
+      "timestamp": "2026-03-23T13:13:11.639521"
+    },
+    "timestamp": "2026-03-23T13:13:11.639532"
+  },
+  "dolthub/dolt": {
+    "data": {
+      "owner": "dolthub",
+      "repo": "dolt",
+      "stars": 21635,
+      "forks": 706,
+      "language": "Go",
+      "description": "Dolt \u2013 Git for Data",
+      "topics": [
+        "agent-memory",
+        "agent-memory-server",
+        "ai-agents",
+        "ai-database"
+      ],
+      "url": "https://github.com/dolthub/dolt",
+      "timestamp": "2026-03-23T13:13:11.869877"
+    },
+    "timestamp": "2026-03-23T13:13:11.869885"
+  },
+  "kestra-io/kestra": {
+    "data": {
+      "owner": "kestra-io",
+      "repo": "kestra",
+      "stars": 26582,
+      "forks": 2531,
+      "language": "Java",
+      "description": "Event Driven Orchestration & Scheduling Platform for Mission Critical Applications",
+      "topics": [
+        "automation",
+        "data-orchestration",
+        "devops",
+        "hacktoberfest"
+      ],
+      "url": "https://github.com/kestra-io/kestra",
+      "timestamp": "2026-03-23T13:13:12.136223"
+    },
+    "timestamp": "2026-03-23T13:13:12.136232"
+  },
+  "gianlucam76/k8s-cleaner": {
+    "data": {
+      "owner": "gianlucam76",
+      "repo": "k8s-cleaner",
+      "stars": 737,
+      "forks": 40,
+      "language": "Go",
+      "description": "Cleaner is a Kubernetes controller that identifies unused or unhealthy resources, helping you maintain a streamlined and efficient Kubernetes cluster. It provides flexible scheduling, label filtering, Lua-based selection criteria, resource removal or update and notifications via Slack, Webex and Discord. it can also automate clusters operations.",
+      "topics": [
+        "discord",
+        "kubernetes",
+        "kubernetes-operator",
+        "lua"
+      ],
+      "url": "https://github.com/gianlucam76/k8s-cleaner",
+      "timestamp": "2026-03-23T13:13:12.447337"
+    },
+    "timestamp": "2026-03-23T13:13:12.447345"
+  },
+  "theredsix/agent-browser-protocol": {
+    "data": {
+      "owner": "theredsix",
+      "repo": "agent-browser-protocol",
+      "stars": 418,
+      "forks": 12,
+      "language": "C++",
+      "description": "Deterministic browser automation. Works out of the box with Claude/Codex/OpenCode",
+      "topics": [
+        "agentic-ai",
+        "ai",
+        "ai-agents",
+        "browser-automation"
+      ],
+      "url": "https://github.com/theredsix/agent-browser-protocol",
+      "timestamp": "2026-03-23T13:13:12.798659"
+    },
+    "timestamp": "2026-03-23T13:13:12.798668"
+  },
+  "jlandersen/k8s-unix-system": {
+    "data": {
+      "owner": "jlandersen",
+      "repo": "k8s-unix-system",
+      "stars": 135,
+      "forks": 6,
+      "language": "JavaScript",
+      "description": "Jurassic Park Unix System style Kubernetes resource viewer",
+      "topics": [
+        "3d",
+        "devtools",
+        "golang",
+        "jurassic-park"
+      ],
+      "url": "https://github.com/jlandersen/k8s-unix-system",
+      "timestamp": "2026-03-23T13:13:13.071888"
+    },
+    "timestamp": "2026-03-23T13:13:13.071896"
+  },
+  "mattrobinsonsre/terrapod": {
+    "data": {
+      "owner": "mattrobinsonsre",
+      "repo": "terrapod",
+      "stars": 141,
+      "forks": 6,
+      "language": "Python",
+      "description": "Open-source Terraform Enterprise replacement",
+      "topics": [
+        "devops",
+        "docker",
+        "fastapi",
+        "gitops"
+      ],
+      "url": "https://github.com/mattrobinsonsre/terrapod",
+      "timestamp": "2026-03-23T13:13:13.328308"
+    },
+    "timestamp": "2026-03-23T13:13:13.328329"
+  },
+  "karpathy/autoresearch": {
+    "data": {
+      "owner": "karpathy",
+      "repo": "autoresearch",
+      "stars": 51930,
+      "forks": 7239,
+      "language": "Python",
+      "description": "AI agents running research on single-GPU nanochat training automatically",
+      "topics": [],
+      "url": "https://github.com/karpathy/autoresearch",
+      "timestamp": "2026-03-23T13:56:18.857706"
+    },
+    "timestamp": "2026-03-23T13:56:18.857723"
   }
 }

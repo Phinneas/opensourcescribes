@@ -15,32 +15,8 @@ from pathlib import Path
 from gtts import gTTS
 from typing import Optional, Dict
 
-# Import enhanced modules
-try:
-    from minimax_integration import get_minimax_generator
-    from github_page_capture import GitHubPageCapture
-    MINIMAX_AVAILABLE = True
-except ImportError:
-    MINIMAX_AVAILABLE = False
-    print("⚠️  MiniMax modules not available - using static graphics only")
-
-# Import hybrid video modules
-try:
-    from minimax_intro_generator import generate_intro_with_audio
-    from ffmpeg_enhancements import create_animated_segment, get_random_effect
-    from remotion_overlay_generator import OverlayGenerator
-    from remotion_transition_generator import TransitionGenerator
-    HYBRID_AVAILABLE = True
-except ImportError as e:
-    HYBRID_AVAILABLE = False
-    print(f"⚠️  Hybrid modules not available: {e}")
-
-# Import Gemini image generator (optional — degrades gracefully)
-try:
-    from gemini_image_generator import GeminiImageGenerator
-    GEMINI_IMAGE_AVAILABLE = True
-except ImportError:
-    GEMINI_IMAGE_AVAILABLE = False
+# Import Seedream 5 Generator
+from seedream_generator import SeedreamGenerator
 
 # Import content generators
 from generate_description import generate_description
@@ -75,25 +51,6 @@ Path(SHORTS_FOLDER).mkdir(exist_ok=True)
 
 MAX_DEEP_DIVES = 3  # Limit deep dives per roundup (Set to 0 to disable)
 
-# Cinematic Motion Library for MiniMax
-MOTION_LIBRARY = [
-    "Smooth cinematic camera scroll down revealing features.",
-    "Slow pan across the interface showing technical details.",
-    "Tilt up shot revealing the bottom sections of the page.",
-    "Cinematic zoom-in on the main repository header.",
-    "Dolly sweep from left to right across the code files.",
-    "Perspective tilt showing the page in a 3D workspace.",
-    "Slow rotation around the center of the UI.",
-    "Fast tracking shot down the sidebar and into the content.",
-    "Glide over the interface with a soft bokeh background effect.",
-    "Rack focus from the foreground text to the background code.",
-    "Dynamic crane shot descending from the top of the repository.",
-    "Slow push-in on a specific set of features.",
-    "Arresting side-scrolling shot showing the project evolution.",
-    "Floating camera effect mimicking a handheld walkthrough.",
-    "Sharp cinematic pull-back revealing the full page layout."
-]
-
 
 class VideoSuiteAutomated:
     """Creates both longform and short videos automatically"""
@@ -102,11 +59,8 @@ class VideoSuiteAutomated:
         self.projects = []
         self.shorts_selection = []
         self.deep_dive_selection = []
-        self.use_minimax = CONFIG.get('video_settings', {}).get('use_minimax', True)
-        self.minimax_generator = get_minimax_generator() if MINIMAX_AVAILABLE else None
-        self.github_capture = GitHubPageCapture() if MINIMAX_AVAILABLE else None
-        self.gemini_image_gen = GeminiImageGenerator() if GEMINI_IMAGE_AVAILABLE else None
-        self.overlay_gen = OverlayGenerator() if HYBRID_AVAILABLE else None
+        self.seedream_generator = SeedreamGenerator()
+        self.video_settings = CONFIG.get('video_settings', {})
         
     def load_projects(self):
         """Load projects from posts_data.json"""
@@ -276,6 +230,55 @@ class VideoSuiteAutomated:
             import traceback
             traceback.print_exc()
             return None
+
+    def render_remotion_scene(
+        self,
+        composition: str,
+        props: dict,
+        output_path: Path,
+        duration_seconds: float
+    ) -> Path:
+        """
+        Render a Remotion composition scene via subprocess.
+        
+        Args:
+            composition: Remotion composition ID (e.g., "IntroScene", "SegmentScene")
+            props: Props dict for the composition
+            output_path: Output video file path
+            duration_seconds: Duration in seconds
+            
+        Returns:
+            Path to rendered video
+        """
+        fps = self.video_settings.get('fps', 30)
+        duration_frames = int(duration_seconds * fps)
+        
+        # Build remotion render command
+        cmd = [
+            'npx', 'remotion', 'render',
+            'remotion_video/src/index.ts',
+            composition,
+            '--props', json.dumps(props),
+            '--output', str(output_path),
+            '--frame-range', f'0-{duration_frames - 1}'
+        ]
+        
+        print(f"  Rendering {composition} ({duration_seconds}s)...")
+        result = subprocess.run(
+            cmd,
+            cwd=Path(__file__).parent / 'remotion_video',
+            capture_output=True,
+            text=True
+        )
+        
+        if result.returncode != 0:
+            raise RuntimeError(f"Remotion render failed: {result.stderr}")
+        
+        if not output_path.exists():
+            raise FileNotFoundError(f"Remotion output not found: {output_path}")
+        
+        print(f"  ✓ Rendered to {output_path.name}")
+        return output_path
 
     def _get_audio_duration(self, audio_path: str) -> float:
         """Helper to get audio duration using ffprobe"""
@@ -673,30 +676,72 @@ class VideoSuiteAutomated:
         print(f"   Episode title: {episode_title}")
         self.generate_audio(intro_script, str(intro_audio))
 
-        if HYBRID_AVAILABLE:
-            # Use MiniMax for cinematic intro (falls back to static card on failure)
-            intro_seg = generate_intro_with_audio(
-                intro_video_path=str(Path(OUTPUT_FOLDER) / "intro_minimax.mp4"),
-                intro_audio_path=str(intro_audio),
-                output_path=str(Path(OUTPUT_FOLDER) / "seg_intro.mp4"),
-                episode_title=episode_title,
-                fallback_to_static=True
-            )
-            if intro_seg and os.path.exists(intro_seg):
-                segment_files.append(intro_seg)
-        else:
-            from branding import create_intro_card
-            intro_path = create_intro_card(CONFIG, episode_title)
-            if os.path.exists(intro_path):
-                if intro_audio.exists():
-                    segment_files.append(self.create_static_segment(intro_path, 0, "seg_intro.mp4", audio_path=str(intro_audio)))
-                else:
-                    segment_files.append(self.create_static_segment(intro_path, 3, "seg_intro.mp4"))
+        # Render intro via Remotion — hard dependency, no fallback
+        intro_duration = self.video_settings.get('intro_duration', 6)
+        intro_output = Path(OUTPUT_FOLDER) / "seg_intro.mp4"
         
+        intro_props = {
+            "episodeTitle": episode_title,
+            "channelName": CONFIG.get('branding', {}).get('channel_name', 'OpenSourceScribes')
+        }
+        
+        self.render_remotion_scene(
+            composition="IntroScene",
+            props=intro_props,
+            output_path=intro_output,
+            duration_seconds=intro_duration
+        )
+        
+        segment_files.append(str(intro_output))
+        
+        # Generate segments using Seedream + Remotion
         for i, project in enumerate(self.projects):
-            segment_files.append(self.create_segment(project, i, is_short=False))
+            print(f"\n🎬 Processing segment {i + 1}/{len(self.projects)}: {project['name']}")
             
-            # Mid-roll subscribe (Moved to after project 2 - index 1)
+            # 1. Generate Seedream image for this project
+            image_path = self.seedream_generator.generate(project)
+            
+            # 2. Render segment via Remotion with Seedream background
+            segment_duration = self.video_settings.get('segment_duration', 8)
+            segment_output = Path(OUTPUT_FOLDER) / f"seg_{i:03d}.mp4"
+            
+            segment_props = {
+                "imagePath": str(image_path),
+                "projectName": project['name'],
+                "stars": project.get('stars', 0),
+                "forks": project.get('forks', 0),
+                "language": project.get('language', ''),
+                "topics": project.get('topics', [])
+            }
+            
+            self.render_remotion_scene(
+                composition="SegmentScene",
+                props=segment_props,
+                output_path=segment_output,
+                duration_seconds=segment_duration
+            )
+            
+            segment_files.append(str(segment_output))
+            
+            # 3. Render transition between segments (except after last)
+            if i < len(self.projects) - 1:
+                transition_duration = self.video_settings.get('transition_duration', 1)
+                transition_output = Path(OUTPUT_FOLDER) / f"trans_{i:03d}.mp4"
+                
+                # Cycle through transition styles
+                transition_styles = ['wipe', 'sweep', 'flash']
+                transition_style = transition_styles[i % len(transition_styles)]
+                
+                self.render_remotion_scene(
+                    composition="TransitionScene",
+                    props={"style": transition_style},
+                    output_path=transition_output,
+                    duration_seconds=transition_duration
+                )
+                
+                segment_files.append(str(transition_output))
+            
+            # Mid-roll subscribe (after project 2 - index 1)
             if i == 1:
                 sub_card = Path(OUTPUT_FOLDER) / "subscribe_card.png"
                 sub_audio = Path(OUTPUT_FOLDER) / "subscribe_audio.mp3"

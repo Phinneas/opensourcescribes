@@ -741,8 +741,9 @@ class VideoSuiteAutomated:
                 
                 segment_files.append(str(transition_output))
             
-            # Mid-roll subscribe (after project 2 - index 1)
-            if i == 1:
+            # Mid-roll subscribe at ~1/3 through the video
+            subscribe_position = len(self.projects) // 3
+            if i == subscribe_position:
                 sub_card = Path(OUTPUT_FOLDER) / "subscribe_card.png"
                 sub_audio = Path(OUTPUT_FOLDER) / "subscribe_audio.mp3"
                 if not sub_card.exists():
@@ -750,7 +751,7 @@ class VideoSuiteAutomated:
                     create_subscribe_card(CONFIG, str(sub_card))
                 
                 if sub_card.exists() and sub_audio.exists():
-                    print("🎬 Adding mid-roll subscribe prompt...")
+                    print(f"🎬 Adding mid-roll subscribe prompt at position {i + 1}/{len(self.projects)}...")
                     segment_files.append(self.create_static_segment(str(sub_card), 0, "seg_subscribe.mp4", audio_path=str(sub_audio)))
             
         if os.path.exists(outro_path):

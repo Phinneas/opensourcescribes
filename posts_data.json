@@ -1,92 +1,104 @@
 [
   {
-    "id": "karpathy_autoresearch",
-    "name": "autoresearch",
-    "github_url": "https://github.com/karpathy/autoresearch",
-    "script_text": "Autonomous AI agents running research on single-GPU nanochat training. This project automates the tedious task of iteratively improving language models. The agents modify the training code, run experiments, and track results - all without human intervention. Simply provide a baseline setup, and the agents will explore the search space, aiming to minimize the validation bits-per-byte metric. This hands-off approach allows for rapid, unbiased exploration, uncovering insights that may have been missed. The core idea is to program the high-level research context, not the low-level training code. A simplified version of the nanochat project serves as the testbed, but the same principles apply to any deep learning research setup. With autoresearch, the future of AI research is autonomous, efficient, and scalable."
+    "id": "unclecode_crawl4ai",
+    "name": "crawl4ai",
+    "github_url": "https://github.com/unclecode/crawl4ai",
+    "script_text": "Crawl4AI is an open-source web crawler and scraper designed for Large Language Models (LLMs). It turns the web into clean, structured Markdown data, optimized for use in RAG, agents, and data pipelines.\n\nCrawl4AI features advanced capabilities like automatic anti-bot detection, shadow DOM flattening, and crash recovery - all built on a fast, scalable, and battle-tested architecture. Its modular design allows for seamless integration into your existing data workflows.\n\nImportantly, Crawl4AI is built to be drastically more cost-effective than existing web extraction solutions, making it an ideal choice for data-hungry AI applications. Join our growing community of 50,000+ developers and help us shape the future of web-powered AI."
   },
   {
-    "id": "athina_ai_goose_skills",
-    "name": "goose-skills",
-    "github_url": "https://github.com/athina-ai/goose-skills",
-    "script_text": "Goose Skills is a library of ready-to-use skills for Claude Code, Codex, and Cursor. It provides a collection of 125 capabilities, composites, and playbooks across key domains like ads, branding, and competitive intelligence.\n\nThe skills are designed for easy installation and cross-platform deployment. With a single command, you can install a skill to your preferred target - Claude Code, Codex, or Cursor. The Cursor integration even generates a project-local rule file for seamless integration.\n\nThis project aims to accelerate your AI-powered workflows, whether you're a sales, marketing, or competitive intelligence professional. Leverage the power of Goose Skills to boost your productivity and gain a competitive edge."
+    "id": "tinykit_studio_tinykit",
+    "name": "tinykit",
+    "github_url": "https://github.com/tinykit-studio/tinykit",
+    "script_text": "Tinykit is a self-hosted, open-source platform for building and deploying web apps with AI. It manages code, database, content, and deployment, allowing you to focus on your application's core functionality.\n\nTinykit's agentic builder lets you prompt the AI to write code, create tables, and wire up your app, while the realtime database synchronizes data across clients. The code editor provides direct access to your Svelte-based source, and the visual design system simplifies styling and theming.\n\nTinykit also includes built-in asset storage, time travel for easy undo, and the ability to bring your own language model, like OpenAI or Anthropic. Future updates will add server-side functionality, authentication, and a community app showcase.\n\nRun multiple apps on a single server and point any domain to get a working application. Tinykit is an all-in-one, self-hosted solution for your web development needs."
   },
   {
-    "id": "nousresearch_hermes_agent",
-    "name": "hermes-agent",
-    "github_url": "https://github.com/NousResearch/hermes-agent",
-    "script_text": "Hermes Agent is a self-improving AI assistant built by Nous Research. It grows with you, creating skills from experience, improving them during use, and building a deepening model of who you are across sessions. \n\nHermes runs anywhere - on a $5 VPS, a GPU cluster, or serverless infrastructure. It's not tied to your laptop - talk to it from Telegram while it works on a cloud VM. Use any model you want, with no lock-in. \n\nHermes has a real terminal interface with multiline editing, autocomplete, and streaming output. It lives where you do - Telegram, Discord, CLI, and more. Its closed learning loop curates memory, creates autonomous skills, and allows cross-session recall.\n\nHermes can also schedule unattended automations, delegate workstreams, and parallelize tasks. It's the AI agent that grows with you, empowering your productivity across platforms."
+    "id": "evolutionapi_evo_ai",
+    "name": "evo-ai",
+    "github_url": "https://github.com/EvolutionAPI/evo-ai",
+    "script_text": "Evo AI is an open-source platform for creating and managing AI agents. It enables integration with different AI models and services, empowering developers to build complex AI-powered applications.\n\nThe platform provides a robust framework for agent management, including features like agent organization, secure API key storage, and support for various agent types such as language models, agent-to-agent protocols, and custom workflow agents.\n\nEvo AI's modular architecture allows seamless integration with popular language models, MCP servers, and custom tools. Developers can leverage this flexibility to construct tailored AI agents that fit their specific use cases.\n\nWhether you're building conversational interfaces, automating workflows, or exploring the frontiers of AI-driven applications, Evo AI offers a comprehensive solution to simplify the development and deployment of AI agents."
   },
   {
-    "id": "runanywhereai_rcli",
-    "name": "RCLI",
-    "github_url": "https://github.com/RunanywhereAI/RCLI",
-    "script_text": "Here is a 161-word engineering-focused video script for the RCLI project:\n\nRCLI is an on-device voice AI for macOS. It runs a complete speech-to-text, language model, text-to-speech, and visual understanding pipeline entirely on Apple Silicon \u2014 no cloud, no API keys required.\n\nPowered by MetalRT, a proprietary GPU inference engine built specifically for Apple's chips, RCLI delivers sub-200ms end-to-end latency and 40 native macOS actions, including hands-free control of apps, document querying, and on-device vision analysis. \n\nThe system uses a hybrid retrieval approach, quickly surfacing relevant information from your local documents to answer your voice queries. And it lets you hot-swap different language models right from the terminal, so you can find the one that best suits your needs.\n\nRCLI brings voice AI capabilities to your Mac, with everything running locally for privacy and performance. It's an ideal tool for developers, researchers, and anyone who wants to leverage advanced language AI without relying on the cloud."
+    "id": "sipeed_picoclaw",
+    "name": "picoclaw",
+    "github_url": "https://github.com/sipeed/picoclaw",
+    "script_text": "PicoClaw is an ultra-efficient AI assistant built entirely in Go. Capable of running on $10 hardware with just 10MB of RAM, PicoClaw offers millisecond boot times, making it perfect for deployment anywhere.\n\nUnlike traditional AI assistants, PicoClaw was self-bootstrapped, with the AI agent driving the architecture and optimization. This unique approach allows PicoClaw to be incredibly lightweight and resource-efficient, without compromising on functionality.\n\nDesigned to automate mundane tasks and unleash creativity, PicoClaw is a versatile tool that can be seamlessly integrated into a wide range of projects, from embedded systems to serverless applications. With its cross-platform support, PicoClaw can run on x86_64, ARM64, MIPS, RISC-V, and LoongArch architectures, making it a truly portable solution.\n\nWhether you're a hobbyist, a developer, or an engineer, PicoClaw offers a powerful and accessible way to streamline your workflows and explore new possibilities."
+  },
+  {
+    "id": "openhands_openhands",
+    "name": "OpenHands",
+    "github_url": "https://github.com/OpenHands/OpenHands",
+    "script_text": "OpenHands is an AI-driven development platform that empowers engineers to create powerful software agents. The core of OpenHands is a composable Python library that allows you to define and run intelligent agents, whether locally or at scale in the cloud.\n\nThe OpenHands Software Agent SDK provides a modular, extensible architecture for building advanced AI-powered applications. Developers can leverage pre-built components or create their own custom agents tailored to specific use cases. The platform's flexibility enables rapid prototyping and seamless integration into a wide range of projects.\n\nComplementing the SDK, the OpenHands CLI and Local GUI offer intuitive interfaces for working with the system. These tools make it easy to leverage the power of large language models like GPT and Claude for tasks such as code generation, analysis, and task automation.\n\nWith its focus on AI-driven development, OpenHands aims to enhance developer productivity and unleash new possibilities in software engineering."
+  },
+  {
+    "id": "mindsdb_mindsdb",
+    "name": "mindsdb",
+    "github_url": "https://github.com/mindsdb/mindsdb",
+    "script_text": "Here is a 159-word engineering-focused video script for a YouTube video about the mindsdb project:\n\nMindsDB is an open-source query engine that enables you to build self-reasoning agents across all your live data. It provides a SQL-compatible data language with additional constructs for searching unstructured data, managing workflows, and building AI-powered applications.\n\nThe unique implementation of MindsDB allows you to connect to your existing data sources, unify the data, and empower your agents to directly answer questions in plain English. This eliminates the need for complex ETL pipelines and allows you to leverage your data more effectively.\n\nKey features of MindsDB include conversational analytics agents that provide precise, data-driven answers, and semantic search agents that ground large language model responses in your internal knowledge. By using MindsDB, you can quickly build intelligent applications that make your data more accessible and actionable."
+  },
+  {
+    "id": "vercel_satori",
+    "name": "satori",
+    "github_url": "https://github.com/vercel/satori",
+    "script_text": "**Satori**: An enlightened library to convert HTML and CSS to SVG.\n\nSatori supports the JSX syntax, making it straightforward to use. It handles layout calculation, font, typography, and more to generate an SVG that matches the exact same HTML and CSS in a browser.\n\nUnder the hood, Satori uses a limited subset of HTML and CSS features, optimized for its specific use cases. It allows you to create dynamic, customizable SVG images, such as Open Graph images and social cards, without the need for server-side rendering.\n\nTo use Satori in your project, check out the [Vercel Open Graph Image Generation documentation](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation) for a seamless integration."
+  },
+  {
+    "id": "inclusionai_areal",
+    "name": "AReaL",
+    "github_url": "https://github.com/inclusionAI/AReaL",
+    "script_text": "AReaL is an open-source, fully asynchronous reinforcement learning (RL) system for building large reasoning and agentic models. Leveraging the ReaLHF framework, AReaL provides flexible customization for agentic RL and online RL training, simply by replacing the base URL. With industry-leading training speed and stability, AReaL enables state-of-the-art performance in math, coding, search, and customer service agents.\n\nAReaL's unique, fully asynchronous architecture allows for efficient, scalable RL training, making it an ideal choice for developing advanced AI agents. By providing the necessary training details, data, and infrastructure, AReaL empowers everyone to build their own AI agents easily and affordably."
+  },
+  {
+    "id": "keygraphhq_shannon",
+    "name": "shannon",
+    "github_url": "https://github.com/KeygraphHQ/shannon",
+    "script_text": "Shannon is an autonomous, white-box AI pentester for web applications and APIs. It analyzes your source code, identifies attack vectors, and executes real exploits to prove vulnerabilities before they reach production.\n\nBy combining source code analysis with live exploitation, Shannon provides on-demand, automated penetration testing that can run against every build or release. This helps close the security gap between your rapid development and your annual penetration test.\n\nShannon has identified over 20 exploitable vulnerabilities in OWASP Juice Shop, including authentication bypass and database exfiltration. The final report contains only proven, exploitable findings with copy-and-paste proof-of-concepts.\n\nShannon is designed to be a comprehensive, automated security testing solution for your web applications and APIs."
+  },
+  {
+    "id": "agentscope_ai_reme",
+    "name": "ReMe",
+    "github_url": "https://github.com/agentscope-ai/ReMe",
+    "script_text": "ReMe is a memory management toolkit for AI agents, providing both file-based and vector-based memory systems. It tackles the challenges of limited context window and stateless sessions, allowing agents to maintain long-term memory. \n\nReMe's file-based memory system automatically compacts old conversations, persistently stores important information, and recalls relevant context for future interactions. The vector-based memory enables agents to efficiently retrieve and update memories based on semantic similarity.\n\nDesigned for state-of-the-art performance, ReMe has achieved top results on the LoCoMo and HaluMem benchmarks. This toolkit empowers AI agents, such as personal assistants, to maintain comprehensive memory and provide more coherent and contextual responses over long-term interactions."
+  },
+  {
+    "id": "feldera_feldera",
+    "name": "feldera",
+    "github_url": "https://github.com/feldera/feldera",
+    "script_text": "Feldera is a fast, incremental computation engine that can evaluate arbitrary SQL programs incrementally. Unlike batch engines, warehouses, or streaming databases, Feldera has the unique ability to continuously update views as data changes, avoiding the need to recompute over older data.\n\nA Feldera pipeline is a set of SQL tables and views, with views that can be deeply nested. Users can start, stop, or pause pipelines to manage and advance computations. When the pipeline receives changes - any number of inserts, updates, or deletes - Feldera incrementally updates all the views, achieving millions of events per second on a laptop.\n\nThis powerful approach enables unified offline and online compute over both live and historical data. Feldera users have built batch and real-time feature engineering pipelines, ETL pipelines, and various forms of incremental and periodic analytical jobs."
+  },
+  {
+    "id": "blackboardsh_electrobun",
+    "name": "electrobun",
+    "github_url": "https://github.com/blackboardsh/electrobun",
+    "script_text": "Electrobun is a toolkit for building ultra-fast, tiny, and cross-platform desktop applications using Typescript. It uses the Bun runtime to execute the main process and bundle the Webview Typescript, with native bindings written in Zig.\n\nElectrobun provides a complete solution-in-a-box, allowing you to write Typescript for both the main process and Webviews without worrying about the underlying complexities. It offers isolation between the main and Webview processes, with fast, typed, and easy-to-implement RPC communication.\n\nThe resulting application bundles are small, around 12MB, with even smaller updates as low as 14KB. Electrobun streamlines the entire development and distribution workflow, letting you start coding in 5 minutes and distribute your application in 10.\n\nWhether you're building a productivity tracker, a code editor, or a desktop audio player, Electrobun provides a powerful and efficient way to create cross-platform desktop applications with Typescript."
+  },
+  {
+    "id": "callstackincubator_react_native_grab",
+    "name": "react-native-grab",
+    "github_url": "https://github.com/callstackincubator/react-native-grab",
+    "script_text": "Here's a 165-word engineering-focused video script for the \"react-native-grab\" project:\n\n\"React Native Grab is a touch-to-grab context tool for UI changes in React Native apps. It bridges the gap between your app's visual elements and your coding agent, allowing you to directly capture precise source context from the native UI.\n\nInstead of guesswork and layout descriptions, you can simply point at the exact UI element on the screen. React Native Grab then provides the relevant source context, such as the component structure, styles, and other contextual information. This helps accelerate the coding process, especially for low-entropy updates like spacing, alignment, and copy changes.\n\nThe library integrates with Metro, the React Native bundler, so you can easily wire it up and send the captured context directly to your host clipboard. It requires the New Architecture with the Fabric renderer, ensuring compatibility with the latest React Native advancements.\n\nReact Native Grab streamlines the workflow between your UI and your codebase, making it a valuable tool for React Native developers.\""
+  },
+  {
+    "id": "danielmiessler_fabric",
+    "name": "Fabric",
+    "github_url": "https://github.com/danielmiessler/Fabric",
+    "script_text": "Fabric is an open-source framework that provides a modular system for solving specific problems using a crowdsourced set of AI prompts. It organizes these prompts by real-world tasks, allowing users to create, collect, and integrate their most valuable AI solutions into their favorite tools.\n\nThe unique implementation of Fabric is its focus on prompt engineering - the fundamental units of AI. By centralizing and structuring these prompts, Fabric aims to address the integration problem that often hinders the adoption of AI capabilities.\n\nWhether you're command-line focused or prefer graphical interfaces, Fabric offers a versatile platform to augment your productivity and problem-solving abilities using the power of AI. Fabric's primary use case is to empower users to seamlessly incorporate AI into their workflows."
   },
   {
     "id": "alibaba_page_agent",
     "name": "page-agent",
     "github_url": "https://github.com/alibaba/page-agent",
-    "script_text": "Introducing Page Agent - a revolutionary in-page JavaScript GUI agent that lets you control web interfaces with natural language. Unlike traditional browser extensions or headless browsers, Page Agent operates entirely within your web page, providing seamless text-based DOM manipulation without the need for screenshots or multi-modal language models.\n\nWith its easy integration and ability to bring your own language models, Page Agent empowers developers to ship AI-powered assistants in their products with just a few lines of code. From smart form filling to accessibility solutions, Page Agent's versatile use cases make it a game-changer for enhancing user experiences across a wide range of web applications.\n\nWhether you're building a SaaS AI copilot or seeking to extend your web agent's reach with the optional Chrome extension and MCP server, Page Agent offers a powerful and innovative approach to natural language-driven web automation."
+    "script_text": "Page Agent is a JavaScript-based GUI agent that allows you to control web interfaces with natural language. Unlike browser extensions or headless browsers, Page Agent integrates directly into your web page, offering text-based DOM manipulation without the need for screenshots or special permissions.\n\nWith Page Agent, you can build an AI-powered copilot for your SaaS application, automate complex form-filling workflows, and make any web app accessible through voice commands and screen readers. The project's modular design also enables you to bring your own language models, while the optional Chrome extension and MCP server can further extend the agent's reach across browser tabs and external systems.\n\nPage Agent provides a lightweight, flexible, and powerful way to enhance your web applications with intelligent, natural language-driven user experiences."
   },
   {
-    "id": "2xbuild_cutefolio",
-    "name": "cutefolio",
-    "github_url": "https://github.com/2xBuild/cutefolio",
-    "script_text": "Build portfolios and linkfolios that are actually cute. cutefolio allows you to host your online profiles with customizable templates, custom domains, and advanced analytics. Powered by Bun, Next.js, and TypeScript, the platform offers per-profile page views, link clicks, visitor locations, and more. Integrate with Polar for seamless billing and customer management. Connect your own domain through the Vercel API. Customize fonts, colors, and layout to match your personal brand. cutefolio is the perfect tool to showcase your work, projects, or SaaS product in a visually appealing way."
+    "id": "basnijholt_agent_cli",
+    "name": "agent-cli",
+    "github_url": "https://github.com/basnijholt/agent-cli",
+    "script_text": "`agent-cli` is a collection of local, AI-powered command-line tools that run entirely on your machine. It provides a suite of powerful utilities for voice and text interaction, designed for privacy, offline capability, and seamless integration with your system-wide workflows.\n\nThe key features include voice transcription to clipboard, text autocorrection, voice-based content editing, and a conversational AI assistant. All of these agents are built to operate locally, ensuring your data stays private and accessible even without an internet connection.\n\nThe primary use case for `agent-cli` is to enhance your productivity by leveraging AI-powered tools that integrate directly with your desktop environment. Whether you're working with language models or simply trying to speed up your text-based tasks, this tool aims to offer a seamless, local-first solution for your needs."
   },
   {
-    "id": "thesysdev_openui",
-    "name": "openui",
-    "github_url": "https://github.com/thesysdev/openui",
-    "script_text": "OpenUI is a compact, streaming-first language for generative UI. Unlike traditional approaches that treat model output as text, OpenUI allows you to define components, generate prompts from that library, and render structured UI as the model streams.\n\nThe core of OpenUI is a language designed for efficient UI generation. It supports built-in components for charts, forms, tables, and more, which you can use as-is or extend. OpenUI also generates prompts directly from your component set, ensuring the model outputs match your UI requirements.\n\nUnder the hood, OpenUI uses a streaming renderer to parse and update the UI progressively as tokens arrive. This enables real-time interactions and assistants powered by large language models.\n\nIf you're building interactive applications, chatbots, or AI-driven tools, OpenUI provides a powerful foundation to generate and render UI in a more efficient, structured way."
-  },
-  {
-    "id": "dolthub_dolt",
-    "name": "dolt",
-    "github_url": "https://github.com/dolthub/dolt",
-    "script_text": "Dolt is Git for Data. It's a SQL database that you can fork, clone, branch, merge, push, and pull just like a Git repository. Connect to Dolt like any MySQL database to read or modify schema and data. All the Git commands you know work the same for Dolt, but Dolt versions tables instead of files.\n\nWe built DoltHub, a place to share Dolt databases. Host your own version with DoltLab or use our Hosted Dolt service. For Postgres fans, try Doltgres, now in beta. \n\nDolt is a powerful tool with countless applications, from agent memory to multi-agent workflows. Join our Discord community to get started or check out our roadmap to see what's next."
-  },
-  {
-    "id": "kestra_io_kestra",
-    "name": "kestra",
-    "github_url": "https://github.com/kestra-io/kestra",
-    "script_text": "Kestra is an open-source, event-driven orchestration platform that simplifies scheduled and event-driven workflows. By leveraging Infrastructure as Code principles, Kestra enables users to declaratively define and manage complex data, process, and microservice orchestrations.\n\nThe platform's event-driven architecture allows for reactive automation, enabling workflows to respond to real-time triggers and events. Kestra's declarative configuration, based on YAML, promotes maintainability and version control of critical infrastructure.\n\nThe platform integrates with a wide range of technologies, from databases and message queues to cloud services and APIs, making it a versatile solution for mission-critical applications. Kestra's scalable and fault-tolerant design ensures reliable and resilient workflow execution, making it an ideal choice for enterprises with demanding operational requirements."
-  },
-  {
-    "id": "buva7687_sql_crack",
-    "name": "sql-crack",
-    "github_url": "https://github.com/buva7687/sql-crack",
-    "script_text": "SQL Crack is a Visual Studio Code extension that transforms SQL queries into interactive execution flow diagrams. It provides a unique visual perspective on your database operations, allowing you to understand complex queries at a glance, track data lineage, and identify optimization opportunities.\n\nThe extension supports a wide range of SQL dialects, including PostgreSQL, MySQL, SQLite, and more. It automatically generates color-coded flow diagrams, with nodes representing different query operations like filters, joins, and aggregations. You can navigate the diagram, expand nested queries, and even compare baseline and current queries side-by-side.\n\nSQL Crack's advanced features, such as column lineage tracing and performance scoring, empower developers and analysts to gain deeper insights into their SQL workflows. This tool is a must-have for anyone working with SQL databases and looking to enhance their productivity and data understanding."
-  },
-  {
-    "id": "gianlucam76_k8s_cleaner",
-    "name": "k8s-cleaner",
-    "github_url": "https://github.com/gianlucam76/k8s-cleaner",
-    "script_text": "The Kubernetes controller Cleaner identifies unused or unhealthy resources, helping you maintain a streamlined and efficient Kubernetes cluster. It provides flexible scheduling, label filtering, Lua-based selection criteria, and resource removal or update capabilities. Cleaner can also automate cluster operations.\n\nThe project's unique implementation allows it to handle any Kubernetes resource types, including custom resources. Its sophisticated filtering options, including label-based selection and custom Lua-based criteria, make it a powerful tool for identifying and managing stale or orphaned resources.\n\nCleaner keeps you informed with notifications through popular platforms like Slack, Webex, and Discord. This ensures you stay in the loop and can take timely action to maintain a healthy Kubernetes environment.\n\nIf you're looking to optimize your Kubernetes cluster and maintain a clean, efficient infrastructure, Cleaner is the tool for you."
-  },
-  {
-    "id": "backnotprop_plannotator",
-    "name": "plannotator",
-    "github_url": "https://github.com/backnotprop/plannotator",
-    "script_text": "Plannotator is an interactive tool for annotating and reviewing coding agent plans and code diffs. It provides a visual interface to mark up plans, track changes, and share feedback with your team. Plannotator seamlessly integrates with popular AI coding agents like Claude Code, OpenCode, Pi, and Codex, allowing you to streamline your review and collaboration process.\n\nThe key features include visual plan review, automatic plan diffing, code review with inline annotations, and the ability to annotate any file or the agent's last message. Plannotator uses end-to-end encryption for secure sharing of large plans, with no server-side storage of your content.\n\nPlannotator empowers you to streamline your AI-assisted coding workflows, enabling efficient plan refinement, code review, and team collaboration."
-  },
-  {
-    "id": "theredsix_agent_browser_protocol",
-    "name": "agent-browser-protocol",
-    "github_url": "https://github.com/theredsix/agent-browser-protocol",
-    "script_text": "Introducing agent-browser-protocol: deterministic browser automation that works seamlessly with Claude, Codex, and OpenCode. This open-source project leverages the power of the Chromium browser to enable reliable, programmatic control of web interfaces.\n\nBy utilizing a standardized protocol, agent-browser-protocol allows developers to interact with web applications in a consistent, predictable manner. Whether you're building automated testing suites, web scrapers, or integration workflows, this tool provides a robust, reliable foundation.\n\nDesigned for ease of use, agent-browser-protocol integrates effortlessly with popular AI language models, empowering users to control browser interactions through natural language commands. Unlock new possibilities in web automation and expand the capabilities of your AI-driven applications."
-  },
-  {
-    "id": "jlandersen_k8s_unix_system",
-    "name": "k8s-unix-system",
-    "github_url": "https://github.com/jlandersen/k8s-unix-system",
-    "script_text": "The k8s-unix-system project is a 3D Kubernetes resource viewer inspired by the iconic File System Navigator from Jurassic Park. It allows you to fly through your cluster like it's 1993, with namespaces rendered as raised platforms and pods as 3D blocks on each island. \n\nThe live updates are powered by the Kubernetes watch API, providing a real-time visualization of your cluster's state. The intuitive controls and detailed resource information make it a valuable tool for monitoring and understanding your Kubernetes environments.\n\nWhether you're a seasoned DevOps engineer or a curious developer, the k8s-unix-system project offers a unique and engaging way to explore and manage your Kubernetes resources."
-  },
-  {
-    "id": "mattrobinsonsre_terrapod",
-    "name": "terrapod",
-    "github_url": "https://github.com/mattrobinsonsre/terrapod",
-    "script_text": "Terrapod is an open-source platform that provides a drop-in replacement for Terraform Enterprise. It offers a comprehensive set of features, including remote state management, remote execution, VCS integration, and role-based access control, all while maintaining API compatibility with the HCP Terraform / TFE V2 API.\n\nTerrapod orchestrates the execution of Terraform or Tofu as pluggable backends, allowing you to leverage your existing tooling and workflows. The platform's key features, such as private module and provider registries, binary caching, and drift detection, enhance collaboration, governance, and productivity within your infrastructure as code (IaC) operations.\n\nDesigned to be a seamless transition from Terraform Enterprise, Terrapod empowers teams to manage their cloud infrastructure with increased flexibility, security, and control, while maintaining compatibility with the tools they already use."
+    "id": "21st_dev_21st_sdk",
+    "name": "21st-sdk",
+    "github_url": "https://github.com/21st-dev/21st-sdk",
+    "script_text": "The 21st-sdk is a suite of packages that simplify building conversational AI applications. It includes a React chat UI, a Node.js API client, and a Python SDK, all designed to work seamlessly with the 21st platform.\n\nThe key innovation is the agent-based architecture, where each conversational tool is defined as a reusable, composable component. This allows developers to build complex AI workflows by combining various agents, without having to worry about the underlying implementation details.\n\nThe 21st-sdk is built with developer productivity in mind, providing a consistent API across multiple languages and frameworks. Whether you're building a web application with React and Next.js or a standalone Python script, the 21st-sdk makes it easy to integrate powerful conversational capabilities into your project."
   }
 ]

@@ -1597,8 +1597,8 @@
     "data": {
       "owner": "alibaba",
       "repo": "page-agent",
-      "stars": 13558,
-      "forks": 1030,
+      "stars": 14907,
+      "forks": 1153,
       "language": "TypeScript",
       "description": "JavaScript in-page GUI agent. Control web interfaces with natural language.",
       "topics": [
@@ -1608,9 +1608,9 @@
         "browser-automation"
       ],
       "url": "https://github.com/alibaba/page-agent",
-      "timestamp": "2026-03-23T13:13:11.114344"
+      "timestamp": "2026-04-01T16:01:35.506962"
     },
-    "timestamp": "2026-03-23T13:13:11.114354"
+    "timestamp": "2026-04-01T16:01:35.506995"
   },
   "2xBuild/cutefolio": {
     "data": {
@@ -1791,5 +1791,268 @@
       "timestamp": "2026-04-01T12:26:55.679052"
     },
     "timestamp": "2026-04-01T12:26:55.679059"
+  },
+  "unclecode/crawl4ai": {
+    "data": {
+      "owner": "unclecode",
+      "repo": "crawl4ai",
+      "stars": 63142,
+      "forks": 6451,
+      "language": "Python",
+      "description": "\ud83d\ude80\ud83e\udd16 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN",
+      "topics": [],
+      "url": "https://github.com/unclecode/crawl4ai",
+      "timestamp": "2026-04-01T15:13:26.340845"
+    },
+    "timestamp": "2026-04-01T15:13:26.340852"
+  },
+  "tinykit-studio/tinykit": {
+    "data": {
+      "owner": "tinykit-studio",
+      "repo": "tinykit",
+      "stars": 418,
+      "forks": 64,
+      "language": "Svelte",
+      "description": "Self-hosted Lovable/v0 alternative. Realtime database & storage included.",
+      "topics": [
+        "agentic",
+        "ai",
+        "app-builder",
+        "batteries-included"
+      ],
+      "url": "https://github.com/tinykit-studio/tinykit",
+      "timestamp": "2026-04-01T15:13:27.094094"
+    },
+    "timestamp": "2026-04-01T15:13:27.094150"
+  },
+  "EvolutionAPI/evo-ai": {
+    "data": {
+      "owner": "EvolutionAPI",
+      "repo": "evo-ai",
+      "stars": 568,
+      "forks": 187,
+      "language": "TypeScript",
+      "description": "Evo AI is an open-source platform for creating and managing AI agents, enabling integration with different AI models and services.",
+      "topics": [
+        "a2a-protocol",
+        "adk",
+        "agent",
+        "agentic-ai"
+      ],
+      "url": "https://github.com/EvolutionAPI/evo-ai",
+      "timestamp": "2026-04-01T15:13:27.383556"
+    },
+    "timestamp": "2026-04-01T15:13:27.383564"
+  },
+  "sipeed/picoclaw": {
+    "data": {
+      "owner": "sipeed",
+      "repo": "picoclaw",
+      "stars": 27004,
+      "forks": 3784,
+      "language": "Go",
+      "description": "Tiny, Fast, and Deployable anywhere \u2014 automate the mundane, unleash your creativity",
+      "topics": [],
+      "url": "https://github.com/sipeed/picoclaw",
+      "timestamp": "2026-04-01T15:13:27.982170"
+    },
+    "timestamp": "2026-04-01T15:13:27.982178"
+  },
+  "OpenHands/OpenHands": {
+    "data": {
+      "owner": "OpenHands",
+      "repo": "OpenHands",
+      "stars": 70385,
+      "forks": 8813,
+      "language": "Python",
+      "description": "\ud83d\ude4c OpenHands: AI-Driven Development",
+      "topics": [
+        "agent",
+        "artificial-intelligence",
+        "chatgpt",
+        "claude-ai"
+      ],
+      "url": "https://github.com/OpenHands/OpenHands",
+      "timestamp": "2026-04-01T15:13:28.328461"
+    },
+    "timestamp": "2026-04-01T15:13:28.328473"
+  },
+  "mindsdb/mindsdb": {
+    "data": {
+      "owner": "mindsdb",
+      "repo": "mindsdb",
+      "stars": 38895,
+      "forks": 6170,
+      "language": "Python",
+      "description": "Query Engine for AI Analytics: Build self-reasoning agents across all your live data",
+      "topics": [
+        "agents",
+        "ai",
+        "analytics",
+        "artificial-inteligence"
+      ],
+      "url": "https://github.com/mindsdb/mindsdb",
+      "timestamp": "2026-04-01T15:13:28.722078"
+    },
+    "timestamp": "2026-04-01T15:13:28.722085"
+  },
+  "vercel/satori": {
+    "data": {
+      "owner": "vercel",
+      "repo": "satori",
+      "stars": 13211,
+      "forks": 338,
+      "language": "TypeScript",
+      "description": "Enlightened library to convert HTML and CSS to SVG",
+      "topics": [
+        "css",
+        "image",
+        "image-generation",
+        "image-generator"
+      ],
+      "url": "https://github.com/vercel/satori",
+      "timestamp": "2026-04-01T15:13:29.272759"
+    },
+    "timestamp": "2026-04-01T15:13:29.272771"
+  },
+  "inclusionAI/AReaL": {
+    "data": {
+      "owner": "inclusionAI",
+      "repo": "AReaL",
+      "stars": 4956,
+      "forks": 446,
+      "language": "Python",
+      "description": "Lightning-Fast RL for LLM Reasoning and Agents. Made Simple & Flexible.",
+      "topics": [
+        "agent",
+        "llm",
+        "llm-agent",
+        "llm-reasoning"
+      ],
+      "url": "https://github.com/inclusionAI/AReaL",
+      "timestamp": "2026-04-01T15:13:29.598808"
+    },
+    "timestamp": "2026-04-01T15:13:29.598815"
+  },
+  "KeygraphHQ/shannon": {
+    "data": {
+      "owner": "KeygraphHQ",
+      "repo": "shannon",
+      "stars": 35083,
+      "forks": 3553,
+      "language": "TypeScript",
+      "description": "Shannon Lite is an autonomous, white-box AI pentester for web applications and APIs. It analyzes your source code, identifies attack vectors, and executes real exploits to prove vulnerabilities before they reach production.",
+      "topics": [
+        "penetration-testing",
+        "pentesting",
+        "security-audit",
+        "security-automation"
+      ],
+      "url": "https://github.com/KeygraphHQ/shannon",
+      "timestamp": "2026-04-01T15:13:29.887568"
+    },
+    "timestamp": "2026-04-01T15:13:29.887576"
+  },
+  "agentscope-ai/ReMe": {
+    "data": {
+      "owner": "agentscope-ai",
+      "repo": "ReMe",
+      "stars": 2567,
+      "forks": 207,
+      "language": "Python",
+      "description": "ReMe: Memory Management Kit for Agents - Remember Me, Refine Me.",
+      "topics": [
+        "agent",
+        "ai-agents",
+        "memory",
+        "memoryscope"
+      ],
+      "url": "https://github.com/agentscope-ai/ReMe",
+      "timestamp": "2026-04-01T15:13:30.160841"
+    },
+    "timestamp": "2026-04-01T15:13:30.160849"
+  },
+  "feldera/feldera": {
+    "data": {
+      "owner": "feldera",
+      "repo": "feldera",
+      "stars": 1851,
+      "forks": 108,
+      "language": "Rust",
+      "description": "The Feldera Incremental Computation Engine",
+      "topics": [
+        "data-analytics",
+        "data-pipelines",
+        "database",
+        "incremental-computation"
+      ],
+      "url": "https://github.com/feldera/feldera",
+      "timestamp": "2026-04-01T15:13:30.465012"
+    },
+    "timestamp": "2026-04-01T15:13:30.465022"
+  },
+  "callstackincubator/react-native-grab": {
+    "data": {
+      "owner": "callstackincubator",
+      "repo": "react-native-grab",
+      "stars": 208,
+      "forks": 6,
+      "language": "TypeScript",
+      "description": "Touch-to-grab context tool for React Native UI changes",
+      "topics": [
+        "agents",
+        "devtools"
+      ],
+      "url": "https://github.com/callstackincubator/react-native-grab",
+      "timestamp": "2026-04-01T15:13:30.720230"
+    },
+    "timestamp": "2026-04-01T15:13:30.720236"
+  },
+  "danielmiessler/Fabric": {
+    "data": {
+      "owner": "danielmiessler",
+      "repo": "Fabric",
+      "stars": 40320,
+      "forks": 4018,
+      "language": "Go",
+      "description": "Fabric is an open-source framework for augmenting humans using AI. It provides a modular system for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.",
+      "topics": [
+        "ai",
+        "augmentation",
+        "flourishing",
+        "life"
+      ],
+      "url": "https://github.com/danielmiessler/Fabric",
+      "timestamp": "2026-04-01T15:13:30.971622"
+    },
+    "timestamp": "2026-04-01T15:13:30.971632"
+  },
+  "basnijholt/agent-cli": {
+    "data": {
+      "owner": "basnijholt",
+      "repo": "agent-cli",
+      "stars": 171,
+      "forks": 15,
+      "language": "Python",
+      "description": "A suite of local AI-powered command-line tools",
+      "topics": [],
+      "url": "https://github.com/basnijholt/agent-cli",
+      "timestamp": "2026-04-01T15:13:31.248626"
+    },
+    "timestamp": "2026-04-01T15:13:31.248632"
+  },
+  "21st-dev/21st-sdk": {
+    "data": {
+      "owner": "21st-dev",
+      "repo": "21st-sdk",
+      "stars": 82,
+      "forks": 6,
+      "language": "TypeScript",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/21st-dev/21st-sdk",
+      "timestamp": "2026-04-01T15:13:31.517490"
+    },
+    "timestamp": "2026-04-01T15:13:31.517506"
   }
 }

@@ -82,33 +82,32 @@ MOTION_LIBRARY = [
 
 @task(name="generate-audio", retries=2, retry_delay_seconds=10)
 def generate_audio_task(text: str, output_path: str) -> str:
+    """Generate audio using EnhancedVoiceGenerator with full fallback chain"""
     logger = get_run_logger()
     if os.path.exists(output_path):
         return output_path
 
-    import re
-    pronunciation_map = {"webmcp": "Web M C P", "sqlite": "sequel lite", "github": "git hub", "osmnx": "O S M N X"}
-    processed = text
-    for term, phonetic in pronunciation_map.items():
-        processed = re.sub(rf"\b{term}\b", phonetic, processed, flags=re.IGNORECASE)
-
-    if CONFIG.get("hume_ai", {}).get("use_hume", False):
-        try:
-            from hume import HumeClient
-            from hume.tts import PostedUtterance
-            client = HumeClient(api_key=CONFIG["hume_ai"]["api_key"])
-            gen = client.tts.synthesize_file(utterances=[PostedUtterance(text=processed)])
-            with open(output_path, "wb") as f:
-                f.write(b"".join(gen))
-            _trim_silence(output_path)
+    try:
+        from enhanced_audio_generator import EnhancedVoiceGenerator
+        generator = EnhancedVoiceGenerator()
+        
+        # Apply text preprocessing for better pronunciation
+        import re
+        pronunciation_map = {"webmcp": "Web M C P", "sqlite": "sequel lite", "github": "git hub", "osmnx": "O S M N X"}
+        processed = text
+        for term, phonetic in pronunciation_map.items():
+            processed = re.sub(rf"\b{term}\b", phonetic, processed, flags=re.IGNORECASE)
+        
+        success = generator.generate_audio(processed, output_path)
+        if success:
             return output_path
-        except Exception as e:
-            logger.warning(f"Hume.ai failed: {e}")
-
-    from gtts import gTTS
-    gTTS(text=processed, lang="en").save(output_path)
-    _trim_silence(output_path)
-    return output_path
+        else:
+            logger.error("All voice services failed - this should never happen with gTTS fallback")
+            raise RuntimeError("Audio generation failed completely")
+            
+    except Exception as e:
+        logger.error(f"Audio generation task failed: {e}")
+        raise
 
 def _trim_silence(path: str):
     tmp = path.replace(".mp3", "_trimmed.mp3")
@@ -374,22 +373,37 @@ def production_pipeline():
     props = {"clips": []}
     
     # helper for precise lengths
-    def add_clip(src, dur, ctype, name="", url=""):
+    def add_clip(src, dur, ctype, name="", url="", img="", stats=None):
         props["clips"].append({
             "src": f"{os.path.basename(src)}",
             "durationInSeconds": dur,
             "type": ctype,
             "name": name,
-            "url": url
+            "url": url,
+            "img": f"{os.path.basename(img)}" if img else "",
+            "stats": stats or {}
         })
 
     add_clip(intro_seg, _get_audio_duration(intro_audio), "intro")
 
     mid = len(projects) // 2
+    
+    # Load stats cache for SegmentScene
+    stats_cache = {}
+    stats_fp = Path(__file__).parent / "github_stats_cache.json"
+    if stats_fp.exists():
+        with open(stats_fp) as sf:
+            stats_cache = json.load(sf)
+
     for i, p in enumerate(projects):
         seg = render_segment_task(p, i)
         segment_files.append(seg)
-        add_clip(seg, _get_audio_duration(p["audio_path"]), "project", p.get("name", ""), p.get("github_url", ""))
+        
+        # Get repo metadata from github_url
+        repo_id = p.get("github_url", "").replace("https://github.com/", "").strip("/")
+        repo_stats = stats_cache.get(repo_id, {}).get("data", {})
+        
+        add_clip(seg, _get_audio_duration(p["audio_path"]), "project", p.get("name", ""), p.get("github_url", ""), p.get("img_path", ""), repo_stats)
         
         if i == mid - 1:
             segment_files.append(sub_seg)

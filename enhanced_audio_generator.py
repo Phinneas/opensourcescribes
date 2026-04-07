@@ -1,6 +1,10 @@
 """
 Enhanced Audio Generator for OpenSourceScribes
 Supports multiple AI voice services with advanced customization
+
+PRIMARY: Minimax TTS (using video generation tokens for audio)
+FALLBACK: KittenTTS (free, self-hosted)
+DEPRECATED: ElevenLabs (kept for potential future use)
 """
 
 import os
@@ -22,6 +26,18 @@ class EnhancedVoiceGenerator:
         self.config = config or CONFIG
         self.voice_cache = {}
         
+    def _make_api_request(self, url, headers, data, timeout=30):
+        """Make API request with error handling"""
+        try:
+            response = requests.post(url, json=data, headers=headers, timeout=timeout)
+            return response, None
+        except requests.exceptions.Timeout:
+            return None, "Request timed out"
+        except requests.exceptions.ConnectionError:
+            return None, "Connection error"
+        except Exception as e:
+            return None, str(e)
+        
     def trim_audio_silence(self, input_path: str, threshold_db: int = -50):
         """Trim silence from beginning of audio file"""
         temp_path = input_path.replace('.mp3', '_trimmed.mp3')
@@ -42,7 +58,141 @@ class EnhancedVoiceGenerator:
             print(f"   ⚠️  Silence trimming failed: {e}")
             return False
     
-    # ==================== HUME.AI (Your Current Service) ====================
+    # ==================== MINIMAX TTS (PRIMARY - Using Video Tokens) ====================
+    
+    def generate_audio_minimax(
+        self, 
+        text: str, 
+        output_path: str,
+        voice_id: str = "male-1",
+        model: str = "speech-01",
+        speed: float = 1.0
+    ) -> bool:
+        """
+        Generate audio using Minimax TTS service
+        
+        Uses video generation tokens for high-quality speech synthesis
+        
+        Args:
+            text: Text to convert to speech
+            output_path: Where to save the audio file
+            voice_id: Voice to use (male-1, female-1, etc.)
+            model: Minimax speech model
+            speed: Speech speed (0.5 to 2.0)
+        """
+        try:
+            print(f"🎙️ Minimax TTS: {text[:40]}...")
+            
+            api_key = self.config.get('minimax', {}).get('api_key')
+            group_id = self.config.get('minimax', {}).get('group_id')
+            
+            if not api_key or not group_id:
+                print("   ⚠️  Minimax API credentials not configured")
+                return False
+            
+            url = f"https://api.minimax.chat/v1/text_to_speech?GroupId={group_id}"
+            
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            data = {
+                "model": model,
+                "text": text,
+                "voice_setting": {
+                    "voice_id": voice_id,
+                    "speed": speed,
+                    "vol": 1.0  # Volume level
+                },
+                "audio_setting": {
+                    "sample_rate": 32000,
+                    "bitrate": 128000,
+                    "format": "mp3"
+                }
+            }
+            
+            response, error = self._make_api_request(url, headers, data)
+            
+            if error:
+                print(f"   ⚠️  Minimax request error: {error}")
+                return False
+                
+            if response.status_code == 200:
+                with open(output_path, 'wb') as f:
+                    f.write(response.content)
+                print(f"   ✅ Minimax TTS generated (voice: {voice_id}, speed: {speed}x)")
+                return True
+            else:
+                print(f"   ⚠️  Minimax API error: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            print(f"   ⚠️  Minimax TTS failed: {e}")
+            return False
+    
+    # ==================== KITTENTTS (FREE FALLBACK) ====================
+    
+    def generate_audio_kittentts(
+        self, 
+        text: str, 
+        output_path: str,
+        model: str = "kit/ljspeech-tts",  # Default model from the repo
+        speed: float = 1.0
+    ) -> bool:
+        """
+        Generate audio using KittenTTS (free, self-hosted option)
+        
+        KittenTTS is a free TTS system from https://github.com/KittenML/KittenTTS
+        Perfect for fallback when paid services are unavailable
+        
+        Args:
+            text: Text to convert to speech
+            output_path: Where to save the audio file
+            model: TTS model to use
+            speed: Speech speed multiplier
+        """
+        try:
+            print(f"🎙️ KittenTTS (free): {text[:40]}...")
+            
+            # KittenTTS typically runs locally, default to port 5000
+            base_url = self.config.get('kittentts', {}).get('base_url', 'http://localhost:5000')
+            
+            # Check if service is available
+            try:
+                health_response = requests.get(f"{base_url}/health", timeout=5)
+                if health_response.status_code != 200:
+                    print(f"   ⚠️  KittenTTS not available at {base_url}")
+                    return False
+            except Exception as e:
+                print(f"   ⚠️  KittenTTS health check failed: {e}")
+                return False
+            
+            url = f"{base_url}/tts"
+            headers = {"Content-Type": "application/json"}
+            
+            data = {
+                "text": text,
+                "model": model,
+                "speed": speed
+            }
+            
+            response = requests.post(url, json=data, headers=headers, timeout=30)
+            
+            if response.status_code == 200:
+                with open(output_path, 'wb') as f:
+                    f.write(response.content)
+                print(f"   ✅ KittenTTS generated (model: {model})")
+                return True
+            else:
+                print(f"   ⚠️  KittenTTS API error: {response.status_code}")
+                return False
+                
+        except Exception as e:
+            print(f"   ⚠️  KittenTTS failed: {e}")
+            return False
+    
+    # ==================== HUME.AI (Legacy Service - Kept for Backup) ====================
     
     def generate_audio_hume_enhanced(
         self, 
@@ -98,7 +248,9 @@ class EnhancedVoiceGenerator:
             print(f"   ⚠️  Hume.ai failed: {e}")
             return False
     
-    # ==================== ELEVENLABS (Best Quality) ====================
+    # ==================== ELEVENLABS (DEPRECATED - Kept for Future Use) ====================
+    # Note: ElevenLabs is deprecated but kept in codebase in case we return to it later
+    # It will not be used in the current fallback chain
     
     def generate_audio_elevenlabs(
         self, 
@@ -111,6 +263,9 @@ class EnhancedVoiceGenerator:
     ) -> bool:
         """
         Generate audio using ElevenLabs (best quality AI voice)
+        
+        DEPRECATED: This service is kept for potential future use but is not
+        currently active in the fallback chain due to cost considerations.
         
         Popular voices:
         - 21m00Tcm4TlvDq8ikWAM: Rachel (female, professional)
@@ -159,7 +314,7 @@ class EnhancedVoiceGenerator:
             print(f"   ⚠️  ElevenLabs failed: {e}")
             return False
     
-    # ==================== OPENAI TTS (Good Value) ====================
+    # ==================== OPENAI TTS (Backup Service) ====================
     
     def generate_audio_openai(
         self, 
@@ -169,7 +324,7 @@ class EnhancedVoiceGenerator:
         model: str = "tts-1-hd"
     ) -> bool:
         """
-        Generate audio using OpenAI TTS
+        Generate audio using OpenAI TTS (backup service)
         
         Voice options:
         - alloy: Neutral, professional
@@ -328,10 +483,13 @@ class EnhancedVoiceGenerator:
         """
         Generate audio with intelligent fallback chain
         
+        NEW CHAIN: minimax → hume → openai → kittentts → gtts
+        DEPRECATED: elevenlabs (kept in code but not in default chain)
+        
         Args:
             text: Text to convert to speech
             output_path: Where to save the audio file
-            preferred_service: 'hume', 'elevenlabs', 'openai', 'cartes', or None (auto)
+            preferred_service: 'minimax', 'hume', 'openai', 'kittentts', or None (auto)
             fallback_chain: List of services to try in order
         
         Returns:
@@ -342,14 +500,14 @@ class EnhancedVoiceGenerator:
             print(f"   ✅ Audio already exists: {output_path}")
             return True
         
-        # Default fallback chain
+        # Default fallback chain - UPDATED
         if fallback_chain is None:
             fallback_chain = self.config.get('voice', {}).get('fallback_chain', [
-                'elevenlabs',
-                'hume',
-                'openai',
-                'cartes',
-                'gtts'
+                'minimax',      # PRIMARY: Use Minimax video tokens for TTS
+                'hume',         # BACKUP: Hume.ai (existing service)
+                'openai',       # BACKUP: OpenAI TTS
+                'kittentts',    # FREE: KittenTTS (self-hosted)
+                'gtts'          # FALLBACK: Built-in fallback
             ])
         
         # If preferred service specified, try it first
@@ -362,35 +520,43 @@ class EnhancedVoiceGenerator:
             
             success = False
             
-            if service == 'hume':
+            if service == 'minimax':
+                voice_id = self.config.get('voice', {}).get('minimax_voice_id', 'male-1')
+                speed = self.config.get('voice', {}).get('minimax_speed', 1.0)
+                success = self.generate_audio_minimax(text, output_path, voice_id, speed=speed)
+            
+            elif service == 'hume':
                 voice_id = self.config.get('voice', {}).get('hume_voice_id', 'drew')
                 speed = self.config.get('voice', {}).get('hume_speed', 1.0)
                 success = self.generate_audio_hume_enhanced(text, output_path, voice_id, speed)
-            
-            elif service == 'elevenlabs':
-                voice_id = self.config.get('voice', {}).get('elevenlabs_voice_id', '21m00Tcm4TlvDq8ikWAM')
-                stability = self.config.get('voice', {}).get('elevenlabs_stability', 0.5)
-                success = self.generate_audio_elevenlabs(text, output_path, voice_id, stability=stability)
             
             elif service == 'openai':
                 voice = self.config.get('voice', {}).get('openai_voice', 'nova')
                 success = self.generate_audio_openai(text, output_path, voice)
             
-            elif service == 'cartes':
-                voice_id = self.config.get('voice', {}).get('cartes_voice_id', '79a125e8-cd45-4c13-8a67-1888f38bdcd9')
-                success = self.generate_audio_cartes(text, output_path, voice_id)
-            
-            elif service == 'playht':
-                voice_id = self.config.get('voice', {}).get('playht_voice_id', '')
-                success = self.generate_audio_playht(text, output_path, voice_id)
+            elif service == 'kittentts':
+                model = self.config.get('voice', {}).get('kittentts_model', 'kit/ljspeech-tts')
+                speed = self.config.get('voice', {}).get('kittentts_speed', 1.0)
+                success = self.generate_audio_kittentts(text, output_path, model, speed)
             
             elif service == 'gtts':
                 from gtts import gTTS
-                print(f"🎙️ gTTS (fallback): {text[:40]}...")
+                print(f"🎙️ gTTS (final fallback): {text[:40]}...")
                 tts = gTTS(text=text, lang='en', slow=False)
                 tts.save(output_path)
                 print(f"   ✅ gTTS voice generated")
                 success = True
+            
+            # Deprecated services (elevenlabs, cartes, playht) - not in default chain
+            elif service == 'elevenlabs':
+                print(f"   ⚠️  ElevenLabs is deprecated - skipping")
+                continue
+            elif service == 'cartes':
+                voice_id = self.config.get('voice', {}).get('cartes_voice_id', '79a125e8-cd45-4c13-8a67-1888f38bdcd9')
+                success = self.generate_audio_cartes(text, output_path, voice_id)
+            elif service == 'playht':
+                voice_id = self.config.get('voice', {}).get('playht_voice_id', '')
+                success = self.generate_audio_playht(text, output_path, voice_id)
             
             if success:
                 # Trim silence from successful generation

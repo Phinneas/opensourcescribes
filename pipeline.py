@@ -50,49 +50,41 @@ for d in [OUTPUT_FOLDER, DELIVERY_FOLDER, SHORTS_FOLDER, DEEP_DIVES_FOLDER]:
 
 @task(name="generate-audio", retries=2, retry_delay_seconds=10, log_prints=True)
 def generate_audio_task(text: str, output_path: str) -> str:
-    """Generate TTS audio — Hume.ai with gTTS fallback. Retries twice."""
+    """Generate audio using EnhancedVoiceGenerator with full fallback chain"""
     logger = get_run_logger()
-
+    
     if os.path.exists(output_path):
         logger.info(f"✅ Audio already exists: {output_path}")
         return output_path
 
-    import re
-    pronunciation_map = {
-        "webmcp": "Web M C P",
-        "sqlite": "sequel lite",
-        "github": "git hub",
-        "substack": "sub stack",
-        "osmnx": "O S M N X",
-    }
-    processed = text
-    for term, phonetic in pronunciation_map.items():
-        processed = re.sub(rf"\b{term}\b", phonetic, processed, flags=re.IGNORECASE)
-
-    # Try Hume.ai
-    if CONFIG.get("hume_ai", {}).get("use_hume", False):
-        try:
-            from hume import HumeClient
-            from hume.tts import PostedUtterance
-
-            logger.info(f"🎙️ Hume.ai: {text[:40]}…")
-            client = HumeClient(api_key=CONFIG["hume_ai"]["api_key"])
-            gen = client.tts.synthesize_file(utterances=[PostedUtterance(text=processed)])
-            audio_bytes = b"".join(gen)
-            with open(output_path, "wb") as f:
-                f.write(audio_bytes)
-            _trim_silence(output_path)
-            logger.info("   ✅ Hume.ai done")
+    try:
+        from enhanced_audio_generator import EnhancedVoiceGenerator
+        generator = EnhancedVoiceGenerator(CONFIG)
+        
+        # Apply text preprocessing for better pronunciation
+        import re
+        pronunciation_map = {
+            "webmcp": "Web M C P",
+            "sqlite": "sequel lite",
+            "github": "git hub",
+            "substack": "sub stack",
+            "osmnx": "O S M N X",
+        }
+        processed = text
+        for term, phonetic in pronunciation_map.items():
+            processed = re.sub(rf"\b{term}\b", phonetic, processed, flags=re.IGNORECASE)
+        
+        success = generator.generate_audio(processed, output_path)
+        if success:
+            logger.info(f"✅ Audio generated successfully: {output_path}")
             return output_path
-        except Exception as e:
-            logger.warning(f"⚠️ Hume.ai failed: {e} — falling back to gTTS")
-
-    # Fallback: gTTS
-    logger.info(f"🎙️ gTTS: {processed[:40]}…")
-    from gtts import gTTS
-    gTTS(text=processed, lang="en").save(output_path)
-    _trim_silence(output_path)
-    return output_path
+        else:
+            logger.error("All voice services failed - this should never happen with gTTS fallback")
+            raise RuntimeError("Audio generation failed completely")
+            
+    except Exception as e:
+        logger.error(f"Audio generation task failed: {e}")
+        raise
 
 
 def _trim_silence(path: str) -> None:

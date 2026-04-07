@@ -266,7 +266,21 @@ Examples:
     
     # Save results
     filepath = save_results(filtered_repos)
-    
+
+    # Mark discovered URLs as seen so future runs don't surface them again
+    seen_urls_file = "github_urls.txt"
+    existing_seen: Set[str] = set()
+    if os.path.exists(seen_urls_file):
+        with open(seen_urls_file, "r") as f:
+            existing_seen = {line.strip() for line in f if line.strip()}
+
+    new_seen = [r["url"] for r in filtered_repos if r["url"] not in existing_seen]
+    if new_seen:
+        with open(seen_urls_file, "a") as f:
+            for url in new_seen:
+                f.write(url + "\n")
+        print(f"Logged {len(new_seen)} URL(s) to {seen_urls_file}")
+
     print("-" * 50)
     print(f"Successfully saved {len(filtered_repos)} repositories to:")
     print(f"  {filepath}")
@@ -274,7 +288,6 @@ Examples:
     print("Next steps:")
     print("  1. Review the JSON file manually")
     print("  2. Select repos to include in your roundup")
-    print("  3. Add selected URLs to github_urls.txt")
 
 
 if __name__ == "__main__":

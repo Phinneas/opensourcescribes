@@ -903,9 +903,30 @@ class VideoSuiteAutomated:
         except Exception as e:
             print(f"⚠️ Failed to generate content suite: {e}")
         
+        # Record published URLs so discovery tools never surface them again
+        self._mark_published(self.projects)
+
         print("\n" + "="*60)
         print("✅ WORKFLOW COMPLETE")
         print("="*60)
+
+    def _mark_published(self, projects: list, seen_file: str = "github_urls.txt") -> None:
+        """Append each project's GitHub URL to the canonical seen-list."""
+        existing: set = set()
+        if os.path.exists(seen_file):
+            with open(seen_file, "r") as f:
+                existing = {line.strip() for line in f if line.strip()}
+
+        new_urls = [
+            p["github_url"] for p in projects
+            if p.get("github_url") and p["github_url"] not in existing
+        ]
+
+        if new_urls:
+            with open(seen_file, "a") as f:
+                for url in new_urls:
+                    f.write(url + "\n")
+            print(f"📋 Marked {len(new_urls)} repo(s) as published in {seen_file}")
 
 if __name__ == "__main__":
     suite = VideoSuiteAutomated()

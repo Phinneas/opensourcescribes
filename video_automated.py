@@ -327,7 +327,7 @@ class VideoSuiteAutomated:
             return 6.0
         
     def generate_audio(self, text, output_path):
-        """Generate audio: MiniMax → Hume → gTTS"""
+        """Generate audio: MiniMax → Hume → gTTS fallback"""
 
         import re
 
@@ -344,67 +344,97 @@ class VideoSuiteAutomated:
             processed_text = re.sub(rf'\b{term}\b', phonetic, processed_text, flags=re.IGNORECASE)
 
         if os.path.exists(output_path):
-            return
+            # Reject suspiciously small cached files (e.g. old JSON errors saved as audio)
+            if os.path.getsize(output_path) < 1000:
+                os.remove(output_path)
+                print(f"⚠️  Removed invalid cached audio at {output_path}")
+            else:
+                return
 
-        # 1. MiniMax (primary)
-        minimax_key = CONFIG.get('minimax', {}).get('api_key', '')
+        # 1. MiniMax T2A v2 — international platform (api.minimax.io)
+        minimax_key   = CONFIG.get('minimax', {}).get('api_key', '')
         minimax_group = CONFIG.get('minimax', {}).get('group_id', '')
-        if minimax_key and minimax_group and 'YOUR_MINIMAX' not in minimax_key:
+        if minimax_key and minimax_group:
             try:
                 import requests as _req
-                voice_id = CONFIG.get('voice', {}).get('minimax_voice_id', 'male-1')
-                speed = CONFIG.get('voice', {}).get('minimax_speed', 1.0)
-                print(f"🎙️ MiniMax: {processed_text[:40]}...")
-                url = f"https://api.minimax.chat/v1/text_to_speech?GroupId={minimax_group}"
+                voice_id = CONFIG.get('voice', {}).get('minimax_voice_id', 'male-qn-qingse')
+                speed    = CONFIG.get('voice', {}).get('minimax_speed', 1.0)
+                print(f"🎙️ MiniMax: {processed_text[:50]}...")
+                url = f"https://api.minimax.io/v1/t2a_v2?GroupId={minimax_group}"
                 resp = _req.post(url, headers={
                     "Authorization": f"Bearer {minimax_key}",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 }, json={
-                    "model": "speech-01",
+                    "model": "speech-02-hd",
                     "text": processed_text,
-                    "voice_id": voice_id,
-                    "speed": speed,
-                    "vol": 1.0,
-                    "pitch": 0
-                }, timeout=30)
+                    "stream": False,
+                    "voice_setting": {
+                        "voice_id": voice_id,
+                        "speed": speed,
+                        "vol": 1.0,
+                        "pitch": 0,
+                    },
+                    "audio_setting": {
+                        "sample_rate": 32000,
+                        "bitrate": 128000,
+                        "format": "mp3",
+                        "channel": 1,
+                    },
+                }, timeout=60)
                 if resp.status_code == 200:
-                    with open(output_path, 'wb') as f:
-                        f.write(resp.content)
-                    try:
-                        self.trim_audio_silence(output_path)
-                    except Exception as trim_e:
-                        print(f"⚠️  Trim failed (audio kept as-is): {trim_e}")
-                    return True
+                    data = resp.json()
+                    if data.get("base_resp", {}).get("status_code") == 0:
+                        audio_hex = data.get("data", {}).get("audio", "")
+                        if audio_hex:
+                            audio_bytes = bytes.fromhex(audio_hex)
+                            with open(output_path, "wb") as f:
+                                f.write(audio_bytes)
+                            try:
+                                self.trim_audio_silence(output_path)
+                            except Exception:
+                                pass
+                            return True
+                        else:
+                            print("⚠️  MiniMax: no audio in response")
+                    else:
+                        print(f"⚠️  MiniMax error: {data.get('base_resp')}")
                 else:
-                    print(f"⚠️  MiniMax failed: {resp.status_code} {resp.text[:100]}")
+                    print(f"⚠️  MiniMax HTTP {resp.status_code}: {resp.text[:120]}")
             except Exception as e:
                 print(f"⚠️  MiniMax failed: {e}")
-        else:
-            print("⚠️  MiniMax credentials not set, skipping")
 
         # 2. Hume (fallback)
-        if CONFIG.get('hume_ai', {}).get('use_hume', False):
+        hume_key = CONFIG.get('hume_ai', {}).get('api_key', '')
+        if hume_key:
             try:
                 from hume import HumeClient
                 from hume.tts import PostedUtterance
-                print(f"🎙️ Hume.ai: {processed_text[:40]}...")
-                client = HumeClient(api_key=CONFIG['hume_ai']['api_key'])
+                print(f"🎙️ Hume: {processed_text[:50]}...")
+                client = HumeClient(api_key=hume_key)
                 audio_generator = client.tts.synthesize_file(
                     utterances=[PostedUtterance(text=processed_text)]
                 )
                 audio_bytes = b''.join(chunk for chunk in audio_generator)
+                if len(audio_bytes) < 1000:
+                    raise ValueError(f"Hume returned {len(audio_bytes)} bytes")
                 with open(output_path, 'wb') as f:
                     f.write(audio_bytes)
-                self.trim_audio_silence(output_path)
+                try:
+                    self.trim_audio_silence(output_path)
+                except Exception:
+                    pass
                 return True
             except Exception as e:
-                print(f"⚠️  Hume.ai failed: {e}")
+                print(f"⚠️  Hume failed: {e}")
 
         # 3. gTTS (last resort)
-        print(f"🎙️ gTTS: {processed_text[:40]}...")
+        print(f"🎙️ gTTS: {processed_text[:50]}...")
         tts = gTTS(text=processed_text, lang='en')
         tts.save(output_path)
-        self.trim_audio_silence(output_path)
+        try:
+            self.trim_audio_silence(output_path)
+        except Exception:
+            pass
         return True
     
     def trim_audio_silence(self, input_path):

@@ -374,18 +374,34 @@ export const SegmentScene: React.FC<SegmentSceneProps> = ({
         />
       </Sequence>
 
-      {/* Phase 2: GitHub scroll */}
-      <Sequence from={titleFrames} durationInFrames={scrollFrames}>
-        <GitHubScroll
-          screenshotPath={screenshotPath}
-          projectName={projectName}
-          frame={frame - titleFrames}
-          fps={fps}
-          durationInFrames={scrollFrames}
-          zoomInDuration={zoomInDuration}
-          zoomOutDuration={zoomOutDuration}
-        />
-      </Sequence>
+      {/* Phase 2: GitHub scroll — only if we have a screenshot */}
+      {screenshotPath ? (
+        <Sequence from={titleFrames} durationInFrames={scrollFrames}>
+          <GitHubScroll
+            screenshotPath={screenshotPath}
+            projectName={projectName}
+            frame={frame - titleFrames}
+            fps={fps}
+            durationInFrames={scrollFrames}
+            zoomInDuration={zoomInDuration}
+            zoomOutDuration={zoomOutDuration}
+          />
+        </Sequence>
+      ) : (
+        /* No screenshot — extend title card for full duration */
+        <Sequence from={titleFrames} durationInFrames={scrollFrames}>
+          <TitleCard
+            projectName={projectName}
+            description={description}
+            stars={stars}
+            forks={forks}
+            language={language}
+            topics={topics}
+            frame={frame}
+            fps={fps}
+          />
+        </Sequence>
+      )}
     </AbsoluteFill>
   );
 };

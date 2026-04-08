@@ -70,9 +70,10 @@ const ClipRenderer: React.FC<{ clip: ClipDesc; isFirstProject?: boolean }> = ({ 
     return (
       <div className="flex-1 bg-black relative" style={{ opacity }}>
         <Video src={staticFile(clip.src)} style={{ opacity: 0 }} volume={1} />
-        <SegmentScene 
-           imagePath={clip.img || clip.src} 
-           projectName={clip.name} 
+        <SegmentScene
+           screenshotPath={clip.img || clip.src || ''}
+           projectName={clip.name}
+           description={''}
            stars={clip.stats?.stars || 0}
            forks={clip.stats?.forks || 0}
            language={clip.stats?.language || "Open Source"}

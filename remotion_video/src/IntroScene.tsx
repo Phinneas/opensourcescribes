@@ -18,7 +18,7 @@ export interface IntroSceneProps {
  */
 export const IntroScene: React.FC<IntroSceneProps> = ({ episodeTitle, channelName }) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps } = useVideoConfig();
 
   // Channel name fade animation
   const channelOpacity = spring({

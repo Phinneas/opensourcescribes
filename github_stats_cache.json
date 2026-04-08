@@ -107,5 +107,57 @@
       "timestamp": "2026-04-07T19:17:22.413711"
     },
     "timestamp": "2026-04-07T19:17:22.413738"
+  },
+  "katherlab/toolmaker": {
+    "data": {
+      "owner": "katherlab",
+      "repo": "toolmaker",
+      "stars": 73,
+      "forks": 10,
+      "language": "Python",
+      "description": "Turn GitHub repositories into LLM tools. (ACL 2025)",
+      "topics": [
+        "agents",
+        "function-calling",
+        "llm-agents",
+        "medicine"
+      ],
+      "url": "https://github.com/katherlab/toolmaker",
+      "timestamp": "2026-04-08T11:07:41.973075"
+    },
+    "timestamp": "2026-04-08T11:07:41.973086"
+  },
+  "OpenBMB/XAgent": {
+    "data": {
+      "owner": "OpenBMB",
+      "repo": "XAgent",
+      "stars": 8515,
+      "forks": 900,
+      "language": "Python",
+      "description": "An Autonomous LLM Agent for Complex Task Solving",
+      "topics": [],
+      "url": "https://github.com/OpenBMB/XAgent",
+      "timestamp": "2026-04-08T11:28:31.516470"
+    },
+    "timestamp": "2026-04-08T11:28:31.516478"
+  },
+  "voltagent/voltagent": {
+    "data": {
+      "owner": "voltagent",
+      "repo": "voltagent",
+      "stars": 7600,
+      "forks": 752,
+      "language": "TypeScript",
+      "description": "AI Agent Engineering Platform built on an Open Source TypeScript AI Agent Framework",
+      "topics": [
+        "agents",
+        "ai",
+        "ai-agents",
+        "ai-agents-framework"
+      ],
+      "url": "https://github.com/voltagent/voltagent",
+      "timestamp": "2026-04-08T11:28:37.202384"
+    },
+    "timestamp": "2026-04-08T11:28:37.202390"
   }
 }

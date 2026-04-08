@@ -5,6 +5,7 @@ NON-INTERACTIVE VERSION.
 """
 
 import os
+import sys
 import asyncio
 import json
 import subprocess
@@ -103,15 +104,38 @@ class VideoSuiteAutomated:
 
     async def prepare_assets(self):
         """Generate graphics and audio for projects"""
-        from github_screenshot import capture_github_page
         tasks = []
 
         # 1. GitHub page screenshots for longform scroll segments
+        # Run in a subprocess to avoid sync_playwright conflict with asyncio event loop
         print(f"\n📸 Capturing GitHub page screenshots...")
         for project in self.projects:
             try:
-                screenshot_path = capture_github_page(project['github_url'])
-                project['screenshot_path'] = str(screenshot_path)
+                result = subprocess.run(
+                    [sys.executable, "github_screenshot.py", project['github_url']],
+                    capture_output=True, text=True, timeout=60,
+                    cwd=os.path.dirname(os.path.abspath(__file__))
+                )
+                # Parse the output path from the script's stdout
+                screenshot_path = None
+                for line in result.stdout.splitlines():
+                    if line.startswith("Screenshot saved to:"):
+                        screenshot_path = line.split(":", 1)[1].strip()
+                        break
+                if not screenshot_path:
+                    # Derive expected path the same way github_screenshot.py does
+                    import re as _re
+                    m = _re.search(r"github\.com/([^/]+)/([^/]+)", project['github_url'])
+                    if m:
+                        slug = f"{m.group(1)}_{m.group(2).rstrip('/')}".lower().replace("-", "_")
+                        screenshot_path = f"assets/screenshots/{slug}_github.png"
+                if screenshot_path and os.path.exists(screenshot_path):
+                    project['screenshot_path'] = screenshot_path
+                    print(f"  [screenshot] {project['name']}: {screenshot_path}")
+                else:
+                    project['screenshot_path'] = ''
+                    if result.stderr:
+                        print(f"  ⚠️  Screenshot failed for {project['name']}: {result.stderr[-200:]}")
             except Exception as e:
                 print(f"  ⚠️  Screenshot failed for {project['name']}: {e}")
                 project['screenshot_path'] = ''
@@ -827,7 +851,7 @@ class VideoSuiteAutomated:
             segment_output = Path(OUTPUT_FOLDER) / f"seg_{i:03d}.mp4"
 
             segment_props = {
-                "screenshotPath": Path(screenshot_src).name if screenshot_src else '',
+                "screenshotPath": str(Path(screenshot_src).resolve()) if screenshot_src and os.path.exists(screenshot_src) else '',
                 "projectName": project['name'],
                 "description": project.get('description', ''),
                 "stars": stars,
@@ -996,8 +1020,11 @@ class VideoSuiteAutomated:
             'ffmpeg', '-y',
             '-f', 'concat', '-safe', '0',
             '-i', str(concat_list),
+            '-vf', 'fps=30',           # force constant 30fps — fixes non-monotonic PTS
             '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
-            '-c:a', 'aac', '-b:a', '192k',
+            '-profile:v', 'high', '-level', '4.0',
+            '-bf', '0',                # disable B-frames — guarantees monotonic PTS
+            '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2',
             '-movflags', '+faststart',
             output_name
         ]

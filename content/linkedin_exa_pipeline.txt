@@ -1,0 +1,19 @@
+I used to spend hours each week manually finding GitHub repos for my open source roundup channel.
+
+I just automated the entire thing with Exa.
+
+The setup: two discovery strategies run before every video production cycle.
+
+The first uses Exa's neural search — five queries like "open source AI agent framework" and "LLM developer tooling 2025", scoped to github.com. It finds things GitHub's own keyword search misses because it understands intent, not just terms.
+
+The second uses find_similar(). I give it the GitHub URLs of my best-performing videos and it finds repos that are contextually similar — projects that audiences of those videos would also want to watch. That's a different signal entirely from trending lists or star counts.
+
+The two pools get merged, deduplicated against a permanent published history, trimmed to 15, and written to a file. From there, auto_script_generator fetches READMEs and generates narration scripts, the video pipeline handles graphics and audio, and the content suite produces the Medium post, newsletter, and social copy.
+
+One command. The whole thing runs unattended.
+
+The part that took the most thought wasn't the discovery — it was deduplication. You need a permanent record of everything you've ever published, not just what's queued for the current run. Simple append-only file, checked on every discovery run. Now a repo that's appeared once never appears again.
+
+The only thing left requiring human judgment: keeping the seed list current. Knowing which projects actually resonated with your audience and updating the discovery signal accordingly. That part's harder to automate, and probably shouldn't be.
+
+Full write-up on Medium (link in comments).

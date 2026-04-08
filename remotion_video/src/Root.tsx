@@ -73,13 +73,14 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={({ props }) => {
           const segmentProps = props as unknown as SegmentSceneProps;
           return {
-            durationInFrames: FPS * 8, // 8 seconds
+            durationInFrames: FPS * 42, // 42 seconds
             props: segmentProps as unknown as Record<string, unknown>,
           };
         }}
         defaultProps={{
-          imagePath: "assets/wavespeed/example.png",
+          screenshotPath: "example_github.png",
           projectName: "Example Project",
+          description: "An example open source project",
           stars: 1000,
           forks: 100,
           language: "TypeScript",

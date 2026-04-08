@@ -21,31 +21,27 @@ class SeedreamGenerator:
     Generates high-quality background images with local caching.
     """
     
-    API_ENDPOINT = "https://api.wavespeed.ai/api/v3/bytedance/seedream-v5.0"
     DEFAULT_WIDTH = 1920
     DEFAULT_HEIGHT = 1080
     POLL_INTERVAL = 15
     MAX_POLL_ATTEMPTS = 20
-    
+
     def __init__(self, config: Optional[Dict] = None):
-        """
-        Initialize Seedream generator from config.
-        
-        Args:
-            config: Optional config dict. Falls back to config.json
-        """
         if config is None:
             with open('config.json', 'r') as f:
                 self.config = json.load(f)
         else:
             self.config = config
-        
-        self.api_key = self.config.get('wavespeed', {}).get('api_key')
+
+        ws = self.config.get('wavespeed', {})
+        self.api_key = ws.get('api_key')
         if not self.api_key:
             raise ValueError("wavespeed.api_key not found in config.json")
-        
-        self.model = self.config.get('wavespeed', {}).get('seedream_model', 'bytedance/seedream-v5.0')
-        self.output_dir = Path(self.config.get('wavespeed', {}).get('output_dir', 'assets/wavespeed'))
+
+        api_base = ws.get('api_base', 'https://api.wavespeed.ai/api/v3')
+        self.model = ws.get('seedream_model', 'bytedance/seedream-v5.0-lite')
+        self.API_ENDPOINT = f"{api_base}/{self.model}"
+        self.output_dir = Path(ws.get('output_dir', 'assets/wavespeed'))
         self.output_dir.mkdir(parents=True, exist_ok=True)
     
     def _get_cache_key(self, project: Dict) -> str:
@@ -95,19 +91,22 @@ class SeedreamGenerator:
         language = project.get('language', '')
         topics = project.get('topics', [])
         
-        # Build cinematic prompt
-        prompt = f"""Cinematic, high-detail digital artwork representing {name}: {description}. """
-        
-        # Add technical flavor
-        if language:
-            prompt += f"Written in {language}. "
-        
-        if topics:
-            topic_list = ', '.join(t[:3] for t in topics[:3])
-            prompt += f"Topics: {topic_list}. "
-        
-        prompt += """Dark tech aesthetic, deep blues and purples, subtle code/circuit motifs, 
-dramatic lighting. 4K, photorealistic, no text, no logos, no UI elements."""
+        # Build abstract tech prompt — no figurative elements
+        tech_context = description[:120] if description else name
+        lang_hint = f"{language} " if language else ""
+        topic_hint = ', '.join(topics[:3]) + ' ' if topics else ''
+
+        prompt = (
+            f"Abstract {lang_hint}technology visualization: {tech_context}. "
+            f"{topic_hint}"
+            "Dark deep-space aesthetic, electric blues and purples, glowing data streams, "
+            "floating geometric nodes, circuit lattice patterns, particle networks, "
+            "volumetric light rays through dark void. "
+            "Completely abstract — no people, no characters, no humans, no faces, "
+            "no astronauts, no suits, no animals, no figures of any kind. "
+            "Pure abstract digital art only. No text, no logos, no UI. "
+            "Cinematic 4K quality."
+        )
         
         return prompt
     
@@ -128,52 +127,44 @@ dramatic lighting. 4K, photorealistic, no text, no logos, no UI elements."""
         
         payload = {
             "prompt": prompt,
-            "model": self.model,
             "width": self.DEFAULT_WIDTH,
             "height": self.DEFAULT_HEIGHT,
-            "num_images": 1
         }
-        
+
         response = requests.post(self.API_ENDPOINT, headers=headers, json=payload)
+        if not response.ok:
+            print(f"  ✗ Seedream API error {response.status_code}: {response.text[:300]}")
         response.raise_for_status()
-        
-        return response.json()
-    
-    def _poll_task_status(self, task_id: str) -> Dict:
-        """
-        Poll the task status until completion or timeout.
-        
-        Args:
-            task_id: Task ID from submission response
-            
-        Returns:
-            Final task response with image URL or error
-        """
-        status_url = f"{self.API_ENDPOINT}/status"
+
+        # Response shape: {"code":200, "data": {"id": "...", "urls": {"get": "..."}, ...}}
+        return response.json().get('data', {})
+
+    def _poll_task_status(self, poll_url: str) -> Dict:
+        """Poll the result URL until succeeded/failed or timeout."""
         headers = {"Authorization": f"Bearer {self.api_key}"}
-        
+
         for attempt in range(self.MAX_POLL_ATTEMPTS):
             try:
-                response = requests.get(f"{status_url}?task_id={task_id}", headers=headers)
+                response = requests.get(poll_url, headers=headers)
                 response.raise_for_status()
-                result = response.json()
-                
-                status = result.get('status', '').lower()
-                
-                if status == 'succeeded':
-                    return result
+                data = response.json().get('data', {})
+
+                status = data.get('status', '').lower()
+
+                if status in ('succeeded', 'completed'):
+                    return data
                 elif status == 'failed':
-                    raise RuntimeError(f"Seedream generation failed: {result.get('error', 'Unknown error')}")
-                
+                    raise RuntimeError(f"Seedream generation failed: {data.get('error', 'Unknown error')}")
+
                 print(f"  Polling ({attempt + 1}/{self.MAX_POLL_ATTEMPTS}): status={status}")
                 time.sleep(self.POLL_INTERVAL)
-                
+
             except requests.RequestException as e:
                 if attempt == self.MAX_POLL_ATTEMPTS - 1:
                     raise
                 print(f"  Poll attempt {attempt + 1} failed: {e}")
                 time.sleep(self.POLL_INTERVAL)
-        
+
         raise TimeoutError(f"Seedream generation timeout after {self.MAX_POLL_ATTEMPTS} attempts")
     
     def _download_image(self, image_url: str, output_path: Path):
@@ -219,21 +210,22 @@ dramatic lighting. 4K, photorealistic, no text, no logos, no UI elements."""
             # Submit request
             print("  Submitting to Seedream 5 API...")
             submit_response = self._submit_generation_request(prompt)
-            task_id = submit_response.get('task_id')
-            
-            if not task_id:
-                raise RuntimeError("No task_id in API response")
-            
+            task_id = submit_response.get('id')
+            poll_url = submit_response.get('urls', {}).get('get')
+
+            if not task_id or not poll_url:
+                raise RuntimeError(f"Unexpected API response: {submit_response}")
+
             # Poll for completion
             print("  Waiting for generation...")
-            result = self._poll_task_status(task_id)
-            
-            # Extract image URL
-            images = result.get('images', [])
-            if not images:
-                raise RuntimeError("No images in API response")
-            
-            image_url = images[0].get('url')
+            result = self._poll_task_status(poll_url)
+
+            # outputs is a list of image URLs (strings)
+            outputs = result.get('outputs', [])
+            if not outputs:
+                raise RuntimeError("No outputs in API response")
+
+            image_url = outputs[0] if isinstance(outputs[0], str) else outputs[0].get('url')
             if not image_url:
                 raise RuntimeError("No image URL in API response")
             

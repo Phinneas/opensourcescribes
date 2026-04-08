@@ -1,0 +1,51 @@
+Title: I Stopped Manually Finding GitHub Repos. Here's What I Built Instead.
+
+Running a weekly open source roundup channel means you need a constant supply of interesting repos. For a while I was doing this entirely by hand — browsing GitHub trending, checking Hacker News, following developer Twitter. It worked, but it didn't scale, and it was the most time-consuming part of the whole operation.
+
+So I built an automated discovery pipeline using Exa, wired it into my existing video and content generation stack, and got the whole thing down to one command.
+
+---
+
+The problem with GitHub's own search for this use case is that it's keyword-dependent. You get what you asked for, nothing more. If you search "AI agent framework", you get AI agent frameworks. But a lot of interesting projects don't describe themselves that cleanly. They use different terminology, they're newer than the trending lists, or they're adjacent to the thing you're looking for rather than exactly it.
+
+Exa approaches search differently. It's neural — you can describe what you're looking for in natural language and it finds semantically related results. More usefully for my case, it has a find_similar() method: give it a URL, it finds pages that are contextually similar to that URL. Feed it your top-performing video subjects and it surfaces repos that audiences of those videos would also want to watch.
+
+That's a meaningfully different signal than "repos with 100+ stars updated in the last 7 days."
+
+---
+
+The architecture is straightforward. Two discovery strategies run in parallel:
+
+Keyword search runs five neural queries against github.com — things like "open source AI agent framework" and "LLM developer tools 2025." Each query returns 10 results, they get deduplicated, and anything already in the published history gets filtered out.
+
+find_similar() runs against a seed list of top-performing repos. These are projects from previous videos that got strong audience response. Exa finds 20 similar repos per seed, again deduplicated and filtered.
+
+The combined pool gets trimmed to 15. Those 15 URLs get written to github_urls.txt, which my existing auto_script_generator.py picks up, fetches GitHub metadata and READMEs for, and passes to Claude to generate narration scripts. From there the video pipeline takes over — graphics, TTS audio, segment assembly, Ken Burns effects, the Medium post, LinkedIn, newsletter, all of it.
+
+The whole chain runs from one command:
+
+    python exa_discovery.py
+
+---
+
+The deduplication piece took more thought than the discovery itself. The naive approach — checking the current posts_data.json — only catches repos queued for the current run. It doesn't know about anything published in previous runs.
+
+The fix is a simple append-only file: published_repos.txt. Every time the pipeline completes, the URLs from that run get written there. Every time discovery runs, that file gets checked first. The design keeps github_urls.txt as a clean current-batch input (15 URLs, overwritten each run) and published_repos.txt as the permanent history that only grows.
+
+It's not clever. It doesn't need to be. The important thing is that it's correct — a repo that's been through the pipeline once will never surface again, regardless of how many times you run discovery.
+
+---
+
+A few things worth noting if you're building something similar:
+
+Exa's include_domains parameter is essential here. Without it you get a lot of blog posts and documentation pages that happen to mention GitHub repos. Scoping to github.com directly is the right call.
+
+The seed list for find_similar() matters a lot. Seeding from high-authority AI authors (Karpathy, Anthropic's own repos) produces different results than seeding from niche projects. Worth experimenting with. The list should be updated as you learn what your audience actually responds to.
+
+The 15-repo batch size is deliberate. Enough for a proper roundup video without the later segments feeling like padding. It also keeps TTS and rendering time reasonable.
+
+---
+
+The full pipeline — discovery, scripting, video, all written content — now runs unattended. The only thing left requiring judgment is the seed list: knowing which repos resonated with your audience and updating the discovery signal accordingly. That part's harder to automate, and probably shouldn't be.
+
+OpenSourceScribes is at @opensourcescribes on YouTube and Substack.

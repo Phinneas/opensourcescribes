@@ -268,7 +268,7 @@ Examples:
     filepath = save_results(filtered_repos)
 
     # Mark discovered URLs as seen so future runs don't surface them again
-    seen_urls_file = "github_urls.txt"
+    seen_urls_file = "published_repos.txt"
     existing_seen: Set[str] = set()
     if os.path.exists(seen_urls_file):
         with open(seen_urls_file, "r") as f:

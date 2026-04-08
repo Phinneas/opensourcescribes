@@ -1,0 +1,60 @@
+Subreddits: r/Python, r/selfhosted, r/MachineLearning, r/learnprogramming
+
+Title: Built a fully automated open source video pipeline — here's every bug I hit and how I fixed it
+
+---
+
+I run a YouTube channel that covers interesting open source GitHub repos. The workflow was entirely manual — find repos, write scripts, record audio, edit video, write the blog post. I automated the whole thing. Here's an honest account of every non-obvious problem I hit.
+
+**The stack**
+
+- Exa API for repo discovery (neural search + find_similar seeded from top performers)
+- Claude for narration script generation
+- WaveSpeed Seedream for background image generation per segment
+- MiniMax TTS for narration audio
+- Remotion for video rendering
+- FFmpeg for assembly
+- Auto-generated Medium post, newsletter, and social copy at the end
+
+**Deduplication design flaw**
+
+My original design used one file (github_urls.txt) as both the input list for the current batch and the historical record of everything ever published. These are two different jobs and one file can't do both.
+
+Fix: github_urls.txt is now the current batch only (15 repos, overwritten each run). published_repos.txt is a permanent append-only log. Discovery checks the log. The script generator reads the batch file. They never touch each other.
+
+**Remotion has three constraints that aren't obvious**
+
+1. It runs as a subprocess with its own cwd. If you pass `remotion_video/src/index.ts` as the entry point and cwd is already `remotion_video`, the path doubles and Remotion interprets the whole string as a composition ID. The error message doesn't make this clear.
+
+2. Output paths must be absolute. A relative path resolves against the Remotion cwd, not your project root. File gets written somewhere unexpected, your existence check fails, confusing error.
+
+3. `staticFile()` only serves from the `public/` folder. No absolute paths. Fix: copy assets into `remotion_video/public/` before rendering, pass only the filename.
+
+**WaveSpeed Seedream API**
+
+The model `seedream-v5.0` no longer exists. It's `seedream-v5.0-lite` now. The 400 response body says "model not found" which is helpful — but only if you print the response body on error (the original code just raised without printing it).
+
+The response format also changed from what the code expected:
+- Response is wrapped in a `data` envelope
+- ID field is `data.id` not `task_id`
+- Poll URL is `data.urls.get` not a constructed URL
+- Completion status is `completed` not `succeeded`
+- Images are in `data.outputs[]` as plain URL strings, not objects with a `url` key
+
+Lesson: don't hardcode API base URLs or model names in the class. Put them in config. When the API changes (and it will), it's a config edit not a code change.
+
+**Audio chain was broken silently**
+
+The main pipeline had its own `generate_audio()` method that hardcoded Hume as primary, completely ignoring the fallback chain defined in config. MiniMax was configured as primary everywhere that mattered except where the code actually ran.
+
+Additionally, the silence-trimming step used `subprocess.run(cmd, check=True)` — if ffmpeg failed for any reason, the exception bubbled up through the MiniMax try/except and got caught as a MiniMax failure, triggering the fallback to Hume even though MiniMax had successfully generated the audio.
+
+Fix: wrap trim in its own try/except so it can't take down the parent service attempt.
+
+**Resuming after crashes**
+
+Audio files, Seedream images, and graphics are all cached by output path. Rerunning after a crash skips anything already generated. Delete the delivery folder to start the video assembly fresh without losing cached assets.
+
+---
+
+Happy to answer questions. The full runbook is in the repo docs.

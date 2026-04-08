@@ -1,0 +1,77 @@
+Title: Building an Automated Open Source Video Pipeline From Scratch
+
+The idea was simple: stop spending hours every week manually finding interesting GitHub repos, scripting them, recording narration, editing video, and writing companion posts. Automate the whole thing.
+
+The reality was a sequence of API response format changes, hardcoded paths that worked until they didn't, and a deduplication system that looked correct but had a fundamental design flaw. Here's what I built and what I learned.
+
+---
+
+## The stack
+
+The pipeline has five stages:
+
+**Discovery** — Exa's neural search API finds 15 fresh repos per run. Two strategies run in parallel: keyword queries scoped to github.com, and find_similar() seeded from the URLs of top-performing previous videos. The second strategy is the interesting one — instead of searching for "AI agent framework," you're finding repos that audiences of your best content would also want to watch. It's a different signal.
+
+**Scripting** — auto_script_generator.py fetches GitHub metadata and READMEs, then passes them to Claude to produce 150-170 word narration scripts. Short enough to read in under a minute. Long enough to actually say something.
+
+**Images** — WaveSpeed's Seedream generates one cinematic background image per repo segment. Cached by content hash so they don't regenerate unless you force it.
+
+**Video** — Remotion renders each segment, transition, and intro scene. FFmpeg assembles them. MiniMax TTS handles narration audio with Hume as fallback.
+
+**Content** — Medium post, newsletter, YouTube description, and social copy all generate automatically from the project data at the end of the run.
+
+One command triggers the whole chain.
+
+---
+
+## The deduplication problem
+
+The original design used github_urls.txt as both the current batch input and the historical dedup log. These are two different jobs and the same file can't do both cleanly.
+
+If you append published repos to the file, auto_script_generator reads all of them — including old ones — on the next run. If you overwrite it with only new repos, you lose the history.
+
+The fix: split it into two files. github_urls.txt is the current batch only — 15 URLs, overwritten at the start of each discovery run. published_repos.txt is a permanent append-only log that grows with every completed run. Discovery checks published_repos.txt. The script generator reads github_urls.txt. They never conflict.
+
+Simple, but it took a while to see clearly.
+
+---
+
+## Remotion's constraints
+
+Remotion is a React-based video renderer and it has opinions about how assets are served. Three things will burn you if you don't know them going in:
+
+First, it runs with its own working directory. If your Python code runs Remotion as a subprocess with cwd=remotion_video, then a path like remotion_video/src/index.ts doubles the directory and Remotion interprets the path as a composition ID rather than an entry point. The error message is confusing.
+
+Second, output paths must be absolute. A relative path like assets/seg_000.mp4 resolves against the Remotion working directory, not your project root. The file gets written somewhere unexpected and then your existence check fails.
+
+Third, staticFile() only serves files from the public/ folder. You can't pass an absolute path to a file elsewhere on disk. The fix is to copy the file into remotion_video/public/ before rendering and pass only the filename.
+
+None of this is unreasonable once you understand it. The documentation covers it. But hitting all three in sequence while debugging a larger pipeline is slow.
+
+---
+
+## API formats change
+
+WaveSpeed's Seedream API returned a 400 for a model named seedream-v5.0. The model had become seedream-v5.0-lite. Easy enough fix — but only if the model name isn't hardcoded in the class as a constant and separately in config.json pointing at different things.
+
+The API response format had also changed. The code expected task_id at the top level of the response. The actual response wraps everything in a data envelope and uses id. The polling URL is in data.urls.get. The completion status is completed, not succeeded.
+
+The lesson isn't that WaveSpeed changed their API — that's normal. The lesson is that the model name, the API base URL, and the response parsing all need to be in one place and easy to update. Hardcoding any of them in source is asking for a debug session.
+
+---
+
+## Audio fallback chain
+
+The pipeline uses MiniMax as primary TTS with Hume as fallback. The catch: video_automated.py had its own generate_audio() method that hardcoded Hume as the first attempt. The fallback chain configured elsewhere was irrelevant — this local method ran instead and never tried MiniMax at all.
+
+When MiniMax finally got wired in correctly, the silence-trimming step (ffmpeg silenceremove) was failing with exit code 183, bubbling up through the MiniMax try/except block, and getting caught as a MiniMax failure. The audio was actually fine — the trim was the problem. Wrapping the trim in its own try/except fixed it: if trim fails, keep the untrimmed audio and move on.
+
+---
+
+## What's running now
+
+The pipeline runs unattended. Discovery, scripting, image generation, video rendering, and all written content happen automatically. The only ongoing maintenance is updating the Exa seed list as new top-performing videos emerge — knowing which repos resonated and feeding that signal back into discovery.
+
+The runbook lives in docs/runbook.md. Every error and its fix is documented there while it's fresh.
+
+Full code is part of the OpenSourceScribes project. Follow along at @opensourcescribes on YouTube and Substack.

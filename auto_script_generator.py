@@ -9,10 +9,10 @@ import requests
 import json
 from typing import Dict, Optional, Tuple
 
-# Target word count for 1 minute narration (50% shorter)
-MIN_WORDS = 150
-MAX_WORDS = 170
-TARGET_WORDS = 160
+# Target word count for ~39-46 second narration (~150wpm speaking pace)
+MIN_WORDS = 100
+MAX_WORDS = 115
+TARGET_WORDS = 107
 
 
 def fetch_github_data(github_url: str) -> Optional[Dict]:

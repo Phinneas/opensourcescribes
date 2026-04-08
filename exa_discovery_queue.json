@@ -1,0 +1,482 @@
+[
+  {
+    "url": "https://github.com/agent0ai/agent-zero",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850788",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/OpenBMB/XAgent",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850803",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/TransformerOptimus/SuperAGI",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850808",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/superagentxai/superagentX",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850813",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/DataBassGit/AgentForge",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850818",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/voltagent/voltagent",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850822",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/frdel/agent-zero",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850825",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/langchain-ai/langchain",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850834",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/ag2ai/ag2",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:28.850839",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/ChengJunyan1/lllm",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177847",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/octotools/octotools",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177860",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/lpalbou/AbstractLLM",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177863",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/royerlab/litemind",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177866",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/MedChaouch/Puzld.ai",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177869",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/katherlab/toolmaker",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177871",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/koo1140/OpenAgent",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177873",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/NVlabs/ToolOrchestra",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177876",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/iamEtornam/spectra",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177878",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/MiniMax-AI/MiniMax-M2",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.177882",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/oraios/serena",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558164",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/vinhnx/VTCode",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558178",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/sourcegraph/cody-public-snapshot",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558182",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/CodebuffAI/codebuff",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558185",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/codestoryai/ide",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558188",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/RooCodeInc/Roo-Code",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558191",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/openai/codex",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558194",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/AndyMik90/Aperant",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558196",
+    "status": "pending"
+  },
+  {
+    "url": "http://github.com/voideditor/void",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.558198",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/google/adk-python",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943498",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/NVIDIA-AI-Blueprints/aiq",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943520",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/mudler/LocalAI",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943529",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/jupyterlab/jupyter-ai",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943534",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/google/adk-java",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943539",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/vercel/ai",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943547",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/mastra-ai/mastra",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943552",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-code",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:29.943557",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/openai/openai-agents-python",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349462",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/vstorm-co/pydantic-deepagents",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349482",
+    "status": "pending"
+  },
+  {
+    "url": "http://github.com/google/adk-python",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349487",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/razzant/ouroboros",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349490",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/atlas-2192/AI-Agent-Framework",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349493",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/swe-agent/swe-agent",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349496",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/SWE-agent/Mini-SWE-Agent",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349499",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/shaunthecomputerscientist/mas-ai",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349502",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/leomariga/ProactiveAgent",
+    "source": "exa_keyword",
+    "discovered_at": "2026-04-07T16:51:30.349505",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/NousResearch/hermes-agent",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:31.944831",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/0xNyk/awesome-hermes-agent",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:31.944852",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/MythicAgents/hermes",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:31.944857",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/outsourc-e/hermes-agent",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:31.944861",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/rookiemann/portable-hermes-agent",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:31.944884",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/Lab41/hermes",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:31.944892",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/gmh5225/GPT-nanoGPT",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276333",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/geyang/nanoGPT",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276352",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/Lightning-AI/nanoGPT",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276358",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/karpathy/nanochat",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276364",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/ttwthomas/nanogpt",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276369",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/karpathy/minGPT",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276374",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/kjdeveloper8/nano-GPT",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276380",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/users/karpathy",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276388",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/flexaihq/nanoGPT",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276393",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/karpathy/build-nanogpt",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:32.276402",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/volcengine/OpenViking",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:33.935782",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/vikingcode/vikingcode.github.io",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:33.935802",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/viking-gps/viking-gps.github.io",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:33.935809",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/viking-gps/viking",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:33.935813",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/vikingmute/vikingmute",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:33.935826",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/d3witt/viking",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:33.935831",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/project-valhalla/main",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:33.935842",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-typescript",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243255",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-agent-sdk-python",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243276",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/claude-code-sdk-python",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243282",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-go",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243290",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-tools",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243295",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/jasonkneen/claude-code-sdk",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243300",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/loveyou001/anthropic-sdk-python",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243305",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/courses",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243310",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-ruby",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243313",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-java",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243319",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/strands-agents/sdk-python",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243329",
+    "status": "pending"
+  },
+  {
+    "url": "https://github.com/anthropics/anthropic-sdk-php",
+    "source": "exa_similar",
+    "discovered_at": "2026-04-07T16:51:34.243333",
+    "status": "pending"
+  }
+]

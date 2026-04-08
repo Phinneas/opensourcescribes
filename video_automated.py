@@ -51,6 +51,9 @@ Path(SHORTS_FOLDER).mkdir(exist_ok=True)
 
 MAX_DEEP_DIVES = 3  # Limit deep dives per roundup (Set to 0 to disable)
 
+# Legacy feature flag — superseded by Seedream + Remotion pipeline
+HYBRID_AVAILABLE = False
+
 
 class VideoSuiteAutomated:
     """Creates both longform and short videos automatically"""
@@ -100,20 +103,31 @@ class VideoSuiteAutomated:
 
     async def prepare_assets(self):
         """Generate graphics and audio for projects"""
+        from github_screenshot import capture_github_page
         tasks = []
-        
-        # 1. Prepare Main Video Assets (with MiniMax if available)
+
+        # 1. GitHub page screenshots for longform scroll segments
+        print(f"\n📸 Capturing GitHub page screenshots...")
+        for project in self.projects:
+            try:
+                screenshot_path = capture_github_page(project['github_url'])
+                project['screenshot_path'] = str(screenshot_path)
+            except Exception as e:
+                print(f"  ⚠️  Screenshot failed for {project['name']}: {e}")
+                project['screenshot_path'] = ''
+
+        # 2. Prepare Main Video Assets (horizontal graphics for shorts/thumbnails)
         print(f"\n🎨 Generating Main Video Assets (Horizontal)...")
         for project in self.projects:
             img_path = Path(OUTPUT_FOLDER) / f"{project['id']}_screen.png"
             audio_path = Path(OUTPUT_FOLDER) / f"{project['id']}_audio.mp3"
-            
+
             project['img_path'] = str(img_path)
             project['audio_path'] = str(audio_path)
-            
+
             # Generate Audio
             self.generate_audio(project['script_text'], str(audio_path))
-            
+
             tasks.append(self.create_project_graphic(
                 project['name'],
                 project['github_url'],
@@ -253,13 +267,31 @@ class VideoSuiteAutomated:
         fps = self.video_settings.get('fps', 30)
         duration_frames = int(duration_seconds * fps)
         
+        # Resolve output path to absolute so Remotion (cwd=remotion_video) writes to the right place
+        abs_output = Path(output_path).resolve()
+
+        # Remotion only serves files from its public/ folder.
+        # Copy any local file paths in props there and pass just the filename.
+        remotion_public = Path(__file__).parent / 'remotion_video' / 'public'
+        remotion_public.mkdir(parents=True, exist_ok=True)
+        resolved_props = {}
+        for k, v in props.items():
+            if isinstance(v, str) and os.path.exists(v):
+                src = Path(v).resolve()
+                dest = remotion_public / src.name
+                import shutil
+                shutil.copy2(src, dest)
+                resolved_props[k] = src.name  # Remotion resolves from public/ root
+            else:
+                resolved_props[k] = v
+
         # Build remotion render command
         cmd = [
             'npx', 'remotion', 'render',
-            'remotion_video/src/index.ts',
+            'src/index.ts',
             composition,
-            '--props', json.dumps(props),
-            '--output', str(output_path),
+            '--props', json.dumps(resolved_props),
+            '--output', str(abs_output),
             '--frame-range', f'0-{duration_frames - 1}'
         ]
         
@@ -273,9 +305,9 @@ class VideoSuiteAutomated:
         
         if result.returncode != 0:
             raise RuntimeError(f"Remotion render failed: {result.stderr}")
-        
-        if not output_path.exists():
-            raise FileNotFoundError(f"Remotion output not found: {output_path}")
+
+        if not abs_output.exists():
+            raise FileNotFoundError(f"Remotion output not found: {abs_output}")
         
         print(f"  ✓ Rendered to {output_path.name}")
         return output_path
@@ -295,8 +327,10 @@ class VideoSuiteAutomated:
             return 6.0
         
     def generate_audio(self, text, output_path):
-        """Generate audio using Hume.ai or gTTS"""
-        
+        """Generate audio: MiniMax → Hume → gTTS"""
+
+        import re
+
         # Phonetic corrections for common technical terms/acronyms
         pronunciation_map = {
             "webmcp": "Web M C P",
@@ -305,62 +339,89 @@ class VideoSuiteAutomated:
             "substack": "sub stack",
             "osmnx": "O S M N X"
         }
-        
         processed_text = text
         for term, phonetic in pronunciation_map.items():
-            # Case insensitive replacement while preserving original punctuation context
-            import re
             processed_text = re.sub(rf'\b{term}\b', phonetic, processed_text, flags=re.IGNORECASE)
-        
+
         if os.path.exists(output_path):
             return
 
-        # Try Hume.ai first
+        # 1. MiniMax (primary)
+        minimax_key = CONFIG.get('minimax', {}).get('api_key', '')
+        minimax_group = CONFIG.get('minimax', {}).get('group_id', '')
+        if minimax_key and minimax_group and 'YOUR_MINIMAX' not in minimax_key:
+            try:
+                import requests as _req
+                voice_id = CONFIG.get('voice', {}).get('minimax_voice_id', 'male-1')
+                speed = CONFIG.get('voice', {}).get('minimax_speed', 1.0)
+                print(f"🎙️ MiniMax: {processed_text[:40]}...")
+                url = f"https://api.minimax.chat/v1/text_to_speech?GroupId={minimax_group}"
+                resp = _req.post(url, headers={
+                    "Authorization": f"Bearer {minimax_key}",
+                    "Content-Type": "application/json"
+                }, json={
+                    "model": "speech-01",
+                    "text": processed_text,
+                    "voice_id": voice_id,
+                    "speed": speed,
+                    "vol": 1.0,
+                    "pitch": 0
+                }, timeout=30)
+                if resp.status_code == 200:
+                    with open(output_path, 'wb') as f:
+                        f.write(resp.content)
+                    try:
+                        self.trim_audio_silence(output_path)
+                    except Exception as trim_e:
+                        print(f"⚠️  Trim failed (audio kept as-is): {trim_e}")
+                    return True
+                else:
+                    print(f"⚠️  MiniMax failed: {resp.status_code} {resp.text[:100]}")
+            except Exception as e:
+                print(f"⚠️  MiniMax failed: {e}")
+        else:
+            print("⚠️  MiniMax credentials not set, skipping")
+
+        # 2. Hume (fallback)
         if CONFIG.get('hume_ai', {}).get('use_hume', False):
             try:
                 from hume import HumeClient
                 from hume.tts import PostedUtterance
-                
-                print(f"🎙️ Hume.ai: {text[:30]}...")
+                print(f"🎙️ Hume.ai: {processed_text[:40]}...")
                 client = HumeClient(api_key=CONFIG['hume_ai']['api_key'])
-                
                 audio_generator = client.tts.synthesize_file(
                     utterances=[PostedUtterance(text=processed_text)]
                 )
-                
-                audio_chunks = []
-                for chunk in audio_generator:
-                    audio_chunks.append(chunk)
-                
-                audio_bytes = b''.join(audio_chunks)
-                
+                audio_bytes = b''.join(chunk for chunk in audio_generator)
                 with open(output_path, 'wb') as f:
                     f.write(audio_bytes)
-                
                 self.trim_audio_silence(output_path)
                 return True
             except Exception as e:
                 print(f"⚠️  Hume.ai failed: {e}")
-        
-        # Fallback to gTTS
-        print(f"🎙️ gTTS: {processed_text[:30]}...")
+
+        # 3. gTTS (last resort)
+        print(f"🎙️ gTTS: {processed_text[:40]}...")
         tts = gTTS(text=processed_text, lang='en')
         tts.save(output_path)
         self.trim_audio_silence(output_path)
         return True
     
     def trim_audio_silence(self, input_path):
-        """Trim silence from beginning"""
+        """Trim silence from beginning — silently skips if ffmpeg fails."""
         temp_path = input_path.replace('.mp3', '_trimmed.mp3')
-        
         cmd = [
             'ffmpeg', '-y',
             '-i', input_path,
             '-af', 'silenceremove=start_periods=1:start_duration=0:start_threshold=-50dB',
             temp_path
         ]
-        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-        os.replace(temp_path, input_path)
+        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        if result.returncode == 0 and os.path.exists(temp_path):
+            os.replace(temp_path, input_path)
+        else:
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
     
     async def create_project_graphic(self, project_name, github_url, output_path):
         """Create horizontal graphic (1920x1080)"""
@@ -512,17 +573,19 @@ class VideoSuiteAutomated:
         cmd = [
             'ffmpeg', '-y',
             '-loop', '1', '-framerate', '24',
-            '-i', image_path,
-            '-i', audio_path,
+            '-i', str(Path(image_path).resolve()),
+            '-i', str(Path(audio_path).resolve()),
             '-r', '24',
             '-c:v', 'libx264', '-preset', 'ultrafast', '-tune', 'stillimage',
             '-c:a', 'aac', '-b:a', '192k',
             '-pix_fmt', 'yuv420p',
             '-shortest',
-            str(output_path)
+            str(Path(output_path).resolve())
         ]
 
-        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+        if result.returncode != 0:
+            print(f"⚠️  ffmpeg error (code {result.returncode}): {result.stderr[-500:]}")
         return str(output_path)
     
     def _create_segment_with_overlay(
@@ -627,6 +690,33 @@ class VideoSuiteAutomated:
 
         return output_path
 
+    def _fetch_github_stats(self, project: dict) -> tuple:
+        """Fetch live star count, forks, language, topics from GitHub API."""
+        import re as _re
+        import requests as _req
+        url = project.get('github_url', '')
+        match = _re.search(r'github\.com/([^/]+)/([^/]+)', url)
+        if not match:
+            return 0, 0, project.get('language', ''), project.get('topics', [])
+        owner, repo = match.groups()
+        repo = repo.rstrip('/')
+        try:
+            token = CONFIG.get('github', {}).get('api_key', '')
+            headers = {'Authorization': f'token {token}'} if token else {}
+            resp = _req.get(f'https://api.github.com/repos/{owner}/{repo}',
+                            headers=headers, timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                return (
+                    data.get('stargazers_count', 0),
+                    data.get('forks_count', 0),
+                    data.get('language', '') or '',
+                    data.get('topics', [])
+                )
+        except Exception:
+            pass
+        return 0, 0, project.get('language', ''), project.get('topics', [])
+
     def _generate_episode_intro(self):
         """
         Build a unique per-episode intro narration script and title
@@ -698,29 +788,49 @@ class VideoSuiteAutomated:
         for i, project in enumerate(self.projects):
             print(f"\n🎬 Processing segment {i + 1}/{len(self.projects)}: {project['name']}")
             
-            # 1. Generate Seedream image for this project
-            image_path = self.seedream_generator.generate(project)
-            
-            # 2. Render segment via Remotion with Seedream background
-            segment_duration = self.video_settings.get('segment_duration', 8)
+            # 1. Fetch live GitHub stats so star/fork counts are accurate
+            stars, forks, language, topics = self._fetch_github_stats(project)
+
+            # 2. Copy GitHub screenshot to Remotion public/ and build props
+            screenshot_src = project.get('screenshot_path', '')
+            segment_duration = self.video_settings.get('segment_duration', 42)
             segment_output = Path(OUTPUT_FOLDER) / f"seg_{i:03d}.mp4"
-            
+
             segment_props = {
-                "imagePath": str(image_path),
+                "screenshotPath": Path(screenshot_src).name if screenshot_src else '',
                 "projectName": project['name'],
-                "stars": project.get('stars', 0),
-                "forks": project.get('forks', 0),
-                "language": project.get('language', ''),
-                "topics": project.get('topics', [])
+                "description": project.get('description', ''),
+                "stars": stars,
+                "forks": forks,
+                "language": language,
+                "topics": topics,
             }
-            
+
             self.render_remotion_scene(
                 composition="SegmentScene",
                 props=segment_props,
                 output_path=segment_output,
                 duration_seconds=segment_duration
             )
-            
+
+            # 4. Merge narration audio into the Remotion segment
+            audio_path = project.get('audio_path', '')
+            if audio_path and os.path.exists(audio_path):
+                merged = Path(OUTPUT_FOLDER) / f"seg_{i:03d}_av.mp4"
+                merge_cmd = [
+                    'ffmpeg', '-y',
+                    '-i', str(segment_output.resolve()),
+                    '-i', str(Path(audio_path).resolve()),
+                    '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
+                    '-shortest',
+                    str(merged.resolve())
+                ]
+                result = subprocess.run(merge_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+                if result.returncode == 0:
+                    merged.replace(segment_output)
+                else:
+                    print(f"⚠️  Audio merge failed: {result.stderr[-200:]}")
+
             segment_files.append(str(segment_output))
             
             # 3. Render transition between segments (except after last)
@@ -856,7 +966,9 @@ class VideoSuiteAutomated:
             'ffmpeg', '-y',
             '-f', 'concat', '-safe', '0',
             '-i', str(concat_list),
-            '-c', 'copy',
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-c:a', 'aac', '-b:a', '192k',
+            '-movflags', '+faststart',
             output_name
         ]
 
@@ -910,24 +1022,73 @@ class VideoSuiteAutomated:
         print("✅ WORKFLOW COMPLETE")
         print("="*60)
 
-    def _mark_published(self, projects: list, seen_file: str = "github_urls.txt") -> None:
-        """Append each project's GitHub URL to the canonical seen-list."""
-        existing: set = set()
-        if os.path.exists(seen_file):
-            with open(seen_file, "r") as f:
-                existing = {line.strip() for line in f if line.strip()}
+    def _mark_published(self, projects: list, seen_file: str = "published_repos.txt") -> None:
+        """Record each project's GitHub URL as published in SurrealDB (and txt fallback)."""
+        urls = [p["github_url"] for p in projects if p.get("github_url")]
+        if not urls:
+            return
 
-        new_urls = [
-            p["github_url"] for p in projects
-            if p.get("github_url") and p["github_url"] not in existing
-        ]
-
-        if new_urls:
-            with open(seen_file, "a") as f:
-                for url in new_urls:
-                    f.write(url + "\n")
-            print(f"📋 Marked {len(new_urls)} repo(s) as published in {seen_file}")
+        # Primary: SurrealDB
+        try:
+            from db import DB
+            with DB() as db:
+                for p in projects:
+                    url = p.get("github_url")
+                    if not url:
+                        continue
+                    db.mark_published(url, {
+                        "name":        p.get("name", ""),
+                        "description": p.get("description", ""),
+                        "stars":       p.get("stars"),
+                        "forks":       p.get("forks"),
+                        "language":    p.get("language", ""),
+                        "topics":      p.get("topics", []),
+                    })
+            print(f"📋 Marked {len(urls)} repo(s) as published in SurrealDB")
+        except Exception as e:
+            print(f"[db] Warning: SurrealDB write failed ({e}), using txt fallback")
+            # Fallback: plain text
+            existing: set = set()
+            if os.path.exists(seen_file):
+                with open(seen_file, "r") as f:
+                    existing = {line.strip() for line in f if line.strip()}
+            new_urls = [u for u in urls if u not in existing]
+            if new_urls:
+                with open(seen_file, "a") as f:
+                    for u in new_urls:
+                        f.write(u + "\n")
+                print(f"📋 Marked {len(new_urls)} repo(s) as published in {seen_file}")
 
 if __name__ == "__main__":
     suite = VideoSuiteAutomated()
-    asyncio.run(suite.run())
+
+    # Log the pipeline run to SurrealDB
+    run_id = None
+    try:
+        from db import DB
+        with DB() as _db:
+            run_id = _db.start_run()
+    except Exception:
+        pass
+
+    import sys as _sys
+    try:
+        asyncio.run(suite.run())
+        if run_id:
+            from db import DB
+            with DB() as _db:
+                _db.finish_run(
+                    run_id,
+                    repos_count=len(suite.projects),
+                    success_count=len(suite.projects),
+                    error_count=0,
+                )
+    except Exception as _e:
+        if run_id:
+            try:
+                from db import DB
+                with DB() as _db:
+                    _db.finish_run(run_id, repos_count=0, success_count=0, error_count=1)
+            except Exception:
+                pass
+        raise

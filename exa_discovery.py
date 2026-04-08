@@ -1,56 +1,57 @@
 #!/usr/bin/env python3
 """
-exa_discovery.py - Exa-powered repository discovery for OpenSourceScribes.
+exa_discovery.py - Exa-powered repository auto-discovery for OpenSourceScribes.
 
-Two discovery strategies:
-  1. Keyword search  — broad queries for trending OSS repos in AI/dev tooling
-  2. find_similar()  — seeded from top-performing repo URLs to surface similar content
+Finds 15 fresh repos, writes them to github_urls.txt, then runs the full pipeline.
 
-Implements the DiscoverySource interface from discovery_sources.py.
+Usage:
+    python exa_discovery.py              # discover + run full pipeline
+    python exa_discovery.py --discover-only  # write github_urls.txt, stop there
+    python exa_discovery.py --mode keyword   # keyword search only (default: both)
+    python exa_discovery.py --mode similar
+    python exa_discovery.py --count 10       # override batch size (default: 15)
 
-Usage (standalone):
-    python exa_discovery.py                    # run both strategies, print results
-    python exa_discovery.py --mode keyword     # keyword search only
-    python exa_discovery.py --mode similar     # find_similar only
-    python exa_discovery.py --append           # append new finds to posts_data.json queue file
+Files:
+    github_urls.txt     — current batch input (overwritten each run with fresh repos)
+    published_repos.txt — permanent append-only history used for dedup
 """
 
 import json
 import os
 import re
+import subprocess
 import sys
 import argparse
 from datetime import datetime
 from typing import List, Optional
 
 from discovery_sources import DiscoverySource, RepoCandidate
+from db import DB
 
 # ---------------------------------------------------------------------------
-# Configuration
+# Config
 # ---------------------------------------------------------------------------
 
-# Load config for API key
 _CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
 with open(_CONFIG_PATH) as _f:
     _CONFIG = json.load(_f)
 
 EXA_API_KEY: str = _CONFIG.get("exa", {}).get("api_key", "")
 
-# Dedup sources — URLs in these files are considered already seen
-POSTS_DATA_FILE = "posts_data.json"
-REPO_HISTORY_FILE = "repo_history.json"
+BATCH_SIZE = 15                          # repos per run
+GITHUB_URLS_FILE = "github_urls.txt"    # current batch — read by auto_script_generator.py
+PUBLISHED_FILE = "published_repos.txt"  # permanent dedup history
 
 # ---------------------------------------------------------------------------
-# Seed repos for find_similar() — top-performing videos by audience signal
+# Seed repos for find_similar()
+# Update this list as new top-performing videos emerge.
 # ---------------------------------------------------------------------------
 
 SEED_REPOS: List[str] = [
-    # Your top-performing video subjects — Exa finds repos that audiences of these
-    # would also want to watch. Update this list as new top performers emerge.
-    "https://github.com/AgenTool/Hermes-Agent",            # top performer (update slug if needed)
-    "https://github.com/karpathy/nanoGPT",                  # Karpathy / high-authority AI signal
-    "https://github.com/OpenVikings/openviking",            # OpenViking
-    "https://github.com/anthropics/anthropic-sdk-python",  # agent tooling signal
+    "https://github.com/AgenTool/Hermes-Agent",
+    "https://github.com/karpathy/nanoGPT",
+    "https://github.com/OpenVikings/openviking",
+    "https://github.com/anthropics/anthropic-sdk-python",
 ]
 
 # ---------------------------------------------------------------------------
@@ -73,69 +74,42 @@ _GITHUB_RE = re.compile(r"https?://github\.com/[A-Za-z0-9_.\-]+/[A-Za-z0-9_.\-]+
 
 
 def _extract_github_url(url: str) -> Optional[str]:
-    """Normalise a URL to a clean github.com/owner/repo form, or None."""
+    """Normalise to clean github.com/owner/repo, or None."""
     m = _GITHUB_RE.search(url)
     if not m:
         return None
-    # Strip trailing slashes / extra path segments beyond owner/repo
     parts = m.group(0).rstrip("/").split("/")
     if len(parts) < 5:
         return None
     return "/".join(parts[:5])
 
 
-GITHUB_URLS_FILE = "github_urls.txt"  # canonical published-URL log
-
-
-def _load_seen_urls() -> set:
-    """Collect all GitHub URLs already published or in-pipeline so we can skip them."""
+def _load_published_fallback() -> set:
+    """Fallback: load from published_repos.txt if DB unavailable."""
     seen = set()
-
-    # github_urls.txt — canonical seen-list, updated after every pipeline run
-    if os.path.exists(GITHUB_URLS_FILE):
-        with open(GITHUB_URLS_FILE) as f:
+    if os.path.exists(PUBLISHED_FILE):
+        with open(PUBLISHED_FILE) as f:
             for line in f:
                 u = line.strip()
                 if u:
                     seen.add(u.rstrip("/").lower())
-
-    # posts_data.json — current batch queued for the next run
-    if os.path.exists(POSTS_DATA_FILE):
-        try:
-            with open(POSTS_DATA_FILE) as f:
-                for item in json.load(f):
-                    u = item.get("github_url", "")
-                    if u:
-                        seen.add(u.rstrip("/").lower())
-        except Exception:
-            pass
-
-    # repo_history.json — legacy history (may be a list or dict)
-    if os.path.exists(REPO_HISTORY_FILE):
-        try:
-            with open(REPO_HISTORY_FILE) as f:
-                data = json.load(f)
-            if isinstance(data, list):
-                for item in data:
-                    u = item.get("url", item.get("github_url", ""))
-                    if u:
-                        seen.add(u.rstrip("/").lower())
-            elif isinstance(data, dict):
-                for u in data.keys():
-                    seen.add(u.rstrip("/").lower())
-        except Exception:
-            pass
-
     return seen
 
 
+def _migrate_published_txt(db: DB) -> None:
+    """One-time import of published_repos.txt into SurrealDB (safe to call repeatedly)."""
+    if not os.path.exists(PUBLISHED_FILE):
+        return
+    count = db.import_published_txt(PUBLISHED_FILE)
+    if count:
+        print(f"[db] Migrated {count} URLs from {PUBLISHED_FILE} into SurrealDB")
+
+
 # ---------------------------------------------------------------------------
-# DiscoverySource implementations
+# Discovery sources
 # ---------------------------------------------------------------------------
 
 class ExaKeywordSource(DiscoverySource):
-    """Discovers repos via Exa keyword/neural search queries."""
-
     def __init__(self, api_key: str, num_results_per_query: int = 10):
         self._api_key = api_key
         self._num_results = num_results_per_query
@@ -144,15 +118,14 @@ class ExaKeywordSource(DiscoverySource):
     def source_name(self) -> str:
         return "exa_keyword"
 
-    def fetch(self) -> List[RepoCandidate]:
+    def fetch(self, seen: set) -> List[RepoCandidate]:
         from exa_py import Exa  # type: ignore
         client = Exa(api_key=self._api_key)
-        seen = _load_seen_urls()
         candidates: List[RepoCandidate] = []
         found_urls: set = set()
 
         for query in SEARCH_QUERIES:
-            print(f"  [exa_keyword] Searching: {query!r}")
+            print(f"  [keyword] {query!r}")
             try:
                 results = client.search(
                     query,
@@ -174,15 +147,12 @@ class ExaKeywordSource(DiscoverySource):
                         discovered_at=datetime.now(),
                     ))
             except Exception as e:
-                print(f"  [exa_keyword] Query failed ({query!r}): {e}")
+                print(f"  [keyword] failed ({query!r}): {e}")
 
-        print(f"  [exa_keyword] Found {len(candidates)} new candidates")
         return candidates
 
 
 class ExaSimilarSource(DiscoverySource):
-    """Discovers repos via Exa find_similar() seeded from top-performing videos."""
-
     def __init__(self, api_key: str, seed_urls: Optional[List[str]] = None,
                  num_results_per_seed: int = 20):
         self._api_key = api_key
@@ -193,15 +163,14 @@ class ExaSimilarSource(DiscoverySource):
     def source_name(self) -> str:
         return "exa_similar"
 
-    def fetch(self) -> List[RepoCandidate]:
+    def fetch(self, seen: set) -> List[RepoCandidate]:
         from exa_py import Exa  # type: ignore
         client = Exa(api_key=self._api_key)
-        seen = _load_seen_urls()
         candidates: List[RepoCandidate] = []
         found_urls: set = set()
 
         for seed_url in self._seeds:
-            print(f"  [exa_similar] find_similar seeded from: {seed_url}")
+            print(f"  [similar] seeded from {seed_url}")
             try:
                 results = client.find_similar(
                     url=seed_url,
@@ -213,7 +182,6 @@ class ExaSimilarSource(DiscoverySource):
                     clean = _extract_github_url(r.url)
                     if not clean:
                         continue
-                    # Skip the seed itself
                     if clean.lower() == seed_url.rstrip("/").lower():
                         continue
                     key = clean.lower()
@@ -226,146 +194,145 @@ class ExaSimilarSource(DiscoverySource):
                         discovered_at=datetime.now(),
                     ))
             except Exception as e:
-                print(f"  [exa_similar] Seed failed ({seed_url}): {e}")
+                print(f"  [similar] failed ({seed_url}): {e}")
 
-        print(f"  [exa_similar] Found {len(candidates)} new candidates")
         return candidates
 
 
 # ---------------------------------------------------------------------------
-# Combined runner
+# Main discovery class
 # ---------------------------------------------------------------------------
 
 class ExaDiscovery:
-    """
-    Runs both Exa strategies and returns a deduplicated list of RepoCandidate.
 
-    Usage:
-        discovery = ExaDiscovery()
-        candidates = discovery.run()   # -> List[RepoCandidate]
-    """
-
-    def __init__(self, api_key: Optional[str] = None,
-                 seed_urls: Optional[List[str]] = None):
+    def __init__(self, api_key: Optional[str] = None, seed_urls: Optional[List[str]] = None):
         self._api_key = api_key or EXA_API_KEY
         if not self._api_key:
             raise ValueError(
-                "Exa API key not found. Add it to config.json under exa.api_key "
-                "or pass it directly."
+                "Exa API key missing. Add to config.json: { \"exa\": { \"api_key\": \"...\" } }"
             )
         self._seeds = seed_urls or SEED_REPOS
 
-    def run(self, mode: str = "both") -> List[RepoCandidate]:
+    def discover(self, mode: str = "both", count: int = BATCH_SIZE) -> List[str]:
         """
-        Args:
-            mode: 'keyword', 'similar', or 'both'
-        Returns:
-            Deduplicated list of RepoCandidate sorted by source then URL.
+        Run discovery and return up to `count` new repo URLs, deduplicated
+        against SurrealDB (falls back to published_repos.txt if DB unavailable).
         """
+        try:
+            with DB() as db:
+                _migrate_published_txt(db)
+                seen = {u.lower() for u in db.get_published_urls()}
+                seen |= {u.lower() for u in (db.get_pending_repos(limit=500) and
+                         [r["url"] for r in db.get_pending_repos(limit=500)])}
+        except Exception as e:
+            print(f"[db] Warning: could not load from SurrealDB ({e}), falling back to txt")
+            seen = _load_published_fallback()
+
         all_candidates: List[RepoCandidate] = []
 
         if mode in ("keyword", "both"):
-            src = ExaKeywordSource(self._api_key)
-            all_candidates.extend(src.fetch())
+            all_candidates.extend(ExaKeywordSource(self._api_key).fetch(seen))
 
         if mode in ("similar", "both"):
-            src = ExaSimilarSource(self._api_key, seed_urls=self._seeds)
-            all_candidates.extend(src.fetch())
+            all_candidates.extend(ExaSimilarSource(self._api_key, self._seeds).fetch(seen))
 
-        # Final global dedup across both strategies
+        # Global dedup across both strategies
         seen_keys: set = set()
-        deduped: List[RepoCandidate] = []
+        deduped: List[str] = []
         for c in all_candidates:
             key = c.url.lower()
             if key not in seen_keys:
                 seen_keys.add(key)
-                deduped.append(c)
+                deduped.append(c.url)
 
-        print(f"\n[ExaDiscovery] Total new candidates: {len(deduped)}")
-        return deduped
+        batch = deduped[:count]
+        duplicates = len(all_candidates) - len(deduped)
+        print(f"\n[ExaDiscovery] {len(deduped)} candidates found ({duplicates} dupes), taking {len(batch)}")
 
-    def run_and_print(self, mode: str = "both") -> List[RepoCandidate]:
-        candidates = self.run(mode=mode)
-        print("\n--- Discovered Repos ---")
-        for i, c in enumerate(candidates, 1):
-            print(f"  {i:3d}. [{c.source_name}] {c.url}")
-        return candidates
+        # Log candidates to DB and record discovery event
+        try:
+            with DB() as db:
+                for url in deduped:
+                    name = url.rstrip("/").split("/")[-1]
+                    db.upsert_repo(url, name, source=mode)
+                db.log_discovery(mode, found=len(all_candidates),
+                                 new_repos=len(deduped), duplicates=duplicates)
+        except Exception as e:
+            print(f"[db] Warning: could not save candidates ({e})")
 
-    def run_and_append_queue(self, queue_file: str = "exa_discovery_queue.json",
-                              mode: str = "both") -> List[RepoCandidate]:
+        return batch
+
+    def run(self, mode: str = "both", count: int = BATCH_SIZE,
+            discover_only: bool = False) -> None:
         """
-        Discover repos and write them to a JSON queue file for review.
-        Does NOT write directly to posts_data.json — keeps human in the loop.
+        Full flow:
+          1. Discover `count` fresh repos (DB-deduplicated)
+          2. Write them to github_urls.txt
+          3. Unless --discover-only: run auto_script_generator + video_automated
         """
-        candidates = self.run(mode=mode)
+        batch = self.discover(mode=mode, count=count)
 
-        # Load existing queue to avoid double-adding
-        existing: List[dict] = []
-        if os.path.exists(queue_file):
-            try:
-                with open(queue_file) as f:
-                    existing = json.load(f)
-            except Exception:
-                pass
+        if not batch:
+            print("[ExaDiscovery] No new repos found. Exiting.")
+            return
 
-        existing_urls = {e["url"].lower() for e in existing}
-        new_entries = []
-        for c in candidates:
-            if c.url.lower() not in existing_urls:
-                new_entries.append({
-                    "url": c.url,
-                    "source": c.source_name,
-                    "discovered_at": c.discovered_at.isoformat(),
-                    "status": "pending",
-                })
+        # Overwrite github_urls.txt with this batch
+        with open(GITHUB_URLS_FILE, "w") as f:
+            for url in batch:
+                f.write(url + "\n")
+        print(f"[ExaDiscovery] Wrote {len(batch)} URLs to {GITHUB_URLS_FILE}")
+        for url in batch:
+            print(f"  {url}")
 
-        combined = existing + new_entries
-        with open(queue_file, "w") as f:
-            json.dump(combined, f, indent=2)
+        if discover_only:
+            print("\n[ExaDiscovery] --discover-only set, stopping here.")
+            return
 
-        print(f"\n[ExaDiscovery] Appended {len(new_entries)} new repos to {queue_file}")
-        print(f"               Total queue size: {len(combined)}")
-        return candidates
+        # Run auto_script_generator
+        print("\n[ExaDiscovery] Running auto_script_generator...")
+        result = subprocess.run(
+            [sys.executable, "auto_script_generator.py",
+             "--input", GITHUB_URLS_FILE, "--output", "posts_data.json"],
+            cwd=os.path.dirname(os.path.abspath(__file__))
+        )
+        if result.returncode != 0:
+            print("[ExaDiscovery] auto_script_generator failed. Stopping.")
+            return
+
+        # Run video pipeline
+        print("\n[ExaDiscovery] Running video pipeline...")
+        result = subprocess.run(
+            [sys.executable, "video_automated.py"],
+            cwd=os.path.dirname(os.path.abspath(__file__))
+        )
+        if result.returncode != 0:
+            print("[ExaDiscovery] video_automated.py failed.")
+            return
+
+        print("\n[ExaDiscovery] Done.")
 
 
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
-def _parse_args():
-    p = argparse.ArgumentParser(description="Exa-powered OSS repo discovery")
-    p.add_argument(
-        "--mode", choices=["keyword", "similar", "both"], default="both",
-        help="Which Exa strategy to run (default: both)"
-    )
-    p.add_argument(
-        "--append", action="store_true",
-        help="Append results to exa_discovery_queue.json for review"
-    )
-    p.add_argument(
-        "--queue-file", default="exa_discovery_queue.json",
-        help="Queue file path (default: exa_discovery_queue.json)"
-    )
-    p.add_argument(
-        "--api-key", default="",
-        help="Exa API key (overrides config.json)"
-    )
-    return p.parse_args()
-
-
 if __name__ == "__main__":
-    args = _parse_args()
-    api_key = args.api_key or EXA_API_KEY
+    p = argparse.ArgumentParser(description="Exa auto-discovery → full pipeline")
+    p.add_argument("--mode", choices=["keyword", "similar", "both"], default="both")
+    p.add_argument("--count", type=int, default=BATCH_SIZE,
+                   help=f"Repos per batch (default: {BATCH_SIZE})")
+    p.add_argument("--discover-only", action="store_true",
+                   help="Write github_urls.txt and stop — don't run the pipeline")
+    p.add_argument("--api-key", default="")
+    args = p.parse_args()
 
+    api_key = args.api_key or EXA_API_KEY
     if not api_key:
-        print("ERROR: No Exa API key found.")
-        print("  Add it to config.json: { \"exa\": { \"api_key\": \"YOUR_KEY\" } }")
-        print("  Or pass --api-key YOUR_KEY")
+        print("ERROR: No Exa API key. Add to config.json under exa.api_key")
         sys.exit(1)
 
-    discovery = ExaDiscovery(api_key=api_key)
-
-    if args.append:
-        discovery.run_and_append_queue(queue_file=args.queue_file, mode=args.mode)
-    else:
-        discovery.run_and_print(mode=args.mode)
+    ExaDiscovery(api_key=api_key).run(
+        mode=args.mode,
+        count=args.count,
+        discover_only=args.discover_only,
+    )

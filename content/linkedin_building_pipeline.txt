@@ -1,0 +1,17 @@
+I just finished building a fully automated content pipeline for my open source YouTube channel from scratch.
+
+One command now handles discovery, scripting, image generation, video rendering, narration, and all written content — Medium post, newsletter, YouTube description, social copy.
+
+Here's what I learned building it:
+
+The deduplication design took the longest to get right. I was using one file as both the current batch input and the historical record of everything published. Those are two different jobs. The fix was obvious once I saw it — split into github_urls.txt (current batch, overwritten each run) and published_repos.txt (permanent append-only history). A repo that's been through the pipeline once never surfaces again.
+
+Remotion has three constraints that will burn you if you don't know them: it runs in its own working directory so paths double if you're not careful, output paths must be absolute, and assets must live in its public/ folder — no absolute paths in staticFile(). Hit all three in sequence while debugging a larger system and it's a slow afternoon.
+
+API response formats change. WaveSpeed's Seedream model slug changed, the response envelope changed, the status string changed. None of it is unreasonable. But if any of it is hardcoded in your source rather than config, each change is a debug session instead of a one-line fix.
+
+The audio chain had a subtle bug: the main pipeline had its own TTS method that hardcoded Hume as primary, ignoring the fallback chain configured elsewhere. MiniMax was never being tried. The fix was replacing that method with one that actually reads the config.
+
+The pipeline runs unattended now. The only thing left requiring judgment is keeping the discovery seed list current — knowing which repos resonated and feeding that signal back in.
+
+Full writeup on Medium (link in comments).

@@ -1,104 +1,92 @@
 [
-  {
-    "id": "unclecode_crawl4ai",
-    "name": "crawl4ai",
-    "github_url": "https://github.com/unclecode/crawl4ai",
-    "script_text": "Crawl4AI is an open-source web crawler and scraper designed for Large Language Models (LLMs). It turns the web into clean, structured Markdown data, optimized for use in RAG, agents, and data pipelines.\n\nCrawl4AI features advanced capabilities like automatic anti-bot detection, shadow DOM flattening, and crash recovery - all built on a fast, scalable, and battle-tested architecture. Its modular design allows for seamless integration into your existing data workflows.\n\nImportantly, Crawl4AI is built to be drastically more cost-effective than existing web extraction solutions, making it an ideal choice for data-hungry AI applications. Join our growing community of 50,000+ developers and help us shape the future of web-powered AI."
-  },
-  {
-    "id": "tinykit_studio_tinykit",
-    "name": "tinykit",
-    "github_url": "https://github.com/tinykit-studio/tinykit",
-    "script_text": "Tinykit is a self-hosted, open-source platform for building and deploying web apps with AI. It manages code, database, content, and deployment, allowing you to focus on your application's core functionality.\n\nTinykit's agentic builder lets you prompt the AI to write code, create tables, and wire up your app, while the realtime database synchronizes data across clients. The code editor provides direct access to your Svelte-based source, and the visual design system simplifies styling and theming.\n\nTinykit also includes built-in asset storage, time travel for easy undo, and the ability to bring your own language model, like OpenAI or Anthropic. Future updates will add server-side functionality, authentication, and a community app showcase.\n\nRun multiple apps on a single server and point any domain to get a working application. Tinykit is an all-in-one, self-hosted solution for your web development needs."
-  },
-  {
-    "id": "evolutionapi_evo_ai",
-    "name": "evo-ai",
-    "github_url": "https://github.com/EvolutionAPI/evo-ai",
-    "script_text": "Evo AI is an open-source platform for creating and managing AI agents. It enables integration with different AI models and services, empowering developers to build complex AI-powered applications.\n\nThe platform provides a robust framework for agent management, including features like agent organization, secure API key storage, and support for various agent types such as language models, agent-to-agent protocols, and custom workflow agents.\n\nEvo AI's modular architecture allows seamless integration with popular language models, MCP servers, and custom tools. Developers can leverage this flexibility to construct tailored AI agents that fit their specific use cases.\n\nWhether you're building conversational interfaces, automating workflows, or exploring the frontiers of AI-driven applications, Evo AI offers a comprehensive solution to simplify the development and deployment of AI agents."
-  },
-  {
-    "id": "sipeed_picoclaw",
-    "name": "picoclaw",
-    "github_url": "https://github.com/sipeed/picoclaw",
-    "script_text": "PicoClaw is an ultra-efficient AI assistant built entirely in Go. Capable of running on $10 hardware with just 10MB of RAM, PicoClaw offers millisecond boot times, making it perfect for deployment anywhere.\n\nUnlike traditional AI assistants, PicoClaw was self-bootstrapped, with the AI agent driving the architecture and optimization. This unique approach allows PicoClaw to be incredibly lightweight and resource-efficient, without compromising on functionality.\n\nDesigned to automate mundane tasks and unleash creativity, PicoClaw is a versatile tool that can be seamlessly integrated into a wide range of projects, from embedded systems to serverless applications. With its cross-platform support, PicoClaw can run on x86_64, ARM64, MIPS, RISC-V, and LoongArch architectures, making it a truly portable solution.\n\nWhether you're a hobbyist, a developer, or an engineer, PicoClaw offers a powerful and accessible way to streamline your workflows and explore new possibilities."
-  },
-  {
-    "id": "openhands_openhands",
-    "name": "OpenHands",
-    "github_url": "https://github.com/OpenHands/OpenHands",
-    "script_text": "OpenHands is an AI-driven development platform that empowers engineers to create powerful software agents. The core of OpenHands is a composable Python library that allows you to define and run intelligent agents, whether locally or at scale in the cloud.\n\nThe OpenHands Software Agent SDK provides a modular, extensible architecture for building advanced AI-powered applications. Developers can leverage pre-built components or create their own custom agents tailored to specific use cases. The platform's flexibility enables rapid prototyping and seamless integration into a wide range of projects.\n\nComplementing the SDK, the OpenHands CLI and Local GUI offer intuitive interfaces for working with the system. These tools make it easy to leverage the power of large language models like GPT and Claude for tasks such as code generation, analysis, and task automation.\n\nWith its focus on AI-driven development, OpenHands aims to enhance developer productivity and unleash new possibilities in software engineering."
-  },
-  {
-    "id": "mindsdb_mindsdb",
-    "name": "mindsdb",
-    "github_url": "https://github.com/mindsdb/mindsdb",
-    "script_text": "Here is a 159-word engineering-focused video script for a YouTube video about the mindsdb project:\n\nMindsDB is an open-source query engine that enables you to build self-reasoning agents across all your live data. It provides a SQL-compatible data language with additional constructs for searching unstructured data, managing workflows, and building AI-powered applications.\n\nThe unique implementation of MindsDB allows you to connect to your existing data sources, unify the data, and empower your agents to directly answer questions in plain English. This eliminates the need for complex ETL pipelines and allows you to leverage your data more effectively.\n\nKey features of MindsDB include conversational analytics agents that provide precise, data-driven answers, and semantic search agents that ground large language model responses in your internal knowledge. By using MindsDB, you can quickly build intelligent applications that make your data more accessible and actionable."
-  },
-  {
-    "id": "vercel_satori",
-    "name": "satori",
-    "github_url": "https://github.com/vercel/satori",
-    "script_text": "**Satori**: An enlightened library to convert HTML and CSS to SVG.\n\nSatori supports the JSX syntax, making it straightforward to use. It handles layout calculation, font, typography, and more to generate an SVG that matches the exact same HTML and CSS in a browser.\n\nUnder the hood, Satori uses a limited subset of HTML and CSS features, optimized for its specific use cases. It allows you to create dynamic, customizable SVG images, such as Open Graph images and social cards, without the need for server-side rendering.\n\nTo use Satori in your project, check out the [Vercel Open Graph Image Generation documentation](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation) for a seamless integration."
-  },
-  {
-    "id": "inclusionai_areal",
-    "name": "AReaL",
-    "github_url": "https://github.com/inclusionAI/AReaL",
-    "script_text": "AReaL is an open-source, fully asynchronous reinforcement learning (RL) system for building large reasoning and agentic models. Leveraging the ReaLHF framework, AReaL provides flexible customization for agentic RL and online RL training, simply by replacing the base URL. With industry-leading training speed and stability, AReaL enables state-of-the-art performance in math, coding, search, and customer service agents.\n\nAReaL's unique, fully asynchronous architecture allows for efficient, scalable RL training, making it an ideal choice for developing advanced AI agents. By providing the necessary training details, data, and infrastructure, AReaL empowers everyone to build their own AI agents easily and affordably."
-  },
-  {
-    "id": "keygraphhq_shannon",
-    "name": "shannon",
-    "github_url": "https://github.com/KeygraphHQ/shannon",
-    "script_text": "Shannon is an autonomous, white-box AI pentester for web applications and APIs. It analyzes your source code, identifies attack vectors, and executes real exploits to prove vulnerabilities before they reach production.\n\nBy combining source code analysis with live exploitation, Shannon provides on-demand, automated penetration testing that can run against every build or release. This helps close the security gap between your rapid development and your annual penetration test.\n\nShannon has identified over 20 exploitable vulnerabilities in OWASP Juice Shop, including authentication bypass and database exfiltration. The final report contains only proven, exploitable findings with copy-and-paste proof-of-concepts.\n\nShannon is designed to be a comprehensive, automated security testing solution for your web applications and APIs."
-  },
-  {
-    "id": "agentscope_ai_reme",
-    "name": "ReMe",
-    "github_url": "https://github.com/agentscope-ai/ReMe",
-    "script_text": "ReMe is a memory management toolkit for AI agents, providing both file-based and vector-based memory systems. It tackles the challenges of limited context window and stateless sessions, allowing agents to maintain long-term memory. \n\nReMe's file-based memory system automatically compacts old conversations, persistently stores important information, and recalls relevant context for future interactions. The vector-based memory enables agents to efficiently retrieve and update memories based on semantic similarity.\n\nDesigned for state-of-the-art performance, ReMe has achieved top results on the LoCoMo and HaluMem benchmarks. This toolkit empowers AI agents, such as personal assistants, to maintain comprehensive memory and provide more coherent and contextual responses over long-term interactions."
-  },
-  {
-    "id": "feldera_feldera",
-    "name": "feldera",
-    "github_url": "https://github.com/feldera/feldera",
-    "script_text": "Feldera is a fast, incremental computation engine that can evaluate arbitrary SQL programs incrementally. Unlike batch engines, warehouses, or streaming databases, Feldera has the unique ability to continuously update views as data changes, avoiding the need to recompute over older data.\n\nA Feldera pipeline is a set of SQL tables and views, with views that can be deeply nested. Users can start, stop, or pause pipelines to manage and advance computations. When the pipeline receives changes - any number of inserts, updates, or deletes - Feldera incrementally updates all the views, achieving millions of events per second on a laptop.\n\nThis powerful approach enables unified offline and online compute over both live and historical data. Feldera users have built batch and real-time feature engineering pipelines, ETL pipelines, and various forms of incremental and periodic analytical jobs."
-  },
-  {
-    "id": "blackboardsh_electrobun",
-    "name": "electrobun",
-    "github_url": "https://github.com/blackboardsh/electrobun",
-    "script_text": "Electrobun is a toolkit for building ultra-fast, tiny, and cross-platform desktop applications using Typescript. It uses the Bun runtime to execute the main process and bundle the Webview Typescript, with native bindings written in Zig.\n\nElectrobun provides a complete solution-in-a-box, allowing you to write Typescript for both the main process and Webviews without worrying about the underlying complexities. It offers isolation between the main and Webview processes, with fast, typed, and easy-to-implement RPC communication.\n\nThe resulting application bundles are small, around 12MB, with even smaller updates as low as 14KB. Electrobun streamlines the entire development and distribution workflow, letting you start coding in 5 minutes and distribute your application in 10.\n\nWhether you're building a productivity tracker, a code editor, or a desktop audio player, Electrobun provides a powerful and efficient way to create cross-platform desktop applications with Typescript."
-  },
-  {
-    "id": "callstackincubator_react_native_grab",
-    "name": "react-native-grab",
-    "github_url": "https://github.com/callstackincubator/react-native-grab",
-    "script_text": "Here's a 165-word engineering-focused video script for the \"react-native-grab\" project:\n\n\"React Native Grab is a touch-to-grab context tool for UI changes in React Native apps. It bridges the gap between your app's visual elements and your coding agent, allowing you to directly capture precise source context from the native UI.\n\nInstead of guesswork and layout descriptions, you can simply point at the exact UI element on the screen. React Native Grab then provides the relevant source context, such as the component structure, styles, and other contextual information. This helps accelerate the coding process, especially for low-entropy updates like spacing, alignment, and copy changes.\n\nThe library integrates with Metro, the React Native bundler, so you can easily wire it up and send the captured context directly to your host clipboard. It requires the New Architecture with the Fabric renderer, ensuring compatibility with the latest React Native advancements.\n\nReact Native Grab streamlines the workflow between your UI and your codebase, making it a valuable tool for React Native developers.\""
-  },
-  {
-    "id": "danielmiessler_fabric",
-    "name": "Fabric",
-    "github_url": "https://github.com/danielmiessler/Fabric",
-    "script_text": "Fabric is an open-source framework that provides a modular system for solving specific problems using a crowdsourced set of AI prompts. It organizes these prompts by real-world tasks, allowing users to create, collect, and integrate their most valuable AI solutions into their favorite tools.\n\nThe unique implementation of Fabric is its focus on prompt engineering - the fundamental units of AI. By centralizing and structuring these prompts, Fabric aims to address the integration problem that often hinders the adoption of AI capabilities.\n\nWhether you're command-line focused or prefer graphical interfaces, Fabric offers a versatile platform to augment your productivity and problem-solving abilities using the power of AI. Fabric's primary use case is to empower users to seamlessly incorporate AI into their workflows."
-  },
-  {
-    "id": "alibaba_page_agent",
-    "name": "page-agent",
-    "github_url": "https://github.com/alibaba/page-agent",
-    "script_text": "Page Agent is a JavaScript-based GUI agent that allows you to control web interfaces with natural language. Unlike browser extensions or headless browsers, Page Agent integrates directly into your web page, offering text-based DOM manipulation without the need for screenshots or special permissions.\n\nWith Page Agent, you can build an AI-powered copilot for your SaaS application, automate complex form-filling workflows, and make any web app accessible through voice commands and screen readers. The project's modular design also enables you to bring your own language models, while the optional Chrome extension and MCP server can further extend the agent's reach across browser tabs and external systems.\n\nPage Agent provides a lightweight, flexible, and powerful way to enhance your web applications with intelligent, natural language-driven user experiences."
-  },
-  {
-    "id": "basnijholt_agent_cli",
-    "name": "agent-cli",
-    "github_url": "https://github.com/basnijholt/agent-cli",
-    "script_text": "`agent-cli` is a collection of local, AI-powered command-line tools that run entirely on your machine. It provides a suite of powerful utilities for voice and text interaction, designed for privacy, offline capability, and seamless integration with your system-wide workflows.\n\nThe key features include voice transcription to clipboard, text autocorrection, voice-based content editing, and a conversational AI assistant. All of these agents are built to operate locally, ensuring your data stays private and accessible even without an internet connection.\n\nThe primary use case for `agent-cli` is to enhance your productivity by leveraging AI-powered tools that integrate directly with your desktop environment. Whether you're working with language models or simply trying to speed up your text-based tasks, this tool aims to offer a seamless, local-first solution for your needs."
-  },
-  {
-    "id": "21st_dev_21st_sdk",
-    "name": "21st-sdk",
-    "github_url": "https://github.com/21st-dev/21st-sdk",
-    "script_text": "The 21st-sdk is a suite of packages that simplify building conversational AI applications. It includes a React chat UI, a Node.js API client, and a Python SDK, all designed to work seamlessly with the 21st platform.\n\nThe key innovation is the agent-based architecture, where each conversational tool is defined as a reusable, composable component. This allows developers to build complex AI workflows by combining various agents, without having to worry about the underlying implementation details.\n\nThe 21st-sdk is built with developer productivity in mind, providing a consistent API across multiple languages and frameworks. Whether you're building a web application with React and Next.js or a standalone Python script, the 21st-sdk makes it easy to integrate powerful conversational capabilities into your project."
-  }
+    {
+        "id": "agent0ai_agent_zero",
+        "name": "agent-zero",
+        "github_url": "https://github.com/agent0ai/agent-zero",
+        "script_text": "Agent Zero is an open-source AI framework designed to be a personal, organic, and continuously evolving assistant. Unlike predefined AI agents, Agent Zero is customizable, transparent, and grows alongside its user.\n\nThe key feature is the Skills System - a standardized way to define and manage agent capabilities. Skills are portable, structured, and compatible with other AI systems like Claude and Codex. This allows users to easily expand Agent Zero's abilities by importing community-contributed Skills.\n\nAdditionally, Agent Zero integrates with Git-based projects, enabling users to clone public or private codebases into isolated workspaces and collaborate with the agent directly on development tasks.\n\nThe primary use case for Agent Zero is as a personalized, flexible AI assistant that can adapt to the user's evolving needs and workflows."
+    },
+    {
+        "id": "openbmb_xagent",
+        "name": "XAgent",
+        "github_url": "https://github.com/OpenBMB/XAgent",
+        "script_text": "XAgent is an autonomous Large Language Model (LLM) agent designed to solve complex tasks. It can automatically divide tasks into subtasks, generate and rectify plans, and execute them using a diverse set of tools.\n\nXAgent's key features include safety, extensibility, and cooperation with humans. It runs safely within a Docker container, can be easily extended with new tools, and collaborates with users to tackle challenges. The agent's powerful planning and execution capabilities make it a versatile tool for a wide range of applications.\n\nXAgent is still in its early stages, but our goal is to create a super-intelligent agent that can solve any given task. If you're interested in the frontiers of autonomous agents, we welcome your contributions. Join us in realizing the potential of true autonomous agents."
+    },
+    {
+        "id": "transformeroptimus_superagi",
+        "name": "SuperAGI",
+        "github_url": "https://github.com/TransformerOptimus/SuperAGI",
+        "script_text": "SuperAGI is an open-source autonomous AI agent framework that empowers developers to build, manage, and run useful autonomous agents quickly and reliably. The project offers a modular and extensible architecture, allowing developers to customize agents for their specific needs.\n\nAt the core of SuperAGI is a powerful agent engine that handles task execution, state management, and communication with external services. Developers can leverage pre-built agent templates or create their own custom agents, all while benefiting from the framework's robust security and monitoring features.\n\nThe project's emphasis on developer experience sets it apart, providing intuitive APIs, comprehensive documentation, and a growing ecosystem of community-contributed plugins. Whether you're automating business workflows, building personal assistants, or exploring novel AI applications, SuperAGI simplifies the process of creating and deploying autonomous agents."
+    },
+    {
+        "id": "superagentxai_superagentx",
+        "name": "superagentx",
+        "github_url": "https://github.com/superagentxai/superagentX",
+        "script_text": "Here is a 163-word engineering-focused video script for the SuperAgentX project:\n\nSuperAgentX is an open-source, modular AI framework that enables agents to plan, execute, and track real-world workflows with built-in human approval and governance. Unlike traditional chatbots, SuperAgentX is designed for autonomous action, not just conversation. \n\nThe core innovation is a unified control plane that centrally manages agents, models, tools, data, and policies. This allows for consistent observability, auditability, and oversight as agents dynamically call external services, APIs, and browsers to complete multi-step tasks.\n\nAgents can understand goals, plan execution steps, call tools dynamically, and run sequential or parallel workflows. A human approval governance agent pauses sensitive actions, requests explicit approval, and persists all decisions for audit. This ensures AI cannot act blindly and maintains human control.\n\nSuperAgentX's flexible architecture supports over 100 language models and 10,000 external tools, making it a powerful platform for deploying autonomous AI agents across a variety of real-world applications."
+    },
+    {
+        "id": "databassgit_agentforge",
+        "name": "AgentForge",
+        "github_url": "https://github.com/DataBassGit/AgentForge",
+        "script_text": "**AgentForge: An Extensible AGI Framework**\n\nAgentForge is a low-code framework for rapid development, testing, and iteration of AI-powered autonomous agents and cognitive architectures. Its core concepts\u2014flexible Agents, declarative Cogs, and integrated Memory\u2014enable both simple agent implementations and sophisticated multi-agent orchestration with minimal code.\n\nCompatible with a range of LLM models, AgentForge lets you run different agents with different LLMs as needed. Its dynamic prompt templates adapt to various contexts and memory, allowing for coherent, context-aware interactions.\n\nAgentForge provides tools to craft intelligent, model-agnostic, and database-flexible autonomous agents. Whether you're new to AI agents or building advanced cognitive systems, this framework offers the flexibility to explore and create innovative AI applications."
+    },
+    {
+        "id": "voltagent_voltagent",
+        "name": "voltagent",
+        "github_url": "https://github.com/voltagent/voltagent",
+        "script_text": "Here is a 161-word engineering-focused video script for a YouTube video about the voltagent project:\n\nvoltagent is an AI Agent Engineering Platform built on an open-source TypeScript framework. The core framework allows you to create intelligent agents with memory, tools, and multi-step workflows, while connecting to any AI provider. Developers can build sophisticated multi-agent systems where specialized agents work together under supervisor coordination.\n\nThe framework includes a Core Runtime for defining agents with typed roles, tools, memory, and model providers. It also features a Workflow Engine for declaratively describing multi-step automations. Supervisors can coordinate the activities of sub-agents, enabling complex task flows.\n\nBeyond the framework, the voltagent platform provides a cloud-based or self-hosted Console for observability, automation, deployment, evaluations, guardrails, and prompts management. This gives developers full control over their agent code while shipping with production-ready visibility and operations.\n\nWhether you're building intelligent automation, decision-support systems, or multi-agent applications, voltagent provides a powerful and flexible platform to engineer your AI agents."
+    },
+    {
+        "id": "frdel_agent_zero",
+        "name": "agent-zero",
+        "github_url": "https://github.com/frdel/agent-zero",
+        "script_text": "Agent Zero is an AI framework designed to be a personal, organic agent that grows and learns with you. Unlike predefined agentic frameworks, Agent Zero is fully transparent, readable, customizable, and interactive. It uses the computer as a tool to accomplish your tasks.\n\nThe key features of Agent Zero include a structured skills system, allowing you to seamlessly integrate external capabilities, and Git-based projects with authentication for public and private repositories. You can clone codebases directly into isolated workspaces, fostering a dynamic and adaptive development environment.\n\nAgent Zero is engineered to be a flexible and powerful tool that evolves alongside your needs, empowering you to tackle a wide range of challenges efficiently and effectively."
+    },
+    {
+        "id": "langchain_ai_langchain",
+        "name": "langchain",
+        "github_url": "https://github.com/langchain-ai/langchain",
+        "script_text": "LangChain is an agent engineering platform that simplifies the development of AI applications powered by large language models. It provides a modular framework for chaining together interoperable components and integrating with third-party tools, allowing developers to focus on building intelligent systems rather than low-level implementation details.\n\nAt the core, LangChain offers a rich set of abstractions and utilities that enable you to construct complex agent workflows. This includes capabilities for task planning, subagent orchestration, and file system interactions. The platform also seamlessly integrates with a range of chat and embedding models, as well as other AI-focused tools and services.\n\nLangChain's ecosystem further extends its capabilities, providing solutions for agent evaluation, observability, and deployment. Whether you're building a chatbot, a content generation tool, or a task-oriented assistant, LangChain can help you develop and deploy LLM-powered applications more efficiently."
+    },
+    {
+        "id": "ag2ai_ag2",
+        "name": "ag2",
+        "github_url": "https://github.com/ag2ai/ag2",
+        "script_text": "AG2 is an open-source programming framework for building AI agents and enabling collaboration among multiple agents to tackle complex tasks. Evolved from AutoGen, AG2 streamlines the development and research of agentic AI by offering features like agent-to-agent interaction, support for various large language models (LLMs) and external tools, autonomous and human-in-the-loop workflows, and multi-agent conversation patterns.\n\nThe project is maintained by a dynamic team of volunteers from several organizations. AG2 aims to simplify the creation of AI agents that can cooperate to solve real-world problems. Developers and researchers can leverage AG2's modular architecture and extensible design to build innovative AI systems tailored to their specific needs."
+    },
+    {
+        "id": "chengjunyan1_lllm",
+        "name": "lllm",
+        "github_url": "https://github.com/ChengJunyan1/lllm",
+        "script_text": "Here is a 166-word video script for the LLLM project:\n\nLLLM is a lightweight framework for building advanced agentic systems. It allows users to construct complex AI agents in under 100 lines of code. Prioritizing minimalism, modularity, and reliability, LLLM is well-suited for frontier AI research beyond simple chatbots.\n\nDevelopers often face the burden of low-level complexities like exception handling and output parsing when building advanced AI systems. LLLM bridges this gap by offering necessary abstractions that balance encapsulation with the flexibility required for experimentation. Its design philosophy treats the agentic system as a program, with agents, prompts, and tactics as core components.\n\nLLLM's modular and minimalist architecture makes the code easy to understand and customize. This enables researchers and developers to focus on their core research questions rather than managing technical overhead. Whether you're exploring program synthesis, neural-symbolic AI, or other frontier applications, LLLM provides a solid foundation to rapidly prototype and iterate."
+    },
+    {
+        "id": "octotools_octotools",
+        "name": "octotools",
+        "github_url": "https://github.com/octotools/octotools",
+        "script_text": "OctoTools is an agentic framework that provides a suite of extensible tools for complex reasoning tasks. At its core, OctoTools leverages large language models to enable advanced capabilities like multi-step reasoning, knowledge integration, and open-ended problem solving.\n\nThe unique aspect of OctoTools is its modular design, allowing users to easily integrate custom tools and components. This extensibility empowers researchers and developers to build complex AI systems tailored to their specific needs.\n\nOctoTools supports a variety of large language models, including LiteLLM, Ollama, and Azure OpenAI. It also provides a seamless interface for using local checkpoint models, enabling further customization and fine-tuning.\n\nWith its powerful reasoning capabilities and flexible architecture, OctoTools is well-suited for a wide range of applications, from open-ended question answering to task-oriented assistants. Dive into the project to explore how OctoTools can enhance your complex AI systems."
+    },
+    {
+        "id": "lpalbou_abstractllm",
+        "name": "AbstractLLM",
+        "github_url": "https://github.com/lpalbou/AbstractLLM",
+        "script_text": "AbstractLLM provides a unified interface for interacting with large language models, offering memory, reasoning, and tool capabilities. This framework supports major providers like OpenAI, Anthropic, and Ollama, while providing a consistent API that simplifies development.\n\nThe core infrastructure includes provider-agnostic features, such as automatic detection of model capabilities, an enhanced tool system, and structured output formatting. The agentic capabilities, currently in alpha testing, include hierarchical memory, ReAct reasoning cycles, and context-aware retrieval, allowing for more sophisticated AI agent development.\n\nDevelopers can easily switch between language model providers with minimal code changes, enabling flexible and scalable AI applications. The primary use case for AbstractLLM is to accelerate the development of practical AI agents that can leverage the power of large language models in a cohesive and streamlined manner."
+    },
+    {
+        "id": "royerlab_litemind",
+        "name": "litemind",
+        "github_url": "https://github.com/royerlab/litemind",
+        "script_text": "LiteMind is a powerful Python library designed to simplify the development of sophisticated conversational agents and AI tools. It provides a flexible, unified API for interacting with leading Large Language Models (LLMs) from providers like OpenAI, Anthropic, and Google Gemini.\n\nThe library's key innovation is its agentic AI framework, which empowers developers to build autonomous agents capable of reasoning, using external tools, and accessing additional knowledge sources. This capability is achieved through a high-level `Agent` class that manages the entire conversational loop, including context tracking, tool integration, and Retrieval-Augmented Generation (RAG).\n\nLiteMind also handles the complexities of multimodal inputs and outputs, allowing your agents to seamlessly process and generate text, images, audio, and more. Whether you're building a simple chatbot or a complex, multi-agent system, LiteMind provides the tools and abstractions to help you get the job done quickly and efficiently."
+    },
+    {
+        "id": "medchaouch_puzld.ai",
+        "name": "Puzld.ai",
+        "github_url": "https://github.com/MedChaouch/Puzld.ai",
+        "script_text": "PuzldAI is a multi-LLM orchestration framework that enables agentic execution, memory, and training data generation. It routes tasks to the best-suited AI agent, allows agents to collaborate and debate, and provides tools for agents to safely explore and edit files. \n\nThe framework features auto-routing, model selection, parallel comparisons, and pipeline construction to tackle complex workflows. PuzldAI's \"Agentic Mode\" gives language models the ability to navigate your codebase, propose file edits with permission prompts, and build persistent memory for future context. The \"Observation Layer\" logs all interactions, generating training data for fine-tuning.\n\nThis comprehensive AI orchestration solution is designed to evolve with your AI-powered development workflow, providing a unified platform to leverage the strengths of diverse language models."
+    },
+    {
+        "id": "katherlab_toolmaker",
+        "name": "ToolMaker",
+        "github_url": "https://github.com/katherlab/toolmaker",
+        "script_text": "ToolMaker autonomously transforms GitHub repositories into LLM-compatible tools. Given a task description and repository URL, it installs dependencies and generates code, using self-correction to diagnose and fix errors. ToolMaker's closed-loop system enables the automatic creation of a wide range of specialized tools, empowering LLM agents to tackle complex, multi-step tasks across diverse domains like life sciences and medicine. Evaluated on a benchmark of 15 computational tasks, ToolMaker correctly implements 80% of the requirements, outperforming state-of-the-art software engineering agents. This innovative framework represents a step towards fully autonomous agent-based scientific workflows."
+    }
 ]

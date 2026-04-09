@@ -3,8 +3,8 @@
     "data": {
       "owner": "frdel",
       "repo": "agent-zero",
-      "stars": 16836,
-      "forks": 3451,
+      "stars": 16876,
+      "forks": 3462,
       "language": "Python",
       "description": "Agent Zero AI framework",
       "topics": [
@@ -14,9 +14,9 @@
         "autonomous"
       ],
       "url": "https://github.com/frdel/agent-zero",
-      "timestamp": "2026-04-07T18:16:37.752102"
+      "timestamp": "2026-04-09T15:46:26.160731"
     },
-    "timestamp": "2026-04-07T18:16:37.752118"
+    "timestamp": "2026-04-09T15:46:26.160741"
   },
   "superagentxai/superagentX": {
     "data": {
@@ -123,9 +123,9 @@
         "medicine"
       ],
       "url": "https://github.com/katherlab/toolmaker",
-      "timestamp": "2026-04-08T11:07:41.973075"
+      "timestamp": "2026-04-09T12:19:06.019555"
     },
-    "timestamp": "2026-04-08T11:07:41.973086"
+    "timestamp": "2026-04-09T12:19:06.019563"
   },
   "OpenBMB/XAgent": {
     "data": {
@@ -159,5 +159,119 @@
       "timestamp": "2026-04-08T11:28:37.202384"
     },
     "timestamp": "2026-04-08T11:28:37.202390"
+  },
+  "MedChaouch/Puzld.ai": {
+    "data": {
+      "owner": "MedChaouch",
+      "repo": "Puzld.ai",
+      "stars": 255,
+      "forks": 24,
+      "language": "TypeScript",
+      "description": "Multi-LLM orchestration framework",
+      "topics": [
+        "ai",
+        "ai-agents",
+        "claude-code",
+        "codex"
+      ],
+      "url": "https://github.com/MedChaouch/Puzld.ai",
+      "timestamp": "2026-04-08T12:57:59.547568"
+    },
+    "timestamp": "2026-04-08T12:57:59.547593"
+  },
+  "lpalbou/AbstractLLM": {
+    "data": {
+      "owner": "lpalbou",
+      "repo": "AbstractLLM",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "description": "A unified interface for Large Language Models with memory, reasoning, and tool capabilities. Supports OpenAI, Anthropic, Ollama, HuggingFace, and MLX with hierarchical memory system and agent development features.",
+      "topics": [
+        "agency",
+        "agents",
+        "ai",
+        "anthropic"
+      ],
+      "url": "https://github.com/lpalbou/AbstractLLM",
+      "timestamp": "2026-04-08T12:58:05.696998"
+    },
+    "timestamp": "2026-04-08T12:58:05.697013"
+  },
+  "ChengJunyan1/lllm": {
+    "data": {
+      "owner": "ChengJunyan1",
+      "repo": "lllm",
+      "stars": 96,
+      "forks": 13,
+      "language": "Python",
+      "description": "A light-weight framework for building llm agentic systems with additional supports for program synthesis and neural-symbolic research.",
+      "topics": [
+        "agent",
+        "agentic-ai",
+        "agents",
+        "ai"
+      ],
+      "url": "https://github.com/ChengJunyan1/lllm",
+      "timestamp": "2026-04-09T12:25:29.866407"
+    },
+    "timestamp": "2026-04-09T12:25:29.866429"
+  },
+  "langchain-ai/langchain": {
+    "data": {
+      "owner": "langchain-ai",
+      "repo": "langchain",
+      "stars": 132953,
+      "forks": 21936,
+      "language": "Python",
+      "description": "The agent engineering platform",
+      "topics": [
+        "agents",
+        "ai",
+        "ai-agents",
+        "anthropic"
+      ],
+      "url": "https://github.com/langchain-ai/langchain",
+      "timestamp": "2026-04-09T13:43:21.368556"
+    },
+    "timestamp": "2026-04-09T13:43:21.368566"
+  },
+  "agent0ai/agent-zero": {
+    "data": {
+      "owner": "agent0ai",
+      "repo": "agent-zero",
+      "stars": 16878,
+      "forks": 3463,
+      "language": "Python",
+      "description": "Agent Zero AI framework",
+      "topics": [
+        "agent",
+        "ai",
+        "assistant",
+        "autonomous"
+      ],
+      "url": "https://github.com/agent0ai/agent-zero",
+      "timestamp": "2026-04-09T16:03:33.362744"
+    },
+    "timestamp": "2026-04-09T16:03:33.362755"
+  },
+  "DataBassGit/AgentForge": {
+    "data": {
+      "owner": "DataBassGit",
+      "repo": "AgentForge",
+      "stars": 774,
+      "forks": 153,
+      "language": "Python",
+      "description": "Extensible AGI Framework",
+      "topics": [
+        "agent-based",
+        "agi",
+        "ai",
+        "artificial-intelligence"
+      ],
+      "url": "https://github.com/DataBassGit/AgentForge",
+      "timestamp": "2026-04-09T16:03:38.315355"
+    },
+    "timestamp": "2026-04-09T16:03:38.315363"
   }
 }

@@ -7,7 +7,7 @@
         "screenshot_path": "assets/screenshots/agent0ai_agent_zero_github.png",
         "img_path": "assets/agent0ai_agent_zero_screen.png",
         "audio_path": "assets/agent0ai_agent_zero_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/agent0ai_agent_zero_short.png"
+        "short_img_path": "deliveries/04-09/shorts/agent0ai_agent_zero_short.png"
     },
     {
         "id": "openbmb_xagent",
@@ -17,7 +17,7 @@
         "screenshot_path": "assets/screenshots/openbmb_xagent_github.png",
         "img_path": "assets/openbmb_xagent_screen.png",
         "audio_path": "assets/openbmb_xagent_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/openbmb_xagent_short.png"
+        "short_img_path": "deliveries/04-09/shorts/openbmb_xagent_short.png"
     },
     {
         "id": "transformeroptimus_superagi",
@@ -27,7 +27,7 @@
         "screenshot_path": "assets/screenshots/transformeroptimus_superagi_github.png",
         "img_path": "assets/transformeroptimus_superagi_screen.png",
         "audio_path": "assets/transformeroptimus_superagi_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/transformeroptimus_superagi_short.png"
+        "short_img_path": "deliveries/04-09/shorts/transformeroptimus_superagi_short.png"
     },
     {
         "id": "superagentxai_superagentx",
@@ -37,7 +37,7 @@
         "screenshot_path": "assets/screenshots/superagentxai_superagentx_github.png",
         "img_path": "assets/superagentxai_superagentx_screen.png",
         "audio_path": "assets/superagentxai_superagentx_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/superagentxai_superagentx_short.png"
+        "short_img_path": "deliveries/04-09/shorts/superagentxai_superagentx_short.png"
     },
     {
         "id": "databassgit_agentforge",
@@ -47,7 +47,7 @@
         "screenshot_path": "assets/screenshots/databassgit_agentforge_github.png",
         "img_path": "assets/databassgit_agentforge_screen.png",
         "audio_path": "assets/databassgit_agentforge_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/databassgit_agentforge_short.png"
+        "short_img_path": "deliveries/04-09/shorts/databassgit_agentforge_short.png"
     },
     {
         "id": "voltagent_voltagent",
@@ -57,7 +57,7 @@
         "screenshot_path": "assets/screenshots/voltagent_voltagent_github.png",
         "img_path": "assets/voltagent_voltagent_screen.png",
         "audio_path": "assets/voltagent_voltagent_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/voltagent_voltagent_short.png"
+        "short_img_path": "deliveries/04-09/shorts/voltagent_voltagent_short.png"
     },
     {
         "id": "frdel_agent_zero",
@@ -67,7 +67,7 @@
         "screenshot_path": "assets/screenshots/frdel_agent_zero_github.png",
         "img_path": "assets/frdel_agent_zero_screen.png",
         "audio_path": "assets/frdel_agent_zero_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/frdel_agent_zero_short.png"
+        "short_img_path": "deliveries/04-09/shorts/frdel_agent_zero_short.png"
     },
     {
         "id": "langchain_ai_langchain",
@@ -77,7 +77,7 @@
         "screenshot_path": "assets/screenshots/langchain_ai_langchain_github.png",
         "img_path": "assets/langchain_ai_langchain_screen.png",
         "audio_path": "assets/langchain_ai_langchain_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/langchain_ai_langchain_short.png"
+        "short_img_path": "deliveries/04-09/shorts/langchain_ai_langchain_short.png"
     },
     {
         "id": "ag2ai_ag2",
@@ -87,7 +87,7 @@
         "screenshot_path": "assets/screenshots/ag2ai_ag2_github.png",
         "img_path": "assets/ag2ai_ag2_screen.png",
         "audio_path": "assets/ag2ai_ag2_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/ag2ai_ag2_short.png"
+        "short_img_path": "deliveries/04-09/shorts/ag2ai_ag2_short.png"
     },
     {
         "id": "chengjunyan1_lllm",
@@ -97,7 +97,7 @@
         "screenshot_path": "assets/screenshots/chengjunyan1_lllm_github.png",
         "img_path": "assets/chengjunyan1_lllm_screen.png",
         "audio_path": "assets/chengjunyan1_lllm_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/chengjunyan1_lllm_short.png"
+        "short_img_path": "deliveries/04-09/shorts/chengjunyan1_lllm_short.png"
     },
     {
         "id": "octotools_octotools",
@@ -107,7 +107,7 @@
         "screenshot_path": "assets/screenshots/octotools_octotools_github.png",
         "img_path": "assets/octotools_octotools_screen.png",
         "audio_path": "assets/octotools_octotools_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/octotools_octotools_short.png"
+        "short_img_path": "deliveries/04-09/shorts/octotools_octotools_short.png"
     },
     {
         "id": "lpalbou_abstractllm",
@@ -117,7 +117,7 @@
         "screenshot_path": "assets/screenshots/lpalbou_abstractllm_github.png",
         "img_path": "assets/lpalbou_abstractllm_screen.png",
         "audio_path": "assets/lpalbou_abstractllm_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/lpalbou_abstractllm_short.png"
+        "short_img_path": "deliveries/04-09/shorts/lpalbou_abstractllm_short.png"
     },
     {
         "id": "royerlab_litemind",
@@ -127,7 +127,7 @@
         "screenshot_path": "assets/screenshots/royerlab_litemind_github.png",
         "img_path": "assets/royerlab_litemind_screen.png",
         "audio_path": "assets/royerlab_litemind_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/royerlab_litemind_short.png"
+        "short_img_path": "deliveries/04-09/shorts/royerlab_litemind_short.png"
     },
     {
         "id": "medchaouch_puzld.ai",
@@ -137,7 +137,7 @@
         "screenshot_path": "assets/screenshots/medchaouch_puzld.ai_github.png",
         "img_path": "assets/medchaouch_puzld.ai_screen.png",
         "audio_path": "assets/medchaouch_puzld.ai_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/medchaouch_puzld.ai_short.png"
+        "short_img_path": "deliveries/04-09/shorts/medchaouch_puzld.ai_short.png"
     },
     {
         "id": "katherlab_toolmaker",
@@ -147,6 +147,6 @@
         "screenshot_path": "assets/screenshots/katherlab_toolmaker_github.png",
         "img_path": "assets/katherlab_toolmaker_screen.png",
         "audio_path": "assets/katherlab_toolmaker_audio.mp3",
-        "short_img_path": "deliveries/04-08/shorts/katherlab_toolmaker_short.png"
+        "short_img_path": "deliveries/04-09/shorts/katherlab_toolmaker_short.png"
     }
 ]

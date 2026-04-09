@@ -111,17 +111,24 @@ class VideoSuiteAutomated:
         print(f"\n📸 Capturing GitHub page screenshots...")
         for project in self.projects:
             try:
+                print(f"  [screenshot] Capturing {project['name']}...")
                 result = subprocess.run(
                     [sys.executable, "github_screenshot.py", project['github_url']],
                     capture_output=True, text=True, timeout=60,
                     cwd=os.path.dirname(os.path.abspath(__file__))
                 )
+                
+                print(f"  [screenshot] Process output:")
+                print(f"      stdout preview: {result.stdout[-150:] if result.stdout else 'None'}")
+                print(f"      stderr preview: {result.stderr[-150:] if result.stderr else 'None'}")
+                
                 # Parse the output path from the script's stdout
                 screenshot_path = None
                 for line in result.stdout.splitlines():
                     if line.startswith("Screenshot saved to:"):
                         screenshot_path = line.split(":", 1)[1].strip()
                         break
+                
                 if not screenshot_path:
                     # Derive expected path the same way github_screenshot.py does
                     import re as _re
@@ -129,15 +136,25 @@ class VideoSuiteAutomated:
                     if m:
                         slug = f"{m.group(1)}_{m.group(2).rstrip('/')}".lower().replace("-", "_")
                         screenshot_path = f"assets/screenshots/{slug}_github.png"
+                
+                print(f"  [screenshot] Derived path: {screenshot_path}")
+                print(f"  [screenshot] Path exists: {os.path.exists(screenshot_path) if screenshot_path else 'N/A'}")
+                
                 if screenshot_path and os.path.exists(screenshot_path):
+                    file_size = os.path.getsize(screenshot_path)
                     project['screenshot_path'] = screenshot_path
-                    print(f"  [screenshot] {project['name']}: {screenshot_path}")
+                    print(f"  ✅ [screenshot] {project['name']}: {screenshot_path} ({file_size//1024}KB)")
                 else:
                     project['screenshot_path'] = ''
+                    print(f"  ❌ [screenshot] Failed: {result.returncode}")
                     if result.stderr:
-                        print(f"  ⚠️  Screenshot failed for {project['name']}: {result.stderr[-200:]}")
+                        print(f"      Error details: {result.stderr[-300:]}")
+                    print(f"  ⚠️  Will use title card fallback for {project['name']}")
+            except subprocess.TimeoutExpired:
+                print(f"  ⚠️  [screenshot] Timeout for {project['name']} - will use fallback")
+                project['screenshot_path'] = ''
             except Exception as e:
-                print(f"  ⚠️  Screenshot failed for {project['name']}: {e}")
+                print(f"  ⚠️  [screenshot] Exception for {project['name']}: {e}")
                 project['screenshot_path'] = ''
 
         # 2. Prepare Main Video Assets (horizontal graphics for shorts/thumbnails)
@@ -335,6 +352,632 @@ class VideoSuiteAutomated:
         
         print(f"  ✓ Rendered to {output_path.name}")
         return output_path
+
+    # ── PIL / FFmpeg renderers (replace Remotion in main pipeline) ─────────
+
+    def _render_title_card_image(self, project: dict) -> Path:
+        """Generate a 1920x1080 codestream-aesthetic title card PNG via PIL."""
+        from PIL import Image, ImageDraw, ImageFont
+        import textwrap
+
+        W, H = 1920, 1080
+        BG    = (8,   12,  20)
+        TEAL  = (0,   212, 255)
+        GREEN = (0,   255, 136)
+        WHITE = (255, 255, 255)
+        GRAY  = (136, 153, 170)
+        GOLD  = (255, 215, 0)
+
+        img  = Image.new('RGB', (W, H), BG)
+        draw = ImageDraw.Draw(img)
+
+        # Subtle grid
+        grid = (*TEAL, 15)
+        overlay = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+        od = ImageDraw.Draw(overlay)
+        for x in range(0, W, 60):
+            od.line([(x, 0), (x, H)], fill=grid, width=1)
+        for y in range(0, H, 60):
+            od.line([(0, y), (W, y)], fill=grid, width=1)
+        img.paste(Image.alpha_composite(img.convert('RGBA'), overlay).convert('RGB'))
+        draw = ImageDraw.Draw(img)
+
+        # Top bar
+        draw.rectangle([(0, 0), (W, 3)], fill=TEAL)
+
+        # Corner accents
+        s = 40
+        for cx, cy, dx, dy in [(0,0,1,1),(W-1,0,-1,1),(0,H-1,1,-1),(W-1,H-1,-1,-1)]:
+            draw.line([(cx, cy), (cx + dx*s, cy)], fill=GREEN, width=2)
+            draw.line([(cx, cy), (cx, cy + dy*s)], fill=GREEN, width=2)
+
+        def try_font(paths, size):
+            for p in paths:
+                try:
+                    return ImageFont.truetype(p, size)
+                except Exception:
+                    pass
+            return ImageFont.load_default()
+
+        mono  = ['/System/Library/Fonts/Menlo.ttc',
+                 '/System/Library/Fonts/Courier.ttc',
+                 '/Library/Fonts/Courier New.ttf']
+        bold  = ['/System/Library/Fonts/HelveticaNeue.ttc',
+                 '/System/Library/Fonts/Helvetica.ttc',
+                 '/Library/Fonts/Arial Bold.ttf',
+                 '/Library/Fonts/Arial.ttf']
+
+        f_label = try_font(mono, 30)
+        f_name  = try_font(bold, 96)
+        f_desc  = try_font(mono, 32)
+        f_stats = try_font(mono, 30)
+        f_tag   = try_font(mono, 26)
+
+        # "// OPEN SOURCE"
+        label = "// OPEN SOURCE"
+        lw = draw.textlength(label, font=f_label)
+        draw.text(((W - lw) / 2, 90), label, fill=TEAL, font=f_label)
+
+        # Project name
+        name = project.get('name', '')
+        nw = draw.textlength(name, font=f_name)
+        if nw > W - 120:
+            f_name = try_font(bold, int(96 * (W - 120) / nw))
+            nw = draw.textlength(name, font=f_name)
+        name_y = 220
+        draw.text(((W - nw) / 2, name_y), name, fill=WHITE, font=f_name)
+
+        # Divider
+        div_y = name_y + 130
+        draw.rectangle([(W//2 - 200, div_y), (W//2 + 200, div_y + 2)], fill=TEAL)
+
+        # Description
+        desc = project.get('description', '')
+        if desc:
+            dy = div_y + 36
+            for line in textwrap.wrap(desc, width=65)[:2]:
+                lw = draw.textlength(line, font=f_desc)
+                draw.text(((W - lw) / 2, dy), line, fill=GRAY, font=f_desc)
+                dy += 50
+
+        # Stars / forks
+        stars    = project.get('stars', 0) or 0
+        forks    = project.get('forks', 0) or 0
+        language = project.get('language', '') or ''
+        topics   = project.get('topics',   []) or []
+
+        def fmt(n):
+            return f"{n/1000:.1f}k" if n >= 1000 else str(n)
+
+        sy = H - 175
+        draw.text((80,  sy), f"\u2605 {fmt(stars)} stars", fill=GOLD, font=f_stats)
+        draw.text((360, sy), f"\u2442 {fmt(forks)} forks", fill=GRAY, font=f_stats)
+
+        # Tag pills
+        tags = ([language] if language else []) + list(topics)[:3]
+        px, py = 80, sy + 58
+        for tag in tags:
+            tw  = int(draw.textlength(tag, font=f_tag))
+            pad = 14
+            pw  = tw + pad * 2
+            draw.rounded_rectangle([(px, py), (px + pw, py + 42)],
+                                    radius=8, fill=(0, 40, 60), outline=TEAL, width=1)
+            draw.text((px + pad, py + 8), tag, fill=TEAL, font=f_tag)
+            px += pw + 12
+
+        out = Path(OUTPUT_FOLDER) / f"{project['id']}_title_card.png"
+        img.save(str(out))
+        return out
+
+    def _render_github_scroll_ffmpeg(self, screenshot_path: str,
+                                      output_path: Path, duration: float = 38.0):
+        """
+        Zoom in (2s) → scroll top-to-bottom (duration-4s) → zoom out (2s).
+        Generates frames with Pillow and pipes to FFmpeg.
+        """
+        from PIL import Image
+
+        FPS       = 30
+        W, H      = 1920, 1080
+        BG        = (8, 12, 20)
+        MIN_SCALE = 0.28
+        MAX_SCROLL_PX = 2200
+        ZOOM_S    = 2.0
+
+        # Limit maximum scroll duration to prevent excessive processing
+        duration = min(duration, 30.0)  # Cap at 30 seconds max
+
+        zoom_in_f  = int(ZOOM_S * FPS)
+        zoom_out_f = int(ZOOM_S * FPS)
+        scroll_f   = int(duration * FPS) - zoom_in_f - zoom_out_f
+        total_f    = zoom_in_f + scroll_f + zoom_out_f
+
+        src = Image.open(screenshot_path).convert('RGB')
+        sw, sh = src.size
+        scaled_h = int(sh * (W / sw))
+        src = src.resize((W, scaled_h), Image.LANCZOS)
+        max_scroll = min(MAX_SCROLL_PX, max(0, scaled_h - H))
+
+        cmd = [
+            'ffmpeg', '-y',
+            '-f', 'rawvideo', '-vcodec', 'rawvideo',
+            '-s', f'{W}x{H}', '-pix_fmt', 'rgb24', '-r', str(FPS),
+            '-i', 'pipe:0',
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-pix_fmt', 'yuv420p',
+            str(output_path),
+        ]
+        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE,
+                                stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        try:
+            for n in range(total_f):
+                # Check if process is still alive before writing
+                if proc.poll() is not None:
+                    raise RuntimeError("FFmpeg process died during frame generation")
+                
+                if n < zoom_in_f:
+                    t = n / zoom_in_f
+                    scale    = MIN_SCALE + (1.0 - MIN_SCALE) * t
+                    scroll_y = 0
+                elif n < zoom_in_f + scroll_f:
+                    scale    = 1.0
+                    t        = (n - zoom_in_f) / max(scroll_f, 1)
+                    scroll_y = int(max_scroll * t)
+                else:
+                    t        = (n - zoom_in_f - scroll_f) / max(zoom_out_f, 1)
+                    scale    = 1.0 - (1.0 - MIN_SCALE) * t
+                    scroll_y = max_scroll
+
+                frame = Image.new('RGB', (W, H), BG)
+                if scale >= 0.999:
+                    cy = min(scroll_y, max(0, scaled_h - H))
+                    frame.paste(src.crop((0, cy, W, cy + H)), (0, 0))
+                else:
+                    dw = int(W * scale)
+                    dh = int(H * scale)
+                    cy = min(scroll_y, max(0, scaled_h - H))
+                    ch = min(H, scaled_h - cy)
+                    if ch > 0 and dw > 0 and dh > 0:
+                        region  = src.crop((0, cy, W, cy + ch))
+                        region  = region.resize((dw, int(ch * scale)), Image.LANCZOS)
+                        frame.paste(region, ((W - dw) // 2, (H - int(ch * scale)) // 2))
+                
+                try:
+                    proc.stdin.write(frame.tobytes())
+                except BrokenPipeError:
+                    raise RuntimeError("FFmpeg pipe broken - process likely crashed")
+
+            proc.stdin.close()
+            _, stderr = proc.communicate()
+            if proc.returncode != 0:
+                print(f"  ⚠️  Scroll encode failed: {stderr[-200:].decode(errors='replace')}")
+        except Exception as e:
+            if proc.poll() is None:
+                proc.kill()
+            print(f"  ⚠️  Scroll render error: {e}")
+
+    def _create_fallback_screenshot(self, project: dict) -> Optional[str]:
+        """Create a fallback GitHub-style screenshot when capture fails."""
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+            
+            fallback_path = Path(OUTPUT_FOLDER) / f"{project['id']}_fallback_github.png"
+            if fallback_path.exists():
+                return str(fallback_path)
+            
+            W, H = 1920, 1080
+            BG = (248, 248, 252)  # GitHub light gray background
+            WHITE = (255, 255, 255)
+            BLACK = (24, 23, 23)
+            GRAY = (88, 96, 105)
+            GREEN = (31, 136, 61)
+            BLUE = (9, 105, 218)
+            
+            img = Image.new('RGB', (W, H), BG)
+            draw = ImageDraw.Draw(img)
+            
+            # GitHub-like header
+            header_height = 60
+            draw.rectangle([(0, 0), (W, header_height)], fill=BG, outline=(224, 224, 224))
+            
+            repo_name = project.get('name', 'Unknown Repo')
+            desc = project.get('description', 'No description available')
+            stars = project.get('stars', 0) or 0
+            forks = project.get('forks', 0) or 0
+            
+            def try_font(size):
+                fonts = [
+                    "/System/Library/Fonts/Menlo.ttc",
+                    "/System/Library/Fonts/Helvetica.ttc", 
+                    "/Library/Fonts/Arial.ttf",
+                    "/System/Library/Fonts/Courier New.ttf"
+                ]
+                for font in fonts:
+                    try:
+                        return ImageFont.truetype(font, size)
+                    except:
+                        pass
+                return ImageFont.load_default()
+            
+            font_large = try_font(48)
+            font_medium = try_font(28)
+            font_small = try_font(20)
+            
+            # Repository name in header area
+            draw.text((20, header_height + 20), repo_name, fill=BLACK, font=font_large)
+            
+            # Description area
+            draw.rectangle([(20, header_height + 80), (W - 20, header_height + 200)], 
+                          fill=WHITE, outline=(224, 224, 224))
+            draw.text((40, header_height + 95), desc[:50] + "...", fill=GRAY, font=font_medium)
+            
+            # Stats area
+            stats_y = header_height + 220
+            draw.text((40, stats_y), f"⭐ {stars} stars", fill=GREEN, font=font_medium)
+            draw.text((200, stats_y), f"🔄 {forks} forks", fill=BLUE, font=font_medium)
+            
+            # GitHub URL
+            url_text = project.get('github_url', 'github.com/owner/repo')
+            draw.text((40, stats_y + 40), url_text[-60:], fill=GRAY, font=font_small)
+            
+            # Add some decorative elements
+            for i in range(5):
+                y = stats_y + 80 + i * 60
+                draw.rectangle([(40, y), (W - 40, y + 40)], fill=WHITE, outline=(224, 224, 224))
+                draw.text((60, y + 10), f"GitHub README Section {i+1}", fill=BLACK, font=font_small)
+            
+            img.save(str(fallback_path))
+            print(f"  ✅ Created fallback screenshot: {fallback_path.name}")
+            return str(fallback_path)
+            
+        except Exception as e:
+            print(f"  ⚠️  Failed to create fallback screenshot: {e}")
+            return None
+
+    def _render_segment_ffmpeg(self, project: dict, i: int, audio_path: str) -> Path:
+        """Render one project segment: title card (4s) + scroll (matched to audio)."""
+        FPS             = 30
+        title_dur       = 4
+        
+        # Calculate segment duration based on actual audio length
+        audio_dur = self._get_audio_duration(audio_path) if audio_path and os.path.exists(audio_path) else 42.0
+        segment_dur = max(8.0, audio_dur)  # Minimum 8s total (4s title + 4s scroll)
+        scroll_dur = max(4.0, segment_dur - title_dur)  # Minimum 4s scroll
+        
+        pid             = project['id']
+        
+        # Check cache for existing segment (performance optimization)
+        cache_key = f"{pid}_seg_{int(audio_dur)}s"
+        cached_path = Path(OUTPUT_FOLDER) / f"seg_{i:03d}.mp4"
+        
+        if cached_path.exists() and cached_path.stat().st_size > 100000:  # More than 100KB
+            print(f"  ♻️  Using cached segment: {cached_path.name}")
+            return cached_path
+
+        print(f"  🖼️  Title card...")
+        title_card = self._render_title_card_image(project)
+
+        title_mp4 = Path(OUTPUT_FOLDER) / f"tmp_{pid}_title.mp4"
+        subprocess.run([
+            'ffmpeg', '-y', '-loop', '1', '-framerate', str(FPS),
+            '-i', str(title_card),
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-t', str(title_dur), '-r', str(FPS),
+            '-vf', 'scale=1920:1080:force_original_aspect_ratio=decrease,'
+                   'pad=1920:1080:(ow-iw)/2:(oh-ih)/2,format=yuv420p',
+            str(title_mp4),
+        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+
+        scroll_mp4  = Path(OUTPUT_FOLDER) / f"tmp_{pid}_scroll.mp4"
+        screenshot  = project.get('screenshot_path', '')
+        
+        # Enhanced screenshot debugging and validation
+        print(f"  🔍 Screenshot check for {project['name']}:")
+        print(f"      Path: '{screenshot}'")
+        print(f"      Exists: {os.path.exists(screenshot) if screenshot else 'N/A'}")
+        
+        if screenshot and os.path.exists(screenshot):
+            file_size = os.path.getsize(screenshot)
+            print(f"      Size: {file_size} bytes ({file_size//1024}KB)")
+            print(f"  📜 Scroll animation ({scroll_dur}s) using screenshot...")
+            self._render_github_scroll_ffmpeg(screenshot, scroll_mp4, duration=scroll_dur)
+        else:
+            print(f"  ⚠️  No screenshot available — creating fallback...")
+            fallback_path = self._create_fallback_screenshot(project)
+            if fallback_path and os.path.exists(fallback_path):
+                print(f"  📜 Scroll animation ({scroll_dur}s) using fallback...")
+                self._render_github_scroll_ffmpeg(fallback_path, scroll_mp4, duration=scroll_dur)
+            else:
+                print(f"  ⚠️  No fallback available — extending title card")
+                subprocess.run([
+                    'ffmpeg', '-y', '-loop', '1', '-framerate', str(FPS),
+                    '-i', str(title_card),
+                    '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+                    '-t', str(scroll_dur), '-r', str(FPS),
+                    '-vf', 'scale=1920:1080,format=yuv420p',
+                    str(scroll_mp4),
+                ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+            subprocess.run([
+                'ffmpeg', '-y', '-loop', '1', '-framerate', str(FPS),
+                '-i', str(title_card),
+                '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+                '-t', str(scroll_dur), '-r', str(FPS),
+                '-vf', 'scale=1920:1080,format=yuv420p',
+                str(scroll_mp4),
+            ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+
+        concat_txt = Path(OUTPUT_FOLDER) / f"tmp_{pid}_concat.txt"
+        videoonly  = Path(OUTPUT_FOLDER) / f"tmp_{pid}_vid.mp4"
+        with open(concat_txt, 'w') as f:
+            f.write(f"file '{title_mp4.resolve()}'\n")
+            f.write(f"file '{scroll_mp4.resolve()}'\n")
+
+        subprocess.run([
+            'ffmpeg', '-y', '-f', 'concat', '-safe', '0', '-i', str(concat_txt),
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-r', str(FPS), '-bf', '0', '-pix_fmt', 'yuv420p',
+            str(videoonly),
+        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+
+        seg_out = Path(OUTPUT_FOLDER) / f"seg_{i:03d}.mp4"
+        if audio_path and os.path.exists(audio_path):
+            result = subprocess.run([
+                'ffmpeg', '-y',
+                '-i', str(videoonly),
+                '-i', str(audio_path),
+                '-map', '0:v:0', '-map', '1:a:0',
+                '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
+                '-ar', '48000', '-ac', '2',
+                str(seg_out),
+            ], capture_output=True)
+            if result.returncode != 0:
+                print(f"  ⚠️  Audio merge failed: {result.stderr[-100:].decode(errors='replace')}")
+                # Fallback: copy video only without audio
+                videoonly.rename(seg_out)
+                print(f"  ⚠️  Using video-only fallback for {project['name']}")
+            else:
+                print(f"  ✅ Segment completed: {seg_out.name} ({seg_out.stat().st_size//1024}KB)")
+        else:
+            videoonly.rename(seg_out)
+            print(f"  ⚠️  No audio, video-only segment for {project['name']}")
+
+        for f in [title_card, title_mp4, scroll_mp4, concat_txt, videoonly]:
+            try:
+                Path(f).unlink(missing_ok=True)
+            except Exception:
+                pass
+
+        return seg_out
+
+    def _render_intro_ffmpeg(self, episode_title: str,
+                              audio_path: str, output_path: Path):
+        """
+        Enhanced animated intro: dramatic gradient + prominent particles + 
+        channel name reveal + typing effect for episode title + logo branding.
+        Pillow frames → FFmpeg pipe.
+        Audio is normalized to 48 kHz stereo to match all other segments.
+        Falls back to static branding card if PIL fails.
+        """
+        from PIL import Image, ImageDraw, ImageFont
+
+        FPS = 30
+        W, H = 1920, 1080
+        BG   = (5, 8, 20)  # Darker, richer background
+
+        audio_dur = (self._get_audio_duration(audio_path)
+                     if audio_path and os.path.exists(audio_path) else 6.0)
+        dur     = max(6.0, audio_dur)
+        total_f = int(dur * FPS)
+
+        channel_name = CONFIG.get('branding', {}).get('channel_name', 'OpenSourceScribes')
+
+        def try_font(size):
+            candidates = [
+                "/System/Library/Fonts/HelveticaNeue.ttc",
+                "/System/Library/Fonts/Supplemental/Arial.ttf",
+                "/Library/Fonts/Arial.ttf",
+                "/System/Library/Fonts/Helvetica.ttc",
+            ]
+            for p in candidates:
+                try:
+                    return ImageFont.truetype(p, size)
+                except Exception:
+                    pass
+            return ImageFont.load_default()
+
+        f_channel = try_font(96)
+        f_title   = try_font(42)
+        f_logo    = try_font(28)
+
+        # Enhanced prominent particles (more, larger, brighter)
+        import random as _rng
+        rng = _rng.Random(42)
+        particles = [
+            (rng.randint(40, W - 40), rng.randint(40, H - 40),
+             rng.randint(25, 80),      rng.uniform(0.15, 0.35))
+            for _ in range(40)  # More particles
+        ]
+
+        # Logo/welcome text that appears at the bottom
+        welcome_text = "Prepared by AI Early Signal"
+
+        vid_only = output_path.with_suffix('.vid.mp4')
+
+        encode_cmd = [
+            'ffmpeg', '-y',
+            '-f', 'rawvideo', '-vcodec', 'rawvideo',
+            '-s', f'{W}x{H}', '-pix_fmt', 'rgb24', '-r', str(FPS),
+            '-i', 'pipe:0',
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-pix_fmt', 'yuv420p', str(vid_only),
+        ]
+        proc = subprocess.Popen(encode_cmd, stdin=subprocess.PIPE,
+                                stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        animated_ok = True
+        try:
+            for n in range(total_f):
+                # Check process health
+                if proc.poll() is not None:
+                    raise RuntimeError("FFmpeg process died during intro animation")
+                
+                img  = Image.new('RGB', (W, H), BG)
+                draw = ImageDraw.Draw(img)
+
+                # More dramatic gradient with vibrant colors
+                for y in range(0, H, 2):
+                    t = y / H
+                    gradient_color = (
+                        int(5 + 25 * t),
+                        int(8 + 30 * t), 
+                        int(20 + 50 * t + 20 * (1 - abs(t - 0.5) * 2))
+                    )
+                    draw.line([(0, y), (W, y)], fill=gradient_color)
+
+                # Enhanced grid lines with more prominent appearance
+                for gx in range(0, W, 40):
+                    alpha = int(60 + 40 * (gx / W))
+                    draw.line([(gx, 0), (gx, H)], fill=(alpha, alpha * 1.5, alpha * 3))
+                for gy in range(0, H, 40):
+                    alpha = int(60 + 40 * (gy / H))
+                    draw.line([(0, gy), (W, gy)], fill=(alpha, alpha * 1.5, alpha * 3))
+
+                # Enhanced prominent particles — fade in faster and brighter
+                p_alpha = min(1.0, n / (FPS * 0.5))  # Faster fade-in
+                for px, py, pr, pop in particles:
+                    pa = pop * p_alpha
+                    # Brighter, vibrant colors
+                    base_c = (int(BG[0] + (200 - BG[0]) * pa),
+                              int(BG[1] + (220 - BG[1]) * pa),
+                              int(BG[2] + (255 - BG[2]) * pa))
+                    # Add glow effect
+                    glow_color = (min(255, base_c[0] + 30), min(255, base_c[1] + 30), min(255, base_c[2] + 30))
+                    draw.ellipse([(px - pr, py - pr), (px + pr, py + pr)], fill=base_c)
+                    
+                    # Outer glow for larger particles
+                    if pr > 50:
+                        draw.ellipse([(px - pr+8, py - pr+8), (px + pr+8, py + pr+8)], 
+                                    outline=glow_color, width=2)
+
+                # Channel name — enhanced reveal with scale effect
+                ch_t = min(1.0, n / (FPS * 1.2))  # Longer reveal
+                if ch_t > 0:
+                    scale = 0.8 + 0.2 * ch_t  # Scale up effect
+                    drift = int(60 * (1.0 - ch_t))
+                    ch_y  = int(H * 0.4 - 130 + drift)
+                    
+                    # Vibrant color gradient for text
+                    cr = int(100 + 150 * ch_t)
+                    cg = int(170 + 85 * ch_t)
+                    cb = 255
+                    
+                    try:
+                        cw_scaled = int(draw.textlength(channel_name, font=f_channel) * scale)
+                    except Exception:
+                        cw_scaled = int(len(channel_name) * 48 * scale)
+                    
+                    # Position with scaling effect
+                    ch_x = (W - cw_scaled) // 2
+                    
+                    # Enhanced shadow for depth
+                    try:
+                        draw.text(((W - cw_scaled) // 2, ch_y + 4), channel_name,
+                                  fill=(0, 0, 0), font=f_channel)
+                    except:
+                        pass
+                    
+                    draw.text((ch_x, ch_y), channel_name,
+                              fill=(cr, cg, cb), font=f_channel)
+                    
+                    # Enhanced underline with gradient effect
+                    uw = int(250 * ch_t)
+                    ul_c = (int(cr * 0.9), int(cg * 0.9), 240)
+                    draw.rectangle([(W//2 - uw//2, ch_y + 122),
+                                    (W//2 + uw//2, ch_y + 126)], fill=ul_c)
+
+                # Episode title — typing effect reveal
+                et_raw = max(0.0, n / FPS - 2.0)  # Start after channel name
+                et_t   = min(1.0, et_raw / 1.2)
+                if et_t > 0:
+                    # Typing effect - reveal characters progressively
+                    chars_to_show = int(len(episode_title) * et_t)
+                    visible_text = episode_title[:max(1, chars_to_show)]
+                    
+                    er, eg, eb = int(200 + 55 * et_t), int(210 + 45 * et_t), 255
+                    
+                    try:
+                        tw = int(draw.textlength(visible_text, font=f_title))
+                    except Exception:
+                        tw = int(len(visible_text) * 20)
+                    
+                    draw.text(((W - tw) // 2, int(H * 0.5 + 90)),
+                              visible_text, fill=(er, eg, eb), font=f_title)
+                    
+                    # Blinking cursor effect
+                    if chars_to_show < len(episode_title) and n % 20 < 10:
+                        cursor_x = ((W - tw) // 2) + tw + 8
+                        draw.rectangle([(cursor_x, int(H * 0.5 + 85)),
+                                      (cursor_x + 8, int(H * 0.5 + 125))], fill=(er, eg, eb))
+
+                # Logo/welcome text — fade in later
+                logo_raw = max(0.0, n / FPS - 3.5)
+                logo_t = min(1.0, logo_raw / 1.5)
+                if logo_t > 0:
+                    lr, lg, lb = int(180 * logo_t), int(190 * logo_t), 220
+                    
+                    try:
+                        lw = int(draw.textlength(welcome_text, font=f_logo))
+                    except Exception:
+                        lw = int(len(welcome_text) * 16)
+                    
+                    draw.text(((W - lw) // 2, H - 80), welcome_text,
+                              fill=(lr, lg, lb), font=f_logo)
+
+                try:
+                    proc.stdin.write(img.tobytes())
+                except BrokenPipeError:
+                    raise RuntimeError("FFmpeg pipe broken - process likely crashed")
+
+            proc.stdin.close()
+            _, stderr = proc.communicate()
+            if proc.returncode != 0:
+                animated_ok = False
+                print(f"  ⚠️  Intro animation encode failed: "
+                      f"{stderr[-120:].decode(errors='replace')}")
+        except Exception as exc:
+            if proc.poll() is None:
+                proc.kill()
+            animated_ok = False
+            print(f"  ⚠️  Intro animation failed ({exc}), using static card")
+
+        if not animated_ok:
+            from branding import create_intro_card
+            card = create_intro_card(CONFIG)
+            subprocess.run([
+                'ffmpeg', '-y', '-loop', '1', '-framerate', str(FPS),
+                '-i', str(card),
+                '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+                '-t', str(dur), '-r', str(FPS),
+                '-vf', 'scale=1920:1080:force_original_aspect_ratio=decrease,'
+                       'pad=1920:1080:(ow-iw)/2:(oh-ih)/2,format=yuv420p',
+                str(vid_only),
+            ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+
+        # Merge audio — normalize to 48 kHz stereo so concat demuxer
+        # never sees mismatched sample rates between segments.
+        if audio_path and os.path.exists(audio_path):
+            subprocess.run([
+                'ffmpeg', '-y',
+                '-i', str(vid_only), '-i', str(audio_path),
+                '-map', '0:v:0', '-map', '1:a:0',
+                '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
+                '-ar', '48000', '-ac', '2',
+                str(output_path),
+            ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+            vid_only.unlink(missing_ok=True)
+        else:
+            vid_only.rename(output_path)
+
+    # ── end PIL / FFmpeg renderers ──────────────────────────────────────────
 
     def _get_audio_duration(self, audio_path: str) -> float:
         """Helper to get audio duration using ffprobe"""
@@ -805,8 +1448,24 @@ class VideoSuiteAutomated:
 
         return script, episode_title
 
+    def _render_fade_transition(self, output_path: Path, duration: float = 1.0):
+        """Render a short dark-frame fade transition using FFmpeg lavfi with vignette effect."""
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-f', 'lavfi',
+            '-i', f'color=c=0x080c14:s=1920x1080:r=30:d={duration}',
+            '-f', 'lavfi',
+            '-i', f'anullsrc=channel_layout=stereo:sample_rate=48000',
+            '-t', str(duration),
+            '-vf', 'fade=in:0:15, fade=out:15:15, eq=contrast=1.1:brightness=0.95:saturation=0.9',
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-pix_fmt', 'yuv420p',
+            '-c:a', 'aac', '-b:a', '128k',
+            str(output_path),
+        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+
     def assemble_longform_video(self):
-        """Assemble full longform video"""
+        """Assemble full longform video using FFmpeg + PIL (no Remotion)."""
         from branding import create_outro_card
 
         print(f"\n🎬 Assembling Longform Video...")
@@ -814,118 +1473,65 @@ class VideoSuiteAutomated:
         outro_path = create_outro_card(CONFIG)
         segment_files = []
 
-        # Always regenerate intro audio — script is unique per episode
-        intro_audio = Path(OUTPUT_FOLDER) / "intro_audio.mp3"
+        # ── Intro ─────────────────────────────────────────────────────────────
+        intro_audio  = Path(OUTPUT_FOLDER) / "intro_audio.mp3"
+        intro_output = Path(OUTPUT_FOLDER) / "seg_intro.mp4"
         intro_script, episode_title = self._generate_episode_intro()
         print(f"   Episode title: {episode_title}")
         self.generate_audio(intro_script, str(intro_audio))
-
-        # Render intro via Remotion — hard dependency, no fallback
-        intro_duration = self.video_settings.get('intro_duration', 6)
-        intro_output = Path(OUTPUT_FOLDER) / "seg_intro.mp4"
-        
-        intro_props = {
-            "episodeTitle": episode_title,
-            "channelName": CONFIG.get('branding', {}).get('channel_name', 'OpenSourceScribes')
-        }
-        
-        self.render_remotion_scene(
-            composition="IntroScene",
-            props=intro_props,
-            output_path=intro_output,
-            duration_seconds=intro_duration
-        )
-        
+        print(f"   Rendering intro...")
+        self._render_intro_ffmpeg(episode_title, str(intro_audio), intro_output)
         segment_files.append(str(intro_output))
-        
-        # Generate segments using Seedream + Remotion
+
+        # ── Project segments ──────────────────────────────────────────────────
+        subscribe_position = max(0, len(self.projects) // 3)
+
         for i, project in enumerate(self.projects):
-            print(f"\n🎬 Processing segment {i + 1}/{len(self.projects)}: {project['name']}")
-            
-            # 1. Fetch live GitHub stats so star/fork counts are accurate
+            print(f"\n🎬 Segment {i + 1}/{len(self.projects)}: {project['name']}")
+
+            # Refresh GitHub stats directly onto project dict for title card
             stars, forks, language, topics = self._fetch_github_stats(project)
+            project['stars']    = stars
+            project['forks']    = forks
+            project['language'] = language
+            project['topics']   = topics
 
-            # 2. Copy GitHub screenshot to Remotion public/ and build props
-            screenshot_src = project.get('screenshot_path', '')
-            segment_duration = self.video_settings.get('segment_duration', 42)
-            segment_output = Path(OUTPUT_FOLDER) / f"seg_{i:03d}.mp4"
-
-            segment_props = {
-                "screenshotPath": str(Path(screenshot_src).resolve()) if screenshot_src and os.path.exists(screenshot_src) else '',
-                "projectName": project['name'],
-                "description": project.get('description', ''),
-                "stars": stars,
-                "forks": forks,
-                "language": language,
-                "topics": topics,
-            }
-
-            self.render_remotion_scene(
-                composition="SegmentScene",
-                props=segment_props,
-                output_path=segment_output,
-                duration_seconds=segment_duration
-            )
-
-            # 4. Merge narration audio into the Remotion segment
             audio_path = project.get('audio_path', '')
-            if audio_path and os.path.exists(audio_path):
-                merged = Path(OUTPUT_FOLDER) / f"seg_{i:03d}_av.mp4"
-                merge_cmd = [
-                    'ffmpeg', '-y',
-                    '-i', str(segment_output.resolve()),
-                    '-i', str(Path(audio_path).resolve()),
-                    '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
-                    '-shortest',
-                    str(merged.resolve())
-                ]
-                result = subprocess.run(merge_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-                if result.returncode == 0:
-                    merged.replace(segment_output)
-                else:
-                    print(f"⚠️  Audio merge failed: {result.stderr[-200:]}")
+            seg_out = self._render_segment_ffmpeg(project, i, audio_path)
+            segment_files.append(str(seg_out))
 
-            segment_files.append(str(segment_output))
-            
-            # 3. Render transition between segments (except after last)
+            # Dark-frame fade between segments (not after the last one)
             if i < len(self.projects) - 1:
-                transition_duration = self.video_settings.get('transition_duration', 1)
-                transition_output = Path(OUTPUT_FOLDER) / f"trans_{i:03d}.mp4"
-                
-                # Cycle through transition styles
-                transition_styles = ['wipe', 'sweep', 'flash']
-                transition_style = transition_styles[i % len(transition_styles)]
-                
-                self.render_remotion_scene(
-                    composition="TransitionScene",
-                    props={"style": transition_style},
-                    output_path=transition_output,
-                    duration_seconds=transition_duration
-                )
-                
-                segment_files.append(str(transition_output))
-            
-            # Mid-roll subscribe at ~1/3 through the video
-            subscribe_position = len(self.projects) // 3
+                trans_out = Path(OUTPUT_FOLDER) / f"trans_{i:03d}.mp4"
+                self._render_fade_transition(trans_out, duration=1.0)
+                segment_files.append(str(trans_out))
+
+            # Mid-roll subscribe card at ~1/3 through
             if i == subscribe_position:
-                sub_card = Path(OUTPUT_FOLDER) / "subscribe_card.png"
+                sub_card  = Path(OUTPUT_FOLDER) / "subscribe_card.png"
                 sub_audio = Path(OUTPUT_FOLDER) / "subscribe_audio.mp3"
                 if not sub_card.exists():
                     from branding import create_subscribe_card
                     create_subscribe_card(CONFIG, str(sub_card))
-                
                 if sub_card.exists() and sub_audio.exists():
-                    print(f"🎬 Adding mid-roll subscribe prompt at position {i + 1}/{len(self.projects)}...")
-                    segment_files.append(self.create_static_segment(str(sub_card), 0, "seg_subscribe.mp4", audio_path=str(sub_audio)))
-            
+                    print(f"🎬 Mid-roll subscribe card...")
+                    segment_files.append(
+                        self.create_static_segment(str(sub_card), 0,
+                                                   "seg_subscribe.mp4",
+                                                   audio_path=str(sub_audio)))
+
+        # ── Outro ─────────────────────────────────────────────────────────────
         if os.path.exists(outro_path):
             segment_files.append(self.create_static_segment(outro_path, 5, "seg_outro.mp4"))
-            
+
         self.concatenate_segments(segment_files, LONGFORM_VIDEO)
-        
+
         for seg in segment_files:
-            if os.path.exists(seg):
-                os.remove(seg)
+            try:
+                if os.path.exists(seg):
+                    os.remove(seg)
+            except Exception:
+                pass
                 
     def assemble_shorts(self):
         """Assemble individual Shorts"""
@@ -971,15 +1577,14 @@ class VideoSuiteAutomated:
         ]
         
         if audio_path:
-            # Normalize audio to mono 48kHz to match segment format
+            # Normalize audio to stereo 48kHz to match segment format
             cmd.extend([
                 '-i', audio_path,
-                '-af', 'aformat=channel_layouts=mono:sample_rates=48000',
-                '-shortest'
+                '-af', 'aresample=48000:aformat=channel_layouts=stereo',
             ])
         else:
-            # Use mono 48kHz silent audio to match segment format
-            cmd.extend(['-f', 'lavfi', '-i', 'anullsrc=channel_layout=mono:sample_rate=48000', '-t', str(duration)])
+            # Use stereo 48kHz silent audio to match segment format
+            cmd.extend(['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000', '-t', str(duration)])
             
         cmd.extend([
             '-c:v', 'libx264', '-preset', 'ultrafast', '-tune', 'stillimage',
@@ -1024,6 +1629,7 @@ class VideoSuiteAutomated:
             '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
             '-profile:v', 'high', '-level', '4.0',
             '-bf', '0',                # disable B-frames — guarantees monotonic PTS
+            '-af', 'aresample=48000,aformat=channel_layouts=stereo',  # ensure consistent stereo 48kHz
             '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2',
             '-movflags', '+faststart',
             output_name

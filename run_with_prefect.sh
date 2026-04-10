@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script properly starts Prefect server and runs orchestration
-# Usage: ./run_with_prefect.sh [orchestration|pipeline]
+# Usage: ./run_with_prefect.sh [solid|pipeline]
 
 set -e  # Exit on error
 
@@ -8,25 +8,28 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 cd "$SCRIPTPATH" || exit 1
 
-# Default to orchestration if no argument provided
-FLOW="${1:-orchestration}"
+# Default to SOLID architecture if no argument provided
+FLOW="${1:-solid}"
 
 case $FLOW in
-    "orchestration")
-        PYTHON_SCRIPT="orchestration.py"
+    "solid")
+        PYTHON_SCRIPT="core/pipeline_solid.py"
+        DESCRIPTION="SOLID Architecture (Modern)"
         ;;
     "pipeline")
-        PYTHON_SCRIPT="pipeline.py"
+        PYTHON_SCRIPT="core/pipeline.py"
+        DESCRIPTION="Legacy Pipeline"
         ;;
     *)
-        echo "Usage: $0 [orchestration|pipeline]"
-        echo "Default: orchestration"
+        echo "Usage: $0 [solid|pipeline]"
+        echo "  solid   - SOLID architecture with composition root (DEFAULT)"
+        echo "  pipeline - Legacy Prefect pipeline"
         exit 1
         ;;
 esac
 
 echo "================================================"
-echo "Prefect Server + $FLOW Flow Runner"
+echo "Prefect Server + $DESCRIPTION"
 echo "================================================"
 echo "Starting Prefect Server..."
 
@@ -59,7 +62,7 @@ else
 fi
 
 echo "================================================"
-echo "Starting $FLOW pipeline..."
+echo "Starting $DESCRIPTION..."
 echo "================================================"
 
 # Run orchestration with proper environment

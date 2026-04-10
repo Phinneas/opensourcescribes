@@ -1,2 +1,0 @@
-https://github.com/glama-ai/pipenet
-https://github.com/remotion-dev/agent-skills

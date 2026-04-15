@@ -9,7 +9,7 @@ import json
 import subprocess
 from datetime import datetime
 from gtts import gTTS
-from branding import create_intro_card, create_outro_card
+from components.graphics.branding import create_intro_card, create_outro_card
 
 # Load configuration
 with open('config.json', 'r') as f:
@@ -40,7 +40,7 @@ def load_project_by_id(project_id):
 
 async def create_project_visual(project_name, github_url, output_path):
     """Create custom graphic using Code Stream branding"""
-    from codestream_graphics import create_project_graphic
+    from components.graphics.codestream_graphics import create_project_graphic
     
     if os.path.exists(output_path):
         print(f"🎨 Graphic already exists: {output_path}")

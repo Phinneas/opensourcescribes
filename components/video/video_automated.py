@@ -16,15 +16,18 @@ from pathlib import Path
 from gtts import gTTS
 from typing import Optional, Dict
 
+# Add project root to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 # Import Seedream 5 Generator
-from seedream_generator import SeedreamGenerator
+from services.seedream_generator import SeedreamGenerator
 
 # Import content generators
-from generate_description import generate_description
-from generate_medium_post import main as generate_medium_post
-from generate_reddit_post import main as generate_reddit_post
-from generate_newsletter import main as generate_newsletter
-from reformat_newsletter import main as reformat_newsletter
+from content.generate_description import generate_description
+from content.generate_medium_post import main as generate_medium_post
+from content.generate_reddit_post import main as generate_reddit_post
+from content.generate_newsletter import main as generate_newsletter
+from content.reformat_newsletter import main as reformat_newsletter
 
 # Load configuration
 with open('config.json', 'r') as f:
@@ -109,9 +112,9 @@ class VideoSuiteAutomated:
             try:
                 print(f"  [screenshot] Capturing {project['name']}...")
                 result = subprocess.run(
-                    [sys.executable, "github_screenshot.py", project['github_url']],
+                    [sys.executable, "services/github_screenshot.py", project['github_url']],
                     capture_output=True, text=True, timeout=60,
-                    cwd=os.path.dirname(os.path.abspath(__file__))
+                    cwd=str(Path(__file__).parent.parent.parent)
                 )
                 
                 print(f"  [screenshot] Process output:")
@@ -879,7 +882,7 @@ class VideoSuiteAutomated:
             print(f"  ⚠️  Intro animation failed ({exc}), using static card")
 
         if not animated_ok:
-            from branding import create_intro_card
+            from components.graphics.branding import create_intro_card
             card = create_intro_card(CONFIG)
             subprocess.run([
                 'ffmpeg', '-y', '-loop', '1', '-framerate', str(FPS),
@@ -1051,7 +1054,7 @@ class VideoSuiteAutomated:
     
     async def create_project_graphic(self, project_name, github_url, output_path):
         """Create horizontal graphic (1920x1080)"""
-        from codestream_graphics import CodeStreamGraphics
+        from components.graphics.codestream_graphics import CodeStreamGraphics
         
         if os.path.exists(output_path):
             return
@@ -1070,7 +1073,7 @@ class VideoSuiteAutomated:
     
     async def create_shorts_graphic(self, project_name, github_url, output_path):
          """Create vertical graphic (1080x1920)"""
-         from codestream_graphics import CodeStreamGraphics
+         from components.graphics.codestream_graphics import CodeStreamGraphics
          
          if os.path.exists(output_path):
              return
@@ -1093,7 +1096,7 @@ class VideoSuiteAutomated:
 
     def _generate_vertical_image_sync(self, graphics, project_name, github_url, output_path):
         """Synchronous part of vertical image generation"""
-        from codestream_graphics import COLORS
+        from components.graphics.codestream_graphics import COLORS
         from PIL import Image, ImageDraw, ImageFont
 
         img = graphics.create_base_image()
@@ -1289,7 +1292,7 @@ class VideoSuiteAutomated:
 
     def assemble_longform_video(self):
         """Assemble full longform video using FFmpeg + PIL."""
-        from branding import create_outro_card
+        from components.graphics.branding import create_outro_card
 
         print(f"\n🎬 Assembling Longform Video...")
 
@@ -1334,7 +1337,7 @@ class VideoSuiteAutomated:
                 sub_card  = Path(OUTPUT_FOLDER) / "subscribe_card.png"
                 sub_audio = Path(OUTPUT_FOLDER) / "subscribe_audio.mp3"
                 if not sub_card.exists():
-                    from branding import create_subscribe_card
+                    from components.graphics.branding import create_subscribe_card
                     create_subscribe_card(CONFIG, str(sub_card))
                 if sub_card.exists() and sub_audio.exists():
                     print(f"🎬 Mid-roll subscribe card...")
@@ -1375,7 +1378,7 @@ class VideoSuiteAutomated:
             
         print(f"\n🔍 Generating Deep Dive Videos...")
         
-        from single_project_video import create_single_project_video
+        from components.video.single_project_video import create_single_project_video
         
         for project in self.deep_dive_selection:
             project_id = project['id']
@@ -1502,7 +1505,7 @@ class VideoSuiteAutomated:
 
         # Primary: SurrealDB
         try:
-            from db import DB
+            from core.db import DB
             with DB() as db:
                 for p in projects:
                     url = p.get("github_url")
@@ -1537,7 +1540,7 @@ if __name__ == "__main__":
     # Log the pipeline run to SurrealDB
     run_id = None
     try:
-        from db import DB
+        from core.db import DB
         with DB() as _db:
             run_id = _db.start_run()
     except Exception:
@@ -1547,7 +1550,7 @@ if __name__ == "__main__":
     try:
         asyncio.run(suite.run())
         if run_id:
-            from db import DB
+            from core.db import DB
             with DB() as _db:
                 _db.finish_run(
                     run_id,
@@ -1558,7 +1561,7 @@ if __name__ == "__main__":
     except Exception as _e:
         if run_id:
             try:
-                from db import DB
+                from core.db import DB
                 with DB() as _db:
                     _db.finish_run(run_id, repos_count=0, success_count=0, error_count=1)
             except Exception:

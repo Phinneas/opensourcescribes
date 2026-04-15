@@ -66,7 +66,9 @@ echo "Starting $DESCRIPTION..."
 echo "================================================"
 
 # Run orchestration with proper environment
+export PATH="/opt/homebrew/bin:$PATH"
 export PREFECT_API_URL="http://127.0.0.1:4200/api"
+export PYTHONPATH="$SCRIPTPATH:$PYTHONPATH"
 source venv/bin/activate
 python3 "$PYTHON_SCRIPT"
 

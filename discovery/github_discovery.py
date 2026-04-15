@@ -203,9 +203,9 @@ class GitHubDiscoveryPipeline:
                 )
                 
                 enriched_repos.append(enriched)
-                print(f"OK (velocity={velocity:.2f} if not None, cached={has_cache})".replace(
-                    "if not None", "0.0" if velocity is None else f"{velocity:.2f}"
-                ))
+                v_str = "None" if velocity is None else f"{velocity:.2f}"
+                print(f"OK (velocity={v_str}, cached={has_cache})")
+
                 
             except Exception as e:
                 print(f"ERROR: {e}")

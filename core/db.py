@@ -21,7 +21,7 @@ from typing import Optional
 
 from surrealdb import Surreal
 
-_CONFIG_PATH = Path(__file__).parent / "config.json"
+_CONFIG_PATH = Path(__file__).parent.parent / "config.json"
 
 
 def _load_config() -> dict:

@@ -273,5 +273,19 @@
       "timestamp": "2026-04-09T16:03:38.315355"
     },
     "timestamp": "2026-04-09T16:03:38.315363"
+  },
+  "NVIDIA-AI-Blueprints/aiq": {
+    "data": {
+      "owner": "NVIDIA-AI-Blueprints",
+      "repo": "aiq",
+      "stars": 464,
+      "forks": 137,
+      "language": "TypeScript",
+      "description": "The AI-Q NVIDIA Blueprint is an open reference example for building intelligent AI agents that connect to your enterprise data, reason using state-of-the-art models, and deliver trusted business insights.",
+      "topics": [],
+      "url": "https://github.com/NVIDIA-AI-Blueprints/aiq",
+      "timestamp": "2026-04-15T15:31:44.625825"
+    },
+    "timestamp": "2026-04-15T15:31:44.625833"
   }
 }

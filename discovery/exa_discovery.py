@@ -23,16 +23,20 @@ import subprocess
 import sys
 import argparse
 from datetime import datetime
+from pathlib import Path
 from typing import List, Optional
 
-from discovery_sources import DiscoverySource, RepoCandidate
-from db import DB
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from discovery.discovery_sources import DiscoverySource, RepoCandidate
+from core.db import DB
 
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
 
-_CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
+_CONFIG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config.json")
 with open(_CONFIG_PATH) as _f:
     _CONFIG = json.load(_f)
 
@@ -41,6 +45,7 @@ EXA_API_KEY: str = _CONFIG.get("exa", {}).get("api_key", "")
 BATCH_SIZE = 15                          # repos per run
 GITHUB_URLS_FILE = "github_urls.txt"    # current batch — read by auto_script_generator.py
 PUBLISHED_FILE = "published_repos.txt"  # permanent dedup history
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))  # project root directory
 
 # ---------------------------------------------------------------------------
 # Seed repos for find_similar()
@@ -48,10 +53,12 @@ PUBLISHED_FILE = "published_repos.txt"  # permanent dedup history
 # ---------------------------------------------------------------------------
 
 SEED_REPOS: List[str] = [
-    "https://github.com/AgenTool/Hermes-Agent",
-    "https://github.com/karpathy/nanoGPT",
-    "https://github.com/OpenVikings/openviking",
-    "https://github.com/anthropics/anthropic-sdk-python",
+    "https://github.com/mvschwarz/openrig",
+    "https://github.com/666ghj/MiroFish",
+    "https://github.com/humanlayer/humanlayer",
+    "https://github.com/juspay/neurolink",
+    "https://github.com/LogicStamp/logicstamp-context",
+    "https://github.com/volcengine/OpenViking",
 ]
 
 # ---------------------------------------------------------------------------
@@ -59,11 +66,11 @@ SEED_REPOS: List[str] = [
 # ---------------------------------------------------------------------------
 
 SEARCH_QUERIES: List[str] = [
-    "open source AI agent framework github",
-    "new github repository LLM tool developer 2024 2025",
-    "open source coding assistant github stars trending",
-    "AI developer tools open source launch",
-    "github.com python AI agent autonomous",
+    "novel open source approach to browser automation and AI agents github",
+    "newly released open source RAG framework or developer tool github",
+    "under the radar AI developer tools open source launch github",
+    "Y Combinator backed or Hacker News trending open source launch github",
+    "high quality developer focused open source projects launched in 2025 github",
 ]
 
 # ---------------------------------------------------------------------------
@@ -131,6 +138,7 @@ class ExaKeywordSource(DiscoverySource):
                     query,
                     num_results=self._num_results,
                     include_domains=["github.com"],
+                    start_published_date="2025-10-01",
                     type="neural",
                 )
                 for r in results.results:
@@ -176,6 +184,7 @@ class ExaSimilarSource(DiscoverySource):
                     url=seed_url,
                     num_results=self._num_results,
                     exclude_source_domain=False,
+                    start_published_date="2025-10-01",
                     include_domains=["github.com"],
                 )
                 for r in results.results:

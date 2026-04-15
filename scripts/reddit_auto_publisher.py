@@ -48,7 +48,7 @@ def publish_to_reddit(content, subreddit):
     try:
         subreddit_obj = reddit.subreddit(subreddit)
         submission = subreddit_obj.submit(
-            title=f"{datetime.now().strftime(%B %Y)} Trending Open-Source Projects",
+            title=f"{datetime.now().strftime('%B %Y')} Trending Open-Source Projects",
             selftext=content,
             flair=None
         )

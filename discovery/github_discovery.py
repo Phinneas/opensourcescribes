@@ -28,12 +28,12 @@ from pathlib import Path
 
 # Local modules
 try:
-    from discovery_sources import RepoCandidate
-    from github_api_fetcher import GitHubAPIClient, StarVelocityCalculator, GitHubSearchAPISource
-    from github_trending_scraper import GitHubTrendingSource
-    from repo_filter import RepoFilter, EnrichedRepo
-    from mistral_scorer import MistralScorer
-    from output_writer import OutputWriter
+    from discovery.discovery_sources import RepoCandidate
+    from discovery.github_api_fetcher import GitHubAPIClient, StarVelocityCalculator, GitHubSearchAPISource
+    from discovery.github_trending_scraper import GitHubTrendingSource
+    from discovery.repo_filter import RepoFilter, EnrichedRepo
+    from utils.mistral_scorer import MistralScorer
+    from content.output_writer import OutputWriter
 except ImportError as e:
     print(f"Error importing modules: {e}")
     print("Ensure you're running from the opensourcescribes directory.")

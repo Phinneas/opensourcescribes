@@ -1,6 +1,6 @@
 import json
 import logging
-from video_automated import VideoSuiteAutomated
+from components.video.video_automated import VideoSuiteAutomated
 
 print("Starting custom direct longform assembly run...")
 app = VideoSuiteAutomated()

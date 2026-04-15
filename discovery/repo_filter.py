@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Set, Optional
 from pathlib import Path
 from dataclasses import dataclass
-from discovery_sources import RepoCandidate
+from discovery.discovery_sources import RepoCandidate
 
 
 @dataclass

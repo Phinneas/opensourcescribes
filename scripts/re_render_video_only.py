@@ -7,7 +7,7 @@ Skips audio generation and screenshot capture - just re-renders the video segmen
 import os
 import json
 from pathlib import Path
-from video_automated import VideoSuiteAutomated
+from components.video.video_automated import VideoSuiteAutomated
 
 def re_render_video_only():
     """Re-render video using existing audio files and project data."""

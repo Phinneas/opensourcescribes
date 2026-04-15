@@ -479,7 +479,6 @@ class VideoSuiteAutomated:
                 except BrokenPipeError:
                     raise RuntimeError("FFmpeg pipe broken - process likely crashed")
 
-            proc.stdin.close()
             _, stderr = proc.communicate()
             if proc.returncode != 0:
                 print(f"  ⚠️  Scroll encode failed: {stderr[-200:].decode(errors='replace')}")
@@ -629,14 +628,6 @@ class VideoSuiteAutomated:
                     '-vf', 'scale=1920:1080,format=yuv420p',
                     str(scroll_mp4),
                 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-            subprocess.run([
-                'ffmpeg', '-y', '-loop', '1', '-framerate', str(FPS),
-                '-i', str(title_card),
-                '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
-                '-t', str(scroll_dur), '-r', str(FPS),
-                '-vf', 'scale=1920:1080,format=yuv420p',
-                str(scroll_mp4),
-            ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
 
         concat_txt = Path(OUTPUT_FOLDER) / f"tmp_{pid}_concat.txt"
         videoonly  = Path(OUTPUT_FOLDER) / f"tmp_{pid}_vid.mp4"
@@ -765,13 +756,13 @@ class VideoSuiteAutomated:
                     )
                     draw.line([(0, y), (W, y)], fill=gradient_color)
 
-                # Enhanced grid lines with more prominent appearance
+                # Subtle tech grid background — animate slightly
                 for gx in range(0, W, 40):
                     alpha = int(60 + 40 * (gx / W))
-                    draw.line([(gx, 0), (gx, H)], fill=(alpha, alpha * 1.5, alpha * 3))
+                    draw.line([(gx, 0), (gx, H)], fill=(alpha, int(alpha * 1.5), alpha * 3))
                 for gy in range(0, H, 40):
                     alpha = int(60 + 40 * (gy / H))
-                    draw.line([(0, gy), (W, gy)], fill=(alpha, alpha * 1.5, alpha * 3))
+                    draw.line([(0, gy), (W, gy)], fill=(alpha, int(alpha * 1.5), alpha * 3))
 
                 # Enhanced prominent particles — fade in faster and brighter
                 p_alpha = min(1.0, n / (FPS * 0.5))  # Faster fade-in
@@ -869,7 +860,6 @@ class VideoSuiteAutomated:
                 except BrokenPipeError:
                     raise RuntimeError("FFmpeg pipe broken - process likely crashed")
 
-            proc.stdin.close()
             _, stderr = proc.communicate()
             if proc.returncode != 0:
                 animated_ok = False

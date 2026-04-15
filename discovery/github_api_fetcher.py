@@ -10,7 +10,7 @@ import requests
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 from pathlib import Path
-from discovery_sources import RepoCandidate
+from discovery.discovery_sources import RepoCandidate
 
 
 class GitHubAPIClient:

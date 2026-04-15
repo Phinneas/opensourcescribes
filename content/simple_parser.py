@@ -147,7 +147,7 @@ def main():
         print("📡 Generating scripts from GitHub URLs...\n")
         
         try:
-            from auto_script_generator import generate_from_url_list
+            from components.project.auto_script_generator import generate_from_url_list
             projects = generate_from_url_list(input_file)
         except ImportError:
             print("❌ auto_script_generator.py not found!")

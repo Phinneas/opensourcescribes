@@ -9,8 +9,8 @@ import os
 from datetime import datetime
 from typing import List, Dict, Optional
 from pathlib import Path
-from repo_filter import EnrichedRepo
-from mistral_scorer import ScoredRepo
+from discovery.repo_filter import EnrichedRepo
+from utils.mistral_scorer import ScoredRepo
 
 
 class OutputWriter:
@@ -222,8 +222,8 @@ def demo():
     print("=" * 50)
     
     from datetime import datetime
-    from repo_filter import EnrichedRepo
-    from mistral_scorer import ScoredRepo
+    from discovery.repo_filter import EnrichedRepo
+    from utils.mistral_scorer import ScoredRepo
     
     # Mock data
     mock_repo = EnrichedRepo(

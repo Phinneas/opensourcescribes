@@ -9,7 +9,7 @@ import os
 from datetime import datetime
 from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict
-from repo_filter import EnrichedRepo
+from discovery.repo_filter import EnrichedRepo
 
 
 # Mistral schema for structured output

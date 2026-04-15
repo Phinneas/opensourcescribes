@@ -58,7 +58,7 @@ def generate_audio_task(text: str, output_path: str) -> str:
         return output_path
 
     try:
-        from enhanced_audio_generator import EnhancedVoiceGenerator
+        from components.audio.enhanced_audio_generator import EnhancedVoiceGenerator
         generator = EnhancedVoiceGenerator(CONFIG)
         
         # Apply text preprocessing for better pronunciation
@@ -111,7 +111,7 @@ def generate_graphic_task(project_name: str, github_url: str, output_path: str) 
         return output_path
 
     logger.info(f"🎨 Rendering graphic: {project_name}")
-    from codestream_graphics import CodeStreamGraphics
+    from components.graphics.codestream_graphics import CodeStreamGraphics
 
     graphics = CodeStreamGraphics(output_dir=Path(output_path).parent)
     graphics.create_project_graphic(project_name, github_url, output_path)
@@ -161,8 +161,8 @@ def minimax_enhancement_task(project: dict) -> Optional[str]:
         return final_path
 
     try:
-        from minimax_integration import get_minimax_generator
-        from github_page_capture import GitHubPageCapture
+        from services.minimax_integration import get_minimax_generator
+        from services.github_page_capture import GitHubPageCapture
     except ImportError:
         logger.warning("MiniMax modules not available — skipping enhancement")
         return None
@@ -397,7 +397,7 @@ def run_pipeline(data_file: str = DATA_FILE):
 
     # 5. Render intro/outro/subscribe cards
     logger.info("🎬 Rendering intro / outro / subscribe segments…")
-    from branding import create_intro_card, create_outro_card, create_subscribe_card
+    from components.graphics.branding import create_intro_card, create_outro_card, create_subscribe_card
 
     intro_img = create_intro_card(CONFIG, "GitHub Projects Roundup")
     outro_img = create_outro_card(CONFIG)

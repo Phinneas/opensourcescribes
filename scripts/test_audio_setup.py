@@ -6,7 +6,7 @@ Tests all configured audio services in sequence
 
 import os
 import sys
-from enhanced_audio_generator import EnhancedVoiceGenerator
+from components.audio.enhanced_audio_generator import EnhancedVoiceGenerator
 
 def test_audio_services():
     """Test all audio services and report status"""

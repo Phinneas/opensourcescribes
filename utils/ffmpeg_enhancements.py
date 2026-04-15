@@ -109,11 +109,10 @@ def apply_pan_effect(input_image: str, output_video: str, duration: float = 6.0,
     frames = int(duration * fps)
     
     pan_expressions = {
-        "left": f"x='min(0\,iw-iw*on/{frames})':y='ih/2'",
-        "right": f"x='max(iw-iw\,iw*on/{frames}-iw)':y='ih/2'",
-        "up": f"x='iw/2':y='max(0\,ih*on/{frames}-ih)'",
-        "down": f"x='iw/2':y='min(ih\,ih-ih*on/{frames})'"
-    }
+        "left": f"x='min(0,iw-iw*on/{frames})':y='ih/2'",
+        "right": f"x='max(iw-iw,iw*on/{frames}-iw)':y='ih/2'",
+        "up": f"x='iw/2':y='max(0,ih*on/{frames}-ih)'",
+        "down": f"x='iw/2':y='min(ih,ih-ih*on/{frames})'"    }
     
     pan_expr = pan_expressions.get(direction, pan_expressions["left"])
     

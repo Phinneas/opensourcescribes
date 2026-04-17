@@ -287,5 +287,99 @@
       "timestamp": "2026-04-15T15:31:44.625825"
     },
     "timestamp": "2026-04-15T15:31:44.625833"
+  },
+  "LeDat98/NexusRAG": {
+    "data": {
+      "owner": "LeDat98",
+      "repo": "NexusRAG",
+      "stars": 272,
+      "forks": 59,
+      "language": "Python",
+      "description": "Hybrid RAG system combining vector search, knowledge graph (LightRAG), and cross-encoder reranking \u2014 with Docling document parsing, visual intelligence (image/table captioning), agentic streaming chat, and inline citations. Powered by Gemini or local Ollama models.",
+      "topics": [
+        "chromadb",
+        "citation",
+        "docling",
+        "document-parsing"
+      ],
+      "url": "https://github.com/LeDat98/NexusRAG",
+      "timestamp": "2026-04-16T21:14:08.645945"
+    },
+    "timestamp": "2026-04-16T21:14:08.645951"
+  },
+  "tykimos/cheliped-browser": {
+    "data": {
+      "owner": "tykimos",
+      "repo": "cheliped-browser",
+      "stars": 51,
+      "forks": 11,
+      "language": "TypeScript",
+      "description": "Agent Browser Runtime \u2014 AI agent-friendly browser control via Chrome DevTools Protocol (CDP)",
+      "topics": [],
+      "url": "https://github.com/tykimos/cheliped-browser",
+      "timestamp": "2026-04-16T21:21:13.860842"
+    },
+    "timestamp": "2026-04-16T21:21:13.860855"
+  },
+  "VibiumDev/vibium": {
+    "data": {
+      "owner": "VibiumDev",
+      "repo": "vibium",
+      "stars": 2773,
+      "forks": 158,
+      "language": "Go",
+      "description": "Browser automation for AI agents and humans",
+      "topics": [],
+      "url": "https://github.com/VibiumDev/vibium",
+      "timestamp": "2026-04-16T21:21:19.084991"
+    },
+    "timestamp": "2026-04-16T21:21:19.085008"
+  },
+  "billy-enrizky/openbrowser-ai": {
+    "data": {
+      "owner": "billy-enrizky",
+      "repo": "openbrowser-ai",
+      "stars": 228,
+      "forks": 18,
+      "language": "Python",
+      "description": "OpenBrowser is a framework for intelligent browser automation. It combines direct CDP communication with a CodeAgent architecture, where the LLM writes Python code executed in a persistent namespace, to navigate, interact with, and extract information from web pages autonomously.",
+      "topics": [
+        "ai",
+        "ai-agents",
+        "ai-browser",
+        "ai-browser-automation"
+      ],
+      "url": "https://github.com/billy-enrizky/openbrowser-ai",
+      "timestamp": "2026-04-16T21:21:22.915550"
+    },
+    "timestamp": "2026-04-16T21:21:22.915560"
+  },
+  "glyphlang/glyph": {
+    "data": {
+      "owner": "glyphlang",
+      "repo": "glyph",
+      "stars": 61,
+      "forks": 4,
+      "language": "Go",
+      "description": "An AI-Optimized Programming Language",
+      "topics": [],
+      "url": "https://github.com/glyphlang/glyph",
+      "timestamp": "2026-04-17T13:13:43.022079"
+    },
+    "timestamp": "2026-04-17T13:13:43.022090"
+  },
+  "jadenblack/neurolink": {
+    "data": {
+      "owner": "jadenblack",
+      "repo": "neurolink",
+      "stars": 0,
+      "forks": 0,
+      "language": null,
+      "description": "Universal AI Development Platform with MCP server integration, multi-provider support, and professional CLI. Build, test, and deploy AI applications with multiple ai providers.",
+      "topics": [],
+      "url": "https://github.com/jadenblack/neurolink",
+      "timestamp": "2026-04-17T13:14:45.514588"
+    },
+    "timestamp": "2026-04-17T13:14:45.514601"
   }
 }

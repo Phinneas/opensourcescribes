@@ -1,152 +1,22 @@
 [
     {
-        "id": "microsoft_agent_framework",
-        "name": "GitHub",
-        "github_url": "https://github.com/microsoft/agent-framework",
-        "script_text": "The Microsoft Agent Framework is a powerful tool for building, orchestrating, and deploying AI agents and multi-agent workflows. It supports both Python and .NET, allowing developers to leverage their existing skills and infrastructure. The framework provides a flexible and modular architecture, enabling you to create complex, interconnected agent systems with ease. Whether you're working on chatbots, recommendation engines, or automated decision-making processes, the Agent Framework can help you streamline your development and deployment workflows. This project is a valuable resource for anyone looking to harness the power of multi-agent AI systems in their applications.",
-        "screenshot_path": "assets/screenshots/microsoft_agent_framework_github.png",
-        "img_path": "assets/microsoft_agent_framework_screen.png",
-        "audio_path": "assets/microsoft_agent_framework_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/microsoft_agent_framework_short.png"
+        "id": "glyphlang_glyph",
+        "name": "GlyphLang",
+        "github_url": "https://github.com/glyphlang/glyph",
+        "script_text": "**GlyphLang: An AI-Optimized Programming Language**\n\nGlyphLang is a backend programming language designed from the ground up to be efficient for AI generation. By minimizing boilerplate, built-in server and database support, and a consistent syntax, GlyphLang reduces token usage by 23% compared to FastAPI. The strict type system and opinionated design enable production-ready APIs with fewer files and less maintenance. With first-class CLI, LSP, and VS Code support, GlyphLang is a great fit for developers building AI-powered APIs and internal tools who want to lower their LLM costs and ship faster.",
+        "screenshot_path": "assets/screenshots/glyphlang_glyph_github.png",
+        "img_path": "assets/glyphlang_glyph_screen.png",
+        "audio_path": "assets/glyphlang_glyph_audio.mp3",
+        "short_img_path": "deliveries/04-17/shorts/glyphlang_glyph_short.png"
     },
     {
-        "id": "productive_superintelligence_lllm",
-        "name": "GitHub",
-        "github_url": "https://github.com/Productive-Superintelligence/lllm",
-        "script_text": "Here is a short, engineering-focused video script for a YouTube video about the GitHub project \"Productive-Superintelligence/lllm\":\n\nThis lightweight framework enables building LLM-based agentic systems with additional support for program synthesis and neural-symbolic research. It provides a flexible architecture and customizable components to explore LLM integration, allowing developers to experiment with novel approaches in AI safety and capabilities. The framework's modular design simplifies the integration of different LLMs, program synthesis techniques, and reasoning modules, empowering researchers to rapidly prototype and iterate on their ideas. With its focus on these key areas, this project aims to advance the state-of-the-art in AI systems that can assist and collaborate with humans in productive and beneficial ways.",
-        "screenshot_path": "assets/screenshots/productive_superintelligence_lllm_github.png",
-        "img_path": "assets/productive_superintelligence_lllm_screen.png",
-        "audio_path": "assets/productive_superintelligence_lllm_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/productive_superintelligence_lllm_short.png"
-    },
-    {
-        "id": "lazyagi_lazyllm",
-        "name": "GitHub",
-        "github_url": "https://github.com/LazyAGI/LazyLLM",
-        "script_text": "GitHub's LazyAGI/LazyLLM project offers an effortless way to build multi-agent LLM applications. By leveraging a unique implementation, developers can quickly set up and manage a network of language models, enabling them to tackle complex tasks with ease. This approach simplifies the process of integrating various LLMs, allowing you to focus on delivering innovative solutions. Whether you're working on conversational AI, content generation, or task automation, the LazyAGI/LazyLLM project provides a convenient and practical solution to streamline your development workflow.",
-        "screenshot_path": "assets/screenshots/lazyagi_lazyllm_github.png",
-        "img_path": "assets/lazyagi_lazyllm_screen.png",
-        "audio_path": "assets/lazyagi_lazyllm_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/lazyagi_lazyllm_short.png"
-    },
-    {
-        "id": "gumblex_aitoolman",
-        "name": "GitHub",
-        "github_url": "https://github.com/gumblex/aitoolman",
-        "script_text": "The aitoolman project offers a framework for building controllable and transparent large language model (LLM) applications. It provides a set of tools and interfaces to fine-tune, prompt, and evaluate LLMs, ensuring that the underlying models are accessible and their behavior can be inspected. This enables developers to create LLM-powered applications with greater control and understanding of the model's inner workings. The primary use case of aitoolman is to facilitate the development of LLM-based systems that require transparency and customizability, such as conversational AI assistants or content generation tools.",
-        "screenshot_path": "assets/screenshots/gumblex_aitoolman_github.png",
-        "img_path": "assets/gumblex_aitoolman_screen.png",
-        "audio_path": "assets/gumblex_aitoolman_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/gumblex_aitoolman_short.png"
-    },
-    {
-        "id": "plandex_ai_plandex",
-        "name": "GitHub",
-        "github_url": "https://github.com/plandex-ai/plandex",
-        "script_text": "Plandex is an open-source AI coding agent designed to tackle large-scale projects and real-world tasks. Utilizing advanced language models, Plandex can understand complex requirements, generate optimized code, and collaborate with human developers. Its unique architecture allows for seamless integration into existing workflows, empowering teams to accelerate development and focus on high-level problem-solving. Whether you're working on a enterprise-grade application or a innovative startup, Plandex can be a valuable asset in your engineering toolkit.",
-        "screenshot_path": "assets/screenshots/plandex_ai_plandex_github.png",
-        "img_path": "assets/plandex_ai_plandex_screen.png",
-        "audio_path": "assets/plandex_ai_plandex_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/plandex_ai_plandex_short.png"
-    },
-    {
-        "id": "oraios_serena",
-        "name": "GitHub",
-        "github_url": "https://github.com/oraios/serena",
-        "script_text": "GitHub is a powerful MCP toolkit that provides semantic retrieval and editing capabilities, serving as the integrated development environment for your agent, oraios/serena. With its advanced natural language processing, you can quickly navigate and manipulate your codebase, streamlining your development workflow. The toolkit's unique implementation allows for seamless integration with your project, enhancing your productivity and code quality. Whether you're a seasoned programmer or a newcomer to the field, GitHub's versatile features make it an essential tool for your coding endeavors.",
-        "screenshot_path": "assets/screenshots/oraios_serena_github.png",
-        "img_path": "assets/oraios_serena_screen.png",
-        "audio_path": "assets/oraios_serena_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/oraios_serena_short.png"
-    },
-    {
-        "id": "sourcegraph_cody_public_snapshot",
-        "name": "GitHub",
-        "github_url": "https://github.com/sourcegraph/cody-public-snapshot",
-        "script_text": "Cody is an AI-powered code assistant that helps you write and fix code more efficiently. It uses advanced search and codebase context to surface relevant code snippets and solutions, reducing the time you spend typing. Cody's natural language processing capabilities allow you to describe the task at hand, and it will provide the appropriate code suggestions. Whether you're a seasoned developer or just starting out, Cody can accelerate your coding workflow and enhance your productivity.",
-        "screenshot_path": "assets/screenshots/sourcegraph_cody_public_snapshot_github.png",
-        "img_path": "assets/sourcegraph_cody_public_snapshot_screen.png",
-        "audio_path": "assets/sourcegraph_cody_public_snapshot_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/sourcegraph_cody_public_snapshot_short.png"
-    },
-    {
-        "id": "codebuffai_codebuff",
-        "name": "GitHub",
-        "github_url": "https://github.com/CodebuffAI/codebuff",
-        "script_text": "Generate code from the terminal! CodebuffAI's open-source project, GitHub, allows you to contribute to its development. Simply create an account and start coding. GitHub provides a powerful platform for collaborative software engineering, enabling developers to manage code, track issues, and share knowledge. Its intuitive interface and extensive ecosystem of tools make it an essential tool for modern software development. Whether you're an experienced programmer or just starting out, GitHub empowers you to participate in the exciting world of CodebuffAI and shape the future of coding.",
-        "screenshot_path": "assets/screenshots/codebuffai_codebuff_github.png",
-        "img_path": "assets/codebuffai_codebuff_screen.png",
-        "audio_path": "assets/codebuffai_codebuff_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/codebuffai_codebuff_short.png"
-    },
-    {
-        "id": "vinhnx_vtcode",
-        "name": "GitHub",
-        "github_url": "https://github.com/vinhnx/VTCode",
-        "script_text": "VT Code is a semantic AI coding agent that assists with software development. Leveraging natural language processing and machine learning, it can understand code context and provide intelligent suggestions to enhance your programming workflow. By contributing to the vinhnx/VTCode project on GitHub, you can help shape the future of AI-powered coding tools. Join the community, submit bug reports, or even contribute your own code improvements. Together, we can build a powerful platform to streamline the coding process and unlock new levels of productivity.",
-        "screenshot_path": "assets/screenshots/vinhnx_vtcode_github.png",
-        "img_path": "assets/vinhnx_vtcode_screen.png",
-        "audio_path": "assets/vinhnx_vtcode_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/vinhnx_vtcode_short.png"
-    },
-    {
-        "id": "codestoryai_ide",
-        "name": "GitHub",
-        "github_url": "https://github.com/codestoryai/ide",
-        "script_text": "GitHub is an open-source, AI-native Integrated Development Environment (IDE). This unique platform integrates cutting-edge artificial intelligence capabilities to enhance your coding experience. Developers can contribute to the ongoing development of the codestoryai/aide project by creating a GitHub account. Leverage the power of AI-driven code completion, refactoring, and debugging to streamline your software development workflow. Whether you're a seasoned programmer or a newcomer to the field, GitHub's AI-infused IDE can help you write high-quality code efficiently.",
-        "screenshot_path": "assets/screenshots/codestoryai_ide_github.png",
-        "img_path": "assets/codestoryai_ide_screen.png",
-        "audio_path": "assets/codestoryai_ide_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/codestoryai_ide_short.png"
-    },
-    {
-        "id": "roocodeinc_roo_code",
-        "name": "GitHub",
-        "github_url": "https://github.com/RooCodeInc/Roo-Code",
-        "script_text": "Roo Code gives you a whole team of AI agents right in your code editor. These AI agents can assist with tasks like code generation, debugging, and even refactoring. The unique implementation utilizes large language models trained on vast codebases, allowing the agents to provide contextual and relevant support. With Roo Code, developers can streamline their workflow and focus on building great software.",
-        "screenshot_path": "assets/screenshots/roocodeinc_roo_code_github.png",
-        "img_path": "assets/roocodeinc_roo_code_screen.png",
-        "audio_path": "assets/roocodeinc_roo_code_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/roocodeinc_roo_code_short.png"
-    },
-    {
-        "id": "google_adk_python",
-        "name": "GitHub",
-        "github_url": "https://github.com/google/adk-python",
-        "script_text": "GitHub's open-source ADK-Python toolkit empowers developers to build, evaluate, and deploy sophisticated AI agents. This code-first Python library provides the flexibility and control needed to create advanced AI systems. With a focus on customization and deployment, the toolkit streamlines the process of developing cutting-edge AI solutions. Developers can leverage the toolkit's versatile features to tackle a wide range of AI-driven projects, from natural language processing to reinforcement learning. Whether you're an AI researcher or a practitioner, the ADK-Python toolkit offers a powerful platform to bring your AI ideas to life.",
-        "screenshot_path": "assets/screenshots/google_adk_python_github.png",
-        "img_path": "assets/google_adk_python_screen.png",
-        "audio_path": "assets/google_adk_python_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/google_adk_python_short.png"
-    },
-    {
-        "id": "jupyterlab_jupyter_ai",
-        "name": "GitHub",
-        "github_url": "https://github.com/jupyterlab/jupyter-ai",
-        "script_text": "The GitHub project 'jupyter-ai' is an open-source extension that connects AI agents to computational notebooks in JupyterLab. This innovative integration allows users to seamlessly incorporate AI capabilities directly into their data analysis and research workflows. By bridging the gap between AI and interactive coding environments, the project empowers researchers and data scientists to leverage the power of artificial intelligence within their familiar JupyterLab interface. With this extension, users can enhance their data exploration, model training, and decision-making processes, making it a valuable tool for a wide range of scientific and technical applications.",
-        "screenshot_path": "assets/screenshots/jupyterlab_jupyter_ai_github.png",
-        "img_path": "assets/jupyterlab_jupyter_ai_screen.png",
-        "audio_path": "assets/jupyterlab_jupyter_ai_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/jupyterlab_jupyter_ai_short.png"
-    },
-    {
-        "id": "google_adk_go",
-        "name": "GitHub",
-        "github_url": "https://github.com/google/adk-go",
-        "script_text": "Google's open-source ADK-GO toolkit provides a flexible, code-first approach to building and deploying sophisticated AI agents. Leveraging the Go programming language, the toolkit offers a comprehensive suite of tools for training, evaluating, and deploying AI models with fine-grained control. Developers can seamlessly integrate ADK-GO into their existing workflows, empowering them to create cutting-edge AI applications tailored to their specific needs. Whether you're working on natural language processing, computer vision, or reinforcement learning, this flexible toolkit can help you bring your AI ideas to life.",
-        "screenshot_path": "assets/screenshots/google_adk_go_github.png",
-        "img_path": "assets/google_adk_go_screen.png",
-        "audio_path": "assets/google_adk_go_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/google_adk_go_short.png"
-    },
-    {
-        "id": "nvidia_ai_blueprints_aiq",
-        "name": "GitHub",
-        "github_url": "https://github.com/NVIDIA-AI-Blueprints/aiq",
-        "script_text": "The AI-Q NVIDIA Blueprint is an open reference example for building intelligent AI agents. It connects to enterprise data, reasons using state-of-the-art models, and delivers trusted business insights. This unique implementation leverages NVIDIA's industry-leading AI technology to create a scalable and customizable framework. Developers can use this tool to rapidly build AI applications that extract value from their data and inform critical business decisions. Whether you're an enterprise looking to deploy AI or an engineer exploring new possibilities, the AI-Q NVIDIA Blueprint offers a powerful and flexible solution.",
-        "screenshot_path": "assets/screenshots/nvidia_ai_blueprints_aiq_github.png",
-        "img_path": "assets/nvidia_ai_blueprints_aiq_screen.png",
-        "audio_path": "assets/nvidia_ai_blueprints_aiq_audio.mp3",
-        "short_img_path": "deliveries/04-15/shorts/nvidia_ai_blueprints_aiq_short.png"
+        "id": "jadenblack_neurolink",
+        "name": "neurolink",
+        "github_url": "https://github.com/jadenblack/neurolink",
+        "script_text": "NeuroLink is the universal AI development platform that unifies access to 12 major providers and over 100 models. Built for enterprise-grade AI integration, it provides a consistent API, production-ready tooling, and an opinionated factory architecture. \n\nWith NeuroLink, you can switch between AI providers with a single parameter change, leverage 64+ built-in tools and MCP servers, and deploy with confidence using features like Redis memory and multi-provider failover. The platform is available as both a TypeScript SDK and a professional CLI, empowering teams to build, test, and deploy AI applications quickly.\n\nWhether you're working with OpenAI, Anthropic, Google, or any other supported provider, NeuroLink gives you a single, powerful interface to integrate AI into your applications.",
+        "screenshot_path": "assets/screenshots/jadenblack_neurolink_github.png",
+        "img_path": "assets/jadenblack_neurolink_screen.png",
+        "audio_path": "assets/jadenblack_neurolink_audio.mp3",
+        "short_img_path": "deliveries/04-17/shorts/jadenblack_neurolink_short.png"
     }
 ]

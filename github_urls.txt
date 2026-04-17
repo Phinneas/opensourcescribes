@@ -1,15 +1,2 @@
-https://github.com/microsoft/agent-framework
-https://github.com/Productive-Superintelligence/lllm
-https://github.com/LazyAGI/LazyLLM
-https://github.com/gumblex/aitoolman
-https://github.com/plandex-ai/plandex
-https://github.com/oraios/serena
-https://github.com/sourcegraph/cody-public-snapshot
-https://github.com/CodebuffAI/codebuff
-https://github.com/vinhnx/VTCode
-https://github.com/codestoryai/ide
-https://github.com/RooCodeInc/Roo-Code
-https://github.com/google/adk-python
-https://github.com/jupyterlab/jupyter-ai
-https://github.com/google/adk-go
-https://github.com/NVIDIA-AI-Blueprints/aiq
+https://github.com/glyphlang/glyph
+https://github.com/jadenblack/neurolink

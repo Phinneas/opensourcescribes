@@ -440,7 +440,7 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         print("🤖 Generating script with Claude...")
         
         message = client.messages.create(
-            model="claude-4-5-latest",
+            model="claude-haiku-4-5",
             max_tokens=1024,
             messages=[
                 {"role": "user", "content": prompt}

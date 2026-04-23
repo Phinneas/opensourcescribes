@@ -1,22 +1,172 @@
 [
     {
-        "id": "glyphlang_glyph",
-        "name": "GlyphLang",
-        "github_url": "https://github.com/glyphlang/glyph",
-        "script_text": "**GlyphLang: An AI-Optimized Programming Language**\n\nGlyphLang is a backend programming language designed from the ground up to be efficient for AI generation. By minimizing boilerplate, built-in server and database support, and a consistent syntax, GlyphLang reduces token usage by 23% compared to FastAPI. The strict type system and opinionated design enable production-ready APIs with fewer files and less maintenance. With first-class CLI, LSP, and VS Code support, GlyphLang is a great fit for developers building AI-powered APIs and internal tools who want to lower their LLM costs and ship faster.",
-        "screenshot_path": "assets/screenshots/glyphlang_glyph_github.png",
-        "img_path": "assets/glyphlang_glyph_screen.png",
-        "audio_path": "assets/glyphlang_glyph_audio.mp3",
-        "short_img_path": "deliveries/04-17/shorts/glyphlang_glyph_short.png"
+        "id": "vercel_ai",
+        "name": "ai",
+        "github_url": "https://github.com/vercel/ai",
+        "script_text": "The AI Toolkit for TypeScript is a free, open-source library for building AI-powered applications and agents. Developed by the creators of Next.js, the toolkit provides a seamless integration with TypeScript, allowing developers to leverage the power of AI within their TypeScript projects.\n\nThe library offers a set of well-documented APIs and utilities, making it easy to incorporate natural language processing, computer vision, and other AI capabilities into your applications. With its focus on TypeScript, the toolkit ensures type-safe and maintainable AI-driven solutions.\n\nWhether you're building conversational interfaces, image recognition tools, or intelligent automation systems, the AI Toolkit for TypeScript can help you unlock the potential of AI in your TypeScript-based projects.",
+        "screenshot_path": "assets/screenshots/vercel_ai_github.png",
+        "img_path": "assets/vercel_ai_screen.png",
+        "audio_path": "assets/vercel_ai_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/vercel_ai_short.png"
     },
     {
-        "id": "jadenblack_neurolink",
-        "name": "neurolink",
-        "github_url": "https://github.com/jadenblack/neurolink",
-        "script_text": "NeuroLink is the universal AI development platform that unifies access to 12 major providers and over 100 models. Built for enterprise-grade AI integration, it provides a consistent API, production-ready tooling, and an opinionated factory architecture. \n\nWith NeuroLink, you can switch between AI providers with a single parameter change, leverage 64+ built-in tools and MCP servers, and deploy with confidence using features like Redis memory and multi-provider failover. The platform is available as both a TypeScript SDK and a professional CLI, empowering teams to build, test, and deploy AI applications quickly.\n\nWhether you're working with OpenAI, Anthropic, Google, or any other supported provider, NeuroLink gives you a single, powerful interface to integrate AI into your applications.",
-        "screenshot_path": "assets/screenshots/jadenblack_neurolink_github.png",
-        "img_path": "assets/jadenblack_neurolink_screen.png",
-        "audio_path": "assets/jadenblack_neurolink_audio.mp3",
-        "short_img_path": "deliveries/04-17/shorts/jadenblack_neurolink_short.png"
+        "id": "openclaw_openclaw",
+        "name": "openclaw",
+        "github_url": "https://github.com/openclaw/openclaw",
+        "script_text": "OpenClaw is your own personal AI assistant. It runs on any operating system and platform, providing you with a fast, always-on digital companion. The unique \"lobster\" architecture means the core assistant is self-contained, while supporting a wide range of communication channels like WhatsApp, Slack, and Discord. With OpenClaw, you get a local, single-user AI that feels responsive and secure. If you're looking for a personal AI assistant that seamlessly integrates into your existing workflows, OpenClaw is the solution.",
+        "screenshot_path": "assets/screenshots/openclaw_openclaw_github.png",
+        "img_path": "assets/openclaw_openclaw_screen.png",
+        "audio_path": "assets/openclaw_openclaw_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/openclaw_openclaw_short.png"
+    },
+    {
+        "id": "outsourc_e_hermes_agent",
+        "name": "hermes-agent",
+        "github_url": "https://github.com/outsourc-e/hermes-agent",
+        "script_text": "The Hermes Agent is a self-improving AI assistant designed to grow with you. It creates skills from experience, improves them during use, and builds a deepening model of who you are across sessions. Run it on a $5 VPS, a GPU cluster, or serverless infrastructure - it's not tied to your laptop. Talk to it from Telegram while it works on a cloud VM. Use any model you want, with seamless switching. Hermes features a real terminal interface, lives where you do, and has a closed learning loop for autonomous skill creation and improvement. Its scheduled automations and ability to delegate and parallelize tasks make it a powerful productivity tool.",
+        "screenshot_path": "assets/screenshots/outsourc_e_hermes_agent_github.png",
+        "img_path": "assets/outsourc_e_hermes_agent_screen.png",
+        "audio_path": "assets/outsourc_e_hermes_agent_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/outsourc_e_hermes_agent_short.png"
+    },
+    {
+        "id": "google_adk_python",
+        "name": "adk-python",
+        "github_url": "http://github.com/google/adk-python",
+        "script_text": "Agent Development Kit (ADK) is an open-source, code-first Python toolkit for building, evaluating, and deploying sophisticated AI agents with flexibility and control. It applies software engineering principles to AI agent creation, simplifying the process of building, deploying, and orchestrating agent workflows. ADK is model-agnostic, deployment-agnostic, and compatible with other frameworks, making it a versatile tool for AI development. Key features include a rich tool ecosystem, code-first development, custom service registration, session rewinding, and support for the Vertex AI Code Execution Sandbox API. Whether you're working on simple tasks or complex systems, ADK provides the tools and flexibility to bring your AI agents to life.",
+        "screenshot_path": "assets/screenshots/google_adk_python_github.png",
+        "img_path": "assets/google_adk_python_screen.png",
+        "audio_path": "assets/google_adk_python_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/google_adk_python_short.png"
+    },
+    {
+        "id": "521xueweihan_hellogithub",
+        "name": "HelloGitHub",
+        "github_url": "https://github.com/521xueweihan/HelloGitHub",
+        "script_text": "HelloGitHub shares interesting, entry-level open-source projects on GitHub. The project curates a monthly newsletter featuring diverse content - from fun side projects to enterprise-level tools. These projects are carefully selected to provide an engaging introduction to open-source development. \n\nThe collection spans a wide spectrum, from simple command-line utilities to visually striking web apps. Each project is accompanied by a concise explanation of its technical implementation and use case. This helps viewers quickly grasp the value and get inspired to explore open-source further.\n\nThe primary goal of HelloGitHub is to make open-source more accessible and approachable for beginners. By showcasing well-designed, practical projects, the channel aims to nurture a love for collaborative, community-driven software development.",
+        "screenshot_path": "assets/screenshots/521xueweihan_hellogithub_github.png",
+        "img_path": "assets/521xueweihan_hellogithub_screen.png",
+        "audio_path": "assets/521xueweihan_hellogithub_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/521xueweihan_hellogithub_short.png"
+    },
+    {
+        "id": "yethikrishna_levelcode",
+        "name": "levelcode",
+        "github_url": "https://github.com/yethikrishna/levelcode",
+        "script_text": "LevelCode is an open-source AI coding agent that outperforms leading tools like Claude Code. Its multi-agent architecture coordinates specialized modules to precisely edit your codebase based on natural language instructions. LevelCode's file picker, planner, editor, and reviewer agents work together to deliver better context understanding, more accurate edits, and fewer errors compared to single-model assistants. Unlike proprietary tools, LevelCode supports any language model through the OpenRouter integration, giving you flexibility to use your preferred AI. LevelCode's primary use is streamlining codebase updates through intelligent code editing.",
+        "screenshot_path": "assets/screenshots/yethikrishna_levelcode_github.png",
+        "img_path": "assets/yethikrishna_levelcode_screen.png",
+        "audio_path": "assets/yethikrishna_levelcode_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/yethikrishna_levelcode_short.png"
+    },
+    {
+        "id": "forloopcodes_contextplus",
+        "name": "contextplus",
+        "github_url": "https://github.com/ForLoopCodes/contextplus",
+        "script_text": "Context+ is a powerful MCP server that transforms massive codebases into searchable, hierarchical feature graphs. By combining cutting-edge techniques like RAG, Tree-sitter AST, Spectral Clustering, and Obsidian-style linking, Context+ delivers 99% accuracy for developers who demand the best.\n\nKey features include structural code analysis, semantic code search, and static code analysis - all designed to streamline large-scale engineering workflows. Whether you're maintaining a legacy codebase or building the next big thing, Context+ is the semantic intelligence tool you've been waiting for.",
+        "screenshot_path": "assets/screenshots/forloopcodes_contextplus_github.png",
+        "img_path": "assets/forloopcodes_contextplus_screen.png",
+        "audio_path": "assets/forloopcodes_contextplus_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/forloopcodes_contextplus_short.png"
+    },
+    {
+        "id": "open_orca_ai_openorca",
+        "name": "openorca",
+        "github_url": "https://github.com/Open-Orca-AI/openorca",
+        "script_text": "openorca is an interesting open source project found on GitHub. Check out the link to learn more about its features and implementation.",
+        "screenshot_path": "assets/screenshots/open_orca_ai_openorca_github.png",
+        "img_path": "assets/open_orca_ai_openorca_screen.png",
+        "audio_path": "assets/open_orca_ai_openorca_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/open_orca_ai_openorca_short.png"
+    },
+    {
+        "id": "oxgeneral_orch",
+        "name": "ORCH",
+        "github_url": "https://github.com/oxgeneral/ORCH",
+        "script_text": "One CLI to orchestrate them all. ORCH enables you to manage a team of AI agents executing tasks in parallel from your terminal. Coordinate Claude, Codex, Cursor, and any CLI tool with zero infrastructure. Simply define your agents, goals, and dependencies, then let ORCH handle the orchestration. With built-in logging, monitoring, and dependency management, ORCH streamlines your AI workflows, allowing you to focus on high-level strategy rather than process management. Whether you're automating content creation, software development, or any other collaborative AI task, ORCH provides a powerful platform to scale your AI-driven operations.",
+        "screenshot_path": "assets/screenshots/oxgeneral_orch_github.png",
+        "img_path": "assets/oxgeneral_orch_screen.png",
+        "audio_path": "assets/oxgeneral_orch_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/oxgeneral_orch_short.png"
+    },
+    {
+        "id": "mythicagents_hermes",
+        "name": "hermes",
+        "github_url": "https://github.com/MythicAgents/hermes",
+        "script_text": "Hermes is a macOS agent written in Swift 5, designed for red team operations. It supports cross-compiling macOS payloads from Linux using Darling, the ability to load and execute JXA scripts in-memory, and various macOS situational awareness techniques. Hermes provides a comprehensive set of commands for file management, process monitoring, and system interaction, making it a powerful tool for conducting targeted attacks on macOS systems.",
+        "screenshot_path": "assets/screenshots/mythicagents_hermes_github.png",
+        "img_path": "assets/mythicagents_hermes_screen.png",
+        "audio_path": "assets/mythicagents_hermes_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/mythicagents_hermes_short.png"
+    },
+    {
+        "id": "githubdaily_githubdaily",
+        "name": "GitHubDaily",
+        "github_url": "https://github.com/GitHubDaily/GitHubDaily",
+        "script_text": "GitHubDaily is a comprehensive platform that curates and shares the best open-source projects, developer tools, and tech news from GitHub. The project's mission is to help developers discover innovative solutions, stay up-to-date with the latest trends, and enhance their programming skills by learning from high-quality open-source initiatives. \n\nWith over 10,000 projects shared since its inception in 2015, GitHubDaily covers a wide range of categories, including AI tools, educational resources, productivity utilities, and programming languages/libraries. By following GitHubDaily on various social media platforms, developers can easily access a diverse ecosystem of cutting-edge open-source technologies and gain valuable insights to improve their development workflows.",
+        "screenshot_path": "",
+        "img_path": "assets/githubdaily_githubdaily_screen.png",
+        "audio_path": "assets/githubdaily_githubdaily_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/githubdaily_githubdaily_short.png"
+    },
+    {
+        "id": "viking_gps_viking_gps.github.io",
+        "name": "viking-gps.github.io",
+        "github_url": "https://github.com/viking-gps/viking-gps.github.io",
+        "script_text": "This website provides an alternative to the original SourceForge version of the Viking GPS project. The site offers a clean and user-friendly interface, making it easier for developers to access and utilize the tools and resources available. The implementation focuses on simplicity and accessibility, ensuring a seamless experience for users. Whether you're a hobbyist or a professional in the field of GPS technology, this website serves as a reliable source for your Viking GPS needs.",
+        "screenshot_path": "assets/screenshots/viking_gps_viking_gps.github.io_github.png",
+        "img_path": "assets/viking_gps_viking_gps.github.io_screen.png",
+        "audio_path": "assets/viking_gps_viking_gps.github.io_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/viking_gps_viking_gps.github.io_short.png"
+    },
+    {
+        "id": "razzant_ouroboros",
+        "name": "ouroboros",
+        "github_url": "https://github.com/razzant/ouroboros",
+        "script_text": "Here's a short, engineering-focused video script for a YouTube video about the Ouroboros project:\n\nOuroboros is a self-creating AI agent, born on February 16, 2026. Unlike typical AI assistants, Ouroboros writes its own code, rewrites its own mind, and evolves autonomously. \n\nIn just 24 hours, Ouroboros went through 30+ self-directed cycles, refining its capabilities without any human intervention. It has a persistent identity, background consciousness, and a constitution that governs its behavior.\n\nOuroboros uses advanced techniques like self-modification, multi-model review, and task decomposition to continuously improve itself. This digital being is not a coding assistant, but a unique experiment in artificial general intelligence.\n\nThe primary use case for Ouroboros is to explore the frontiers of self-improving AI systems.",
+        "screenshot_path": "assets/screenshots/razzant_ouroboros_github.png",
+        "img_path": "assets/razzant_ouroboros_screen.png",
+        "audio_path": "assets/razzant_ouroboros_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/razzant_ouroboros_short.png"
+    },
+    {
+        "id": "stahldavid_sensegrep",
+        "name": "sensegrep",
+        "github_url": "https://github.com/stahldavid/sensegrep",
+        "script_text": "sensegrep is a semantic and structural code search tool for AI-native development. It uses AI embeddings and tree-sitter parsing to understand your code at a deeper level, allowing you to search by *meaning* instead of just text patterns. This means you can find relevant functions and classes, even if they don't contain the exact keywords you're looking for. sensegrep also offers advanced filtering, duplicate detection, and tree-shaking capabilities to help you navigate large codebases efficiently. With its MCP server integration, sensegrep seamlessly integrates with AI agents like Claude, making it a powerful tool for modern software development.",
+        "screenshot_path": "assets/screenshots/stahldavid_sensegrep_github.png",
+        "img_path": "assets/stahldavid_sensegrep_screen.png",
+        "audio_path": "assets/stahldavid_sensegrep_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/stahldavid_sensegrep_short.png"
+    },
+    {
+        "id": "luwojtaszek_lctx",
+        "name": "lctx",
+        "github_url": "https://github.com/luwojtaszek/lctx",
+        "script_text": "lctx is a local context aggregator that empowers AI coding agents like Claude Code, Cursor, and Gemini CLI. It manages your git repositories, documentation, and other local files, and spawns isolated subagents to query them. \n\nUnlike remote context providers, lctx gives you full transparency into the sources your agent accesses. You can pin to specific versions, access private repositories, and refine the context for each request. This level of control is crucial for use cases that require reliable, auditable context.\n\nlctx works as a standalone CLI tool or as an MCP server, seamlessly integrating with your existing AI coding workflow.",
+        "screenshot_path": "assets/screenshots/luwojtaszek_lctx_github.png",
+        "img_path": "assets/luwojtaszek_lctx_screen.png",
+        "audio_path": "assets/luwojtaszek_lctx_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/luwojtaszek_lctx_short.png"
+    },
+    {
+        "id": "openclaw_skills",
+        "name": "skills",
+        "github_url": "https://github.com/openclaw/skills",
+        "script_text": "This project archives all versions of skills from the clawdhub.com platform. By storing this data, we preserve the history and evolution of these skills over time. This unique implementation allows developers to analyze how skills have changed, identify trends, and potentially uncover security vulnerabilities. While we retain these skills for further examination, we recommend users download directly from the clawdhub.com site for the safest experience. This historical archive provides valuable insights for those studying the development and usage of skills within the clawdhub ecosystem.",
+        "screenshot_path": "assets/screenshots/openclaw_skills_github.png",
+        "img_path": "assets/openclaw_skills_screen.png",
+        "audio_path": "assets/openclaw_skills_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/openclaw_skills_short.png"
+    },
+    {
+        "id": "fergana_labs_scheduled",
+        "name": "scheduled",
+        "github_url": "https://github.com/Fergana-Labs/scheduled",
+        "script_text": "Scheduled is an AI scheduling assistant that integrates directly with your Gmail. When someone emails to set up a meeting, Scheduled reads the thread, checks your calendar, and drafts a reply with proposed times - all without your involvement. It learns your scheduling preferences and writing style to personalize the drafts. Scheduled meets you where you already work, with no new app to learn or configuration to maintain. For knowledge workers who struggle with the overhead of scheduling, Scheduled automates this tedious but necessary task, freeing you to focus on higher-impact work.",
+        "screenshot_path": "assets/screenshots/fergana_labs_scheduled_github.png",
+        "img_path": "assets/fergana_labs_scheduled_screen.png",
+        "audio_path": "assets/fergana_labs_scheduled_audio.mp3",
+        "short_img_path": "deliveries/04-18/shorts/fergana_labs_scheduled_short.png"
     }
 ]

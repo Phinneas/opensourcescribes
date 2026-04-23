@@ -381,5 +381,137 @@
       "timestamp": "2026-04-17T13:14:45.514588"
     },
     "timestamp": "2026-04-17T13:14:45.514601"
+  },
+  "vercel/workflow": {
+    "data": {
+      "owner": "vercel",
+      "repo": "workflow",
+      "stars": 1914,
+      "forks": 236,
+      "language": "TypeScript",
+      "description": "Workflow SDK: Build durable, reliable, and observable apps and AI Agents in TypeScript",
+      "topics": [],
+      "url": "https://github.com/vercel/workflow",
+      "timestamp": "2026-04-17T20:08:04.153389"
+    },
+    "timestamp": "2026-04-17T20:08:04.153396"
+  },
+  "guyowen/typegraph-mcp": {
+    "data": {
+      "owner": "guyowen",
+      "repo": "typegraph-mcp",
+      "stars": 8,
+      "forks": 2,
+      "language": "TypeScript",
+      "description": "MCP server for type-aware TypeScript navigation \u2014 14 semantic tools for AI coding agents",
+      "topics": [],
+      "url": "https://github.com/guyowen/typegraph-mcp",
+      "timestamp": "2026-04-17T20:15:52.529266"
+    },
+    "timestamp": "2026-04-17T20:15:52.529283"
+  },
+  "saaslabsco/justcall-mcp-server": {
+    "data": {
+      "owner": "saaslabsco",
+      "repo": "justcall-mcp-server",
+      "stars": 26,
+      "forks": 3,
+      "language": "HTML",
+      "description": "JustCall's Official MCP Server",
+      "topics": [
+        "ai",
+        "mcp",
+        "mcp-server",
+        "voice-agents"
+      ],
+      "url": "https://github.com/saaslabsco/justcall-mcp-server",
+      "timestamp": "2026-04-17T20:15:57.799977"
+    },
+    "timestamp": "2026-04-17T20:15:57.799987"
+  },
+  "mcp360/unified-gateway-mcp": {
+    "data": {
+      "owner": "mcp360",
+      "repo": "unified-gateway-mcp",
+      "stars": 20,
+      "forks": 3,
+      "language": "TypeScript",
+      "description": "Unified MCP Gateway Platform, Marketplace & Custom MCPs",
+      "topics": [
+        "agent-tools",
+        "agentic-ai",
+        "ai-agents",
+        "claude"
+      ],
+      "url": "https://github.com/mcp360/unified-gateway-mcp",
+      "timestamp": "2026-04-17T20:16:01.756670"
+    },
+    "timestamp": "2026-04-17T20:16:01.756678"
+  },
+  "Fergana-Labs/scheduled": {
+    "data": {
+      "owner": "Fergana-Labs",
+      "repo": "scheduled",
+      "stars": 15,
+      "forks": 1,
+      "language": "Python",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/Fergana-Labs/scheduled",
+      "timestamp": "2026-04-18T21:52:30.837983"
+    },
+    "timestamp": "2026-04-18T21:52:30.838012"
+  },
+  "521xueweihan/HelloGitHub": {
+    "data": {
+      "owner": "521xueweihan",
+      "repo": "HelloGitHub",
+      "stars": 151826,
+      "forks": 11556,
+      "language": "Python",
+      "description": ":octocat: \u5206\u4eab GitHub \u4e0a\u6709\u8da3\u3001\u5165\u95e8\u7ea7\u7684\u5f00\u6e90\u9879\u76ee\u3002Share interesting, entry-level open source projects on GitHub.",
+      "topics": [
+        "awesome",
+        "github",
+        "hellogithub",
+        "python"
+      ],
+      "url": "https://github.com/521xueweihan/HelloGitHub",
+      "timestamp": "2026-04-18T22:28:08.713084"
+    },
+    "timestamp": "2026-04-18T22:28:08.713100"
+  },
+  "razzant/ouroboros": {
+    "data": {
+      "owner": "razzant",
+      "repo": "ouroboros",
+      "stars": 506,
+      "forks": 487,
+      "language": "Python",
+      "description": "Ouroboros \u2014 self-creating AI agent. Born Feb 16, 2026.",
+      "topics": [],
+      "url": "https://github.com/razzant/ouroboros",
+      "timestamp": "2026-04-18T22:28:18.007223"
+    },
+    "timestamp": "2026-04-18T22:28:18.007238"
+  },
+  "stahldavid/sensegrep": {
+    "data": {
+      "owner": "stahldavid",
+      "repo": "sensegrep",
+      "stars": 0,
+      "forks": 0,
+      "language": "TypeScript",
+      "description": "Semantic + structural code search for AI-native development",
+      "topics": [
+        "ai-agents",
+        "code-search",
+        "developer-tools",
+        "mcp"
+      ],
+      "url": "https://github.com/stahldavid/sensegrep",
+      "timestamp": "2026-04-18T22:28:33.527587"
+    },
+    "timestamp": "2026-04-18T22:28:33.527598"
   }
 }

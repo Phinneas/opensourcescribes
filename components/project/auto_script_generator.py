@@ -111,6 +111,49 @@ def fetch_generic_data(url: str) -> Optional[Dict]:
         print(f"❌ Failed to fetch generic data: {e}")
         return None
 
+def fetch_clickhouse_stats(owner: str, repo: str) -> Optional[str]:
+    """
+    Fetch trending/velocity metrics for a repository using the public ClickHouse GitTrends API.
+    Provides nuance to the project description by pulling actual 30-day velocity.
+    """
+    print(f"📊 Fetching ClickHouse metrics for {owner}/{repo}...")
+    try:
+        query = f"""
+            SELECT 
+                countIf(event_type = 'PullRequestEvent') as pr_events,
+                countIf(event_type = 'IssuesEvent') as issue_events,
+                uniqExact(actor_login) as active_contributors
+            FROM github_events 
+            WHERE repo_name = '{owner}/{repo}' 
+              AND created_at > now() - INTERVAL 30 DAY
+            FORMAT JSON
+        """
+        response = requests.post(
+            'https://play.clickhouse.com/?user=explorer',
+            data=query.strip(),
+            timeout=5
+        )
+        if response.status_code == 200:
+            data = response.json()
+            if data and "data" in data and len(data["data"]) > 0:
+                stats = data["data"][0]
+                prs = int(stats.get("pr_events", 0))
+                issues = int(stats.get("issue_events", 0))
+                contributors = int(stats.get("active_contributors", 0))
+                
+                # If project has no recent activity, return empty to not clutter the prompt
+                if prs == 0 and issues == 0:
+                    return ""
+                    
+                context = f"Project Velocity (Last 30 Days): The project has had great momentum with {contributors} active contributors interacting with {prs} PR events and {issues} issue events recently."
+                print(f"   ✅ ClickHouse stats found: {contributors} contributors, {prs} PRs")
+                return context
+    except Exception as e:
+        print(f"   ⚠️ ClickHouse stats fetch skipped/failed (Timeout/Error: {e})")
+        
+    return ""
+
+
 
 def fetch_readme(owner: str, repo: str) -> Optional[str]:
     """
@@ -315,6 +358,16 @@ def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     # Fix multiple spaces
     script = re.sub(r'\s+', ' ', script).strip()
     
+    # Post-process to replace first-person pronouns with generalized second-person
+    script = re.sub(r"\bI\b", "you", script)
+    script = re.sub(r"\bI'm\b", "you're", script, flags=re.IGNORECASE)
+    script = re.sub(r"\bI've\b", "you've", script, flags=re.IGNORECASE)
+    script = re.sub(r"\bI'll\b", "you'll", script, flags=re.IGNORECASE)
+    script = re.sub(r"\bI'd\b", "you'd", script, flags=re.IGNORECASE)
+    script = re.sub(r"\b[mM]y\b", "your", script)
+    script = re.sub(r"\b[wW]e\b", "you", script)
+    script = re.sub(r"\b[mM]e\b", "you", script)
+    
     return script
 
 
@@ -357,30 +410,37 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         # Trim README to prevent token overflow (approx 8000 chars)
         readme_content = readme_content[:8000]
         
+        # Fetch optional nuance stats from ClickHouse
+        ch_stats_text = ""
+        if 'owner' in repo_data and 'repo' in repo_data:
+            ch_stats_text = fetch_clickhouse_stats(repo_data['owner'], repo_data['repo'])
+            
         prompt = f"""
     Write a short, engineering-focused video script (approx {TARGET_WORDS} words) for a YouTube video about this project:
     
     Project Name: {repo_data['name']}
     Description: {repo_data['description']}
+    {ch_stats_text}
     
     Source Content:
     {readme_content}
     
     Requirements:
     1. Start immediately with what the project DOES. No "Hey guys" or intro.
-    2. Explain the technical utility and unique implementation.
+    2. Explain the technical utility and unique implementation. If project velocity stats are provided above, weave that momentum gracefully into the script.
     3. Use a direct, informative tone. Avoid marketing hype.
     4. End with a short sentence on the primary use case.
     5. DO NOT use these words: Robust, Gems, Supercharge, Game changer, Dive in, Revolutionary, Unlock, Pique, Workflow.
     6. DO NOT mention specific star counts or fork counts.
     7. DO NOT use emojis or special characters that break TTS.
     8. KEEP IT UNDER {MAX_WORDS} WORDS.
-    """
-
+    9. NEVER use first-person pronouns like 'I', 'me', 'my', or 'we'. Always use the generalized 'you', 'your', 'developers', or 'users' instead. The script is spoken by an impartial narrator.
+        """
+        
         print("🤖 Generating script with Claude...")
         
         message = client.messages.create(
-            model="claude-3-haiku-20240307",
+            model="claude-4-5-latest",
             max_tokens=1024,
             messages=[
                 {"role": "user", "content": prompt}
@@ -388,6 +448,17 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         )
         
         script = message.content[0].text.strip()
+        
+        # Post-process to aggressively catch any slipping first-person pronouns
+        import re
+        script = re.sub(r"\bI\b", "you", script)
+        script = re.sub(r"\bI'm\b", "you're", script, flags=re.IGNORECASE)
+        script = re.sub(r"\bI've\b", "you've", script, flags=re.IGNORECASE)
+        script = re.sub(r"\bI'll\b", "you'll", script, flags=re.IGNORECASE)
+        script = re.sub(r"\bI'd\b", "you'd", script, flags=re.IGNORECASE)
+        script = re.sub(r"\b[mM]y\b", "your", script)
+        script = re.sub(r"\b[wW]e\b", "you", script)
+        script = re.sub(r"\b[mM]e\b", "you", script)
         
         # Validate word count
         word_count = len(script.split())

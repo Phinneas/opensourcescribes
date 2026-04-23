@@ -31,6 +31,7 @@ from typing import List, Optional, Dict
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from discovery.discovery_sources import DiscoverySource, RepoCandidate
+from discovery.clickhouse_discovery import ClickHouseGitTrendsSource
 from core.db import DB
 
 # ---------------------------------------------------------------------------
@@ -383,11 +384,14 @@ class ExaDiscovery:
 
         all_candidates: List[RepoCandidate] = []
 
-        if mode in ("keyword", "both"):
+        if mode in ("keyword", "both", "all"):
             all_candidates.extend(ExaKeywordSource(self._api_key).fetch(seen))
 
-        if mode in ("similar", "both"):
+        if mode in ("similar", "both", "all"):
             all_candidates.extend(ExaSimilarSource(self._api_key, self._seeds).fetch(seen))
+            
+        if mode in ("clickhouse", "both", "all"):
+            all_candidates.extend(ClickHouseGitTrendsSource().fetch(seen))
 
         # Global dedup across both strategies
         seen_keys: set = set()
@@ -486,7 +490,7 @@ class ExaDiscovery:
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description="Exa auto-discovery → full pipeline")
-    p.add_argument("--mode", choices=["keyword", "similar", "both"], default="both")
+    p.add_argument("--mode", choices=["keyword", "similar", "clickhouse", "both", "all"], default="all")
     p.add_argument("--count", type=int, default=BATCH_SIZE,
                    help=f"Repos per batch (default: {BATCH_SIZE})")
     p.add_argument("--discover-only", action="store_true",

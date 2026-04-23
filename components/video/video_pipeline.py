@@ -211,22 +211,55 @@ class VideoPipeline(IVideoPipeline):
     
     def _generate_intro_script(self) -> str:
         """Generate intro narration script."""
-        names = [p.get('name', '') for p in self.projects]
+        import random
+        # Extract names and topics to make the intro dynamic
+        names = [p.get('name', '') for p in self.projects if p.get('name')]
+        all_topics = []
+        for p in self.projects:
+            topics = p.get('topics', [])
+            if isinstance(topics, list):
+                all_topics.extend(topics)
+        
+        # Get unique valid topics over length 3
+        unique_topics = list(set([t for t in all_topics if len(t) > 3]))
+        
         n = len(names)
-        
-        if n == 1:
-            name_list = names[0]
-        elif n <= 3:
-            name_list = ", ".join(names[:-1]) + f" and {names[-1]}"
+        if n == 0:
+            return "Welcome to OpenSourceScribes. Let's explore some new open source projects. Let's get into it."
+            
+        # Randomly choose whether to mention projects (70% chance) or topics (30% chance)
+        if unique_topics and random.random() > 0.7:
+            sample_size = min(len(unique_topics), random.randint(2, 3))
+            selected = random.sample(unique_topics, sample_size)
+            if sample_size == 1:
+                item_list = selected[0]
+            elif sample_size == 2:
+                item_list = f"{selected[0]} and {selected[1]}"
+            else:
+                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
+                
+            return (
+                f"Welcome to OpenSourceScribes. "
+                f"This week we are covering {n} new open source projects. "
+                f"With focuses on {item_list}, and more. "
+                f"Let's get into it."
+            )
         else:
-            name_list = f"{names[0]}, {names[1]}, {names[2]}, and {n - 3} more"
-        
-        return (
-            f"Welcome to OpenSourceScribes. "
-            f"This week: {n} open source projects. "
-            f"Including {name_list}. "
-            f"Let's get into it."
-        )
+            sample_size = min(n, random.randint(2, 3))
+            selected = random.sample(names, sample_size)
+            if sample_size == 1:
+                item_list = selected[0]
+            elif sample_size == 2:
+                item_list = f"{selected[0]} and {selected[1]}"
+            else:
+                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
+            
+            return (
+                f"Welcome to OpenSourceScribes. "
+                f"This week we have {n} fresh open source projects. "
+                f"Including {item_list}, among others. "
+                f"Let's get into it."
+            )
     
     def _cleanup_temp_files(self) -> None:
         """Clean up temporary files."""

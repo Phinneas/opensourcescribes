@@ -13,6 +13,9 @@ import random
 import math
 from datetime import datetime
 from pathlib import Path
+
+from PIL import Image as _PILImage
+_PILImage.MAX_IMAGE_PIXELS = 300_000_000
 from gtts import gTTS
 from typing import Optional, Dict
 
@@ -1236,31 +1239,74 @@ class VideoSuiteAutomated:
         from the actual project list for this run.
         Both change every episode so no two intros are identical.
         """
-        names = [p['name'] for p in self.projects]
+        import random
+        # Extract names and topics to make the intro dynamic
+        names = [p.get('name', '') for p in self.projects if p.get('name')]
+        all_topics = []
+        for p in self.projects:
+            topics = p.get('topics', [])
+            if isinstance(topics, list):
+                all_topics.extend(topics)
+        
+        # Get unique valid topics over length 3
+        unique_topics = list(set([t for t in all_topics if len(t) > 3]))
+        
         n = len(names)
         date_str = datetime.now().strftime("%B %d")
 
-        # Episode title: date + first two project names
-        if n <= 2:
-            featured = " & ".join(names)
+        # Episode title: random selection of 2 project names or topics
+        if unique_topics and random.random() > 0.5:
+            featured_items = random.sample(unique_topics, min(len(unique_topics), 2))
+            if len(featured_items) <= 2:
+                featured = " & ".join(featured_items)
+            else:
+                featured = f"{featured_items[0]}, {featured_items[1]} & {len(unique_topics) - 2} More"
         else:
-            featured = f"{names[0]}, {names[1]} & {n - 2} More"
+            featured_items = random.sample(names, min(len(names), 2))
+            if n <= 2:
+                featured = " & ".join(featured_items)
+            else:
+                featured = f"{featured_items[0]}, {featured_items[1]} & {n - 2} More"
+        
         episode_title = f"{date_str} — {featured}"
 
-        # Narration: name the first three projects explicitly
-        if n == 1:
-            name_list = names[0]
-        elif n <= 3:
-            name_list = ", ".join(names[:-1]) + f" and {names[-1]}"
-        else:
-            name_list = f"{names[0]}, {names[1]}, {names[2]}, and {n - 3} more"
+        # Narration: random selection of 2-3 projects or topics
+        if n == 0:
+            return "Welcome to OpenSourceScribes. Let's explore some new open source projects. Let's get into it.", episode_title
 
-        script = (
-            f"Welcome to OpenSourceScribes. "
-            f"This week: {n} open source projects. "
-            f"Including {name_list}. "
-            f"Let's get into it."
-        )
+        # Randomly choose whether to mention projects (70% chance) or topics (30% chance)
+        if unique_topics and random.random() > 0.7:
+            sample_size = min(len(unique_topics), random.randint(2, 3))
+            selected = random.sample(unique_topics, sample_size)
+            if sample_size == 1:
+                item_list = selected[0]
+            elif sample_size == 2:
+                item_list = f"{selected[0]} and {selected[1]}"
+            else:
+                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
+                
+            script = (
+                f"Welcome to OpenSourceScribes. "
+                f"This week we are covering {n} new open source projects. "
+                f"With focuses on {item_list}, and more. "
+                f"Let's get into it."
+            )
+        else:
+            sample_size = min(n, random.randint(2, 3))
+            selected = random.sample(names, sample_size)
+            if sample_size == 1:
+                item_list = selected[0]
+            elif sample_size == 2:
+                item_list = f"{selected[0]} and {selected[1]}"
+            else:
+                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
+            
+            script = (
+                f"Welcome to OpenSourceScribes. "
+                f"This week we have {n} fresh open source projects. "
+                f"Including {item_list}, among others. "
+                f"Let's get into it."
+            )
 
         return script, episode_title
 

@@ -1,14 +1,104 @@
 [
     {
-        "id": "glyphlang_glyph",
-        "name": "GlyphLang",
-        "github_url": "https://github.com/glyphlang/glyph",
-        "script_text": "**GlyphLang: An AI-Optimized Programming Language**\n\nGlyphLang is a backend programming language designed from the ground up to be efficient for AI generation. By minimizing boilerplate, built-in server and database support, and a consistent syntax, GlyphLang reduces token usage by 23% compared to FastAPI. The strict type system and opinionated design enable production-ready APIs with fewer files and less maintenance. With first-class CLI, LSP, and VS Code support, GlyphLang is a great fit for developers building AI-powered APIs and internal tools who want to lower their LLM costs and ship faster."
+        "id": "agentlayer_io_agentclick",
+        "name": "AgentClick",
+        "github_url": "https://github.com/agentlayer-io/AgentClick",
+        "script_text": "AgentClick is a TypeScript-based project that a rich web ui layer for ai agent interactions human-in-the-loop, click-to-edit, preference learning. built for claude code, codex and openclaw.. Human-in-the-loop review UI for autonomous AI agents Agents propose actions, users inspect and edit in a browser UI, then the agent continues. Most agents still interact like this User Terminal Agent Action AgentClick adds a review step Agent proposes Browser UI opens User inspects and Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate AgentClick into their workflows to solve complex technical challenges more efficiently. Check out AgentClick if you're working in this space."
     },
     {
-        "id": "jadenblack_neurolink",
-        "name": "neurolink",
-        "github_url": "https://github.com/jadenblack/neurolink",
-        "script_text": "NeuroLink is the universal AI development platform that unifies access to 12 major providers and over 100 models. Built for enterprise-grade AI integration, it provides a consistent API, production-ready tooling, and an opinionated factory architecture. \n\nWith NeuroLink, you can switch between AI providers with a single parameter change, leverage 64+ built-in tools and MCP servers, and deploy with confidence using features like Redis memory and multi-provider failover. The platform is available as both a TypeScript SDK and a professional CLI, empowering teams to build, test, and deploy AI applications quickly.\n\nWhether you're working with OpenAI, Anthropic, Google, or any other supported provider, NeuroLink gives you a single, powerful interface to integrate AI into your applications."
+        "id": "couzic_ts_graph_mcp",
+        "name": "ts-graph-mcp",
+        "github_url": "https://github.com/couzic/ts-graph-mcp",
+        "script_text": "ts-graph-mcp is a TypeScript-based project an open-source tool available on GitHub. A TypeScript code graph tool that extracts code structure into a queryable database, with MCP integration for AI coding agents. ts-graph parses TypeScript source code using AST analysis and builds a graph database of your codebase structure. The graph captures code symbols (functions, classes, inter Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate ts-graph-mcp into their workflows to solve complex technical challenges more efficiently. Check out ts-graph-mcp if you're working in this space."
+    },
+    {
+        "id": "fastprod_contextengine",
+        "name": "ContextEngine",
+        "github_url": "https://github.com/FASTPROD/ContextEngine",
+        "script_text": "ContextEngine is a TypeScript-based project that mcp server ai agents that remember across sessions. zero api keys, 100 local.. Persistent memory and mechanical enforcement for AI coding agents so they stop repeating your mistakes. AI coding agents are powerful but they forget everything between sessions. They repeat mistakes you've already solved, skip commit discipline, and ignore the docs they wrote yesterday. Context This project focuses on ai-agents, claude-desktop, cursor, knowledge-base, local-first, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate ContextEngine into their workflows to build high-performance APIs and backend services. Check out ContextEngine if you're working in this space."
+    },
+    {
+        "id": "ttwthomas_nanogpt",
+        "name": "nanogpt",
+        "github_url": "https://github.com/ttwthomas/nanogpt",
+        "script_text": "nanogpt is a Python-based project that fork of karparthy's nanogpt with custom datasets. Because the code is so simple, it is very easy to hack to your needs, train new models from scratch, or finetune pretrained checkpoints (e.g. biggest one currently available as a starting point would be the GPT-2 1.3B model from OpenAI). Dependencies pip install transformers for huggingface transfo Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate nanogpt into their workflows to manage and process data more effectively. Check out nanogpt if you're working in this space."
+    },
+    {
+        "id": "codeaashu_claude_code",
+        "name": "claude-code",
+        "github_url": "https://github.com/codeaashu/claude-code",
+        "script_text": "claude-code is a TypeScript-based project that claude code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows - all through natural language commands.. The full source code of Anthropic's Claude Code CLI, leaked on March 31, 2026 Spend less time reading code, more time building. How It Leaked What Is Claude Code? Documentation Explore with MCP Server Directory Structure Architecture Tool System Command System Service Layer Bridge System Permission This project focuses on claude, claude-ai, claude-code, claude-code-leaked, claude-code-skill, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate claude-code into their workflows to solve complex technical challenges more efficiently. Check out claude-code if you're working in this space."
+    },
+    {
+        "id": "fergana_labs_scheduler",
+        "name": "scheduled",
+        "github_url": "https://github.com/Fergana-Labs/scheduler",
+        "script_text": "scheduled is a Python-based project an open-source tool available on GitHub. Open source Calendly, but AI. Scheduled is an AI scheduling agent that lives in your Gmail. When someone emails you to set up a meeting, Scheduled reads the thread, checks your calendar for availability, and drafts a reply with proposed times, all without you lifting a finger. You review the draft a Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate scheduled into their workflows to solve complex technical challenges more efficiently. Check out scheduled if you're working in this space."
+    },
+    {
+        "id": "flexaihq_nanogpt",
+        "name": "nanoGPT",
+        "github_url": "https://github.com/flexaihq/nanoGPT",
+        "script_text": "nanoGPT is a Python-based project that the simplest, fastest repository for training finetuning medium-sized gpts.. Because the code is so simple, it is very easy to hack to your needs, train new models from scratch, or finetune pretrained checkpoints (e.g. biggest one currently available as a starting point would be the GPT-2 1.3B model from OpenAI). pip install torch numpy transformers datasets tiktoken wandb t Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate nanoGPT into their workflows to improve their testing strategies and code quality. Check out nanoGPT if you're working in this space."
+    },
+    {
+        "id": "cxong_drunkenviking",
+        "name": "DrunkenViking",
+        "github_url": "https://github.com/cxong/DrunkenViking",
+        "script_text": "DrunkenViking is a JavaScript-based project that top-down puzzle game for mini ld 53. Play it online http congusbongus.itch.io drunken-viking This project focuses on browser-game, javascript, phaserjs, pixel-art, puzzle-game, providing developers with specialized tools and capabilities in these areas. Built with JavaScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate DrunkenViking into their workflows to solve complex technical challenges more efficiently. Check out DrunkenViking if you're working in this space."
+    },
+    {
+        "id": "mudler_localai",
+        "name": "LocalAI",
+        "github_url": "https://github.com/mudler/LocalAI",
+        "script_text": "LocalAI is a Go-based project that localai is the open-source ai engine. run any model - llms, vision, voice, image, video - on any hardware. no gpu required.. LocalAI is the open-source AI engine. Run any model - LLMs, vision, voice, image, video - on any hardware. No GPU required. Drop-in API compatibility OpenAI, Anthropic, ElevenLabs APIs 36 backends llama.cpp, vLLM, transformers, whisper, diffusers, MLX... Any hardware NVIDIA, AMD, Intel, Apple This project focuses on agents, ai, api, audio-generation, decentralized, providing developers with specialized tools and capabilities in these areas. Built with Go, it leverages the language's strengths to deliver reliable performance. Developers can integrate LocalAI into their workflows to solve complex technical challenges more efficiently. LocalAI is worth exploring for your next project."
+    },
+    {
+        "id": "jackchen_me_open_multi_agent",
+        "name": "open-multi-agent",
+        "github_url": "https://github.com/JackChen-me/open-multi-agent",
+        "script_text": "open-multi-agent is a TypeScript-based project that typescript multi-agent orchestration engine one runteam() call from goal to result. multi-model teams, auto task decomposition, parallel execution. 3 runtime dependencies.. The lightweight multi-agent orchestration engine for TypeScript. Three runtime dependencies, zero config, goal to result in one runTeam() call. CrewAI is Python. LangGraph makes you draw the graph by hand. open-multi-agent is the npm install you drop into an existing Node.js backend when you need a This project focuses on agent-framework, ai-agents, anthropic, claude, deepseek, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate open-multi-agent into their workflows to solve complex technical challenges more efficiently. open-multi-agent is worth exploring for your next project."
+    },
+    {
+        "id": "anthropics_claude_code_sdk_python",
+        "name": "claude-agent-sdk-python",
+        "github_url": "https://github.com/anthropics/claude-code-sdk-python",
+        "script_text": "claude-agent-sdk-python is a Python-based project an open-source tool available on GitHub. pip install claude-agent-sdk Prerequisites Python 3.10 Note The Claude Code CLI is automatically bundled with the package - no separate installation required! The SDK will use the bundled CLI by default. If you prefer to use a system-wide installation or a specific version, you can Install Claud Built with Python, it leverages the language's strengths to deliver reliable performance. Developers can integrate claude-agent-sdk-python into their workflows to solve complex technical challenges more efficiently. claude-agent-sdk-python is worth exploring for your next project."
+    },
+    {
+        "id": "vikingcode_vikingcode.github.io",
+        "name": "vikingcode.github.io",
+        "github_url": "https://github.com/vikingcode/vikingcode.github.io",
+        "script_text": "vikingcode.github.io is a HTML-based project an open-source tool available on GitHub. Built with HTML, it leverages the language's strengths to deliver reliable performance. Developers can integrate vikingcode.github.io into their workflows to solve complex technical challenges more efficiently. Check out vikingcode.github.io if you're working in this space."
+    },
+    {
+        "id": "anthropics_anthropic_sdk_go",
+        "name": "anthropic-sdk-go",
+        "github_url": "https://github.com/anthropics/anthropic-sdk-go",
+        "script_text": "anthropic-sdk-go is a Go-based project that access to anthropic's safety-first language model apis via go. \"github.com anthropics anthropic-sdk-go\" imported as anthropic Or explicitly add the dependency go get -u 'github.com anthropics anthropic-sdk-go v1.37.0' package main \"github.com anthropics anthropic-sdk-go\" \"github.com anthropics anthropic-sdk-go option\" func main() client anthropic.NewCl Built with Go, it leverages the language's strengths to deliver reliable performance. Developers can integrate anthropic-sdk-go into their workflows to build high-performance APIs and backend services. Check out anthropic-sdk-go if you're working in this space."
+    },
+    {
+        "id": "zhijiewong_openharness",
+        "name": "openharness",
+        "github_url": "https://github.com/zhijiewong/openharness",
+        "script_text": "openharness is a TypeScript-based project that open source local terminal cli with any llm. ( ) w (( )) ( ) . . ))(( AI coding agent in your terminal. Works wit This project focuses on ai, cli, coding-agent, llm, ollama, providing developers with specialized tools and capabilities in these areas. Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate openharness into their workflows to solve complex technical challenges more efficiently. Check out openharness if you're working in this space."
+    },
+    {
+        "id": "ruanyf_weekly",
+        "name": "weekly",
+        "github_url": "https://github.com/ruanyf/weekly",
+        "script_text": "weekly is that . 393 392 axios 391 AI 390 389 388 387 386 AI 385 384 383 AI 382 381 AI 380 Developers can integrate weekly into their workflows to solve complex technical challenges more efficiently. weekly is worth exploring for your next project."
+    },
+    {
+        "id": "geyang_nanogpt",
+        "name": "nanoGPT",
+        "github_url": "https://github.com/geyang/nanoGPT",
+        "script_text": "nanoGPT is a Jupyter Notebook-based project that adapted version of nanogpt for teaching. Because the code is so simple, it is very easy to hack to your needs, train new models from scratch, or finetune pretrained checkpoints (e.g. biggest one currently available as a starting point would be the GPT-2 1.3B model from OpenAI). Dependencies pip install transformers for huggingface transfo Built with Jupyter Notebook, it leverages the language's strengths to deliver reliable performance. Developers can integrate nanoGPT into their workflows to solve complex technical challenges more efficiently. Check out nanoGPT if you're working in this space."
+    },
+    {
+        "id": "hangsman_claude_code_source",
+        "name": "claude-code-source",
+        "github_url": "https://github.com/hangsman/claude-code-source",
+        "script_text": "claude-code-source is a TypeScript-based project that claude code source map v2.1.88. npm https img.shields.io npm v anthropic-ai claude-code.svg?style flat-square Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows -- all through n Built with TypeScript, it leverages the language's strengths to deliver reliable performance. Developers can integrate claude-code-source into their workflows to solve complex technical challenges more efficiently. Check out claude-code-source if you're working in this space."
     }
 ]

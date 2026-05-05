@@ -513,5 +513,179 @@
       "timestamp": "2026-04-18T22:28:33.527587"
     },
     "timestamp": "2026-04-18T22:28:33.527598"
+  },
+  "Fergana-Labs/scheduler": {
+    "data": {
+      "owner": "Fergana-Labs",
+      "repo": "scheduler",
+      "stars": 15,
+      "forks": 1,
+      "language": "Python",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/Fergana-Labs/scheduler",
+      "timestamp": "2026-04-27T11:10:10.892154"
+    },
+    "timestamp": "2026-04-27T11:10:10.892168"
+  },
+  "anthropics/anthropic-sdk-go": {
+    "data": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-go",
+      "stars": 996,
+      "forks": 155,
+      "language": "Go",
+      "description": "Access to Anthropic's safety-first language model APIs via Go",
+      "topics": [],
+      "url": "https://github.com/anthropics/anthropic-sdk-go",
+      "timestamp": "2026-04-23T12:57:16.188047"
+    },
+    "timestamp": "2026-04-23T12:57:16.188064"
+  },
+  "JackChen-me/open-multi-agent": {
+    "data": {
+      "owner": "JackChen-me",
+      "repo": "open-multi-agent",
+      "stars": 5853,
+      "forks": 2298,
+      "language": "TypeScript",
+      "description": "TypeScript multi-agent orchestration engine \u2014 one runTeam() call from goal to result. Multi-model teams, auto task decomposition, parallel execution. 3 runtime dependencies.",
+      "topics": [
+        "agent-framework",
+        "ai-agents",
+        "anthropic",
+        "claude"
+      ],
+      "url": "https://github.com/JackChen-me/open-multi-agent",
+      "timestamp": "2026-04-23T12:57:22.941443"
+    },
+    "timestamp": "2026-04-23T12:57:22.941457"
+  },
+  "geyang/nanoGPT": {
+    "data": {
+      "owner": "geyang",
+      "repo": "nanoGPT",
+      "stars": 8,
+      "forks": 1,
+      "language": "Jupyter Notebook",
+      "description": "Adapted version of nanoGPT for teaching",
+      "topics": [],
+      "url": "https://github.com/geyang/nanoGPT",
+      "timestamp": "2026-04-23T12:57:30.823212"
+    },
+    "timestamp": "2026-04-23T12:57:30.823228"
+  },
+  "agentlayer-io/AgentClick": {
+    "data": {
+      "owner": "agentlayer-io",
+      "repo": "AgentClick",
+      "stars": 22,
+      "forks": 0,
+      "language": "TypeScript",
+      "description": "A rich web UI layer for AI agent interactions \u2014 human-in-the-loop, click-to-edit, preference learning. Built for Claude Code, CodeX and OpenClaw.",
+      "topics": [],
+      "url": "https://github.com/agentlayer-io/AgentClick",
+      "timestamp": "2026-04-26T21:25:58.697562"
+    },
+    "timestamp": "2026-04-26T21:25:58.697586"
+  },
+  "vikingcode/vikingcode.github.io": {
+    "data": {
+      "owner": "vikingcode",
+      "repo": "vikingcode.github.io",
+      "stars": 3,
+      "forks": 1,
+      "language": "HTML",
+      "description": null,
+      "topics": [],
+      "url": "https://github.com/vikingcode/vikingcode.github.io",
+      "timestamp": "2026-04-27T11:09:51.952445"
+    },
+    "timestamp": "2026-04-27T11:09:51.952460"
+  },
+  "ruanyf/weekly": {
+    "data": {
+      "owner": "ruanyf",
+      "repo": "weekly",
+      "stars": 89636,
+      "forks": 4023,
+      "language": null,
+      "description": "\u79d1\u6280\u7231\u597d\u8005\u5468\u520a\uff0c\u6bcf\u5468\u4e94\u53d1\u5e03",
+      "topics": [],
+      "url": "https://github.com/ruanyf/weekly",
+      "timestamp": "2026-04-27T11:10:00.044825"
+    },
+    "timestamp": "2026-04-27T11:10:00.044841"
+  },
+  "StanHus/MiroFish": {
+    "data": {
+      "owner": "StanHus",
+      "repo": "MiroFish",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "description": "Simulating Students",
+      "topics": [],
+      "url": "https://github.com/StanHus/MiroFish",
+      "timestamp": "2026-04-29T16:57:09.835018"
+    },
+    "timestamp": "2026-04-29T16:57:09.835024"
+  },
+  "tidesdb/tidesdb": {
+    "data": {
+      "owner": "tidesdb",
+      "repo": "tidesdb",
+      "stars": 508,
+      "forks": 43,
+      "language": "C",
+      "description": "High-performance adaptive, durable, portable, transactional embeddable storage engine with optional tiered object storage for infinite scale. Designed for flash and RAM optimization.",
+      "topics": [
+        "acid",
+        "btree",
+        "c-library",
+        "database"
+      ],
+      "url": "https://github.com/tidesdb/tidesdb",
+      "timestamp": "2026-04-29T17:09:20.471266"
+    },
+    "timestamp": "2026-04-29T17:09:20.471285"
+  },
+  "google/adk-java": {
+    "data": {
+      "owner": "google",
+      "repo": "adk-java",
+      "stars": 1523,
+      "forks": 333,
+      "language": "Java",
+      "description": "An open-source, code-first Java toolkit for building, evaluating, and deploying sophisticated AI agents with flexibility and control.",
+      "topics": [
+        "agent",
+        "agentic",
+        "agentic-ai",
+        "agentic-workflow"
+      ],
+      "url": "https://github.com/google/adk-java",
+      "timestamp": "2026-04-29T17:09:29.551770"
+    },
+    "timestamp": "2026-04-29T17:09:29.551791"
+  },
+  "illegalstudio/context": {
+    "data": {
+      "owner": "illegalstudio",
+      "repo": "context",
+      "stars": 0,
+      "forks": 0,
+      "language": "TypeScript",
+      "description": "CLI tool that creates optimized context packs for AI coding assistants (Claude, Cursor, ChatGPT). Analyzes your codebase and extracts relevant files for any task.",
+      "topics": [
+        "ai",
+        "chatgpt",
+        "claude",
+        "claude-code"
+      ],
+      "url": "https://github.com/illegalstudio/context",
+      "timestamp": "2026-04-29T17:09:39.817400"
+    },
+    "timestamp": "2026-04-29T17:09:39.817423"
   }
 }

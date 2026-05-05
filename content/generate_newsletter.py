@@ -1,6 +1,6 @@
 """
-Generate Substack/Newsletter post from project data using Claude API
-Processes projects individually to ensure none are skipped.
+Generate Substack newsletter from project data using Claude API.
+Outputs clean, Substack-native plain text — paste directly, no reformatting needed.
 """
 
 import json
@@ -11,73 +11,102 @@ import anthropic
 # --- PROMPT TEMPLATES ---
 
 CLICHE_FILTER = """
-## 🚫 BANNED PHRASES (CRITICAL)
-Do NOT use: Robust, Gems, Hidden Gems, Supercharge, Dive in, Game changer, Revolutionary, Look no further, Unlock the potential, Elevate your workflow, Buckle up, Pique your interest, Treasure trove, Innovative, Cutting-edge, State of the art, Seamlessly integrate, Tired of X? Meet Y, Workflow.
+BANNED WORDS (do not use any of these): Robust, Gems, Hidden Gems, Supercharge, Dive in, Game changer, Revolutionary, Look no further, Unlock the potential, Elevate your workflow, Buckle up, Pique your interest, Treasure trove, Innovative, Cutting-edge, State of the art, Seamlessly integrate, Tired of X? Meet Y, Workflow.
 
-## ✍️ WRITING STYLE
-- ROI Focus: Explain how much time or effort this tool saves.
-- Direct Technical Analysis: Avoid marketing hype.
-- SHORT sentences (max 15 words). 
+WRITING STYLE:
+- Direct Technical Analysis. No marketing hype.
+- Short sentences (max 15 words each).
+- ROI focus: explain time or effort this saves.
+- DO NOT use any markdown: no #, *, **, ---, or backticks.
 """
 
-EDITORIAL_PROMPT = """You are the lead editor for the OpenSourceScribes Newsletter. 
-Write a technical editorial for "The Scribe's Digest: {n_projects} Open Source Discoveries".
+EDITORIAL_PROMPT = """You are the lead editor for OpenSourceScribes, a developer-focused newsletter.
+Write an opening editorial for this edition: "The Scribe's Digest: {n_projects} Open Source Discoveries."
 
 {cliche_filter}
 
-## PROJECTS IN THIS EDITION (STRICTLY USE THESE):
+Projects in this edition:
 {project_summaries}
 
-## PROMOTIONAL LINKS TO INCLUDE
-{promo_links}
-
-Write ONLY the editorial (150-200 words) and then append the PROMOTIONAL LINKS EXACTLY as provided. NO headers or special formatting symbols in the editorial text. Do not use '#' or '*'."""
-
+RULES:
+- 150-200 words maximum.
+- Plain text only. No markdown, no bullet points, no dashes, no symbols.
+- Opinionated and direct. One concrete observation beats a general one.
+- Do NOT write a thesis about open source. Get straight to what's interesting about this specific batch.
+- End with a single punchy line that sets up the project sections.
+"""
 
 PROJECT_SECTION_PROMPT = """You are the lead editor for OpenSourceScribes.
-Write a technical curation section for this project.
+Write a project spotlight section for this GitHub project.
 
 {cliche_filter}
 
-## PROJECT DATA
+Project details:
 Name: {name}
 GitHub: {url}
 Description: {description}
 
-## FORMATTING RULES
-1. Title: Project: {name}
-2. The TL;DR: (One-sentence technical summary)
-3. Technical Utility: (2-3 sentences of analysis)
-4. Stack: (Primary Language/Tech)
-5. Link: View on GitHub: {url}
-6. NO hashtags, headers, or asterisks (no #, **, or *). Use plain text only.
+OUTPUT FORMAT (use exactly this layout, plain text):
+{name}
+TL;DR: [one sentence technical summary]
+Why it matters: [2-3 sentences of direct technical analysis — specific problem it solves, what makes it worth using]
+Stack: [primary language/tech stack, comma-separated]
+GitHub: {url}
 
-Write ONLY this section.
+RULES:
+- Use the exact field labels above.
+- No markdown, no asterisks, no dashes, no bullet points.
+- Do not add headers or section titles beyond the project name on the first line.
+- Write ONLY this section, nothing else.
 """
 
-OUTRO_PROMPT = """You are the lead editor for OpenSourceScribes. 
-Write the technical closing sections.
+OUTRO_PROMPT = """You are the lead editor for OpenSourceScribes.
+Write the closing section for this newsletter edition.
 
 {cliche_filter}
 
-## TASK
-1. Implementation Pick: Highlight ONE tool from this list as the most practical for production: {project_names}.
-2. Closing: 1-2 sentences of practical advice.
-3. NO hashtags, headers, or asterisks formatting. Do not use '#' or '*'.
+Projects covered this edition:
+{project_names}
 
-Write ONLY this ending part."""
+OUTPUT FORMAT (plain text, no markdown):
+Write two paragraphs:
+1. "Implementation Pick:" — Name ONE tool from the list as the most practical for immediate production use. Give 2-3 specific reasons why.
+2. "Closing Thoughts:" — 1-2 sentences of concrete, practical advice for the reader.
+
+Then end with exactly this line:
+Which tool are you trying first? Let us know in the comments.
+
+RULES:
+- No markdown, no asterisks, no dashes, no headers.
+- Write ONLY these two paragraphs and the closing line.
+"""
+
+PROMO_LINKS = """\
+---
+
+Featured Newsletters and Resources
+
+FinOps Weekly — https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3
+The Multiverse School — https://themultiverseschool.substack.com?r=ykyfl
+Earth Conscious Life — https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr
+My MCP Shelf Directory — https://www.mymcpshelf.com/
+Pikapods with AWS Hosting Tutorial — https://www.salishseaconsulting.com/blog/pikapods/
+Firecrawl MCP Server — https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/
+
+---\
+"""
 
 # --- FUNCTIONS ---
 
 def get_client():
-    """Initialize Anthropic client"""
+    """Initialize Anthropic client from env or config.json."""
     api_key = os.environ.get('ANTHROPIC_API_KEY')
     if not api_key:
         try:
             with open('config.json', 'r') as f:
                 config = json.load(f)
             api_key = config.get('anthropic', {}).get('api_key')
-        except:
+        except Exception:
             pass
     if not api_key:
         print("❌ Anthropic API key not found")
@@ -85,107 +114,104 @@ def get_client():
     return anthropic.Anthropic(api_key=api_key)
 
 def load_projects():
-    """Load project data from JSON"""
-    data_file = 'posts_data.json'
-    if not os.path.exists(data_file):
-        data_file = 'posts_data_longform.json'
-    if not os.path.exists(data_file):
-        return None
-    with open(data_file, 'r') as f:
-        return json.load(f)
+    """Load project data from JSON."""
+    for data_file in ['posts_data.json', 'posts_data_longform.json']:
+        if os.path.exists(data_file):
+            with open(data_file, 'r') as f:
+                return json.load(f)
+    return None
 
-def call_claude(client, prompt, model="claude-3-haiku-20240307"):
-    """Helper to call Claude API"""
+def call_claude(client, prompt, model="claude-sonnet-4-6"):
+    """Call Claude API and return text response."""
     try:
         message = client.messages.create(
             model=model,
-            max_tokens=2048,
+            max_tokens=4096,
             messages=[{"role": "user", "content": prompt}]
         )
-        return message.content[0].text
+        return message.content[0].text.strip()
     except Exception as e:
-        print(f"⚠️ API Error: {e}")
+        print(f"  ⚠️  API Error: {e}")
         return ""
 
 def generate_full_newsletter(projects):
-    """Generate newsletter by assembling sections"""
+    """Assemble the full newsletter as Substack-ready plain text."""
     client = get_client()
-    if not client: return None
-    
-    project_summaries = "\n".join([f"- {p['name']}: {p.get('script_text', '')[:100]}..." for p in projects])
+    if not client:
+        return None
+
     n_projects = len(projects)
-    
-    full_content = []
-    
-    # Title
-    full_content.append(f"# The Scribe's Digest: {n_projects} Open Source Discoveries to Supercharge Your Week\n")
-    
-    PROMO_LINKS = (
-        "**Featured Newsletters & Resources**\n\n"
-        "* [FinOps Weekly](https://newsletter.finopsweekly.com/subscribe?ref=UkXVFz6Kl3)\n"
-        "* [The Multiverse School](https://themultiverseschool.substack.com?r=ykyfl)\n"
-        "* [Earth Conscious Life](https://earthconsciouslife.org/subscribe?ref=24gXUoAEbr)\n"
-        "* [My MCP Shelf Directory](https://www.mymcpshelf.com/)\n"
-        "* [Pikapods with AWS Hosting Tutorial](https://www.salishseaconsulting.com/blog/pikapods/)\n"
-        "* [Firecrawl MCP Server](https://www.salishseaconsulting.com/blog/firecrawl-mcp-server/)\n"
+    project_summaries = "\n".join(
+        [f"- {p['name']}: {p.get('script_text', p.get('description', ''))[:100]}..." for p in projects]
     )
+    project_names = ", ".join([p['name'] for p in projects])
+
+    sections = []
+
+    # Title — plain text, no markdown header
+    sections.append(f"The Scribe's Digest: {n_projects} Open Source Discoveries\n")
 
     # 1. Editorial
-    print(f"🖋️  Generating Newsletter Editorial...")
+    print("🖋️  Generating editorial...")
     editorial = call_claude(client, EDITORIAL_PROMPT.format(
-        n_projects=n_projects, 
-        project_summaries=project_summaries, 
-        cliche_filter=CLICHE_FILTER,
-        promo_links=PROMO_LINKS
+        n_projects=n_projects,
+        project_summaries=project_summaries,
+        cliche_filter=CLICHE_FILTER
     ))
-    full_content.append(editorial)
-    full_content.append("\n---\n")
-    
-    # 2. Project Sections
+    sections.append(editorial)
+
+    # 2. Promo links block (plain text, copy-paste friendly)
+    sections.append(f"\n{PROMO_LINKS}\n")
+
+    # 3. Project sections
     for i, project in enumerate(projects):
-        print(f"📦 [{i+1}/{n_projects}] Generating newsletter section for: {project['name']}...")
+        print(f"📦  [{i+1}/{n_projects}] {project['name']}...")
         section = call_claude(client, PROJECT_SECTION_PROMPT.format(
             name=project['name'],
             url=project['github_url'],
             description=project.get('script_text', project.get('description', '')),
             cliche_filter=CLICHE_FILTER
         ))
-        full_content.append(section)
-        full_content.append("\n---\n")
-        
-    # 3. Outro
-    print("🏁 Generating Newsletter Outro...")
-    outro = call_claude(client, OUTRO_PROMPT.format(project_names=project_summaries, cliche_filter=CLICHE_FILTER))
-    full_content.append(outro)
-    
-    # 4. Final Cleanup: Ensure clean line endings
-    raw_text = "\n".join(full_content)
-    clean_text = raw_text.strip()
-    
-    return clean_text
+        sections.append(section)
+        sections.append("")  # blank line between projects
+
+    # 4. Outro
+    print("🏁  Generating outro...")
+    outro = call_claude(client, OUTRO_PROMPT.format(
+        project_names=project_names,
+        cliche_filter=CLICHE_FILTER
+    ))
+    sections.append(outro)
+
+    full_text = "\n\n".join(sections).strip()
+
+    if len(full_text.split('\n')) < 5:
+        print("⚠️  Warning: Newsletter seems too short — check API responses")
+
+    return full_text
 
 def save_post(content):
-    """Save Newsletter to delivery folder"""
+    """Save newsletter as a plain .txt file ready for Substack copy-paste."""
     current_date = os.environ.get("DELIVERY_DATE", datetime.datetime.now().strftime("%m-%d"))
     delivery_folder = os.path.join("deliveries", current_date)
     os.makedirs(delivery_folder, exist_ok=True)
-    
-    output_path = os.path.join(delivery_folder, 'SUBSTACK_NEWSLETTER.md')
-    with open(output_path, 'w') as f:
+
+    output_path = os.path.join(delivery_folder, 'SUBSTACK_NEWSLETTER.txt')
+    with open(output_path, 'w', encoding='utf-8') as f:
         f.write(content)
-    
-    print(f"✅ Saved to {output_path}")
+
+    print(f"✅  Saved to {output_path}")
     return output_path
 
 def main():
     projects = load_projects()
     if not projects:
-        print("❌ No projects found to process")
+        print("❌ No projects found in posts_data.json")
         return
-    
-    print(f"🚀 Starting Newsletter generation for {len(projects)} projects...")
+
+    print(f"🚀  Generating newsletter for {len(projects)} projects...")
     content = generate_full_newsletter(projects)
-    
+
     if content:
         save_post(content)
 

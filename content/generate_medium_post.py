@@ -11,7 +11,7 @@ import anthropic
 # --- PROMPT TEMPLATES ---
 
 CLICHE_FILTER = """
-Vary sentence length — some short, some longer and more specific. Banned words: robust, streamline, supercharge, game-changer, revolutionary, seamless, dive in, hidden gems, powerful, cutting-edge, leverage, utilize. Banned constructions: "Designed for...", "Whether you're a X, Y, or Z", "Key features include:", three-part lists where everything sounds equally important. Not everything needs to sound exciting. Match enthusiasm to actual interestingness.
+Vary sentence length — keep sentences short and technical. NO narrative fluff, no "Imagine a world where...", no "Tired of X?". Banned words: robust, streamline, supercharge, game-changer, revolutionary, seamless, dive in, hidden gems, powerful, cutting-edge, leverage, utilize. Banned constructions: "Designed for...", "Whether you're a X, Y, or Z", "Key features include:". Avoid flowery transitions.
 """
 
 INTRO_PROMPT = """Write an opening for a developer tools roundup on Medium called OpenSourceScribes.
@@ -27,7 +27,7 @@ Projects in this batch:
 
 100 words maximum. Editorial tone — opinionated, direct, not promotional. Do not use '#' or '*' symbols."""
 
-PROJECT_SECTION_PROMPT = """Write a short description of this GitHub project for a developer tools roundup on Medium.
+PROJECT_SECTION_PROMPT = """Write a direct technical showcase of this GitHub project for a Medium roundup.
 
 Project details:
 Name: {name}
@@ -35,16 +35,17 @@ GitHub: {url}
 Description: {description}
 
 Rules:
-- Length should reflect how interesting the tool actually is. A niche or early-stage tool gets 2-3 sentences. A genuinely useful one gets 4-5.
-- Say what problem it actually solves, not what category it belongs to
-- If it has a meaningful limitation or caveat, mention it
-- No headers, no feature lists, no asterisks
-- Don't start with the project name as the subject of the sentence
+- START by explicitly mentioning the project name: {name}.
+- Use DIRECT, punchy language. No narrative "storytelling" or fluff.
+- Explain the specific technical problem {name} solves.
+- Length: 3-5 sentences total.
+- PARAGRAPHS: Break into at least two short paragraphs (max 2 sentences each).
+- No headers, no feature lists, no asterisks.
 - End with: View on GitHub: {url}
 
 {cliche_filter}
 
-Tone: a knowledgeable colleague who has looked at a lot of tools and has a calibrated sense of what's actually worth attention. Do not use '#' or '*' symbols."""
+Tone: A technical peer providing a concise, opinionated briefing. Do not use '#' or '*' symbols."""
 
 OUTRO_PROMPT = """Write a closing paragraph for this developer tools roundup.
 Don't summarize trends in open source software generally.

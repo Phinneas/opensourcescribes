@@ -104,12 +104,12 @@ def load_projects():
         projects = json.load(f)
     return projects
 
-def call_claude(client, prompt, model="claude-3-haiku-20240307"):
+def call_claude(client, prompt, model="claude-sonnet-4-6"):
     """Helper to call Claude API"""
     try:
         message = client.messages.create(
             model=model,
-            max_tokens=1024,
+            max_tokens=2048,
             messages=[{"role": "user", "content": prompt}]
         )
         return message.content[0].text
@@ -170,11 +170,15 @@ def generate_full_post(projects):
     outro = call_claude(client, OUTRO_PROMPT.format(project_summaries=project_summaries, cliche_filter=CLICHE_FILTER))
     full_content.append(outro)
     
-    # 4. Final Cleanup: Remove any lingering hashtags or asterisks
+    # 4. Final Cleanup: Remove bare hashtags or asterisks if they leaked into the body
+    # but preserve the title's structure.
     raw_text = "\n".join(full_content)
-    clean_text = raw_text.replace('#', '').replace('*', '')
     
-    return clean_text
+    # Check if we actually got content
+    if len(raw_text.strip().split('\n')) < 5:
+        print("⚠️ Warning: Post seems too short, check API responses")
+        
+    return raw_text
 
 def save_post(content):
     """Save Reddit post to delivery folder"""

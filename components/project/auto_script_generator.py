@@ -261,6 +261,21 @@ def parse_readme_sections(readme_text: str) -> Dict[str, str]:
     return sections
 
 
+def _clean_project_name(name: str) -> str:
+    """
+    Strip special characters from project names so TTS never narrates
+    symbols like '*', '#', '@', etc.  Keeps letters, digits, spaces,
+    hyphens, and dots (e.g. 'v2.0' or 'my-project' are fine).
+    """
+    # Remove any character that is NOT a letter, digit, space, hyphen, or dot
+    cleaned = re.sub(r'[^a-zA-Z0-9 \-\.]', '', name)
+    # Collapse multiple spaces / hyphens that may result
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    # Strip leading/trailing hyphens or dots
+    cleaned = cleaned.strip('-.')
+    return cleaned if cleaned else name  # fallback to original if cleaning emptied it
+
+
 def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     """
     Generate script using template-based approach (fallback)
@@ -272,7 +287,7 @@ def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     Returns:
         Generated script text
     """
-    name = repo_data['name']
+    name = _clean_project_name(repo_data['name'])
     description = repo_data.get('description') or ''
     language = repo_data['language']
     stars = repo_data['stars']
@@ -415,10 +430,13 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         if 'owner' in repo_data and 'repo' in repo_data:
             ch_stats_text = fetch_clickhouse_stats(repo_data['owner'], repo_data['repo'])
             
+        # Clean the project name of special characters before sending to AI
+        cleaned_name = _clean_project_name(repo_data['name'])
+
         prompt = f"""
     Write a short, engineering-focused video script (approx {TARGET_WORDS} words) for a YouTube video about this project:
     
-    Project Name: {repo_data['name']}
+    Project Name: {cleaned_name}
     Description: {repo_data['description']}
     {ch_stats_text}
     
@@ -435,6 +453,7 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
     7. DO NOT use emojis or special characters that break TTS.
     8. KEEP IT UNDER {MAX_WORDS} WORDS.
     9. NEVER use first-person pronouns like 'I', 'me', 'my', or 'we'. Always use the generalized 'you', 'your', 'developers', or 'users' instead. The script is spoken by an impartial narrator.
+   10. When naming the project, use ONLY the project name "{cleaned_name}" exactly as written. Do NOT add any prefix, suffix, or special characters (no asterisks, hashes, at-signs, or other symbols) before or after the project name.
         """
         
         print("🤖 Generating script with Claude...")
@@ -510,6 +529,9 @@ def generate_script(github_url: str) -> Optional[Dict]:
 
     readme_data = parse_readme_sections(readme_text) if readme_text else {}
     
+    # Clean name of special characters for TTS-friendly output
+    clean_name = _clean_project_name(repo_data['name'])
+
     # Try AI generation first
     script = generate_script_ai(repo_data, readme_data)
     
@@ -522,7 +544,7 @@ def generate_script(github_url: str) -> Optional[Dict]:
     print(f"✅ Script generated: {word_count} words (~{word_count/150:.1f} minutes)")
     
     return {
-        'name': repo_data['name'],
+        'name': clean_name,
         'github_url': github_url,
         'script_text': script,
         'metadata': {
@@ -566,6 +588,7 @@ def generate_from_url_list(filepath: str) -> list:
     print(f"Found {len(urls)} URLs\n")
     
     projects = []
+    processed_repo_names = set()
     
     for i, url in enumerate(urls, 1):
         print(f"\n{'='*60}")
@@ -576,6 +599,19 @@ def generate_from_url_list(filepath: str) -> list:
         if 'github.com' not in url:
             print(f"⚠️  ERROR CHECK: Skipping non-GitHub URL to prevent scraping errors: {url}")
             continue
+            
+        # Extract repo name for duplicate fork check
+        repo_name_lower = ""
+        match = re.search(r'github\.com/([^/]+)/([^/]+)', url)
+        if match:
+            repo_name_lower = match.group(2).lower()
+            
+        if repo_name_lower in processed_repo_names:
+            print(f"⚠️  Skipping duplicate fork: {url}")
+            continue
+            
+        if repo_name_lower:
+            processed_repo_names.add(repo_name_lower)
         
         result = generate_script(url)
         if result:
@@ -591,7 +627,7 @@ def generate_from_url_list(filepath: str) -> list:
             
             projects.append({
                 'id': safe_id,
-                'name': result['name'],
+                'name': _clean_project_name(result['name']),
                 'github_url': result['github_url'],
                 'script_text': result['script_text']
             })
@@ -610,9 +646,9 @@ def generate_from_url_list(filepath: str) -> list:
                 
             projects.append({
                 'id': safe_id,
-                'name': name,
+                'name': _clean_project_name(name),
                 'github_url': url,
-                'script_text': f"{name} is an interesting open source project found on GitHub. Check out the link to learn more about its features and implementation."
+                'script_text': f"{_clean_project_name(name)} is an interesting open source project found on GitHub. Check out the link to learn more about its features and implementation."
             })
             print(f"✅ Added fallback for {name} (ID: {safe_id})")
     

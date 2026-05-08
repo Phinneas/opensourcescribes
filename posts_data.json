@@ -1,104 +1,134 @@
 [
     {
-        "id": "monkilabs_opencastle",
-        "name": "opencastle",
-        "github_url": "https://github.com/monkilabs/opencastle",
-        "script_text": "# OpenCastle: Multi-Agent AI Coding Orchestration\n\nOpenCastle transforms single AI coding assistants into coordinated multi-agent teams. It works across GitHub Copilot, Cursor, Claude Code, OpenCode, Windsurf, Codex, and Antigravity through unified orchestration setup.\n\nThe framework decomposes development tasks into specialized agents that work in parallel and verify each other's output. Deploy agents interactively through IDE chat or automate overnight via the Convoy Engine.\n\nWith nine active contributors shipping improvements, the project handles IDE-specific configurations automatically\u2014generating tailored agent rules, skills, and MCP servers for your stack in a single command.\n\nUse this for scaling AI-assisted development beyond single-assistant limitations."
+        "id": "coleam00_archon",
+        "name": "Archon",
+        "github_url": "https://github.com/coleam00/Archon",
+        "script_text": "**ARCHON - Open Source AI Coding Harness**\n\nArchon is the first open-source harness builder for deterministic AI coding. Instead of unpredictable AI outputs, define development workflows in YAML: planning, implementation, validation, review, and PR creation. The AI handles the intelligence at each step, but your process structure stays consistent.\n\nThink of it like Dockerfiles for AI workflows. The community is backing this hard - 950 active contributors recently pushed 35 pull requests and 53 issue events, showing real momentum behind the tool.\n\nRun multiple workflows in parallel with isolated git worktrees. Compose deterministic nodes with AI steps. Deploy from CLI, web interface, or Slack.\n\nPerfect for teams needing repeatable, controlled AI-assisted development."
     },
     {
-        "id": "google_adk_java",
-        "name": "adk-java",
-        "github_url": "https://github.com/google/adk-java",
-        "script_text": "# ADK-Java: Code-First AI Agent Development\n\nADK-Java is an open-source toolkit for building and deploying sophisticated AI agents entirely in code. Developers define agent behavior, tool integration, and orchestration directly in Java\u2014enabling precise control, easier testing, and seamless versioning across environments.\n\nThe toolkit features pre-built tools, custom function support, and OpenAPI integration for diverse agent capabilities. Multi-agent systems can be composed into scalable hierarchies for complex applications. With 28 active contributors and ongoing momentum, the project continues gaining traction in the community.\n\nADK-Java is designed for teams building advanced AI agents tightly integrated with Google Cloud services."
+        "id": "calfonso_rusternetes",
+        "name": "rusternetes",
+        "github_url": "https://github.com/calfonso/rusternetes",
+        "script_text": "# R\u016bsternetes: Kubernetes in Rust\n\nR\u016bsternetes is a ground-up reimplementation of Kubernetes written entirely in Rust. Over 216,000 lines of code span ten crates, implementing every core component\u2014API server, scheduler, controller manager, kubelet, and kube-proxy\u2014from scratch with full Kubernetes API compatibility.\n\nThe project passes 94% of official Kubernetes conformance tests across 160 test rounds. It includes a built-in web console with real-time cluster visualization, live metrics, pod log streaming, and resource management.\n\nDevelopers use this for studying Kubernetes internals, evaluating Rust's systems programming capabilities at scale, or deploying containerized workloads in memory-constrained environments where Go's runtime overhead matters."
     },
     {
-        "id": "tidesdb_tidesdb",
-        "name": "tidesdb",
-        "github_url": "https://github.com/tidesdb/tidesdb",
-        "script_text": "# TidesDB: High-Performance Embedded Storage\n\nTidesDB is a C-based key-value storage engine built on log-structured merge-trees, designed for flash and RAM optimization. It delivers ACID transactions with five isolation levels, including serializable snapshot isolation, plus multi-column family support with independent configuration.\n\nThe engine features adaptive compaction modes that automatically scale capacities, bidirectional iterators with snapshot isolation, and optional tiered object storage for infinite scaling. Key-value separation reduces write amplification, while crash recovery reconstructs state from write-ahead logs.\n\nWith active development and steady momentum from contributors, TidesDB serves as an embeddable foundation for building custom databases and high-performance key-value stores without full database overhead."
+        "id": "infisical_agent_vault",
+        "name": "agent-vault",
+        "github_url": "https://github.com/Infisical/agent-vault",
+        "script_text": "**Agent Vault: HTTP Credential Proxy for AI Agents**\n\nAgent Vault is an open-source credential broker that sits between your AI agents and the APIs they call. Instead of handing credentials directly to agents\u2014exposing them to prompt injection and exfiltration\u2014Agent Vault proxies HTTP requests and injects credentials at the network layer.\n\nAgents never see your secrets. They simply route requests through a local proxy that handles authentication transparently. It works with any HTTP-based agent, encrypts credentials with AES-256-GCM, and logs every request for audit trails.\n\nWith 4 active contributors and strong momentum, the project is gaining traction for securing agent-to-API communication without credential exposure."
     },
     {
-        "id": "illegalstudio_context",
-        "name": "context",
-        "github_url": "https://github.com/illegalstudio/context",
-        "script_text": "# Context: AI-Ready Codebase Analysis\n\nContext is a CLI tool that analyzes your codebase and generates optimized context packs for AI coding assistants like Claude and Cursor. Instead of manually selecting files, Context automatically discovers relevant code by scanning import graphs, detecting frameworks, and analyzing task descriptions.\n\nThe tool indexes your project once, then creates focused context packages containing only the files needed for specific tasks. Each pack includes dependency graphs, code excerpts, and a structured prompt ready for AI agents. It supports TypeScript, JavaScript, PHP, Python, and detects frameworks like Laravel, NestJS, and React automatically.\n\nUse Context to give AI assistants precise context, reducing hallucinations and improving code generation accuracy."
+        "id": "huggingface_ml_intern",
+        "name": "ml-intern",
+        "github_url": "https://github.com/huggingface/ml-intern/",
+        "script_text": "# ML-Intern Video Script\n\nML-Intern is an open-source ML engineer that autonomously researches papers, trains models, and ships production code. Built on Hugging Face infrastructure, it accesses documentation, datasets, and cloud compute directly.\n\nThe system supports multiple LLM backends\u2014Claude, GPT, and local models via Ollama or vLLM\u2014giving developers flexibility in model selection. Installation takes seconds with uv sync, and the CLI works immediately from any directory. Users can run interactive chat sessions or execute single prompts in headless mode.\n\nThe tool handles end-to-end ML workflows: from literature review through model training to deployment, all within the Hugging Face ecosystem."
     },
     {
-        "id": "anakin_inc_anakin",
-        "name": "anakin",
-        "github_url": "https://github.com/Anakin-Inc/anakin",
-        "script_text": "# AnakinScraper: Open-Source Web Scraping API\n\nAnakinScraper turns any website into clean markdown or structured JSON with a single command. Built in Go, it combines an anti-detect browser, intelligent proxy selection, and handler chain fallbacks\u2014HTTP fetch, browser rendering, or external APIs\u2014to maximize success rates while minimizing API costs.\n\nSelf-host locally with zero cloud dependencies. The modular architecture lets you define per-domain scraping strategies, detect failures, and retry automatically. With four active contributors driving recent momentum, the project powers RAG pipelines and AI data extraction at scale.\n\nDeploy with `make up`. Perfect for feeding LLMs clean, structured data."
+        "id": "sosedoff_pgweb",
+        "name": "pgweb",
+        "github_url": "https://github.com/sosedoff/pgweb",
+        "script_text": "# pgweb: PostgreSQL Database Explorer\n\npgweb is a web-based PostgreSQL client built in Go, delivering cross-platform database exploration without dependencies. Available as a single binary for Mac, Linux, and Windows, it connects to PostgreSQL 9.1 and newer.\n\nThe tool supports SSH tunnels, multiple concurrent database sessions, and custom SQL execution with query analysis. Users can export data to CSV, JSON, or XML formats, leverage query history, and bookmark frequently-used servers.\n\nInstallation requires just downloading a precompiled binary. Configuration accepts connection flags or standard PostgreSQL connection URLs. Developers use pgweb primarily for quick database inspection and management without heavyweight IDE overhead."
     },
     {
-        "id": "hkuds_nanobot",
-        "name": "nanobot",
-        "github_url": "https://github.com/HKUDS/nanobot",
-        "script_text": "# nanobot: Ultra-Lightweight Personal AI Agent\n\nnanobot is an open-source AI agent designed for minimal overhead and maximum readability. The core loop stays simple while supporting chat channels, memory management, and the Model Context Protocol for practical deployment.\n\nBuilt on Python 3.11 or higher with MIT licensing, nanobot connects to multiple platforms\u2014Discord, Slack, Teams, and Feishu. Recent momentum shows 646 active contributors engaging across 131 pull requests and 52 issues in the last month, driving features like thread awareness, web search integration, and provider flexibility.\n\nThe architecture supports both local and cloud deployment paths, letting developers transition from personal setup to production-grade long-running agents. Perfect for building autonomous assistants that stay lean and maintainable."
+        "id": "software_mansion_argent",
+        "name": "argent",
+        "github_url": "https://github.com/software-mansion/argent",
+        "script_text": "**ARGENT: iOS Simulator Control for AI Agents**\n\nArgent is an agentic toolkit that gives AI assistants direct control over iOS Simulators. Instead of context-switching between tools, developers can ask their agent to tap buttons, run profilers, or reproduce issues\u2014all from the CLI.\n\nThe toolkit handles full UI interaction through taps, swipes, gestures, and hardware buttons. It profiles both React Native and Xcode Instruments natively, analyzes performance data, and captures crash reports for debugging. React Native projects work out of the box with no additional setup.\n\nInstallation is straightforward: run npx @swmansion/argent init, and the setup wizard configures everything. This enables developers to offload repetitive testing and profiling tasks to their AI assistant while maintaining focus on implementation."
     },
     {
-        "id": "volcengine_openviking",
-        "name": "OpenViking",
-        "github_url": "https://github.com/volcengine/OpenViking",
-        "script_text": "# OpenViking: Context Database for AI Agents\n\nOpenViking is an open-source context database built specifically for AI agents. It unifies memory, resources, and skills management through a file system paradigm, enabling hierarchical context delivery and self-evolution.\n\nTraditional AI agent development fragments context across code, vector databases, and scattered skill repositories. OpenViking solves this with a single, organized context layer that supports long-running tasks without information loss and provides observable retrieval chains for debugging.\n\nThe project maintains strong momentum with 513 active contributors processing 102 pull requests and 58 issues in the last month. Designed for agents like OpenClaw, it's essential infrastructure for production-grade agent systems requiring structured, scalable context management."
+        "id": "besimple_oss_broccoli",
+        "name": "broccoli",
+        "github_url": "https://github.com/besimple-oss/broccoli",
+        "script_text": "# Broccoli: AI-Powered PR Generation\n\nBroccoli converts Linear tickets into production-ready pull requests using Claude and Codex. Assign a ticket to the bot, and it plans, implements, and opens a reviewable PR autonomously.\n\nThe implementation runs entirely on your infrastructure\u2014Google Cloud Run, your Postgres, your API keys. No external control plane. No data leaves your tenancy.\n\nSetup takes roughly 30 minutes: one bootstrap script, one config file, two webhooks. The system includes Cloud Run serverless deployment, Secret Manager integration, webhook deduplication, and durable job state tracking.\n\nDevelopers can customize prompt templates, version them with code, and deploy AI-powered code review on every PR. Perfect for teams wanting to automate routine implementation while maintaining full infrastructure ownership."
     },
     {
-        "id": "anthropics_anthropic_tools",
-        "name": "anthropic-tools",
-        "github_url": "https://github.com/anthropics/anthropic-tools",
-        "script_text": "# anthropic-tools Video Script\n\nAnthropic-tools provides a lightweight framework for integrating tool use and function calling with Claude models. The SDK introduces two core classes\u2014BaseTool and ToolUser\u2014that simplify defining custom tools and managing their execution. Developers inherit BaseTool, implement a use_tool method, and pass parameters to Claude for structured execution. The package includes pre-built tools for common operations like web search and SQL queries, all built on the same extensible primitives. Note: this repository is deprecated. For production implementations, use Anthropic's official API documentation. Best suited for developers prototyping function-calling architectures with Claude."
+        "id": "zilliztech_claude_context",
+        "name": "claude-context",
+        "github_url": "https://github.com/zilliztech/claude-context",
+        "script_text": "# Claude Context - YouTube Script\n\nClaude Context is an MCP plugin that enables semantic code search for Claude Code and other AI coding agents. Instead of loading entire codebases into context\u2014which becomes prohibitively expensive at scale\u2014Claude Context stores your code in a vector database and retrieves only relevant files based on natural language queries.\n\nThe plugin efficiently handles large repositories by performing intelligent semantic matching across millions of lines of code. Results surface directly into Claude's context window without requiring multiple discovery rounds.\n\nBuilt on Node.js with npm packages available, Claude Context solves the fundamental challenge of giving coding agents meaningful codebase awareness while managing API costs effectively."
     },
     {
-        "id": "vercel_labs_open_agents",
-        "name": "open-agents",
-        "github_url": "https://github.com/vercel-labs/open-agents",
-        "script_text": "**Open Agents: Building Cloud-Native Coding Agents**\n\nOpen Agents is an open-source template for building autonomous coding agents on Vercel. The system separates the agent runtime from sandbox execution\u2014a critical architectural choice allowing independent scaling and evolution of each layer.\n\nThe platform includes chat-driven coding capabilities, durable multi-step execution via Workflow SDK, isolated sandbox environments, and GitHub integration for automated commits and pull requests. Recent activity shows strong momentum with 443 contributors engaging across 13 pull requests in the last month.\n\nDevelopers fork and adapt the template rather than treating it as a black box. Built for teams needing background agents that operate autonomously without tying up local resources."
+        "id": "hkuds_rag_anything",
+        "name": "RAG-Anything",
+        "github_url": "https://github.com/HKUDS/RAG-Anything",
+        "script_text": "# RAG-Anything: All-in-One RAG Framework\n\nRAG-Anything delivers a unified retrieval-augmented generation framework handling multimodal inputs across text, images, and documents. Built on LightRAG, it provides optimized indexing, retrieval, and generation pipelines with minimal configuration overhead.\n\nThe framework supports Python 3.10 and integrates seamlessly via PyPI. With 108 active contributors recently engaged, the project maintains strong development velocity through structured pull request workflows. Developers can deploy custom knowledge bases, implement hybrid search strategies, and extend functionality across various data formats.\n\nThe implementation prioritizes efficiency and modularity\u2014enabling production-grade RAG systems without extensive engineering effort. Ideal for applications requiring scalable information retrieval across heterogeneous document sources."
     },
     {
-        "id": "21st_dev_1code",
-        "name": "1code",
-        "github_url": "https://github.com/21st-dev/1code",
-        "script_text": "# 1Code: Orchestration Layer for Coding Agents\n\n1Code is an open-source client that orchestrates multiple coding agents\u2014Claude Code, Codex, and others\u2014locally or in the cloud. It isolates each agent session in a Git worktree, preventing accidental commits to main while maintaining full branch safety. The interface mirrors Cursor with real-time diff previews, integrated Git operations, and live browser testing. Unique features include background execution for cloud sandboxes, MCP plugin support, chat forking, and extended thinking enabled by default. The built-in terminal, visual staging, and model switcher keep developers in one workspace. Use 1Code to run coding agents safely with complete visibility over changes before they land."
+        "id": "enterpilot_gomodel",
+        "name": "GoModel",
+        "github_url": "https://github.com/ENTERPILOT/GOModel/",
+        "script_text": "# GoModel - AI Gateway in Go\n\nGoModel is a lightweight AI gateway written in Go that unifies APIs across OpenAI, Anthropic, Gemini, Groq, xAI, and Ollama behind a single OpenAI-compatible interface.\n\nIt handles streaming, cost tracking, token usage monitoring, and built-in observability through an integrated dashboard. Developers get guardrails and detailed logging without the overhead of heavier alternatives.\n\nDeploy via Docker in seconds, configure only the providers you need, and start routing requests immediately. GoModel is purpose-built for teams managing multiple AI models without operational complexity."
     },
     {
-        "id": "belinwu_openviking",
-        "name": "OpenViking",
-        "github_url": "https://github.com/belinwu/OpenViking",
-        "script_text": "# OpenViking: Context Database for AI Agents\n\nOpenViking is an open-source context database built specifically for AI agents. It solves a critical problem: fragmented memory, resources, and skills scattered across code and vector databases.\n\nInstead of traditional flat storage, OpenViking uses a file system paradigm to organize context hierarchically. This approach enables developers to manage agent memory the same way they manage local files\u2014structured, observable, and scalable.\n\nThe system handles context that grows from continuous agent execution without information loss. It provides transparent retrieval chains for debugging and supports agent-specific task memory, not just user interaction logs.\n\nPerfect for developers building long-running AI agents that need reliable context management."
+        "id": "kyegomez_openmythos",
+        "name": "OpenMythos",
+        "github_url": "https://github.com/kyegomez/OpenMythos",
+        "script_text": "# OpenMythos: Theoretical Claude Architecture Reconstruction\n\nOpenMythos is an open-source implementation of a Recurrent-Depth Transformer that reconstructs the Claude Mythos architecture from published research literature. The model features a three-stage pipeline: Prelude transformer blocks, a configurable looped Recurrent Block for iterative reasoning, and a Coda output stage. Developers can toggle between Multi-Head Latent Attention and Grouped Query Attention, with a sparse Mixture of Experts layer for compute-efficient inference. Built in PyTorch with optional Flash Attention 2 acceleration, it's designed for exploring depth-variable reasoning patterns. This implementation is ideal for researchers studying transformer architectures and experimenting with recurrent reasoning mechanisms."
     },
     {
-        "id": "openai_openai_agents_python",
-        "name": "openai-agents-python",
-        "github_url": "https://github.com/openai/openai-agents-python",
-        "script_text": "# OpenAI Agents Python SDK Video Script\n\nThe OpenAI Agents SDK is a lightweight framework for building multi-agent systems in Python. It supports 100+ LLMs and includes built-in tools for agent orchestration, guardrails, human-in-the-loop controls, and tracing. \n\nKey features include sandbox agents for long-running tasks, agent handoffs for task delegation, session management for conversation history, and real-time voice capabilities with GPT-4 integration.\n\nWith 131 active contributors recently engaging across 38 pull requests and 17 issues, the project demonstrates strong development momentum. Installation requires Python 3.10+ via pip or uv.\n\nUse this SDK to build scalable multi-agent systems that coordinate complex workflows across distributed LLMs."
+        "id": "zilliztech_memsearch",
+        "name": "memsearch",
+        "github_url": "https://github.com/zilliztech/memsearch",
+        "script_text": "# memsearch: Unified Memory for AI Coding Agents\n\nmemsearch provides a persistent, cross-platform semantic memory layer for AI agents like Claude Code and Codex. Built on Markdown and Milvus, it enables agents to store and retrieve context across conversations without manual setup.\n\nMemories persist across multiple platforms\u2014what one agent learns becomes immediately searchable in others. The implementation uses vector embeddings for semantic search, allowing agents to find relevant context efficiently.\n\nWith 26 active contributors and strong recent momentum, the project continues evolving. Installation is plugin-based for end users, while developers access a full CLI for custom integrations.\n\nUse memsearch when your coding agents need to maintain context across sessions and platforms."
     },
     {
-        "id": "supermodeltools_mcp",
-        "name": "mcp",
-        "github_url": "https://github.com/supermodeltools/mcp",
-        "script_text": "# mcp - Code Graph Analysis for AI Agents\n\nThis MCP server delivers instant codebase understanding through pre-computed code graphs. Developers integrate it with AI agents to analyze call graphs, dependency structures, detect dead code, and calculate blast radius\u2014all with sub-second response times.\n\nThe technical advantage: pre-computed graph analysis eliminates expensive token-heavy code traversals. Agents can perform complex cross-subsystem analysis without repeated context window consumption, reducing token costs by up to 40 percent.\n\nInstallation is straightforward via npm or a single setup script. Configuration requires only an API key to start. This tool targets teams optimizing AI agent efficiency on large codebases."
+        "id": "matthartman_ghost_pepper",
+        "name": "ghost-pepper",
+        "github_url": "https://github.com/matthartman/ghost-pepper",
+        "script_text": "# Ghost Pepper: Private On-Device Voice Models\n\nGhost Pepper delivers 100% private speech-to-text and meeting transcription entirely on macOS. No cloud APIs. No data leaves your machine.\n\nThe implementation leverages Apple Silicon acceleration with WhisperKit for speech recognition and LLM.swift for intelligent text cleanup. Multiple model options support 50+ languages, from lightweight Whisper tiny to multilingual Qwen3-ASR.\n\nWith 309 active contributors recently engaging on pull requests and issues, the project maintains solid momentum. The app handles meeting transcription with AI-generated summaries, smart filler-word removal, and markdown export\u2014all locally processed.\n\nHold Control, speak, release. Perfect for developers requiring strict data privacy during voice input."
     },
     {
-        "id": "stanhus_mirofish",
-        "name": "MiroFish",
-        "github_url": "https://github.com/StanHus/MiroFish",
-        "script_text": "# MiroFish: Engineering Script\n\nMiroFish is a swarm intelligence engine that simulates multi-agent systems to predict outcomes across domains. Developers feed seed data\u2014news reports, policy documents, financial signals\u2014and natural language queries describing the prediction target. The system automatically constructs a high-fidelity digital world where thousands of autonomous agents with independent personalities, memory, and behavioral logic interact and evolve. Users then observe emergent patterns and inject variables in real-time to test hypothetical scenarios. The technical foundation leverages multi-agent modeling to capture collective behavior from individual interactions, enabling granular forecasting without traditional statistical constraints. Use cases span policy simulation, narrative prediction, and financial scenario testing."
+        "id": "rocky_data_rocky",
+        "name": "rocky",
+        "github_url": "https://github.com/rocky-data/rocky",
+        "script_text": "# Rocky: SQL Transformation Engine for Data Warehouses\n\nRocky is a Rust-based SQL transformation engine that runs as a single static binary. It delivers compile-time type safety, column-level lineage tracking, and per-model cost attribution across Databricks, Snowflake, BigQuery, and DuckDB.\n\nKey capabilities include named branches for isolated experiments, schema drift detection, and data contract enforcement before execution. The engine keeps storage and compute in your warehouse while providing a control plane for SQL pipelines.\n\nWith 4 active contributors and strong recent momentum, Rocky catches data quality issues early and enables risk-free pipeline changes. Use it to manage complex warehouse transformations with safety guarantees."
     },
     {
-        "id": "jeffh_claude_plugins",
-        "name": "claude-plugins",
-        "github_url": "https://github.com/jeffh/claude-plugins",
-        "script_text": "# Claude-Plugins: Engineering-Focused Script\n\nClaude-Plugins is a marketplace for Claude Code featuring specialized productivity extensions. The humanlayer plugin provides six core slash commands and six research agents for codebase analysis, planning, and implementation workflows. The jj plugin adds Jujutsu version control support with atomic commits and stack-aware PR creation.\n\nInstallation is straightforward: add the marketplace via GitHub, then install individual plugins. The project maintains active development momentum with ongoing contributor engagement on pull requests.\n\nThese plugins streamline the complete development cycle from research through validation, making them essential for teams managing complex codebases and multi-step development workflows."
+        "id": "dirac_run_dirac",
+        "name": "dirac",
+        "github_url": "https://github.com/dirac-run/dirac",
+        "script_text": "# Dirac Video Script\n\nDirac is an open-source coding agent that cuts API costs by 50-80% while improving code quality. It achieves this through hash-anchored parallel edits, AST manipulation, and intelligent context curation\u2014keeping only relevant information in focus to maintain model reasoning accuracy.\n\nThe agent recently topped Terminal-Bench-2 with a 65.2% score, outperforming Google's baseline and other leading agents on complex refactoring tasks. By minimizing context bloat without sacrificing capability, Dirac delivers faster results at significantly lower cost.\n\nDevelopers use Dirac when they need efficient, accurate code modifications across large codebases without expensive token overhead.\n\n**Word count: 107**"
     },
     {
-        "id": "atlas_2192_ai_agent_framework",
-        "name": "AI-Agent-Framework",
-        "github_url": "https://github.com/atlas-2192/AI-Agent-Framework",
-        "script_text": "# AI-Agent-Framework Video Script\n\nAgency is a Python library implementing the Actor model for building agent-integrated systems. It provides a minimal foundation to connect AI agents with traditional software through a straightforward API: define agents as classes, expose actions as methods, and control access via policies.\n\nThe framework supports multiprocessing, multithreading, and AMQP for networked deployments. Built-in callbacks enable lifecycle management and observability. The library includes working examples with OpenAI, HuggingFace transformers, and OS-level access.\n\nUse Agency when you need to build custom agent-based applications that scale across distributed systems."
+        "id": "victoriametrics_victoriametrics",
+        "name": "VictoriaMetrics",
+        "github_url": "https://github.com/VictoriaMetrics/VictoriaMetrics",
+        "script_text": "# VictoriaMetrics: Fast Time Series Monitoring\n\nVictoriaMetrics is a high-performance time series database engineered for cost-effective monitoring at scale. It ingests and stores metrics efficiently while maintaining fast query performance, even with massive datasets.\n\nBuilt in Go, VictoriaMetrics uses advanced compression and indexing techniques to minimize storage overhead. The architecture supports horizontal scaling and handles millions of data points per second without sacrificing reliability.\n\nWith 30 active contributors driving momentum through recent pull requests and issue resolution, the project maintains steady technical evolution. Trusted by companies like Spotify and Roblox, it's the primary choice for teams needing scalable, economical time series infrastructure."
     },
     {
-        "id": "glyphlang_glyphlang",
-        "name": "GlyphLang",
-        "github_url": "https://github.com/GlyphLang/GlyphLang",
-        "script_text": "# GlyphLang: AI-Optimized Programming Language\n\nGlyphLang is a backend language designed specifically for AI code generation. It cuts boilerplate by up to 75 percent compared to Python frameworks, reducing LLM token costs by 23 percent while maintaining production-grade type safety.\n\nThe language compiles to a single static binary with built-in HTTP routing, async support, and database access. No external servers or configuration files needed. Type definitions and routes are the program itself.\n\nWith active development momentum\u20146 pull requests and 3 issue discussions in the last month\u2014the project is moving fast. Developers building AI-powered APIs or using LLMs for backend generation will find the minimal syntax and structured validation directly reduce generation errors and maintenance overhead."
+        "id": "abhigyanpatwari_gitnexus",
+        "name": "GitNexus",
+        "github_url": "https://github.com/abhigyanpatwari/GitNexus",
+        "script_text": "# GitNexus: Zero-Server Code Intelligence\n\nGitNexus builds a knowledge graph directly in your browser\u2014no backend required. Upload a GitHub repo or ZIP file and instantly explore code architecture through an interactive graph interface powered by a Graph RAG Agent.\n\nThe tool indexes every dependency, call chain, and execution flow, then exposes them through AI-ready tools. This gives language models\u2014even smaller ones\u2014complete architectural context, eliminating missed dependencies and broken call chains.\n\nUse the Web UI for quick exploration or connect the CLI with Model Context Protocol to integrate with Cursor, Claude, and other AI agents. With 854 active contributors and sustained momentum across recent pull requests and issues, GitNexus is purpose-built for code analysis at scale."
+    },
+    {
+        "id": "lucasimi_tda_mapper_python",
+        "name": "tda-mapper-python",
+        "github_url": "https://github.com/lucasimi/tda-mapper-python",
+        "script_text": "# tda-mapper-python: Topological Data Analysis Made Practical\n\ntda-mapper is a Python library that implements the Mapper algorithm for extracting topological structure from complex, high-dimensional datasets. Built for computational efficiency, it uses optimized spatial search and parallelization to handle large-scale data analysis.\n\nThe library integrates seamlessly with scikit-learn pipelines, offering custom estimators for dimensionality reduction and clustering. Multiple visualization backends\u2014Plotly, Matplotlib, and PyVis\u2014let you explore graph structures interactively. An included web interface provides real-time parameter adjustment and dynamic exploration.\n\nActively maintained with comprehensive documentation and test coverage, tda-mapper is purpose-built for unsupervised learning and exploratory data analysis workflows."
+    },
+    {
+        "id": "cloudflare_agentic_inbox",
+        "name": "agentic-inbox",
+        "github_url": "https://github.com/cloudflare/agentic-inbox",
+        "script_text": "# Agentic Inbox - Video Script\n\nAgentic Inbox is a self-hosted email client running entirely on Cloudflare Workers. It handles send, receive, and management through a modern web interface using your own Cloudflare account.\n\nThe architecture isolates each mailbox in a Durable Object with SQLite, stores attachments in R2, and routes incoming emails via Cloudflare Email Routing. An AI-powered agent built with the Cloudflare Agents SDK and Workers AI can read inboxes, search conversations, and draft replies automatically.\n\nSetup involves deploying to Cloudflare, configuring Email Routing rules, enabling the Email Service binding, and creating mailboxes. This approach lets developers run a full email system without external infrastructure."
+    },
+    {
+        "id": "trycua_cua",
+        "name": "cua",
+        "github_url": "https://github.com/trycua/cua",
+        "script_text": "# CUA: Open-Source Computer-Use Agent Infrastructure\n\nCUA provides sandboxes, SDKs, and benchmarks for training AI agents that control full desktops across macOS, Linux, and Windows. The platform includes CUA Driver for background macOS automation, CUA Sandbox for agentic UI control, and CUA Bench for standardized evaluation. With 27 active contributors recently shipping 19 pull requests, the project maintains strong development momentum. Developers get native app control, canvas-based tool support, and replayable session trajectories. Deploy agents trained on your infrastructure to automate complex desktop workflows at scale."
+    },
+    {
+        "id": "alash3al_stash",
+        "name": "stash",
+        "github_url": "https://github.com/alash3al/stash",
+        "script_text": "# Stash: Persistent Memory for AI Agents\n\nStash solves a fundamental problem: LLMs forget. Every conversation starts blank. This project adds a persistent memory layer that stores episodes, facts, and context in Postgres\u2014letting your agent remember, recall, and learn across sessions.\n\nIt's self-hosted, runs as a single binary, and includes an MCP server. No cloud dependency. An 8-stage consolidation pipeline automatically transforms raw observations into structured knowledge: facts, relationships, causal links, and failure patterns.\n\nDeploy with Docker Compose. Connect any MCP-compatible client\u2014Claude Desktop, Cursor, Windsurf, or others. Perfect for agents that need continuity and contextual awareness over time."
+    },
+    {
+        "id": "raulcd_datanomy",
+        "name": "datanomy",
+        "github_url": "https://github.com/raulcd/datanomy",
+        "script_text": "# Datanomy: Dissecting Data Structures\n\nDatanomy is a terminal-based tool that breaks down the anatomy of columnar data files. Built on Textual and PyArrow, it provides interactive inspection of Parquet file structure, schema, metadata, and statistics directly from the command line.\n\nThe tool displays general structure, column schemas, actual data samples, file metadata, and compression stats in an accessible terminal interface. Installation is straightforward via pip or uv, and usage requires just a single command with your Parquet file.\n\nKeyboard navigation is minimal\u2014press Q to quit. Development setup uses uv for dependency management and includes pytest, ruff formatting, and mypy type checking.\n\nUse Datanomy when you need to understand what's actually inside your Parquet files without external dependencies."
     }
 ]

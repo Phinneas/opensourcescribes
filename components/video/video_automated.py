@@ -51,6 +51,21 @@ DEEP_DIVES_FOLDER = os.path.join(DELIVERY_FOLDER, "deep_dives")
 LONGFORM_VIDEO = os.path.join(DELIVERY_FOLDER, "longform_github_roundup.mp4")
 SHORTS_REEL = os.path.join(DELIVERY_FOLDER, f"github_shorts_{current_date_mmdd}.mp4")
 
+# ── Remove duplicate deliveries for the same date ──
+# If there are sibling folders like "05-06-morning-backup" alongside "05-06",
+# the audio from both can overlap when rendered, producing doubled audio.
+# We keep only the canonical "mm-dd" folder and purge any same-day variants.
+import shutil as _shutil
+if os.path.isdir(DELIVERIES_ROOT):
+    for _entry in os.listdir(DELIVERIES_ROOT):
+        _full = os.path.join(DELIVERIES_ROOT, _entry)
+        if _full == DELIVERY_FOLDER:
+            continue  # keep the canonical folder
+        # Match entries that START with the same date prefix (e.g. "05-06-anything")
+        if _entry.startswith(current_date_mmdd) and os.path.isdir(_full):
+            print(f"⚠️  Removing same-day duplicate delivery: {_entry} (causes doubled audio)")
+            _shutil.rmtree(_full)
+
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 os.makedirs(DELIVERY_FOLDER, exist_ok=True)
 os.makedirs(DEEP_DIVES_FOLDER, exist_ok=True)
@@ -1236,12 +1251,36 @@ class VideoSuiteAutomated:
     def _generate_episode_intro(self):
         """
         Build a unique per-episode intro narration script and title
-        from the actual project list for this run.
+        from the actual project list for THIS run (read from github_urls.txt).
         Both change every episode so no two intros are identical.
         """
         import random
-        # Extract names and topics to make the intro dynamic
-        names = [p.get('name', '') for p in self.projects if p.get('name')]
+        import re as _re
+
+        # ── Read the CURRENT project names from github_urls.txt ──
+        # This ensures the intro always reflects what is actually in this
+        # video, not a stale project list from a previous run.
+        names = []
+        github_urls_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'github_urls.txt')
+        if os.path.exists(github_urls_path):
+            with open(github_urls_path, 'r') as f:
+                for line in f:
+                    url = line.strip()
+                    if not url:
+                        continue
+                    # Extract repo name from URL for clean project name
+                    match = _re.search(r'github\.com/([^/]+)/([^/]+)', url)
+                    if match:
+                        repo = match.group(2).rstrip('/')
+                        # Strip special characters for TTS-safe name
+                        repo = _re.sub(r'[^a-zA-Z0-9 \-\.]', '', repo).strip('-.')
+                        if repo:
+                            names.append(repo)
+
+        # Fallback: if github_urls.txt is missing/empty, use loaded projects
+        if not names:
+            names = [p.get('name', '') for p in self.projects if p.get('name')]
+
         all_topics = []
         for p in self.projects:
             topics = p.get('topics', [])
@@ -1254,59 +1293,34 @@ class VideoSuiteAutomated:
         n = len(names)
         date_str = datetime.now().strftime("%B %d")
 
-        # Episode title: random selection of 2 project names or topics
-        if unique_topics and random.random() > 0.5:
-            featured_items = random.sample(unique_topics, min(len(unique_topics), 2))
-            if len(featured_items) <= 2:
-                featured = " & ".join(featured_items)
-            else:
-                featured = f"{featured_items[0]}, {featured_items[1]} & {len(unique_topics) - 2} More"
+        # Episode title: top 2 project names from current github_urls.txt
+        if n <= 2:
+            featured = " & ".join(names)
         else:
-            featured_items = random.sample(names, min(len(names), 2))
-            if n <= 2:
-                featured = " & ".join(featured_items)
-            else:
-                featured = f"{featured_items[0]}, {featured_items[1]} & {n - 2} More"
+            featured = f"{names[0]}, {names[1]} & {n - 2} More"
         
         episode_title = f"{date_str} — {featured}"
 
-        # Narration: random selection of 2-3 projects or topics
+        # Narration: mention actual projects from this run's github_urls.txt
         if n == 0:
             return "Welcome to OpenSourceScribes. Let's explore some new open source projects. Let's get into it.", episode_title
 
-        # Randomly choose whether to mention projects (70% chance) or topics (30% chance)
-        if unique_topics and random.random() > 0.7:
-            sample_size = min(len(unique_topics), random.randint(2, 3))
-            selected = random.sample(unique_topics, sample_size)
-            if sample_size == 1:
-                item_list = selected[0]
-            elif sample_size == 2:
-                item_list = f"{selected[0]} and {selected[1]}"
-            else:
-                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
-                
-            script = (
-                f"Welcome to OpenSourceScribes. "
-                f"This week we are covering {n} new open source projects. "
-                f"With focuses on {item_list}, and more. "
-                f"Let's get into it."
-            )
+        # Always mention real project names from the current github_urls.txt
+        sample_size = min(n, random.randint(2, 3))
+        selected = random.sample(names, sample_size)
+        if sample_size == 1:
+            item_list = selected[0]
+        elif sample_size == 2:
+            item_list = f"{selected[0]} and {selected[1]}"
         else:
-            sample_size = min(n, random.randint(2, 3))
-            selected = random.sample(names, sample_size)
-            if sample_size == 1:
-                item_list = selected[0]
-            elif sample_size == 2:
-                item_list = f"{selected[0]} and {selected[1]}"
-            else:
-                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
-            
-            script = (
-                f"Welcome to OpenSourceScribes. "
-                f"This week we have {n} fresh open source projects. "
-                f"Including {item_list}, among others. "
-                f"Let's get into it."
-            )
+            item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
+        
+        script = (
+            f"Welcome to OpenSourceScribes. "
+            f"This week we have {n} fresh open source projects. "
+            f"Including {item_list}, among others. "
+            f"Let's get into it."
+        )
 
         return script, episode_title
 

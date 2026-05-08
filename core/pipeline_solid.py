@@ -414,37 +414,71 @@ async def video_generation_flow(config_path: str = "config.json") -> str:
 # Helper Functions
 # ═══════════════════════════════════════════════════════════════════════
 
+def _read_project_names_from_urls() -> List[str]:
+    """Read clean project names from github_urls.txt so the intro
+    always reflects the current video, not a stale project list."""
+    import re as _re
+    names = []
+    urls_path = os.path.join(os.path.dirname(__file__), '..', 'github_urls.txt')
+    urls_path = os.path.abspath(urls_path)
+    if os.path.exists(urls_path):
+        with open(urls_path, 'r') as f:
+            for line in f:
+                url = line.strip()
+                if not url:
+                    continue
+                match = _re.search(r'github\.com/([^/]+)/([^/]+)', url)
+                if match:
+                    repo = match.group(2).rstrip('/')
+                    repo = _re.sub(r'[^a-zA-Z0-9 \-\.]', '', repo).strip('-.')
+                    if repo:
+                        names.append(repo)
+    return names
+
+
 def generate_episode_title(projects: List[Dict]) -> str:
-    """Generate episode title from projects."""
+    """Generate episode title from github_urls.txt."""
     from datetime import datetime
     
+    names = _read_project_names_from_urls()
+    if not names:
+        names = [p.get('name', '') for p in projects[:2]]
+
     date_str = datetime.now().strftime("%B %d")
-    names = [p.get('name', '') for p in projects[:2]]
     
-    if len(projects) <= 2:
+    if len(names) <= 2:
         featured = " & ".join(names)
     else:
-        featured = f"{names[0]}, {names[1]} & {len(projects) - 2} More"
+        featured = f"{names[0]}, {names[1]} & {len(names) - 2} More"
     
     return f"{date_str} — {featured}"
 
 
 def generate_intro_script(projects: List[Dict]) -> str:
-    """Generate intro narration script."""
-    names = [p.get('name', '') for p in projects]
+    """Generate intro narration script from github_urls.txt."""
+    import random
+
+    names = _read_project_names_from_urls()
+    if not names:
+        names = [p.get('name', '') for p in projects if p.get('name')]
+
     n = len(names)
-    
-    if n == 1:
-        name_list = names[0]
-    elif n <= 3:
-        name_list = ", ".join(names[:-1]) + f" and {names[-1]}"
+    if n == 0:
+        return "Welcome to OpenSourceScribes. Let's explore some new open source projects. Let's get into it."
+
+    sample_size = min(n, random.randint(2, 3))
+    selected = random.sample(names, sample_size)
+    if sample_size == 1:
+        name_list = selected[0]
+    elif sample_size == 2:
+        name_list = f"{selected[0]} and {selected[1]}"
     else:
-        name_list = f"{names[0]}, {names[1]}, {names[2]}, and {n - 3} more"
+        name_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
     
     return (
         f"Welcome to OpenSourceScribes. "
-        f"This week: {n} open source projects. "
-        f"Including {name_list}. "
+        f"This week we have {n} fresh open source projects. "
+        f"Including {name_list}, among others. "
         f"Let's get into it."
     )
 

@@ -196,70 +196,88 @@ class VideoPipeline(IVideoPipeline):
         return str(final_video)
     
     def _generate_episode_title(self) -> str:
-        """Generate episode title from projects."""
+        """Generate episode title from github_urls.txt."""
         from datetime import datetime
-        
+        import re as _re
+        import os
+
+        # Read the CURRENT project names from github_urls.txt
+        names = []
+        github_urls_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'github_urls.txt')
+        if os.path.exists(github_urls_path):
+            with open(github_urls_path, 'r') as f:
+                for line in f:
+                    url = line.strip()
+                    if not url:
+                        continue
+                    match = _re.search(r'github\.com/([^/]+)/([^/]+)', url)
+                    if match:
+                        repo = match.group(2).rstrip('/')
+                        repo = _re.sub(r'[^a-zA-Z0-9 \-\.]', '', repo).strip('-.')
+                        if repo:
+                            names.append(repo)
+
+        # Fallback: if github_urls.txt is missing/empty, use loaded projects
+        if not names:
+            names = [p.get('name', '') for p in self.projects[:2]]
+
         date_str = datetime.now().strftime("%B %d")
-        names = [p.get('name', '') for p in self.projects[:2]]
         
-        if len(self.projects) <= 2:
+        if len(names) <= 2:
             featured = " & ".join(names)
         else:
-            featured = f"{names[0]}, {names[1]} & {len(self.projects) - 2} More"
+            featured = f"{names[0]}, {names[1]} & {len(names) - 2} More"
         
         return f"{date_str} — {featured}"
     
     def _generate_intro_script(self) -> str:
-        """Generate intro narration script."""
+        """Generate intro narration script from github_urls.txt."""
         import random
-        # Extract names and topics to make the intro dynamic
-        names = [p.get('name', '') for p in self.projects if p.get('name')]
-        all_topics = []
-        for p in self.projects:
-            topics = p.get('topics', [])
-            if isinstance(topics, list):
-                all_topics.extend(topics)
-        
-        # Get unique valid topics over length 3
-        unique_topics = list(set([t for t in all_topics if len(t) > 3]))
-        
+        import re as _re
+        import os
+
+        # Read the CURRENT project names from github_urls.txt so the intro
+        # always reflects what is actually in this video, not a stale list.
+        names = []
+        github_urls_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'github_urls.txt')
+        if os.path.exists(github_urls_path):
+            with open(github_urls_path, 'r') as f:
+                for line in f:
+                    url = line.strip()
+                    if not url:
+                        continue
+                    match = _re.search(r'github\.com/([^/]+)/([^/]+)', url)
+                    if match:
+                        repo = match.group(2).rstrip('/')
+                        repo = _re.sub(r'[^a-zA-Z0-9 \-\.]', '', repo).strip('-.')
+                        if repo:
+                            names.append(repo)
+
+        # Fallback: if github_urls.txt is missing/empty, use loaded projects
+        if not names:
+            names = [p.get('name', '') for p in self.projects if p.get('name')]
+
         n = len(names)
         if n == 0:
             return "Welcome to OpenSourceScribes. Let's explore some new open source projects. Let's get into it."
-            
-        # Randomly choose whether to mention projects (70% chance) or topics (30% chance)
-        if unique_topics and random.random() > 0.7:
-            sample_size = min(len(unique_topics), random.randint(2, 3))
-            selected = random.sample(unique_topics, sample_size)
-            if sample_size == 1:
-                item_list = selected[0]
-            elif sample_size == 2:
-                item_list = f"{selected[0]} and {selected[1]}"
-            else:
-                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
-                
-            return (
-                f"Welcome to OpenSourceScribes. "
-                f"This week we are covering {n} new open source projects. "
-                f"With focuses on {item_list}, and more. "
-                f"Let's get into it."
-            )
+
+        sample_size = min(n, random.randint(2, 3))
+        selected = random.sample(names, sample_size)
+        if sample_size == 1:
+            item_list = selected[0]
+        elif sample_size == 2:
+            item_list = f"{selected[0]} and {selected[1]}"
         else:
-            sample_size = min(n, random.randint(2, 3))
-            selected = random.sample(names, sample_size)
-            if sample_size == 1:
-                item_list = selected[0]
-            elif sample_size == 2:
-                item_list = f"{selected[0]} and {selected[1]}"
-            else:
-                item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
-            
-            return (
-                f"Welcome to OpenSourceScribes. "
-                f"This week we have {n} fresh open source projects. "
-                f"Including {item_list}, among others. "
-                f"Let's get into it."
-            )
+            item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
+        
+        return (
+            f"Welcome to OpenSourceScribes. "
+            f"This week we have {n} fresh open source projects. "
+            f"Including {item_list}, among others. "
+            f"Let's get into it."
+        )
     
     def _cleanup_temp_files(self) -> None:
         """Clean up temporary files."""

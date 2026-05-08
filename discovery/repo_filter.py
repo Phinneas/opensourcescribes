@@ -54,6 +54,13 @@ class RepoFilter:
         self._history_data = self._load_history()
         self._queued_urls = self._load_queue()
         self._cached_repos = self._load_cache()
+        
+        # Track repo names in current queue to ensure only one fork per delivery
+        self._queued_repo_names = set()
+        for url in self._queued_urls:
+            parts = url.rstrip('/').split('/')
+            if len(parts) >= 2:
+                self._queued_repo_names.add(parts[-1].lower())
     
     def _load_history(self) -> Dict:
         """Load repo history JSON file."""
@@ -181,6 +188,14 @@ class RepoFilter:
         # Filter 6: Already queued (in github_urls.txt)
         if enriched_repo.url in self._queued_urls:
             return False
+            
+        # Filter 7: Only one fork of a project per delivery (check by repo name)
+        repo_name_lower = enriched_repo.repo.lower()
+        if repo_name_lower in self._queued_repo_names:
+            return False
+            
+        # Add to queued repo names so subsequent calls in the same run filter duplicates
+        self._queued_repo_names.add(repo_name_lower)
         
         return True
     

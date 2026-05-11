@@ -14,6 +14,7 @@ Usage:
 Configuration:
     - Set GITHUB_TOKEN in environment or config.json
     - Set Mistral API key in config.json or MISTRAL_API_KEY
+    - Set DeepSeek API key in config.json or DEEPSEEK_API_KEY
     
 Output:
     - github_urls.txt: 15 new URLs appended

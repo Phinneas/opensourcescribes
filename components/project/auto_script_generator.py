@@ -1,6 +1,10 @@
 """
 Auto-Script Generator for GitHub Projects
-Fetches GitHub data and generates 2-4 minute narration scripts automatically
+
+Pipeline:
+  1. GitHub API: Fetches raw metadata + README (fast, free, deterministic)
+  2. DeepSeek:   Enriches API data with structured insights (features, angles, differentiator)
+  3. Claude:     Writes narration script from enriched data
 """
 
 import os
@@ -386,13 +390,14 @@ def generate_script_template(repo_data: Dict, readme_data: Dict) -> str:
     return script
 
 
-def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
+def generate_script_ai(repo_data: Dict, readme_data: Dict, enriched_data: Optional[Dict] = None) -> Optional[str]:
     """
-    Generate script using AI (Claude via API)
+    Generate script using Claude, using enriched data from DeepSeek for richer context.
     
     Args:
-        repo_data: Repository metadata
+        repo_data: Repository metadata (from GitHub API)
         readme_data: Parsed README sections
+        enriched_data: Optional structured insights from DeepSeek enricher
         
     Returns:
         Generated script text or None if AI unavailable
@@ -416,14 +421,25 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         
         client = anthropic.Anthropic(api_key=api_key)
         
-        # Prepare context
-        readme_content = readme_data.get('full_text', '')
-        if not readme_content:
-            print("⚠️  No README content available, using description only")
-            readme_content = repo_data.get('description', '')
-        
-        # Trim README to prevent token overflow (approx 8000 chars)
-        readme_content = readme_content[:8000]
+        # Prepare context — prefer enriched data if available, otherwise raw README
+        if enriched_data:
+            context_block = f"""
+ENRICHED ANALYSIS (DeepSeek):
+- One-line description: {enriched_data.get('one_line_description', '')}
+- Key features: {', '.join(enriched_data.get('key_features', []))}
+- Technical highlight: {enriched_data.get('technical_highlight', '')}
+- Use cases: {', '.join(enriched_data.get('use_cases', []))}
+- Target audience: {enriched_data.get('target_audience', '')}
+- Differentiator: {enriched_data.get('differentiator', '')}
+- Momentum signal: {enriched_data.get('momentum_signal', '')}
+- Content angle: {enriched_data.get('content_angle', '')}
+"""
+        else:
+            readme_content = readme_data.get('full_text', '')
+            if not readme_content:
+                readme_content = repo_data.get('description', '')
+            readme_content = readme_content[:8000]
+            context_block = f"\nSource Content:\n{readme_content}\n"
         
         # Fetch optional nuance stats from ClickHouse
         ch_stats_text = ""
@@ -439,9 +455,7 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
     Project Name: {cleaned_name}
     Description: {repo_data['description']}
     {ch_stats_text}
-    
-    Source Content:
-    {readme_content}
+    {context_block}
     
     Requirements:
     1. Start immediately with what the project DOES. No "Hey guys" or intro.
@@ -456,8 +470,8 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
    10. When naming the project, use ONLY the project name "{cleaned_name}" exactly as written. Do NOT add any prefix, suffix, or special characters (no asterisks, hashes, at-signs, or other symbols) before or after the project name.
         """
         
-        print("🤖 Generating script with Claude...")
-        
+        print("🤖 Claude: Writing script from enriched data...")
+
         message = client.messages.create(
             model="claude-haiku-4-5",
             max_tokens=1024,
@@ -497,9 +511,57 @@ def generate_script_ai(repo_data: Dict, readme_data: Dict) -> Optional[str]:
         return None
 
 
+def _run_deepseek_enrichment(repo_data: Dict, readme_text: Optional[str]) -> Optional[Dict]:
+    """
+    Run DeepSeek enrichment on GitHub API data + README.
+    Returns structured insights dict, or None if DeepSeek unavailable.
+    
+    Args:
+        repo_data: GitHub API metadata dict
+        readme_text: Raw README content
+        
+    Returns:
+        Enriched insights dict or None
+    """
+    try:
+        from services.deepseek_enricher import DeepSeekEnricher
+    except ImportError:
+        print("⚠️  deepseek_enricher module not available, skipping enrichment")
+        return None
+    
+    try:
+        enricher = DeepSeekEnricher()
+    except ValueError as e:
+        print(f"⚠️  DeepSeek unavailable ({e}), skipping enrichment")
+        return None
+    
+    print("🔍 DeepSeek: Enriching repo data...")
+    
+    try:
+        enrichment = enricher.enrich_repo(repo_data, readme_text or "")
+        
+        if not enrichment:
+            print("⚠️  DeepSeek enrichment returned None")
+            return None
+        
+        print(f"   Enriched: {enrichment.get('one_line_description', 'N/A')[:80]}...")
+        return enrichment
+        
+    except Exception as e:
+        print(f"⚠️  DeepSeek enrichment failed: {e}")
+        return None
+
+
 def generate_script(github_url: str) -> Optional[Dict]:
     """
-    Main function to generate script from GitHub URL
+    Main function to generate script from GitHub URL.
+    
+    Pipeline:
+      1. GitHub API: Fetch raw metadata + README
+      2. DeepSeek:   Enrich with structured insights
+      3. Claude:     Write narration script from enriched data
+    
+    Falls back to template if any stage fails.
     
     Args:
         github_url: Full GitHub repository URL
@@ -507,7 +569,7 @@ def generate_script(github_url: str) -> Optional[Dict]:
     Returns:
         Dictionary with project data and generated script
     """
-    # Fetch GitHub data
+    # Step 1: Fetch GitHub API data
     repo_data = fetch_github_data(github_url)
     
     # Fallback to generic if GitHub fetch failed
@@ -519,8 +581,7 @@ def generate_script(github_url: str) -> Optional[Dict]:
         print(f"❌ Failed to fetch any data for {github_url}")
         return None
     
-    # Fetch README
-    # For generic data, owner/repo might not be available or meaningful for README fetch
+    # Fetch README (raw content for DeepSeek analysis)
     readme_text = None
     if 'owner' in repo_data and 'repo' in repo_data:
         readme_text = fetch_readme(repo_data['owner'], repo_data['repo'])
@@ -532,8 +593,11 @@ def generate_script(github_url: str) -> Optional[Dict]:
     # Clean name of special characters for TTS-friendly output
     clean_name = _clean_project_name(repo_data['name'])
 
-    # Try AI generation first
-    script = generate_script_ai(repo_data, readme_data)
+    # Step 2: DeepSeek enrichment
+    enriched_data = _run_deepseek_enrichment(repo_data, readme_text)
+
+    # Step 3: Claude writes script (uses enriched data if available)
+    script = generate_script_ai(repo_data, readme_data, enriched_data=enriched_data)
     
     # Fallback to template if AI fails
     if not script:

@@ -52,3 +52,7 @@ https://github.com/cloudflare/agentic-inbox
 https://github.com/trycua/cua
 https://github.com/alash3al/stash
 https://github.com/raulcd/datanomy
+https://github.com/monirul399/browser
+https://github.com/witt3rd/stagehand
+https://github.com/hst1189/playwright
+https://github.com/felarof99/steel-browser

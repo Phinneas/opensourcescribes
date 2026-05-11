@@ -67,7 +67,7 @@ class DB:
     # ------------------------------------------------------------------ #
     def connect(self):
         self._conn = Surreal(self._url)
-        self._conn.connect()
+        # v1.0.8+ SDK: connection is implicit on first query, no .connect() call needed
         is_remote = self._url.startswith(("ws://", "wss://", "http://", "https://"))
         if is_remote and self._username and self._password:
             self._conn.signin({"username": self._username, "password": self._password})

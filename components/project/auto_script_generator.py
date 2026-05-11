@@ -17,6 +17,7 @@ from typing import Dict, Optional, Tuple
 MIN_WORDS = 100
 MAX_WORDS = 115
 TARGET_WORDS = 107
+MIN_PROJECTS = 15  # Minimum projects per pipeline run
 
 
 def fetch_github_data(github_url: str) -> Optional[Dict]:
@@ -652,7 +653,7 @@ def generate_from_url_list(filepath: str) -> list:
     print(f"Found {len(urls)} URLs\n")
     
     projects = []
-    processed_repo_names = set()
+    processed_full_names = set()  # Track owner/repo to skip actual forks, not same-named different projects
     
     for i, url in enumerate(urls, 1):
         print(f"\n{'='*60}")
@@ -664,18 +665,20 @@ def generate_from_url_list(filepath: str) -> list:
             print(f"⚠️  ERROR CHECK: Skipping non-GitHub URL to prevent scraping errors: {url}")
             continue
             
-        # Extract repo name for duplicate fork check
-        repo_name_lower = ""
+        # Extract full owner/repo for fork dedup (not just repo name — different owners can have same repo name)
+        full_name_lower = ""
         match = re.search(r'github\.com/([^/]+)/([^/]+)', url)
         if match:
-            repo_name_lower = match.group(2).lower()
+            owner = match.group(1).lower()
+            repo = match.group(2).rstrip('/').lower()
+            full_name_lower = f"{owner}/{repo}"
             
-        if repo_name_lower in processed_repo_names:
-            print(f"⚠️  Skipping duplicate fork: {url}")
+        if full_name_lower in processed_full_names:
+            print(f"⚠️  Skipping duplicate: {url}")
             continue
             
-        if repo_name_lower:
-            processed_repo_names.add(repo_name_lower)
+        if full_name_lower:
+            processed_full_names.add(full_name_lower)
         
         result = generate_script(url)
         if result:
@@ -716,7 +719,105 @@ def generate_from_url_list(filepath: str) -> list:
             })
             print(f"✅ Added fallback for {name} (ID: {safe_id})")
     
+    # ── Ensure minimum project count ──
+    # If we don't have enough projects, run discovery to find more
+    if len(projects) < MIN_PROJECTS:
+        print(f"\n⚠️  Only {len(projects)} projects found (minimum: {MIN_PROJECTS}). Running discovery for more...")
+        additional = _discover_additional_projects(projects, MIN_PROJECTS - len(projects))
+        projects.extend(additional)
+        print(f"   Total projects after discovery: {len(projects)}")
+    
     return projects
+
+
+def _discover_additional_projects(existing_projects: list, needed: int) -> list:
+    """
+    Run discovery to find additional projects when the URL list
+    doesn't yield enough. Returns list of new project dicts.
+    
+    Args:
+        existing_projects: Already-processed projects
+        needed: Number of additional projects needed
+        
+    Returns:
+        List of new project dicts
+    """
+    import subprocess
+    import sys
+    
+    # Get URLs we already have to avoid duplicates
+    existing_urls = {p.get('github_url', '').lower().rstrip('/') for p in existing_projects}
+    
+    # Try running exa_discovery to find more repos
+    print(f"   Running Exa discovery for {needed} more repos...")
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "discovery.exa_discovery",
+             "--discover-only", "--count", str(needed + 10)],
+            capture_output=True, text=True, timeout=120,
+            cwd=os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        )
+    except Exception as e:
+        print(f"   Discovery failed: {e}")
+        return []
+    
+    # Re-read github_urls.txt which exa_discovery overwrites
+    urls_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+        'github_urls.txt'
+    )
+    
+    if not os.path.exists(urls_path):
+        print("   No github_urls.txt found after discovery")
+        return []
+    
+    new_urls = []
+    with open(urls_path, 'r') as f:
+        for line in f:
+            url = line.strip()
+            if not url:
+                continue
+            if not url.startswith('http'):
+                url = 'https://' + url
+            if url.lower().rstrip('/') not in existing_urls:
+                new_urls.append(url)
+    
+    if not new_urls:
+        print("   No new URLs found from discovery")
+        return []
+    
+    print(f"   Found {len(new_urls)} new URLs from discovery")
+    
+    # Process new URLs
+    additional_projects = []
+    for i, url in enumerate(new_urls[:needed + 5]):  # Process a few extra in case some fail
+        print(f"   Processing additional {i+1}/{min(len(new_urls), needed+5)}: {url}")
+        result = generate_script(url)
+        if result:
+            match = re.search(r'github\.com/([^/]+)/([^/]+)', result['github_url'])
+            if match:
+                owner, repo = match.groups()
+                safe_id = f"{owner}_{repo}".lower().replace('-', '_')
+            else:
+                safe_id = f"extra_{i}"
+            
+            # Skip if we already have this URL
+            if result['github_url'].lower().rstrip('/') in existing_urls:
+                continue
+            
+            existing_urls.add(result['github_url'].lower().rstrip('/'))
+            additional_projects.append({
+                'id': safe_id,
+                'name': _clean_project_name(result['name']),
+                'github_url': result['github_url'],
+                'script_text': result['script_text']
+            })
+            print(f"   ✅ Added {result['name']} (ID: {safe_id})")
+            
+            if len(additional_projects) >= needed:
+                break
+    
+    return additional_projects
 
 
 if __name__ == "__main__":

@@ -1,134 +1,26 @@
 [
     {
-        "id": "coleam00_archon",
-        "name": "Archon",
-        "github_url": "https://github.com/coleam00/Archon",
-        "script_text": "**ARCHON - Open Source AI Coding Harness**\n\nArchon is the first open-source harness builder for deterministic AI coding. Instead of unpredictable AI outputs, define development workflows in YAML: planning, implementation, validation, review, and PR creation. The AI handles the intelligence at each step, but your process structure stays consistent.\n\nThink of it like Dockerfiles for AI workflows. The community is backing this hard - 950 active contributors recently pushed 35 pull requests and 53 issue events, showing real momentum behind the tool.\n\nRun multiple workflows in parallel with isolated git worktrees. Compose deterministic nodes with AI steps. Deploy from CLI, web interface, or Slack.\n\nPerfect for teams needing repeatable, controlled AI-assisted development."
+        "id": "monirul399_browser",
+        "name": "browser",
+        "github_url": "https://github.com/monirul399/browser",
+        "script_text": "# Lightpanda Browser - Engineering Overview\n\nLightpanda is an open-source headless browser built specifically for AI agents, automation, and web scraping. It executes JavaScript, supports partial Web APIs, and integrates with Playwright, Puppeteer, and chromedp via the Chrome DevTools Protocol.\n\nThe engineering standout: it runs nine times lighter on memory than Chrome and executes eleven times faster, with instant startup. This efficiency matters at scale\u2014testing hundreds of pages becomes practical on modest infrastructure.\n\nThe browser handles DOM manipulation, event execution, and network interactions without the overhead of a full graphical interface. It's ideal for training data collection, automated testing, and agent-based web interaction where performance per compute dollar directly impacts viability."
     },
     {
-        "id": "calfonso_rusternetes",
-        "name": "rusternetes",
-        "github_url": "https://github.com/calfonso/rusternetes",
-        "script_text": "# R\u016bsternetes: Kubernetes in Rust\n\nR\u016bsternetes is a ground-up reimplementation of Kubernetes written entirely in Rust. Over 216,000 lines of code span ten crates, implementing every core component\u2014API server, scheduler, controller manager, kubelet, and kube-proxy\u2014from scratch with full Kubernetes API compatibility.\n\nThe project passes 94% of official Kubernetes conformance tests across 160 test rounds. It includes a built-in web console with real-time cluster visualization, live metrics, pod log streaming, and resource management.\n\nDevelopers use this for studying Kubernetes internals, evaluating Rust's systems programming capabilities at scale, or deploying containerized workloads in memory-constrained environments where Go's runtime overhead matters."
+        "id": "witt3rd_stagehand",
+        "name": "stagehand",
+        "github_url": "https://github.com/witt3rd/stagehand",
+        "script_text": "# Stagehand YouTube Script\n\nStagehand is a production-ready framework for AI browser automation that balances code and natural language. Instead of choosing between low-level Selenium complexity or unpredictable high-level agents, developers can mix both approaches seamlessly.\n\nThe framework lets you write Playwright code for precise actions while using AI for navigating unfamiliar interfaces. Key features include action previewing, token-efficient caching, and one-line integration with OpenAI and Anthropic's computer use models.\n\nDevelopers can execute individual actions, run larger agent tasks, and extract structured data from pages all within one framework. This makes stagehand ideal for building reliable, scalable browser automations in production environments."
     },
     {
-        "id": "infisical_agent_vault",
-        "name": "agent-vault",
-        "github_url": "https://github.com/Infisical/agent-vault",
-        "script_text": "**Agent Vault: HTTP Credential Proxy for AI Agents**\n\nAgent Vault is an open-source credential broker that sits between your AI agents and the APIs they call. Instead of handing credentials directly to agents\u2014exposing them to prompt injection and exfiltration\u2014Agent Vault proxies HTTP requests and injects credentials at the network layer.\n\nAgents never see your secrets. They simply route requests through a local proxy that handles authentication transparently. It works with any HTTP-based agent, encrypts credentials with AES-256-GCM, and logs every request for audit trails.\n\nWith 4 active contributors and strong momentum, the project is gaining traction for securing agent-to-API communication without credential exposure."
+        "id": "hst1189_playwright",
+        "name": "playwright",
+        "github_url": "https://github.com/hst1189/playwright",
+        "script_text": "# Playwright Video Script\n\nPlaywright is a web testing and automation framework that controls Chromium, Firefox, and WebKit through a single API. This unified approach eliminates the need to maintain separate test suites for different browsers.\n\nThe framework delivers evergreen, reliable automation across Linux, macOS, and Windows. Developers can write tests once and execute them headlessly across all major browser engines. Installation is straightforward\u2014either use the init command for a guided setup or manually install the test runner and browsers.\n\nPlaywright's primary strength lies in enabling comprehensive cross-browser testing without duplicating test logic."
     },
     {
-        "id": "huggingface_ml_intern",
-        "name": "ml-intern",
-        "github_url": "https://github.com/huggingface/ml-intern/",
-        "script_text": "# ML-Intern Video Script\n\nML-Intern is an open-source ML engineer that autonomously researches papers, trains models, and ships production code. Built on Hugging Face infrastructure, it accesses documentation, datasets, and cloud compute directly.\n\nThe system supports multiple LLM backends\u2014Claude, GPT, and local models via Ollama or vLLM\u2014giving developers flexibility in model selection. Installation takes seconds with uv sync, and the CLI works immediately from any directory. Users can run interactive chat sessions or execute single prompts in headless mode.\n\nThe tool handles end-to-end ML workflows: from literature review through model training to deployment, all within the Hugging Face ecosystem."
-    },
-    {
-        "id": "sosedoff_pgweb",
-        "name": "pgweb",
-        "github_url": "https://github.com/sosedoff/pgweb",
-        "script_text": "# pgweb: PostgreSQL Database Explorer\n\npgweb is a web-based PostgreSQL client built in Go, delivering cross-platform database exploration without dependencies. Available as a single binary for Mac, Linux, and Windows, it connects to PostgreSQL 9.1 and newer.\n\nThe tool supports SSH tunnels, multiple concurrent database sessions, and custom SQL execution with query analysis. Users can export data to CSV, JSON, or XML formats, leverage query history, and bookmark frequently-used servers.\n\nInstallation requires just downloading a precompiled binary. Configuration accepts connection flags or standard PostgreSQL connection URLs. Developers use pgweb primarily for quick database inspection and management without heavyweight IDE overhead."
-    },
-    {
-        "id": "software_mansion_argent",
-        "name": "argent",
-        "github_url": "https://github.com/software-mansion/argent",
-        "script_text": "**ARGENT: iOS Simulator Control for AI Agents**\n\nArgent is an agentic toolkit that gives AI assistants direct control over iOS Simulators. Instead of context-switching between tools, developers can ask their agent to tap buttons, run profilers, or reproduce issues\u2014all from the CLI.\n\nThe toolkit handles full UI interaction through taps, swipes, gestures, and hardware buttons. It profiles both React Native and Xcode Instruments natively, analyzes performance data, and captures crash reports for debugging. React Native projects work out of the box with no additional setup.\n\nInstallation is straightforward: run npx @swmansion/argent init, and the setup wizard configures everything. This enables developers to offload repetitive testing and profiling tasks to their AI assistant while maintaining focus on implementation."
-    },
-    {
-        "id": "besimple_oss_broccoli",
-        "name": "broccoli",
-        "github_url": "https://github.com/besimple-oss/broccoli",
-        "script_text": "# Broccoli: AI-Powered PR Generation\n\nBroccoli converts Linear tickets into production-ready pull requests using Claude and Codex. Assign a ticket to the bot, and it plans, implements, and opens a reviewable PR autonomously.\n\nThe implementation runs entirely on your infrastructure\u2014Google Cloud Run, your Postgres, your API keys. No external control plane. No data leaves your tenancy.\n\nSetup takes roughly 30 minutes: one bootstrap script, one config file, two webhooks. The system includes Cloud Run serverless deployment, Secret Manager integration, webhook deduplication, and durable job state tracking.\n\nDevelopers can customize prompt templates, version them with code, and deploy AI-powered code review on every PR. Perfect for teams wanting to automate routine implementation while maintaining full infrastructure ownership."
-    },
-    {
-        "id": "zilliztech_claude_context",
-        "name": "claude-context",
-        "github_url": "https://github.com/zilliztech/claude-context",
-        "script_text": "# Claude Context - YouTube Script\n\nClaude Context is an MCP plugin that enables semantic code search for Claude Code and other AI coding agents. Instead of loading entire codebases into context\u2014which becomes prohibitively expensive at scale\u2014Claude Context stores your code in a vector database and retrieves only relevant files based on natural language queries.\n\nThe plugin efficiently handles large repositories by performing intelligent semantic matching across millions of lines of code. Results surface directly into Claude's context window without requiring multiple discovery rounds.\n\nBuilt on Node.js with npm packages available, Claude Context solves the fundamental challenge of giving coding agents meaningful codebase awareness while managing API costs effectively."
-    },
-    {
-        "id": "hkuds_rag_anything",
-        "name": "RAG-Anything",
-        "github_url": "https://github.com/HKUDS/RAG-Anything",
-        "script_text": "# RAG-Anything: All-in-One RAG Framework\n\nRAG-Anything delivers a unified retrieval-augmented generation framework handling multimodal inputs across text, images, and documents. Built on LightRAG, it provides optimized indexing, retrieval, and generation pipelines with minimal configuration overhead.\n\nThe framework supports Python 3.10 and integrates seamlessly via PyPI. With 108 active contributors recently engaged, the project maintains strong development velocity through structured pull request workflows. Developers can deploy custom knowledge bases, implement hybrid search strategies, and extend functionality across various data formats.\n\nThe implementation prioritizes efficiency and modularity\u2014enabling production-grade RAG systems without extensive engineering effort. Ideal for applications requiring scalable information retrieval across heterogeneous document sources."
-    },
-    {
-        "id": "enterpilot_gomodel",
-        "name": "GoModel",
-        "github_url": "https://github.com/ENTERPILOT/GOModel/",
-        "script_text": "# GoModel - AI Gateway in Go\n\nGoModel is a lightweight AI gateway written in Go that unifies APIs across OpenAI, Anthropic, Gemini, Groq, xAI, and Ollama behind a single OpenAI-compatible interface.\n\nIt handles streaming, cost tracking, token usage monitoring, and built-in observability through an integrated dashboard. Developers get guardrails and detailed logging without the overhead of heavier alternatives.\n\nDeploy via Docker in seconds, configure only the providers you need, and start routing requests immediately. GoModel is purpose-built for teams managing multiple AI models without operational complexity."
-    },
-    {
-        "id": "kyegomez_openmythos",
-        "name": "OpenMythos",
-        "github_url": "https://github.com/kyegomez/OpenMythos",
-        "script_text": "# OpenMythos: Theoretical Claude Architecture Reconstruction\n\nOpenMythos is an open-source implementation of a Recurrent-Depth Transformer that reconstructs the Claude Mythos architecture from published research literature. The model features a three-stage pipeline: Prelude transformer blocks, a configurable looped Recurrent Block for iterative reasoning, and a Coda output stage. Developers can toggle between Multi-Head Latent Attention and Grouped Query Attention, with a sparse Mixture of Experts layer for compute-efficient inference. Built in PyTorch with optional Flash Attention 2 acceleration, it's designed for exploring depth-variable reasoning patterns. This implementation is ideal for researchers studying transformer architectures and experimenting with recurrent reasoning mechanisms."
-    },
-    {
-        "id": "zilliztech_memsearch",
-        "name": "memsearch",
-        "github_url": "https://github.com/zilliztech/memsearch",
-        "script_text": "# memsearch: Unified Memory for AI Coding Agents\n\nmemsearch provides a persistent, cross-platform semantic memory layer for AI agents like Claude Code and Codex. Built on Markdown and Milvus, it enables agents to store and retrieve context across conversations without manual setup.\n\nMemories persist across multiple platforms\u2014what one agent learns becomes immediately searchable in others. The implementation uses vector embeddings for semantic search, allowing agents to find relevant context efficiently.\n\nWith 26 active contributors and strong recent momentum, the project continues evolving. Installation is plugin-based for end users, while developers access a full CLI for custom integrations.\n\nUse memsearch when your coding agents need to maintain context across sessions and platforms."
-    },
-    {
-        "id": "matthartman_ghost_pepper",
-        "name": "ghost-pepper",
-        "github_url": "https://github.com/matthartman/ghost-pepper",
-        "script_text": "# Ghost Pepper: Private On-Device Voice Models\n\nGhost Pepper delivers 100% private speech-to-text and meeting transcription entirely on macOS. No cloud APIs. No data leaves your machine.\n\nThe implementation leverages Apple Silicon acceleration with WhisperKit for speech recognition and LLM.swift for intelligent text cleanup. Multiple model options support 50+ languages, from lightweight Whisper tiny to multilingual Qwen3-ASR.\n\nWith 309 active contributors recently engaging on pull requests and issues, the project maintains solid momentum. The app handles meeting transcription with AI-generated summaries, smart filler-word removal, and markdown export\u2014all locally processed.\n\nHold Control, speak, release. Perfect for developers requiring strict data privacy during voice input."
-    },
-    {
-        "id": "rocky_data_rocky",
-        "name": "rocky",
-        "github_url": "https://github.com/rocky-data/rocky",
-        "script_text": "# Rocky: SQL Transformation Engine for Data Warehouses\n\nRocky is a Rust-based SQL transformation engine that runs as a single static binary. It delivers compile-time type safety, column-level lineage tracking, and per-model cost attribution across Databricks, Snowflake, BigQuery, and DuckDB.\n\nKey capabilities include named branches for isolated experiments, schema drift detection, and data contract enforcement before execution. The engine keeps storage and compute in your warehouse while providing a control plane for SQL pipelines.\n\nWith 4 active contributors and strong recent momentum, Rocky catches data quality issues early and enables risk-free pipeline changes. Use it to manage complex warehouse transformations with safety guarantees."
-    },
-    {
-        "id": "dirac_run_dirac",
-        "name": "dirac",
-        "github_url": "https://github.com/dirac-run/dirac",
-        "script_text": "# Dirac Video Script\n\nDirac is an open-source coding agent that cuts API costs by 50-80% while improving code quality. It achieves this through hash-anchored parallel edits, AST manipulation, and intelligent context curation\u2014keeping only relevant information in focus to maintain model reasoning accuracy.\n\nThe agent recently topped Terminal-Bench-2 with a 65.2% score, outperforming Google's baseline and other leading agents on complex refactoring tasks. By minimizing context bloat without sacrificing capability, Dirac delivers faster results at significantly lower cost.\n\nDevelopers use Dirac when they need efficient, accurate code modifications across large codebases without expensive token overhead.\n\n**Word count: 107**"
-    },
-    {
-        "id": "victoriametrics_victoriametrics",
-        "name": "VictoriaMetrics",
-        "github_url": "https://github.com/VictoriaMetrics/VictoriaMetrics",
-        "script_text": "# VictoriaMetrics: Fast Time Series Monitoring\n\nVictoriaMetrics is a high-performance time series database engineered for cost-effective monitoring at scale. It ingests and stores metrics efficiently while maintaining fast query performance, even with massive datasets.\n\nBuilt in Go, VictoriaMetrics uses advanced compression and indexing techniques to minimize storage overhead. The architecture supports horizontal scaling and handles millions of data points per second without sacrificing reliability.\n\nWith 30 active contributors driving momentum through recent pull requests and issue resolution, the project maintains steady technical evolution. Trusted by companies like Spotify and Roblox, it's the primary choice for teams needing scalable, economical time series infrastructure."
-    },
-    {
-        "id": "abhigyanpatwari_gitnexus",
-        "name": "GitNexus",
-        "github_url": "https://github.com/abhigyanpatwari/GitNexus",
-        "script_text": "# GitNexus: Zero-Server Code Intelligence\n\nGitNexus builds a knowledge graph directly in your browser\u2014no backend required. Upload a GitHub repo or ZIP file and instantly explore code architecture through an interactive graph interface powered by a Graph RAG Agent.\n\nThe tool indexes every dependency, call chain, and execution flow, then exposes them through AI-ready tools. This gives language models\u2014even smaller ones\u2014complete architectural context, eliminating missed dependencies and broken call chains.\n\nUse the Web UI for quick exploration or connect the CLI with Model Context Protocol to integrate with Cursor, Claude, and other AI agents. With 854 active contributors and sustained momentum across recent pull requests and issues, GitNexus is purpose-built for code analysis at scale."
-    },
-    {
-        "id": "lucasimi_tda_mapper_python",
-        "name": "tda-mapper-python",
-        "github_url": "https://github.com/lucasimi/tda-mapper-python",
-        "script_text": "# tda-mapper-python: Topological Data Analysis Made Practical\n\ntda-mapper is a Python library that implements the Mapper algorithm for extracting topological structure from complex, high-dimensional datasets. Built for computational efficiency, it uses optimized spatial search and parallelization to handle large-scale data analysis.\n\nThe library integrates seamlessly with scikit-learn pipelines, offering custom estimators for dimensionality reduction and clustering. Multiple visualization backends\u2014Plotly, Matplotlib, and PyVis\u2014let you explore graph structures interactively. An included web interface provides real-time parameter adjustment and dynamic exploration.\n\nActively maintained with comprehensive documentation and test coverage, tda-mapper is purpose-built for unsupervised learning and exploratory data analysis workflows."
-    },
-    {
-        "id": "cloudflare_agentic_inbox",
-        "name": "agentic-inbox",
-        "github_url": "https://github.com/cloudflare/agentic-inbox",
-        "script_text": "# Agentic Inbox - Video Script\n\nAgentic Inbox is a self-hosted email client running entirely on Cloudflare Workers. It handles send, receive, and management through a modern web interface using your own Cloudflare account.\n\nThe architecture isolates each mailbox in a Durable Object with SQLite, stores attachments in R2, and routes incoming emails via Cloudflare Email Routing. An AI-powered agent built with the Cloudflare Agents SDK and Workers AI can read inboxes, search conversations, and draft replies automatically.\n\nSetup involves deploying to Cloudflare, configuring Email Routing rules, enabling the Email Service binding, and creating mailboxes. This approach lets developers run a full email system without external infrastructure."
-    },
-    {
-        "id": "trycua_cua",
-        "name": "cua",
-        "github_url": "https://github.com/trycua/cua",
-        "script_text": "# CUA: Open-Source Computer-Use Agent Infrastructure\n\nCUA provides sandboxes, SDKs, and benchmarks for training AI agents that control full desktops across macOS, Linux, and Windows. The platform includes CUA Driver for background macOS automation, CUA Sandbox for agentic UI control, and CUA Bench for standardized evaluation. With 27 active contributors recently shipping 19 pull requests, the project maintains strong development momentum. Developers get native app control, canvas-based tool support, and replayable session trajectories. Deploy agents trained on your infrastructure to automate complex desktop workflows at scale."
-    },
-    {
-        "id": "alash3al_stash",
-        "name": "stash",
-        "github_url": "https://github.com/alash3al/stash",
-        "script_text": "# Stash: Persistent Memory for AI Agents\n\nStash solves a fundamental problem: LLMs forget. Every conversation starts blank. This project adds a persistent memory layer that stores episodes, facts, and context in Postgres\u2014letting your agent remember, recall, and learn across sessions.\n\nIt's self-hosted, runs as a single binary, and includes an MCP server. No cloud dependency. An 8-stage consolidation pipeline automatically transforms raw observations into structured knowledge: facts, relationships, causal links, and failure patterns.\n\nDeploy with Docker Compose. Connect any MCP-compatible client\u2014Claude Desktop, Cursor, Windsurf, or others. Perfect for agents that need continuity and contextual awareness over time."
-    },
-    {
-        "id": "raulcd_datanomy",
-        "name": "datanomy",
-        "github_url": "https://github.com/raulcd/datanomy",
-        "script_text": "# Datanomy: Dissecting Data Structures\n\nDatanomy is a terminal-based tool that breaks down the anatomy of columnar data files. Built on Textual and PyArrow, it provides interactive inspection of Parquet file structure, schema, metadata, and statistics directly from the command line.\n\nThe tool displays general structure, column schemas, actual data samples, file metadata, and compression stats in an accessible terminal interface. Installation is straightforward via pip or uv, and usage requires just a single command with your Parquet file.\n\nKeyboard navigation is minimal\u2014press Q to quit. Development setup uses uv for dependency management and includes pytest, ruff formatting, and mypy type checking.\n\nUse Datanomy when you need to understand what's actually inside your Parquet files without external dependencies."
+        "id": "felarof99_steel_browser",
+        "name": "steel-browser",
+        "github_url": "https://github.com/felarof99/steel-browser",
+        "script_text": "# Steel-browser Video Script\n\nsteel-browser is an open-source browser API designed for AI agents and applications that need to automate web interactions. It provides full Chrome control through Puppeteer and CDP protocols, handling session management, cookies, and local storage automatically. Developers get built-in proxy support, extension loading, anti-detection measures, and resource cleanup without managing infrastructure. The API converts pages to markdown, captures screenshots, and generates PDFs programmatically. With active development and a growing community, steel-browser eliminates the complexity of browser automation so teams can focus on AI logic instead of infrastructure. Perfect for building web agents that interact with live websites at scale."
     }
 ]

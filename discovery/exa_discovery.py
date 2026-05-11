@@ -44,7 +44,8 @@ with open(_CONFIG_PATH) as _f:
 
 EXA_API_KEY: str = _CONFIG.get("exa", {}).get("api_key", "")
 
-BATCH_SIZE = 17                          # repos per run
+BATCH_SIZE = 17                          # repos per run (minimum output)
+DISCOVERY_COUNT = 40                     # repos to request from discovery (extra buffer for fork dedup)
 GITHUB_URLS_FILE = "github_urls.txt"    # current batch — read by auto_script_generator.py
 PUBLISHED_FILE = "published_repos.txt"  # permanent dedup history
 PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))  # project root directory
@@ -350,6 +351,7 @@ class ExaDiscovery:
         """
         Run discovery and return up to `count` new repo URLs, deduplicated
         against SurrealDB (falls back to published_repos.txt if DB unavailable).
+        Dedup includes fork filtering (same repo name from different owners).
         Uses queue-first logic: checks pending repos before running discovery.
         """
         try:
@@ -394,17 +396,28 @@ class ExaDiscovery:
             all_candidates.extend(ClickHouseGitTrendsSource().fetch(seen))
 
         # Global dedup across both strategies
+        # Dedup by full URL AND by repo name (to filter out forks of same project)
         seen_keys: set = set()
+        seen_repo_names: set = set()  # Track repo names to skip forks
         deduped: List[str] = []
+        forks_skipped = 0
         for c in all_candidates:
             key = c.url.lower()
-            if key not in seen_keys:
-                seen_keys.add(key)
-                deduped.append(c.url)
+            if key in seen_keys:
+                continue
+            # Extract repo name for fork dedup
+            parts = c.url.rstrip('/').split('/')
+            repo_name = parts[-1].lower() if len(parts) >= 2 else ''
+            if repo_name in seen_repo_names:
+                forks_skipped += 1
+                continue
+            seen_keys.add(key)
+            seen_repo_names.add(repo_name)
+            deduped.append(c.url)
 
         batch = deduped[:count]
         duplicates = len(all_candidates) - len(deduped)
-        print(f"\n[ExaDiscovery] {len(deduped)} candidates found ({duplicates} dupes), taking {len(batch)}")
+        print(f"\n[ExaDiscovery] {len(deduped)} unique candidates found ({duplicates} URL dupes, {forks_skipped} forks skipped), taking {len(batch)}")
 
         # Log candidates to DB and record discovery event
         try:

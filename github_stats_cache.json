@@ -1,68 +1,46 @@
 {
-  "mbrukman/mastra": {
+  "monirul399/browser": {
     "data": {
-      "owner": "mbrukman",
-      "repo": "mastra",
+      "owner": "monirul399",
+      "repo": "browser",
       "stars": 0,
       "forks": 0,
       "language": null,
-      "description": "From the team behind Gatsby, Mastra is a framework for building AI-powered applications and agents with a modern TypeScript stack.",
+      "description": "Lightpanda: the headless browser designed for AI and automation",
       "topics": [],
-      "url": "https://github.com/mbrukman/mastra",
-      "timestamp": "2026-05-06T07:51:57.936602"
+      "url": "https://github.com/monirul399/browser",
+      "timestamp": "2026-05-10T19:02:57.451002"
     },
-    "timestamp": "2026-05-06T07:51:57.936637"
+    "timestamp": "2026-05-10T19:02:57.451014"
   },
-  "openai/openai-agents-js": {
+  "hst1189/playwright": {
     "data": {
-      "owner": "openai",
-      "repo": "openai-agents-js",
-      "stars": 2952,
-      "forks": 727,
-      "language": "TypeScript",
-      "description": "A lightweight, powerful framework for multi-agent workflows and voice agents",
-      "topics": [
-        "agents",
-        "openai",
-        "openai-api",
-        "realtime-api"
-      ],
-      "url": "http://github.com/openai/openai-agents-js",
-      "timestamp": "2026-05-06T07:52:05.624794"
-    },
-    "timestamp": "2026-05-06T07:52:05.624875"
-  },
-  "Odeneho-Calculus/kalxjs": {
-    "data": {
-      "owner": "Odeneho-Calculus",
-      "repo": "kalxjs",
-      "stars": 2,
+      "owner": "hst1189",
+      "repo": "playwright",
+      "stars": 0,
       "forks": 0,
-      "language": "JavaScript",
-      "description": "kalxjs is designed to empower developers to build dynamic, scalable, and high-performance web applications. Inspired by the flexibility and reactivity of frameworks like Vue, React, and Angular, kalxjs provides a seamless development experience with a focus on simplicity, performance, and extensibility.",
-      "topics": [],
-      "url": "https://github.com/Odeneho-Calculus/kalxjs",
-      "timestamp": "2026-05-06T07:52:12.567855"
-    },
-    "timestamp": "2026-05-06T07:52:12.567879"
-  },
-  "rocky-data/rocky": {
-    "data": {
-      "owner": "rocky-data",
-      "repo": "rocky",
-      "stars": 219,
-      "forks": 7,
-      "language": "Rust",
-      "description": "Rust SQL transformation engine with branches, replay, column-level lineage, compile-time type safety, and per-model cost attribution. Single static binary; adapters for Databricks, Snowflake, BigQuery, DuckDB. Apache 2.0.",
+      "language": null,
+      "description": "Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. ",
       "topics": [
-        "column-lineage",
-        "dagster",
-        "data-contracts",
-        "data-engineering"
+        "tool"
       ],
-      "url": "https://github.com/rocky-data/rocky",
-      "timestamp": "2026-05-06T19:17:08.245686"
+      "url": "https://github.com/hst1189/playwright",
+      "timestamp": "2026-05-10T19:03:13.998382"
     },
-    "timestamp": "2026-05-06T19:17:08.245697"
+    "timestamp": "2026-05-10T19:03:13.998397"
+  },
+  "felarof99/steel-browser": {
+    "data": {
+      "owner": "felarof99",
+      "repo": "steel-browser",
+      "stars": 0,
+      "forks": 0,
+      "language": null,
+      "description": "\ud83d\udd25 Open Source Browser API for AI Agents & Apps. Steel Browser is a batteries-included browser sandbox that lets you automate the web without worrying about infrastructure.",
+      "topics": [],
+      "url": "https://github.com/felarof99/steel-browser",
+      "timestamp": "2026-05-10T19:03:24.130260"
+    },
+    "timestamp": "2026-05-10T19:03:24.130275"
   }
 }

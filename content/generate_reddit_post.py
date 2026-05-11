@@ -7,7 +7,6 @@ import json
 import os
 import datetime
 import anthropic
-import praw
 
 # --- PROMPT TEMPLATES ---
 

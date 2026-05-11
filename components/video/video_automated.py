@@ -1251,61 +1251,34 @@ class VideoSuiteAutomated:
     def _generate_episode_intro(self):
         """
         Build a unique per-episode intro narration script and title
-        from the actual project list for THIS run (read from github_urls.txt).
+        from the actual projects loaded in this run (self.projects).
         Both change every episode so no two intros are identical.
         """
         import random
         import re as _re
 
-        # ── Read the CURRENT project names from github_urls.txt ──
-        # This ensures the intro always reflects what is actually in this
-        # video, not a stale project list from a previous run.
-        names = []
-        github_urls_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'github_urls.txt')
-        if os.path.exists(github_urls_path):
-            with open(github_urls_path, 'r') as f:
-                for line in f:
-                    url = line.strip()
-                    if not url:
-                        continue
-                    # Extract repo name from URL for clean project name
-                    match = _re.search(r'github\.com/([^/]+)/([^/]+)', url)
-                    if match:
-                        repo = match.group(2).rstrip('/')
-                        # Strip special characters for TTS-safe name
-                        repo = _re.sub(r'[^a-zA-Z0-9 \-\.]', '', repo).strip('-.')
-                        if repo:
-                            names.append(repo)
+        # ── Use ACTUAL loaded projects (self.projects) ──
+        # This guarantees the intro count and names match what is
+        # actually in the video, even if github_urls.txt had more URLs
+        # than projects that were successfully processed.
+        names = [_re.sub(r'[^a-zA-Z0-9 \-\.]', '', p.get('name', '')).strip('-.')
+                 for p in self.projects if p.get('name')]
 
-        # Fallback: if github_urls.txt is missing/empty, use loaded projects
-        if not names:
-            names = [p.get('name', '') for p in self.projects if p.get('name')]
-
-        all_topics = []
-        for p in self.projects:
-            topics = p.get('topics', [])
-            if isinstance(topics, list):
-                all_topics.extend(topics)
-        
-        # Get unique valid topics over length 3
-        unique_topics = list(set([t for t in all_topics if len(t) > 3]))
-        
         n = len(names)
         date_str = datetime.now().strftime("%B %d")
 
-        # Episode title: top 2 project names from current github_urls.txt
-        if n <= 2:
-            featured = " & ".join(names)
+        # Episode title from actual project names in this video
+        if not names:
+            episode_title = f"{date_str} — Open Source Projects"
+        elif n <= 2:
+            episode_title = f"{date_str} — {' & '.join(names)}"
         else:
-            featured = f"{names[0]}, {names[1]} & {n - 2} More"
-        
-        episode_title = f"{date_str} — {featured}"
+            episode_title = f"{date_str} — {names[0]}, {names[1]} & {n - 2} More"
 
-        # Narration: mention actual projects from this run's github_urls.txt
+        # Narration: mention actual project names from this run
         if n == 0:
             return "Welcome to OpenSourceScribes. Let's explore some new open source projects. Let's get into it.", episode_title
 
-        # Always mention real project names from the current github_urls.txt
         sample_size = min(n, random.randint(2, 3))
         selected = random.sample(names, sample_size)
         if sample_size == 1:
@@ -1314,10 +1287,10 @@ class VideoSuiteAutomated:
             item_list = f"{selected[0]} and {selected[1]}"
         else:
             item_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
-        
+
         script = (
             f"Welcome to OpenSourceScribes. "
-            f"This week we have {n} fresh open source projects. "
+            f"Today we have {n} open source project{'s' if n != 1 else ''}. "
             f"Including {item_list}, among others. "
             f"Let's get into it."
         )

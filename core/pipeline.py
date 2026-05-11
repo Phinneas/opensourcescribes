@@ -354,10 +354,33 @@ def run_pipeline(data_file: str = DATA_FILE):
     # Shared audio clips
     intro_audio = str(Path(OUTPUT_FOLDER) / "intro_audio.mp3")
     sub_audio = str(Path(OUTPUT_FOLDER) / "subscribe_audio.mp3")
+
+    # Build dynamic intro script from actual project names in this run
+    import re as _re
+    _project_names = [_re.sub(r'[^a-zA-Z0-9 \-\.]', '', p.get('name', '')).strip('-.')
+                      for p in projects if p.get('name')]
+    _n = len(_project_names)
+    if _n == 0:
+        _intro_script = "Welcome to OpenSourceScribes. Let's explore some new open source projects. Let's get into it."
+    else:
+        import random as _rng
+        _sample_size = min(_n, _rng.randint(2, 3))
+        _selected = _rng.sample(_project_names, _sample_size)
+        if _sample_size == 1:
+            _name_list = _selected[0]
+        elif _sample_size == 2:
+            _name_list = f"{_selected[0]} and {_selected[1]}"
+        else:
+            _name_list = f"{_selected[0]}, {_selected[1]}, and {_selected[2]}"
+        _intro_script = (
+            f"Welcome to OpenSourceScribes. "
+            f"Today we have {_n} open source project{'s' if _n != 1 else ''}. "
+            f"Including {_name_list}, among others. "
+            f"Let's get into it."
+        )
+
     intro_audio_future = generate_audio_task.submit(
-        "Welcome back, glad you could stop by! Today we're diggin into "
-        f"{len(projects)} incredible open source projects that you need to know about. "
-        "Let's get started!",
+        _intro_script,
         intro_audio,
     )
     sub_audio_future = generate_audio_task.submit(
@@ -399,7 +422,19 @@ def run_pipeline(data_file: str = DATA_FILE):
     logger.info("🎬 Rendering intro / outro / subscribe segments…")
     from components.graphics.branding import create_intro_card, create_outro_card, create_subscribe_card
 
-    intro_img = create_intro_card(CONFIG, "GitHub Projects Roundup")
+    # Dynamic episode title from actual project names
+    from datetime import datetime as _dt
+    _title_names = [p.get('name', '') for p in projects if p.get('name')]
+    if not _title_names:
+        _episode_label = "Open Source Projects"
+    elif len(_title_names) <= 2:
+        _episode_label = " & ".join(_title_names)
+    else:
+        _episode_label = f"{_title_names[0]}, {_title_names[1]} & {len(_title_names) - 2} More"
+    _date_str = _dt.now().strftime("%B %d")
+    _intro_card_title = f"{_date_str} — {_episode_label}"
+
+    intro_img = create_intro_card(CONFIG, _intro_card_title)
     outro_img = create_outro_card(CONFIG)
     sub_img = create_subscribe_card(CONFIG)
 

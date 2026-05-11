@@ -414,6 +414,14 @@ async def video_generation_flow(config_path: str = "config.json") -> str:
 # Helper Functions
 # ═══════════════════════════════════════════════════════════════════════
 
+def _clean_repo_name(name: str) -> str:
+    """Strip special characters from a repo name for TTS-safe output."""
+    import re as _re
+    cleaned = _re.sub(r'[^a-zA-Z0-9 \-\.]', '', name)
+    cleaned = _re.sub(r'\s+', ' ', cleaned).strip('-.')
+    return cleaned if cleaned else name
+
+
 def _read_project_names_from_urls() -> List[str]:
     """Read clean project names from github_urls.txt so the intro
     always reflects the current video, not a stale project list."""
@@ -430,37 +438,38 @@ def _read_project_names_from_urls() -> List[str]:
                 match = _re.search(r'github\.com/([^/]+)/([^/]+)', url)
                 if match:
                     repo = match.group(2).rstrip('/')
-                    repo = _re.sub(r'[^a-zA-Z0-9 \-\.]', '', repo).strip('-.')
+                    repo = _clean_repo_name(repo)
                     if repo:
                         names.append(repo)
     return names
 
 
 def generate_episode_title(projects: List[Dict]) -> str:
-    """Generate episode title from github_urls.txt."""
+    """Generate episode title from the actual projects in this run."""
     from datetime import datetime
-    
-    names = _read_project_names_from_urls()
-    if not names:
-        names = [p.get('name', '') for p in projects[:2]]
+
+    # Use actual loaded project names (what's really in the video)
+    names = [_clean_repo_name(p.get('name', '')) for p in projects if p.get('name')]
 
     date_str = datetime.now().strftime("%B %d")
-    
+
+    if not names:
+        return f"{date_str} — Open Source Projects"
+
     if len(names) <= 2:
         featured = " & ".join(names)
     else:
         featured = f"{names[0]}, {names[1]} & {len(names) - 2} More"
-    
+
     return f"{date_str} — {featured}"
 
 
 def generate_intro_script(projects: List[Dict]) -> str:
-    """Generate intro narration script from github_urls.txt."""
+    """Generate intro narration script from the actual projects in this run."""
     import random
 
-    names = _read_project_names_from_urls()
-    if not names:
-        names = [p.get('name', '') for p in projects if p.get('name')]
+    # Use actual loaded project names (what's really in the video)
+    names = [_clean_repo_name(p.get('name', '')) for p in projects if p.get('name')]
 
     n = len(names)
     if n == 0:
@@ -474,10 +483,10 @@ def generate_intro_script(projects: List[Dict]) -> str:
         name_list = f"{selected[0]} and {selected[1]}"
     else:
         name_list = f"{selected[0]}, {selected[1]}, and {selected[2]}"
-    
+
     return (
         f"Welcome to OpenSourceScribes. "
-        f"This week we have {n} fresh open source projects. "
+        f"Today we have {n} open source project{'s' if n != 1 else ''}. "
         f"Including {name_list}, among others. "
         f"Let's get into it."
     )

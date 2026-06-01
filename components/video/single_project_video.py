@@ -62,8 +62,19 @@ async def create_project_visual(project_name, github_url, output_path):
         print(f"❌ Failed to create graphic: {e}")
         return False
 
+def _clean_text_for_tts(text: str) -> str:
+    """Strip markdown formatting so TTS doesn't read symbols aloud."""
+    import re
+    text = re.sub(r'^#{1,6}\s+', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\*{1,3}|_{1,3}', '', text)
+    text = re.sub(r'`+', '', text)
+    text = re.sub(r'\n{2,}', ' ', text)
+    return text.strip()
+
+
 def generate_audio_hume(text, output_path):
     """Generate audio using Hume.ai (premium voice)"""
+    text = _clean_text_for_tts(text)
     try:
         print(f"🎙️ Hume.ai: {text[:50]}...")
         
@@ -95,6 +106,7 @@ def generate_audio_hume(text, output_path):
 
 def generate_audio_gtts(text, output_path):
     """Fallback: Generate audio using gTTS"""
+    text = _clean_text_for_tts(text)
     print(f"🎙️ gTTS: {text[:50]}...")
     tts = gTTS(text=text, lang='en')
     tts.save(output_path)
@@ -144,7 +156,8 @@ async def create_segment(project):
     project_id = project.get('id', 'project')
     project_name = project.get('name', 'Unknown')
     github_url = project.get('github_url', '')
-    script_text = project.get('script_text', '')
+    # Prefer the extended deep-dive script when available
+    script_text = project.get('deep_dive_script') or project.get('script_text', '')
     
     print(f"\n🎬 Processing: {project_name}")
     
@@ -176,11 +189,12 @@ async def create_segment(project):
     subprocess.run(cmd, check=True, capture_output=True)
     return segment_name
 
-async def create_single_project_video(project_id, output_filename=None):
+async def create_single_project_video(project_id, output_filename=None, project=None):
     """Create a focused video for a single project (async)"""
-    
-    # Load project
-    project = load_project_by_id(project_id)
+
+    # Use passed project dict if provided (caller may have set deep_dive_script)
+    if project is None:
+        project = load_project_by_id(project_id)
     if not project:
         return False
     
@@ -201,10 +215,10 @@ async def create_single_project_video(project_id, output_filename=None):
     
     segment_files = []
     
-    # 1. Intro (2-3 seconds)
-    intro_audio_path = os.path.join(OUTPUT_FOLDER, "intro_audio_single.mp3")
-    intro_text = f"Welcome to OpenSourceScribes. Today we're diving deep into {project_name}."
-    
+    # 1. Intro — use project-specific filename so each deep dive gets a fresh intro
+    intro_audio_path = os.path.join(OUTPUT_FOLDER, f"intro_audio_{project.get('id', 'single')}.mp3")
+    intro_text = f"Welcome to OpenSourceScribes. Today we're taking a deep dive into {project_name}."
+
     if not os.path.exists(intro_audio_path):
         use_hume = CONFIG.get('hume_ai', {}).get('use_hume', False)
         if use_hume and CONFIG['hume_ai']['api_key']:

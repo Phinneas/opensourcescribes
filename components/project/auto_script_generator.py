@@ -512,6 +512,91 @@ ENRICHED ANALYSIS (DeepSeek):
         return None
 
 
+def generate_deep_dive_script(project: Dict) -> Optional[str]:
+    """
+    Generate an extended narration script (~350-450 words, ~2-3 minutes) for deep dive videos.
+    Falls back to repeating the short script if Claude is unavailable.
+
+    Args:
+        project: Project dict with at least 'name', 'github_url', 'script_text'
+
+    Returns:
+        Extended script string, or None on failure
+    """
+    try:
+        import anthropic
+
+        api_key = os.getenv('ANTHROPIC_API_KEY')
+        if not api_key:
+            try:
+                with open('config.json', 'r') as f:
+                    config = json.load(f)
+                api_key = config.get('anthropic', {}).get('api_key')
+            except Exception:
+                pass
+
+        if not api_key:
+            print("⚠️  No Anthropic API key for deep dive script, using short script as fallback")
+            return None
+
+        client = anthropic.Anthropic(api_key=api_key)
+
+        name = _clean_project_name(project.get('name', 'this project'))
+        short_script = project.get('script_text', '')
+        github_url = project.get('github_url', '')
+
+        prompt = f"""You are writing an extended video narration script for a deep-dive YouTube video
+about an open source GitHub project. The video is ~2-3 minutes long.
+
+Project: {name}
+GitHub URL: {github_url}
+Short summary (already written, ~100 words):
+{short_script}
+
+Write an EXTENDED narration script of approximately 380-430 words that:
+1. Opens with a natural spoken intro mentioning the project name — no markdown headers.
+2. Covers what the project does and its core technical approach.
+3. Walks through the key features in more depth than the short version.
+4. Explains real-world use cases and who would benefit.
+5. Mentions how to get started (install, clone, or link to docs).
+6. Closes with a brief summary sentence.
+
+Rules:
+- Plain prose only. No markdown headings, bullet points, asterisks, hash symbols, or special characters.
+- No first-person pronouns (I, me, my, we). Use "you", "developers", "users".
+- No hype words: Robust, Supercharge, Game changer, Revolutionary, Unlock.
+- No star/fork counts.
+- Write exactly as it will be spoken aloud — natural speech rhythm, no TTS-unfriendly symbols.
+"""
+
+        print(f"🤖 Claude: Writing deep dive script for {name}...")
+        message = client.messages.create(
+            model="claude-haiku-4-5",
+            max_tokens=2048,
+            messages=[{"role": "user", "content": prompt}]
+        )
+
+        script = message.content[0].text.strip()
+
+        # Sanitise any accidental markdown that slipped through
+        import re
+        script = re.sub(r'^#{1,6}\s+', '', script, flags=re.MULTILINE)
+        script = re.sub(r'\*{1,3}|_{1,3}', '', script)
+        script = re.sub(r'`+', '', script)
+        script = re.sub(r'\n{2,}', ' ', script).strip()
+
+        word_count = len(script.split())
+        print(f"✅ Deep dive script: {word_count} words")
+        return script
+
+    except ImportError:
+        print("⚠️  anthropic package not installed, skipping deep dive script")
+        return None
+    except Exception as e:
+        print(f"⚠️  Deep dive script generation failed: {e}")
+        return None
+
+
 def _run_deepseek_enrichment(repo_data: Dict, readme_text: Optional[str]) -> Optional[Dict]:
     """
     Run DeepSeek enrichment on GitHub API data + README.

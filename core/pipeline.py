@@ -61,8 +61,14 @@ def generate_audio_task(text: str, output_path: str) -> str:
         from components.audio.enhanced_audio_generator import EnhancedVoiceGenerator
         generator = EnhancedVoiceGenerator(CONFIG)
         
-        # Apply text preprocessing for better pronunciation
+        # Strip markdown formatting before TTS
         import re
+        processed = re.sub(r'^#{1,6}\s+', '', text, flags=re.MULTILINE)
+        processed = re.sub(r'\*{1,3}|_{1,3}', '', processed)
+        processed = re.sub(r'`+', '', processed)
+        processed = re.sub(r'\n{2,}', ' ', processed).strip()
+
+        # Phonetic corrections for common technical terms/acronyms
         pronunciation_map = {
             "webmcp": "Web M C P",
             "sqlite": "sequel lite",
@@ -70,7 +76,6 @@ def generate_audio_task(text: str, output_path: str) -> str:
             "substack": "sub stack",
             "osmnx": "O S M N X",
         }
-        processed = text
         for term, phonetic in pronunciation_map.items():
             processed = re.sub(rf"\b{term}\b", phonetic, processed, flags=re.IGNORECASE)
         
@@ -351,8 +356,8 @@ def run_pipeline(data_file: str = DATA_FILE):
         p["audio_path"] = audio_path
         audio_futures.append(generate_audio_task.submit(p["script_text"], audio_path))
 
-    # Shared audio clips
-    intro_audio = str(Path(OUTPUT_FOLDER) / "intro_audio.mp3")
+    # Shared audio clips — dated filename prevents stale cache across runs
+    intro_audio = str(Path(OUTPUT_FOLDER) / f"intro_audio_{current_date_mmdd}.mp3")
     sub_audio = str(Path(OUTPUT_FOLDER) / "subscribe_audio.mp3")
 
     # Build dynamic intro script from actual project names in this run

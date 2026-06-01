@@ -933,10 +933,28 @@ class VideoSuiteAutomated:
         except:
             return 6.0
         
+    @staticmethod
+    def _clean_text_for_tts(text: str) -> str:
+        """Strip markdown formatting so TTS doesn't read symbols aloud."""
+        import re
+        # Remove markdown headings (#, ##, etc.)
+        text = re.sub(r'^#{1,6}\s+', '', text, flags=re.MULTILINE)
+        # Remove bold/italic markers
+        text = re.sub(r'\*{1,3}|_{1,3}', '', text)
+        # Remove inline code backticks
+        text = re.sub(r'`+', '', text)
+        # Remove leading/trailing blank lines and excess whitespace
+        text = re.sub(r'\n{2,}', ' ', text)
+        text = text.strip()
+        return text
+
     def generate_audio(self, text, output_path):
         """Generate audio: MiniMax → Hume → gTTS fallback"""
 
         import re
+
+        # Strip markdown before any further processing
+        processed_text = self._clean_text_for_tts(text)
 
         # Phonetic corrections for common technical terms/acronyms
         pronunciation_map = {
@@ -946,7 +964,6 @@ class VideoSuiteAutomated:
             "substack": "sub stack",
             "osmnx": "O S M N X"
         }
-        processed_text = text
         for term, phonetic in pronunciation_map.items():
             processed_text = re.sub(rf'\b{term}\b', phonetic, processed_text, flags=re.IGNORECASE)
 
@@ -1323,7 +1340,8 @@ class VideoSuiteAutomated:
         segment_files = []
 
         # ── Intro ─────────────────────────────────────────────────────────────
-        intro_audio  = Path(OUTPUT_FOLDER) / "intro_audio.mp3"
+        # Use a dated filename so each run gets a fresh intro (avoids stale cache)
+        intro_audio  = Path(OUTPUT_FOLDER) / f"intro_audio_{current_date_mmdd}.mp3"
         intro_output = Path(OUTPUT_FOLDER) / "seg_intro.mp4"
         intro_script, episode_title = self._generate_episode_intro()
         print(f"   Episode title: {episode_title}")
@@ -1403,13 +1421,25 @@ class VideoSuiteAutomated:
         
         from components.video.single_project_video import create_single_project_video
         
+        from components.project.auto_script_generator import generate_deep_dive_script
+
         for project in self.deep_dive_selection:
             project_id = project['id']
             output_path = os.path.join(DEEP_DIVES_FOLDER, f"{project_id}_deep_dive.mp4")
             print(f"   Creating deep dive: {project['name']}")
+
+            # Generate an extended script for the deep dive if not already present
+            if not project.get('deep_dive_script'):
+                extended = generate_deep_dive_script(project)
+                if extended:
+                    project['deep_dive_script'] = extended
+                    print(f"   Extended script ready ({len(extended.split())} words)")
+                else:
+                    print(f"   Using short script as fallback for {project['name']}")
+
             try:
                 # We need to ensure we don't have overlapping event loops
-                await create_single_project_video(project_id, output_path)
+                await create_single_project_video(project_id, output_path, project=project)
             except Exception as e:
                 print(f"❌ Failed deep dive for {project['name']}: {e}")
             

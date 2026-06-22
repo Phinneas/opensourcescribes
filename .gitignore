@@ -8,3 +8,4 @@ final_github_roundup*.mp4
 assets/
 deliveries/
 config.json
+.worktrees/

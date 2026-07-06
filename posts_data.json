@@ -1,26 +1,104 @@
 [
     {
-        "id": "monirul399_browser",
-        "name": "browser",
-        "github_url": "https://github.com/monirul399/browser",
-        "script_text": "# Lightpanda Browser - Engineering Overview\n\nLightpanda is an open-source headless browser built specifically for AI agents, automation, and web scraping. It executes JavaScript, supports partial Web APIs, and integrates with Playwright, Puppeteer, and chromedp via the Chrome DevTools Protocol.\n\nThe engineering standout: it runs nine times lighter on memory than Chrome and executes eleven times faster, with instant startup. This efficiency matters at scale\u2014testing hundreds of pages becomes practical on modest infrastructure.\n\nThe browser handles DOM manipulation, event execution, and network interactions without the overhead of a full graphical interface. It's ideal for training data collection, automated testing, and agent-based web interaction where performance per compute dollar directly impacts viability."
+        "id": "yhirose_docs_gen",
+        "name": "docs-gen",
+        "github_url": "https://github.com/yhirose/docs-gen",
+        "script_text": "# docs-gen Video Script\n\ndocs-gen is a Rust-based static site generator built specifically for Markdown documentation. It requires zero dependencies and generates fully functional sites directly from your Markdown files\u2014no plugins, runtime overhead, or additional tools needed.\n\nThe engine includes built-in dark and light themes, live-reload development server, syntax highlighting, and client-side full-text search. It supports multiple languages with proper SEO handling through canonical URLs, hreflang tags, and automatic sitemap generation.\n\nInstallation is straightforward via Cargo. Simply write your documentation in Markdown, configure your site settings in TOML, and deploy the generated static files. It's designed for teams building technical documentation at scale."
     },
     {
-        "id": "witt3rd_stagehand",
-        "name": "stagehand",
-        "github_url": "https://github.com/witt3rd/stagehand",
-        "script_text": "# Stagehand YouTube Script\n\nStagehand is a production-ready framework for AI browser automation that balances code and natural language. Instead of choosing between low-level Selenium complexity or unpredictable high-level agents, developers can mix both approaches seamlessly.\n\nThe framework lets you write Playwright code for precise actions while using AI for navigating unfamiliar interfaces. Key features include action previewing, token-efficient caching, and one-line integration with OpenAI and Anthropic's computer use models.\n\nDevelopers can execute individual actions, run larger agent tasks, and extract structured data from pages all within one framework. This makes stagehand ideal for building reliable, scalable browser automations in production environments."
+        "id": "mgks_docmd",
+        "name": "docmd",
+        "github_url": "https://github.com/mgks/docmd",
+        "script_text": "# docmd \u2013 Production Documentation from Markdown\n\ndocmd converts Markdown files into production-ready documentation sites in seconds. Zero configuration required. Just run `npx @docmd/core dev` in any folder with Markdown, and you get a fully functional documentation site at localhost 3000.\n\nThe architecture strips away unnecessary complexity. No React overhead, no bloat\u2014purely content-focused. It handles multi-version support, semantic search indexing, and localization automatically. Built AI-native, it integrates seamlessly with agent workflows through extensible skills.\n\nDevelopers use docmd when they need fast, maintainable documentation that stays synchronized with their codebase without framework friction."
     },
     {
-        "id": "hst1189_playwright",
-        "name": "playwright",
-        "github_url": "https://github.com/hst1189/playwright",
-        "script_text": "# Playwright Video Script\n\nPlaywright is a web testing and automation framework that controls Chromium, Firefox, and WebKit through a single API. This unified approach eliminates the need to maintain separate test suites for different browsers.\n\nThe framework delivers evergreen, reliable automation across Linux, macOS, and Windows. Developers can write tests once and execute them headlessly across all major browser engines. Installation is straightforward\u2014either use the init command for a guided setup or manually install the test runner and browsers.\n\nPlaywright's primary strength lies in enabling comprehensive cross-browser testing without duplicating test logic."
+        "id": "zensical_zensical",
+        "name": "zensical",
+        "github_url": "https://github.com/zensical/zensical",
+        "script_text": "# zensical \u2013 Modern Static Site Generator\n\nzensical is a static site generator built by the Material for MkDocs team. Write documentation in Markdown and deploy searchable, professional sites in minutes. The platform supports over 60 languages, responsive design across all devices, and extensive customization options.\n\nWith eight active contributors and recent momentum across pull requests and issue tracking, zensical demonstrates solid development velocity. Developers can leverage Docker integration, PyPI distribution, and a growing Discord community for support. The tool handles Open Source and commercial projects efficiently.\n\nPerfect for teams needing fast, searchable documentation without complexity."
     },
     {
-        "id": "felarof99_steel_browser",
-        "name": "steel-browser",
-        "github_url": "https://github.com/felarof99/steel-browser",
-        "script_text": "# Steel-browser Video Script\n\nsteel-browser is an open-source browser API designed for AI agents and applications that need to automate web interactions. It provides full Chrome control through Puppeteer and CDP protocols, handling session management, cookies, and local storage automatically. Developers get built-in proxy support, extension loading, anti-detection measures, and resource cleanup without managing infrastructure. The API converts pages to markdown, captures screenshots, and generates PDFs programmatically. With active development and a growing community, steel-browser eliminates the complexity of browser automation so teams can focus on AI logic instead of infrastructure. Perfect for building web agents that interact with live websites at scale."
+        "id": "taurgis_luma_docs",
+        "name": "luma-docs",
+        "github_url": "https://github.com/taurgis/luma-docs",
+        "script_text": "# luma-docs Video Script\n\nluma-docs is a documentation platform built on React 19, MDX, Vite SSG, and Tailwind CSS. It generates routes automatically from your markdown files, includes built-in full-text search, and handles GitHub Pages deployment seamlessly\u2014including subfolder detection for forked repositories.\n\nThe platform pre-renders all HTML at build time, supports versioned documentation snapshots, and includes production-grade SEO features like canonical tags and JSON-LD structured data. Setup takes ninety seconds. Drop MDX files into your content folder and get a fast, searchable documentation site with zero configuration overhead.\n\nPerfect for teams needing hosted documentation on GitHub Pages."
+    },
+    {
+        "id": "hopsoft_docfu",
+        "name": "docfu",
+        "github_url": "https://github.com/hopsoft/docfu",
+        "script_text": "# DocFu Video Script\n\nDocFu transforms existing markdown directly into production-ready documentation sites with a single CLI command. No configuration required. Just run `npx docfu build` on your markdown directory and get a fully functional static site with built-in search, dark mode, responsive design, and breadcrumb navigation.\n\nThe tool supports multiple markdown formats\u2014standard Markdown, MDX, and Markdoc\u2014all working seamlessly together. Components integrate zero-config, themes are customizable, and live preview with watch mode enables instant feedback during authoring.\n\nDocFu targets technical writers and product teams needing feature-complete documentation without maintaining complex build systems or JavaScript dependencies. Deploy the static output anywhere."
+    },
+    {
+        "id": "riligar_solutions_documentation",
+        "name": "documentation",
+        "github_url": "https://github.com/riligar-solutions/documentation",
+        "script_text": "# Documentation - Video Script\n\ndocumentation transforms Markdown files into production-ready documentation sites in minutes. The static site generator handles the heavy lifting automatically: responsive layouts, built-in search, syntax highlighting, and SEO optimization all ship out of the box. Development workflow includes hot-reload for real-time editing, and the CLI keeps setup minimal. From initialization to deployment, documentation reduces typical documentation creation time from 4-8 hours to under an hour. The generator produces fast, secure static output with modern themes and full accessibility support. It's purpose-built for technical teams needing professional documentation without configuration overhead."
+    },
+    {
+        "id": "barttc_microdocs",
+        "name": "microdocs",
+        "github_url": "https://github.com/bartTC/microdocs",
+        "script_text": "# microdocs Video Script\n\nMicrodocs transforms Markdown files into self-contained HTML documentation sites with zero configuration. Point it at your README and CHANGELOG, and get a single-page app with automatic table of contents, syntax highlighting, and dark mode support. The tool embeds all styles directly into the output\u2014only tocbot loads from CDN. Features include responsive design, Pygments code highlighting for both light and dark themes, and tab-based navigation between sections. Built with Tailwind CSS and Alpine.js, microdocs generates beautiful documentation instantly without setup overhead. Use this when you need professional-looking docs generated directly from your existing Markdown files."
+    },
+    {
+        "id": "posit_dev_great_docs",
+        "name": "great-docs",
+        "github_url": "https://github.com/posit-dev/great-docs",
+        "script_text": "# great-docs: Engineering-Focused Video Script\n\ngreat-docs automates Python package documentation generation. Feed it your source code, and it auto-discovers your public API, detects docstring formats, and builds a structured reference site\u2014all in one command.\n\nThe implementation scales from minimal configuration to deep customization. Developers get immediate results without boilerplate, while maintaining control over styling and content organization. Recent activity shows three active contributors collaborating on pull requests and issue resolution, indicating steady development momentum.\n\nThe tool handles docstring parsing intelligently, generates type-aware reference pages, and outputs production-ready HTML. Use great-docs to transform scattered docstrings into a complete, navigable documentation site."
+    },
+    {
+        "id": "ratpi_studio_markdown_doc",
+        "name": "markdown-doc",
+        "github_url": "https://github.com/ratpi-studio/markdown-doc",
+        "script_text": "# markdown-doc Video Script\n\nmarkdown-doc is a markdown-fed documentation generator that transforms markdown files into interactive HTML sites. It handles syntax highlighting, frontmatter metadata, and full-text search out of the box. The tool supports custom theming through a straightforward configuration file, GitHub integration for edit links, and SEO optimization including sitemaps and Open Graph tags.\n\nWith active development momentum, the project recently processed pull requests and improvements. Developers can initialize projects instantly, watch files during development, and serve locally on custom ports. It's built for teams needing fast, maintainable documentation without complex build pipelines."
+    },
+    {
+        "id": "properdocs_properdocs",
+        "name": "properdocs",
+        "github_url": "https://github.com/ProperDocs/properdocs",
+        "script_text": "# ProperDocs Video Script\n\nproperdocs is a static site generator for project documentation that converts Markdown files into deployable HTML. Built as a maintained fork of MkDocs, it functions as a drop-in replacement while actively addressing bugs and adding incremental features.\n\nConfiguration happens through a simple YAML file specifying documentation structure, themes, and plugins. The tool supports extensibility via custom themes, plugins, and Python-Markdown extensions available in its catalog.\n\nDeployment works with any basic web server, including GitHub Pages. Developers use properdocs to transform source documentation into production-ready static sites without external dependencies."
+    },
+    {
+        "id": "joachimhs_docs_md",
+        "name": "docs-md",
+        "github_url": "https://github.com/joachimhs/docs-md",
+        "script_text": "# docs-md Video Script\n\ndocs-md is a documentation system that lives directly in your Git repository. Write architectural decision records, specifications, guides, and runbooks as Markdown files with YAML frontmatter, then browse and manage them through a web UI or CLI.\n\nThe system requires no database or external hosting\u2014just Markdown files versioned with Git. docs-md includes eight structured document types, each with predefined templates and lifecycle statuses. Users get dual-mode editing, full-text search with field-specific queries, and complete Git history tracking per document. An API layer enables AI agents to read and write documentation using simple file conventions.\n\nPerfect for teams keeping documentation synchronized with their codebase."
+    },
+    {
+        "id": "mkdocs_ng_mkdocs",
+        "name": "mkdocs",
+        "github_url": "https://github.com/mkdocs-ng/mkdocs",
+        "script_text": "# MkDocs Video Script\n\nmkdocs is a fast, lightweight static site generator built for project documentation. You write content in Markdown, configure it with a single YAML file, and deploy anywhere static files are served. The maintained fork adds Python 3.13 and 3.14 support, restores live reload during development, and improves link validation. With active development momentum and extensible architecture through themes and plugins, mkdocs streamlines documentation workflows for developers managing technical projects at scale."
+    },
+    {
+        "id": "rabinarayanpatra_docs_generator",
+        "name": "docs-generator",
+        "github_url": "https://github.com/rabinarayanpatra/docs-generator",
+        "script_text": "# docs-generator Video Script\n\ndocs-generator is a documentation platform built on Next.js 16 and TypeScript that transforms markdown files into fast, searchable documentation sites. The tool handles MDX rendering, enabling developers to embed React components directly within documentation. Key technical features include client-side full-text search via FlexSearch, syntax highlighting through Shiki, and KaTeX math rendering. The architecture leverages Turbopack for optimized build performance and includes automatic navigation generation, responsive design, and SEO capabilities like sitemaps and RSS feeds. Use docs-generator to quickly publish professional documentation with minimal configuration overhead."
+    },
+    {
+        "id": "xentixar_vexdocs",
+        "name": "vexdocs",
+        "github_url": "https://github.com/xentixar/vexdocs",
+        "script_text": "# Vexdocs Video Script\n\nVexdocs is a lightweight documentation tool built for speed and simplicity. It generates beautiful documentation sites with zero external dependencies, using a pure JavaScript markdown renderer that keeps performance tight.\n\nThe platform handles multi-version documentation seamlessly, letting developers maintain and switch between different API versions without friction. Built-in features include real-time search, responsive mobile-first design, keyboard shortcuts, and accessibility support out of the box.\n\nNo configuration needed\u2014drop markdown files into your docs folder, run the CLI, and your site builds instantly. Static site generation optimizes everything for CDN deployment.\n\nUse vexdocs when your team needs professional documentation without the overhead."
+    },
+    {
+        "id": "qqshi13_docsforge",
+        "name": "docsforge",
+        "github_url": "https://github.com/QQSHI13/docsforge",
+        "script_text": "# DocsForge Video Script\n\ndocsforge is a unified documentation platform that replaces MkDocs and Material for MkDocs with a single package and command. It combines the ProperDocs engine with an enhanced Material theme, delivering offline-first documentation generation with zero CDN dependencies.\n\nThe core engine includes 31 Markdown extensions, seven built-in plugins for search and blogging, plus native support for KaTeX math, Mermaid diagrams, and 14,000 icons. A VS Code extension enables live preview and one-click GitHub Pages deployment directly from your editor.\n\nUse docsforge when you need production-grade documentation infrastructure without external dependencies."
+    },
+    {
+        "id": "tansuasici_docsync",
+        "name": "DocSync",
+        "github_url": "https://github.com/tansuasici/DocSync",
+        "script_text": "# DocSync - YouTube Script\n\nDocSync transforms GitHub markdown into framework-ready MDX, eliminating documentation duplication. Write once in standard GFM\u2014README files, docs folders\u2014and publish to Fumadocs, Docusaurus, Nextra, or Starlight without manual restructuring.\n\nThe tool handles conversion automatically: GitHub alerts become callout components, relative links transform into site URLs, and asset references pull from raw GitHub. Frontmatter generation extracts titles and descriptions from your source files, while navigation configs build from document ordering.\n\nConfiguration requires minimal setup through a single TypeScript file specifying source paths and target framework. DocSync solves the single critical problem: maintaining documentation across multiple platforms without duplicating content."
+    },
+    {
+        "id": "lbliii_bengal",
+        "name": "bengal",
+        "github_url": "https://github.com/lbliii/bengal",
+        "script_text": "# Bengal: High-Performance Static Site Generator\n\nBengal is a Python-only static site generator built for Python 3.14's free-threading model. Every component\u2014markdown parsing, syntax highlighting, templating, and the dev server\u2014runs in pure Python with zero npm dependencies.\n\nThe architecture scales across CPU cores without GIL contention, delivering sub-second incremental rebuilds through content-addressed hashing. It generates AI-native outputs including llms.txt and per-page JSON, handles Jupyter notebooks and autodoc for APIs, and includes sitemap generation, RSS feeds, and link validation out of the box.\n\nWith four active contributors and steady momentum across recent pull requests and issues, Bengal serves documentation sites, blogs, knowledge bases, and marketing sites where developers need fast, debuggable builds entirely in Python."
     }
 ]

@@ -42,5 +42,80 @@
       "timestamp": "2026-05-10T19:03:24.130260"
     },
     "timestamp": "2026-05-10T19:03:24.130275"
+  },
+  "Cloudstrucc/programmatic-diagram-generator": {
+    "data": {
+      "owner": "Cloudstrucc",
+      "repo": "programmatic-diagram-generator",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "description": "Generates diagrams using Kroki API with PlantUML + Azure icons + Pushes final img to a GitHub repoisitory - clones your repo, adds images to /images folder, commits & pushes Pushes to Azure DevOps as well - same flow for DevOps Git repos Returns raw URLs you can embed in Markdown (or anywhere to reference)",
+      "topics": [],
+      "url": "https://github.com/Cloudstrucc/programmatic-diagram-generator",
+      "timestamp": "2026-06-01T16:01:55.692982"
+    },
+    "timestamp": "2026-06-01T16:01:55.692988"
+  },
+  "DiagramAgent/DiagramAgent_official": {
+    "data": {
+      "owner": "DiagramAgent",
+      "repo": "DiagramAgent_official",
+      "stars": 14,
+      "forks": 1,
+      "language": null,
+      "description": "\u3010CVPR2025\u3011From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing",
+      "topics": [],
+      "url": "https://github.com/DiagramAgent/DiagramAgent_official",
+      "timestamp": "2026-06-01T16:13:48.642509"
+    },
+    "timestamp": "2026-06-01T16:13:48.642520"
+  },
+  "cathrynlavery/diagram-design": {
+    "data": {
+      "owner": "cathrynlavery",
+      "repo": "diagram-design",
+      "stars": 2510,
+      "forks": 187,
+      "language": "HTML",
+      "description": "Thirteen editorial diagram types for Claude Code. Self-contained HTML + SVG. No shadows, no Mermaid-slop.",
+      "topics": [],
+      "url": "https://github.com/cathrynlavery/diagram-design",
+      "timestamp": "2026-06-01T16:14:06.645296"
+    },
+    "timestamp": "2026-06-01T16:14:06.645311"
+  },
+  "OmniSVG/OmniSVG": {
+    "data": {
+      "owner": "OmniSVG",
+      "repo": "OmniSVG",
+      "stars": 2508,
+      "forks": 93,
+      "language": "Python",
+      "description": "[NeurIPS 2025] OmniSVG is the first family of end-to-end multimodal SVG generators that leverage pre-trained Vision-Language Models (VLMs), capable of generating complex and detailed SVGs, from simple icons to intricate anime characters.",
+      "topics": [],
+      "url": "https://github.com/OmniSVG/OmniSVG",
+      "timestamp": "2026-06-01T16:14:24.163544"
+    },
+    "timestamp": "2026-06-01T16:14:24.163557"
+  },
+  "tansuasici/DocSync": {
+    "data": {
+      "owner": "tansuasici",
+      "repo": "DocSync",
+      "stars": 0,
+      "forks": 0,
+      "language": "TypeScript",
+      "description": "Write docs once in GitHub Markdown, publish everywhere. GFM \u2192 MDX transformer for Fumadocs, Docusaurus, Nextra, and Starlight.",
+      "topics": [
+        "cli",
+        "docs",
+        "documentation",
+        "fumadocs"
+      ],
+      "url": "https://github.com/tansuasici/DocSync",
+      "timestamp": "2026-06-30T21:47:33.041959"
+    },
+    "timestamp": "2026-06-30T21:47:33.041966"
   }
 }
